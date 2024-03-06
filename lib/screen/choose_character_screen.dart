@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'home_screen.dart';
+
 class ChooseCharacterScreen extends StatefulWidget {
   final String nickname;
 
@@ -76,7 +78,11 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
                   padding: const EdgeInsets.only(top: 164.62),
                   child: GestureDetector(
                     onTap: () {
-                      // 게임 시작 로직을 여기에 추가합니다.
+                      // HomeScreen으로 화면을 전환합니다.
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      );
                     },
                     child: Image.asset('assets/login/character_start_btn.png', width: 312.22, height: 46.83),
                   ),

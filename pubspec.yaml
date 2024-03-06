@@ -60,6 +60,7 @@ flutter:
 
   assets:
     - assets/login/
+    - assets/home/
 
   fonts:
     - family: Nanum
