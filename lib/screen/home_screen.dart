@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -186,6 +187,19 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         print('$imageName card tapped');
         // 여기에서 Navigator.push를 사용하여 새로운 화면으로 이동
+        if ('$imageName' == 'kikisday_card.png') {
+          // kikisday_play_screen으로 이동
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
+          );
+        } else {
+          // // space_play_screen으로 이동
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => SpacePlayScreen()),
+          // );
+        }
       },
       child: Container(
         width: 231.11,
@@ -193,14 +207,27 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Stack(
           children: <Widget>[
             Image.asset('assets/home/$imageName', fit: BoxFit.cover), // 박스 이미지
-            Positioned( // '플레이 00명' 텍스트 위치 조정
+            Positioned(
+              // '플레이 00명' 텍스트 위치 조정
               left: 20, // 이미지의 좌측으로부터의 거리
               top: 13.18, // 이미지의 상단으로부터의 거리
               child: Row(
                 children: <Widget>[
-                  Text('플레이 ', style: TextStyle(color: textColor, fontSize: 11.38, fontFamily: 'Nanum')),
-                  Text('00', style: TextStyle(color: textColor, fontSize: 11.38, fontFamily: 'Nanum')),
-                  Text('명', style: TextStyle(color: textColor, fontSize: 11.38, fontFamily: 'Nanum')),
+                  Text('플레이 ',
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 11.38,
+                          fontFamily: 'Nanum')),
+                  Text('00',
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 11.38,
+                          fontFamily: 'Nanum')),
+                  Text('명',
+                      style: TextStyle(
+                          color: textColor,
+                          fontSize: 11.38,
+                          fontFamily: 'Nanum')),
                 ],
               ),
             ),
