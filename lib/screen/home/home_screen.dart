@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday_play_screen.dart';
+import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override

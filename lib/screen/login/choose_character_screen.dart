@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
+import '../home/home_screen.dart';
 
 class ChooseCharacterScreen extends StatefulWidget {
   final String nickname;

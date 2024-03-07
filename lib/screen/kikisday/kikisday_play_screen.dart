@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../model/timer_model.dart';
+import 'kikisday_tutorial1_screen.dart';
 
 class KikisdayPlayScreen extends StatelessWidget {
   @override
@@ -30,6 +34,10 @@ class KikisdayPlayScreen extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () {
+                  // 타이머 시작
+                  final timerModel = Provider.of<TimerModel>(context, listen: false);
+                  timerModel.startTimer();
+
                   // 튜토리얼1로 이동
                   Navigator.push(
                     context,
@@ -43,21 +51,6 @@ class KikisdayPlayScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class KikisdayTutorial1Screen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // KikisdayTutorial1Screen 위젯 구현
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('튜토리얼1'),
-      ),
-      body: Center(
-        child: Text('Kikisday Tutorial1 내용'),
       ),
     );
   }
