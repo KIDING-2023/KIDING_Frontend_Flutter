@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -57,11 +58,11 @@ class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
                     Image.asset('assets/kikisday/kikisday_tutorial2_ch.png', width: 360, height: 302.53),
                     GestureDetector(
                       onTap: () {
-                        // // 튜토리얼2로 이동
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => KikisdayTutorial2Screen()),
-                        // );
+                        // 주사위 화면으로 이동
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => KikisdayDiceScreen()),
+                        );
                       },
                       child: Image.asset('assets/kikisday/kikisday_ok_btn.png', width: 322.07, height: 44.75),
                     ),
