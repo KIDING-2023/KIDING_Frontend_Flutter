@@ -4,10 +4,6 @@ import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
 
-void main() {
-  runApp(MaterialApp(home: KikisdayTutorial2Screen()));
-}
-
 class KikisdayTutorial2Screen extends StatefulWidget {
   @override
   _KikisdayTutorial2ScreenState createState() => _KikisdayTutorial2ScreenState();

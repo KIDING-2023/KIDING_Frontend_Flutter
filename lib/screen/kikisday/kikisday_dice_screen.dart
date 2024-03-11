@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/kikisday_song_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -67,7 +68,7 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
                     // 여기에 다음 화면으로 넘어가는 코드를 작성하세요.
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => NextScreen()),
+                      MaterialPageRoute(builder: (context) => KikisdaySongScreen()),
                     );
                     // 상태 업데이트
                     setState(() {
@@ -113,16 +114,6 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-
-class NextScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      // 다음 화면의 구성
     );
   }
 }
