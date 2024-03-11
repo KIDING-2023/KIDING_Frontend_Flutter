@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
+import 'kikisday_random_dice_screen.dart';
 
 class KikisdaySongScreen extends StatefulWidget {
   const KikisdaySongScreen({super.key});
@@ -103,15 +104,6 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
         ],
       ),
     );
-  }
-}
-
-class KikisdayRandomDiceScreen extends StatelessWidget {
-  const KikisdayRandomDiceScreen({super.key, required int currentNumber});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }
 
