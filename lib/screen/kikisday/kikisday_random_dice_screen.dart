@@ -5,6 +5,10 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../model/timer_model.dart';
+import 'kikisday_2_screen.dart';
+import 'kikisday_3_screen.dart';
+import 'kikisday_4_screen.dart';
+import 'kikisday_5_screen.dart';
 
 class KikisdayRandomDiceScreen extends StatefulWidget {
   final int currentNumber;
@@ -16,7 +20,7 @@ class KikisdayRandomDiceScreen extends StatefulWidget {
 }
 
 class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
-  late VideoPlayerController _controller;
+  //late VideoPlayerController _controller;
 
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
@@ -96,11 +100,11 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                   setState(() {
                     randomNumber = Random().nextInt(3) + 1;
                     totalDice = widget.currentNumber + randomNumber;
-                    _controller = VideoPlayerController.asset('assets/kikisday/dice${randomNumber}.mp4')
-                      ..initialize().then((_) {
-                        setState(() {});
-                        _controller.play();
-                      });
+                    // _controller = VideoPlayerController.asset('assets/kikisday/dice${randomNumber}.gif')
+                    //   ..initialize().then((_) {
+                    //     setState(() {});
+                    //     _controller.play();
+                    //   });
                     _rolledDice = true;
                   });
                   // 주사위값에 따른 다음 화면 설정
@@ -121,51 +125,51 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                       nextScreen = Kikisday6Screen(currentNumber: totalDice,);
                       break;
                   }
-                  _controller.addListener(() {
-                    if (!_controller.value.isPlaying && _rolledDice) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => nextScreen),
-                      );
-                      // 상태 업데이트
-                      setState(() {
-                        _rolledDice = false;
-                      });
-                      _controller.dispose(); // 컨트롤러 해제
-                    }
-                  });
-                  // // GIF 재생 시간 후 다음 화면으로 자동 전환
-                  // Future.delayed(Duration(seconds: 4), () {
-                  //   // 여기에 다음 화면으로 넘어가는 코드를 작성하세요.
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(builder: (context) => nextScreen),
-                  //   );
-                  //   // 상태 업데이트
-                  //   setState(() {
-                  //     _rolledDice = false;
-                  //   });
+                  // _controller.addListener(() {
+                  //   // if (!_controller.value.isPlaying && _rolledDice) {
+                  //   //   Navigator.push(
+                  //   //     context,
+                  //   //     MaterialPageRoute(builder: (context) => nextScreen),
+                  //   //   );
+                  //   //   // 상태 업데이트
+                  //   //   setState(() {
+                  //   //     _rolledDice = false;
+                  //   //   });
+                  //   //   _controller.dispose(); // 컨트롤러 해제
+                  //   // }
                   // });
+                  // GIF 재생 시간 후 다음 화면으로 자동 전환
+                  Future.delayed(Duration(seconds: 4), () {
+                    // 여기에 다음 화면으로 넘어가는 코드를 작성하세요.
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => nextScreen),
+                    );
+                    // 상태 업데이트
+                    setState(() {
+                      _rolledDice = false;
+                    });
+                  });
                 }
               },
             ),
           ),
           // 주사위 GIF 애니메이션 (스와이프 후 전체 화면)
-          Positioned.fill(
-            child: _rolledDice
-                ? AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            )
-                : Container(),
-          ),
-          // if (_rolledDice)
-          //   Positioned.fill(
-          //     child: Image.asset(
-          //       'assets/kikisday/dice${randomNumber}.gif', // 주사위 굴리는 GIF
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
+          // Positioned.fill(
+          //   child: _rolledDice
+          //       ? AspectRatio(
+          //     aspectRatio: _controller.value.aspectRatio,
+          //     child: VideoPlayer(_controller),
+          //   )
+          //       : Container(),
+          // ),
+          if (_rolledDice)
+            Positioned.fill(
+              child: Image.asset(
+                'assets/kikisday/dice${randomNumber}.gif', // 주사위 굴리는 GIF
+                fit: BoxFit.cover,
+              ),
+            ),
           // 뒤로 가기 버튼
           Positioned(
             top: 45,
@@ -193,70 +197,6 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class Kikisday2Screen extends StatefulWidget {
-  const Kikisday2Screen({super.key, required int currentNumber});
-
-  @override
-  State<Kikisday2Screen> createState() => _Kikisday2ScreenState();
-}
-
-class _Kikisday2ScreenState extends State<Kikisday2Screen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("2")),
-    );
-  }
-}
-
-class Kikisday3Screen extends StatefulWidget {
-  const Kikisday3Screen({super.key, required int currentNumber});
-
-  @override
-  State<Kikisday3Screen> createState() => _Kikisday3ScreenState();
-}
-
-class _Kikisday3ScreenState extends State<Kikisday3Screen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("3")),
-    );
-  }
-}
-
-class Kikisday4Screen extends StatefulWidget {
-  const Kikisday4Screen({super.key, required int currentNumber});
-
-  @override
-  State<Kikisday4Screen> createState() => _Kikisday4ScreenState();
-}
-
-class _Kikisday4ScreenState extends State<Kikisday4Screen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("4")),
-    );
-  }
-}
-
-class Kikisday5Screen extends StatefulWidget {
-  const Kikisday5Screen({super.key, required int currentNumber});
-
-  @override
-  State<Kikisday5Screen> createState() => _Kikisday5ScreenState();
-}
-
-class _Kikisday5ScreenState extends State<Kikisday5Screen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(child: Text("5")),
     );
   }
 }
