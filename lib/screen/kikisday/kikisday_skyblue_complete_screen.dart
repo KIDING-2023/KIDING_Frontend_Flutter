@@ -6,21 +6,20 @@ import 'package:kiding/screen/kikisday/kikisday_random_dice2_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_random_dice_screen.dart';
 
-class KikisdayBlueCompleteScreen extends StatefulWidget {
+class KikisdaySkyblueCompleteScreen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayBlueCompleteScreen({Key? key, required this.currentNumber})
+  KikisdaySkyblueCompleteScreen({Key? key, required this.currentNumber})
       : super(key: key);
 
   @override
-  State<KikisdayBlueCompleteScreen> createState() =>
-      _KikisdayBlueCompleteScreenState();
+  State<KikisdaySkyblueCompleteScreen> createState() =>
+      _KikisdaySkyblueCompleteScreenState();
 }
 
-class _KikisdayBlueCompleteScreenState
-    extends State<KikisdayBlueCompleteScreen> {
+class _KikisdaySkyblueCompleteScreenState
+    extends State<KikisdaySkyblueCompleteScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
 
@@ -41,9 +40,9 @@ class _KikisdayBlueCompleteScreenState
 
   void _navigateToRandomDiceScreen() {
     switch (widget.currentNumber) {
-      case 3:
+      case 10:
         nextScreen =
-            KikisdayRandomDiceScreen(currentNumber: widget.currentNumber);
+            KikisdayRandomDice3Screen(currentNumber: widget.currentNumber);
         break;
       default:
         nextScreen =
@@ -65,7 +64,7 @@ class _KikisdayBlueCompleteScreenState
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_dice_bg.png',
+              'assets/kikisday/kikisday_2_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -101,7 +100,7 @@ class _KikisdayBlueCompleteScreenState
             top: 127.66,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/blue_complete.png',
+            child: Image.asset('assets/kikisday/skyblue_complete.png',
                 width: 336.93, height: 370.14),
           ),
         ],
@@ -109,3 +108,13 @@ class _KikisdayBlueCompleteScreenState
     );
   }
 }
+
+class KikisdayRandomDice3Screen extends StatelessWidget {
+  const KikisdayRandomDice3Screen({super.key, required int currentNumber});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+

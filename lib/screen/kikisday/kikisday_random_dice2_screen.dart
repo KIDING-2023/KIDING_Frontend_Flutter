@@ -2,28 +2,24 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:video_player/video_player.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_2_screen.dart';
-import 'kikisday_3_screen.dart';
-import 'kikisday_4_screen.dart';
 import 'kikisday_5_screen.dart';
 import 'kikisday_6_screen.dart';
 import 'kikisday_7_screen.dart';
+import 'kikisday_8_screen.dart';
+import 'kikisday_9_screen.dart';
 
-class KikisdayRandomDiceScreen extends StatefulWidget {
+class KikisdayRandomDice2Screen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayRandomDiceScreen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayRandomDice2Screen({Key? key, required this.currentNumber}) : super(key: key);
 
   @override
-  State<KikisdayRandomDiceScreen> createState() => _KikisdayRandomDiceScreenState();
+  State<KikisdayRandomDice2Screen> createState() => _KikisdayRandomDice2ScreenState();
 }
 
-class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
-  //late VideoPlayerController _controller;
-
+class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
 
@@ -36,22 +32,6 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   // 다음 화면
   late var nextScreen;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // 예시로 'dice1.mp4'를 사용하며, 실제 경로는 앱에 맞게 조정해야 합니다.
-  //   _controller = VideoPlayerController.asset('assets/kikisday/dice1.mp4')
-  //     ..initialize().then((_) {
-  //       setState(() {});
-  //     });
-  // }
-  //
-  // @override
-  // void dispose() {
-  //   super.dispose();
-  //   _controller.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +40,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_dice_bg.png',
+              'assets/kikisday/kikisday_2_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -102,24 +82,10 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                   setState(() {
                     randomNumber = Random().nextInt(3) + 1;
                     totalDice = widget.currentNumber + randomNumber;
-                    // _controller = VideoPlayerController.asset('assets/kikisday/dice${randomNumber}.gif')
-                    //   ..initialize().then((_) {
-                    //     setState(() {});
-                    //     _controller.play();
-                    //   });
                     _rolledDice = true;
                   });
                   // 주사위값에 따른 다음 화면 설정
                   switch (totalDice) {
-                    case 2:
-                      nextScreen = Kikisday2Screen(currentNumber: totalDice,);
-                      break;
-                    case 3:
-                      nextScreen = Kikisday3Screen(currentNumber: totalDice,);
-                      break;
-                    case 4:
-                      nextScreen = Kikisday4Screen(currentNumber: totalDice,);
-                      break;
                     case 5:
                       nextScreen = Kikisday5Screen(currentNumber: totalDice,);
                       break;
@@ -129,20 +95,13 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                     case 7:
                       nextScreen = Kikisday7Screen(currentNumber: totalDice,);
                       break;
+                    case 8:
+                      nextScreen = Kikisday8Screen(currentNumber: totalDice,);
+                      break;
+                    case 9:
+                      nextScreen = Kikisday9Screen(currentNumber: totalDice,);
+                      break;
                   }
-                  // _controller.addListener(() {
-                  //   // if (!_controller.value.isPlaying && _rolledDice) {
-                  //   //   Navigator.push(
-                  //   //     context,
-                  //   //     MaterialPageRoute(builder: (context) => nextScreen),
-                  //   //   );
-                  //   //   // 상태 업데이트
-                  //   //   setState(() {
-                  //   //     _rolledDice = false;
-                  //   //   });
-                  //   //   _controller.dispose(); // 컨트롤러 해제
-                  //   // }
-                  // });
                   // GIF 재생 시간 후 다음 화면으로 자동 전환
                   Future.delayed(Duration(seconds: 4), () {
                     // 여기에 다음 화면으로 넘어가는 코드를 작성하세요.
@@ -160,14 +119,6 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
             ),
           ),
           // 주사위 GIF 애니메이션 (스와이프 후 전체 화면)
-          // Positioned.fill(
-          //   child: _rolledDice
-          //       ? AspectRatio(
-          //     aspectRatio: _controller.value.aspectRatio,
-          //     child: VideoPlayer(_controller),
-          //   )
-          //       : Container(),
-          // ),
           if (_rolledDice)
             Positioned.fill(
               child: Image.asset(
