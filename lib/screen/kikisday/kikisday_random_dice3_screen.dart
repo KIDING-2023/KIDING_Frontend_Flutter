@@ -4,25 +4,24 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_10_screen.dart';
 import 'kikisday_11_screen.dart';
 import 'kikisday_12_screen.dart';
-import 'kikisday_5_screen.dart';
-import 'kikisday_6_screen.dart';
-import 'kikisday_7_screen.dart';
-import 'kikisday_8_screen.dart';
-import 'kikisday_9_screen.dart';
+import 'kikisday_13_screen.dart';
+import 'kikisday_14_screen.dart';
+import 'kikisday_15_screen.dart';
+import 'kikisday_16_screen.dart';
+import 'kikisday_17_screen.dart';
 
-class KikisdayRandomDice2Screen extends StatefulWidget {
+class KikisdayRandomDice3Screen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayRandomDice2Screen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayRandomDice3Screen({Key? key, required this.currentNumber}) : super(key: key);
 
   @override
-  State<KikisdayRandomDice2Screen> createState() => _KikisdayRandomDice2ScreenState();
+  State<KikisdayRandomDice3Screen> createState() => _KikisdayRandomDice3ScreenState();
 }
 
-class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
+class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
 
@@ -43,7 +42,7 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_2_dice_bg.png',
+              'assets/kikisday/kikisday_3_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -89,26 +88,26 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
                   });
                   // 주사위값에 따른 다음 화면 설정
                   switch (totalDice) {
-                    case 6:
-                      nextScreen = Kikisday6Screen(currentNumber: totalDice,);
-                      break;
-                    case 7:
-                      nextScreen = Kikisday7Screen(currentNumber: totalDice,);
-                      break;
-                    case 8:
-                      nextScreen = Kikisday8Screen(currentNumber: totalDice,);
-                      break;
-                    case 9:
-                      nextScreen = Kikisday9Screen(currentNumber: totalDice,);
-                      break;
-                    case 10:
-                      nextScreen = Kikisday10Screen(currentNumber: totalDice,);
-                      break;
                     case 11:
                       nextScreen = Kikisday11Screen(currentNumber: totalDice,);
                       break;
-                    default:
+                    case 12:
                       nextScreen = Kikisday12Screen(currentNumber: totalDice,);
+                      break;
+                    case 13:
+                      nextScreen = Kikisday13Screen(currentNumber: totalDice,);
+                      break;
+                    case 14:
+                      nextScreen = Kikisday14Screen(currentNumber: totalDice,);
+                      break;
+                    case 15:
+                      nextScreen = Kikisday15Screen(currentNumber: totalDice,);
+                      break;
+                    case 16:
+                      nextScreen = Kikisday16Screen(currentNumber: totalDice,);
+                      break;
+                    default:
+                      nextScreen = Kikisday17Screen(currentNumber: totalDice,);
                       break;
                   }
                   // GIF 재생 시간 후 다음 화면으로 자동 전환

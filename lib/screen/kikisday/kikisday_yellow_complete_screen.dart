@@ -2,30 +2,23 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_random_dice2_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
 import 'kikisday_random_dice3_screen.dart';
 
-class KikisdaySkyblueCompleteScreen extends StatefulWidget {
+class KikisdayYellowCompleteScreen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdaySkyblueCompleteScreen({Key? key, required this.currentNumber})
-      : super(key: key);
+  KikisdayYellowCompleteScreen({Key? key, required this.currentNumber}) : super(key: key);
 
   @override
-  State<KikisdaySkyblueCompleteScreen> createState() =>
-      _KikisdaySkyblueCompleteScreenState();
+  State<KikisdayYellowCompleteScreen> createState() => _KikisdayYellowCompleteScreenState();
 }
 
-class _KikisdaySkyblueCompleteScreenState
-    extends State<KikisdaySkyblueCompleteScreen> {
+class _KikisdayYellowCompleteScreenState extends State<KikisdayYellowCompleteScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
-
-  // 다음 화면
-  late var nextScreen;
 
   @override
   void initState() {
@@ -40,19 +33,13 @@ class _KikisdaySkyblueCompleteScreenState
   }
 
   void _navigateToRandomDiceScreen() {
-    switch (widget.currentNumber) {
-      case 10:
-        nextScreen =
-            KikisdayRandomDice3Screen(currentNumber: widget.currentNumber);
-        break;
-      default:
-        nextScreen =
-            KikisdayRandomDice2Screen(currentNumber: widget.currentNumber);
-        break;
-    }
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => nextScreen),
+      MaterialPageRoute(
+        builder: (context) => KikisdayRandomDice3Screen(
+          currentNumber: widget.currentNumber,
+        ),
+      ),
     );
     log('currentNumber: ${widget.currentNumber}');
   }
@@ -65,7 +52,7 @@ class _KikisdaySkyblueCompleteScreenState
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_2_dice_bg.png',
+              'assets/kikisday/kikisday_3_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -79,11 +66,9 @@ class _KikisdaySkyblueCompleteScreenState
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                      width: 13.16, height: 20.0),
+                  child: Image.asset('assets/kikisday/kikisday_back_btn.png', width: 13.16, height: 20.0),
                 ),
-                Consumer<TimerModel>(
-                  // TimerModel의 현재 시간을 소비합니다.
+                Consumer<TimerModel>( // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
@@ -101,7 +86,7 @@ class _KikisdaySkyblueCompleteScreenState
             top: 127.66,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/skyblue_complete.png',
+            child: Image.asset('assets/kikisday/yellow_complete.png',
                 width: 336.93, height: 370.14),
           ),
         ],
@@ -109,5 +94,3 @@ class _KikisdaySkyblueCompleteScreenState
     );
   }
 }
-
-

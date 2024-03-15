@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_skyblue_complete_screen.dart';
+import 'kikisday_orange_complete2_screen.dart';
 
-class Kikisday10Screen extends StatefulWidget {
-  const Kikisday10Screen({super.key, required int currentNumber});
+class Kikisday11Screen extends StatefulWidget {
+  const Kikisday11Screen({super.key, required int currentNumber});
 
   @override
-  State<Kikisday10Screen> createState() => _Kikisday10ScreenState();
+  State<Kikisday11Screen> createState() => _Kikisday11ScreenState();
 }
 
-class _Kikisday10ScreenState extends State<Kikisday10Screen> {
+class _Kikisday11ScreenState extends State<Kikisday11Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +20,7 @@ class _Kikisday10ScreenState extends State<Kikisday10Screen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_2_bg.png',
+              'assets/kikisday/kikisday_3_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -56,7 +56,7 @@ class _Kikisday10ScreenState extends State<Kikisday10Screen> {
             top: 120,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_10_text.png',
+            child: Image.asset('assets/kikisday/kikisday_11_text.png',
                 width: 336.93, height: 118),
           ),
           // 카드 이미지
@@ -64,7 +64,7 @@ class _Kikisday10ScreenState extends State<Kikisday10Screen> {
             top: 270,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_skyblue_card.png',
+            child: Image.asset('assets/kikisday/kikisday_orange_card.png',
                 width: 170.57, height: 239.34),
           ),
           // 버튼
@@ -78,22 +78,22 @@ class _Kikisday10ScreenState extends State<Kikisday10Screen> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => KikisdaySkyblueCompleteScreen(
-                          currentNumber: 10,
+                        builder: (context) => KikisdayOrangeComplete2Screen(
+                          currentNumber: 11,
                         )),
                   );
                 },
-                child: Image.asset('assets/kikisday/kikisday_skyblue_btn.png',
+                child: Image.asset('assets/kikisday/kikisday_orange_btn.png',
                     width: 120, height: 40.58),
               )),
           // mark
           Positioned(
-            top: 411.69,
-            left: 266.51,
-            right: 43.8,
-            bottom: 338.62,
+            top: 675.82,
+            left: 50.02,
+            right: 259.87,
+            bottom: 74.07,
             child: Image.asset('assets/kikisday/mark.png',
-                width: 49.69, height: 49.69),
+                width: 50.11, height: 50.11),
           ),
         ],
       ),
