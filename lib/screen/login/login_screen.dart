@@ -28,198 +28,100 @@ class _LoginScreenState extends State<LoginScreen> {
     "Fuck"
   ];
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     body: Stack(
-  //       children: <Widget>[
-  //         // 환영 텍스트 이미지
-  //         Positioned(
-  //           top: 99.97,
-  //           left: 0,
-  //           right: 0,
-  //           child: Image.asset('assets/login/greeting_text.png',
-  //               width: 248.78, height: 120),
-  //         ),
-  //         // 닉네임 입력 칸
-  //         Positioned(
-  //           top: 351.47,
-  //           left: 0,
-  //           right: 0,
-  //           child: Center(
-  //             child: Container(
-  //               width: 261.32,
-  //               height: 49.82,
-  //               decoration: BoxDecoration(
-  //                   image: DecorationImage(
-  //                 image: AssetImage('assets/login/nickname_box.png'),
-  //               )),
-  //               child: TextField(
-  //                 controller: _nicknameController,
-  //                 decoration: InputDecoration(
-  //                   hintText: '닉네임을 입력하세요',
-  //                   hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-  //                   border: InputBorder.none, // 기존의 border를 제거
-  //                   contentPadding: EdgeInsets.only(left: 26.22),
-  //                 ),
-  //                 style: TextStyle(
-  //                   fontFamily: 'Nanum',
-  //                   fontSize: 17,
-  //                   color: Colors.black,
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //         // 경고 메세지 표시
-  //         Positioned(
-  //             top: 413.29,
-  //             left: 76.46,
-  //             child: Container(
-  //               width: 195.23,
-  //               height: 14.11,
-  //               alignment: Alignment.centerLeft,
-  //               child: Row(
-  //                 children: [
-  //                   Visibility(
-  //                     visible: _isEclipseVisible, // 동적으로 가시성을 제어하기 위해 변수를 사용
-  //                     child: Image.asset(
-  //                       'assets/login/eclipse.png',
-  //                     ),
-  //                   ),
-  //                   SizedBox(width: 4.82),
-  //                   Text(
-  //                     _inputErrorText ?? '', // 오류 메시지를 여기에 표시
-  //                     style: TextStyle(
-  //                       fontFamily: 'Nanum',
-  //                       fontSize: 13,
-  //                       color: Color(0xFFFFA37C),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //             )),
-  //         // 버튼
-  //         Positioned(
-  //             top: 437.25,
-  //             left: 0,
-  //             right: 0,
-  //             child: Center(
-  //               child: GestureDetector(
-  //                 onTap: _signup,
-  //                 child: Container(
-  //                   width: 261.32,
-  //                   height: 49.82,
-  //                   alignment: Alignment.center,
-  //                   decoration: BoxDecoration(
-  //                       image: DecorationImage(
-  //                         image: AssetImage('assets/login/join_btn.png'),
-  //                       )),
-  //                   child: Text(
-  //                     '시작하기',
-  //                     style: TextStyle(
-  //                       fontFamily: 'Nanum',
-  //                       fontSize: 17,
-  //                       color: Colors.white,
-  //                     ),
-  //                     ),
-  //                   ),
-  //               ),
-  //               ),
-  //             ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+      body: Stack(
         children: <Widget>[
-          SizedBox(height: 99.97),
-          Center(
-            child: Image.asset(
-              'assets/login/greeting_text.png',
-              width: 248.78,
-              height: 120.0,
-            ),
-          ),
-          SizedBox(height: 131.68),
-          Container(
-            width: 261.32,
-            height: 49.82,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(24.91),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0x26000000),
-                  blurRadius: 1.75,
-                  offset: Offset(0, 0.87),
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            alignment: Alignment.center,
-            child: TextField(
-              controller: _nicknameController,
-              decoration: InputDecoration(
-                hintText: '닉네임을 입력하세요',
-                hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                border: InputBorder.none, // 기존의 border를 제거
-                contentPadding: EdgeInsets.only(left: 26.22),
-              ),
-              style: TextStyle(
-                fontFamily: 'Nanum',
-                fontSize: 17,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          SizedBox(height: 17.08),
-          Container(
-            width: 195.23,
-            height: 14.11,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                  visible: _isEclipseVisible, // 동적으로 가시성을 제어하기 위해 변수를 사용합니다.
-                  child: Image.asset(
-                    'assets/login/eclipse.png',
-                    // 'wrap_content'에 해당하는 플러터 코드는 없지만, 이미지 사이즈로 조정됩니다.
+          // greeting text
+          Positioned(
+              left: 55.61,
+              top: 99.97,
+              child: Image.asset(
+                'assets/login/greeting_text.png',
+                width: 248.78,
+                height: 120,
+              )),
+          // 닉네임 입력 칸
+          Positioned(
+              left: 49.34,
+              top: 351.64,
+              child: Container(
+                width: 261.32,
+                height: 49.82,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/login/nickname_box.png'))),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 26.22),
+                  child: TextField(
+                    controller: _nicknameController,
+                    decoration: InputDecoration(
+                      hintText: '닉네임을 입력하세요',
+                      hintStyle: TextStyle(
+                          fontFamily: 'Nanum',
+                          fontSize: 17,
+                          color: Color(0xFFAAAAAA)),
+                      border: InputBorder.none,
+                    ),
+                    style: TextStyle(
+                      fontFamily: 'Nanum',
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-                SizedBox(width: 4.82),
-                Text(
-                  _inputErrorText ?? '', // 오류 메시지를 여기에 표시
-                  style: TextStyle(
-                    fontFamily: 'Nanum',
-                    fontSize: 13,
-                    color: Color(0xFFFFA37C),
+              )),
+          // 오류 메시지 표시
+          Positioned(
+              left: 76.46,
+              top: 413.29,
+              child: Container(
+                width: 195.23,
+                height: 14.11,
+                child: Row(
+                  children: [
+                    Visibility(
+                      visible: _isEclipseVisible,
+                      child: Image.asset('assets/login/eclipse.png',
+                          width: 2.63, height: 2.63),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 5),
+                      child: Text(
+                        _inputErrorText ?? '',
+                        style: TextStyle(
+                          fontSize: 13,
+                          fontFamily: 'Nanum',
+                          color: Color(0xFFFFa37C)
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+          // 시작하기 버튼
+          Positioned(
+            left: 49.34,
+            top: 437.25,
+            child: GestureDetector(
+              onTap: _signup,
+              child: Container(
+                width: 261.32,
+                height: 49.82,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/login/join_btn.png'))),
+                child: Center(
+                  child: Text(
+                    '시작하기',
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontFamily: 'Nanum',
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-          SizedBox(height: 9.85),
-          ElevatedButton(
-            onPressed: _signup,
-            style: ElevatedButton.styleFrom(
-              primary: Color(0xFFFF6A2B), // 배경색
-              minimumSize: Size(261.32, 49.82), // 버튼 크기
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-            ),
-            child: Text(
-              '시작하기',
-              style: TextStyle(
-                fontFamily: 'Nanum',
-                fontSize: 17,
               ),
             ),
           ),
@@ -227,6 +129,102 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //     body: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       children: <Widget>[
+  //         SizedBox(height: 99.97),
+  //         Center(
+  //           child: Image.asset(
+  //             'assets/login/greeting_text.png',
+  //             width: 248.78,
+  //             height: 120.0,
+  //           ),
+  //         ),
+  //         SizedBox(height: 131.68),
+  //         Container(
+  //           width: 261.32,
+  //           height: 49.82,
+  //           decoration: BoxDecoration(
+  //             color: Colors.white,
+  //             borderRadius: BorderRadius.circular(24.91),
+  //             boxShadow: [
+  //               BoxShadow(
+  //                 color: Color(0x26000000),
+  //                 blurRadius: 1.75,
+  //                 offset: Offset(0, 0.87),
+  //                 spreadRadius: 0,
+  //               ),
+  //             ],
+  //           ),
+  //           alignment: Alignment.center,
+  //           child: TextField(
+  //             controller: _nicknameController,
+  //             decoration: InputDecoration(
+  //               hintText: '닉네임을 입력하세요',
+  //               hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+  //               border: InputBorder.none, // 기존의 border를 제거
+  //               contentPadding: EdgeInsets.only(left: 26.22),
+  //             ),
+  //             style: TextStyle(
+  //               fontFamily: 'Nanum',
+  //               fontSize: 17,
+  //               color: Colors.black,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: 17.08),
+  //         Container(
+  //           width: 195.23,
+  //           height: 14.11,
+  //           child: Row(
+  //             mainAxisSize: MainAxisSize.min,
+  //             children: [
+  //               Visibility(
+  //                 visible: _isEclipseVisible, // 동적으로 가시성을 제어하기 위해 변수를 사용합니다.
+  //                 child: Image.asset(
+  //                   'assets/login/eclipse.png',
+  //                   // 'wrap_content'에 해당하는 플러터 코드는 없지만, 이미지 사이즈로 조정됩니다.
+  //                 ),
+  //               ),
+  //               SizedBox(width: 4.82),
+  //               Text(
+  //                 _inputErrorText ?? '', // 오류 메시지를 여기에 표시
+  //                 style: TextStyle(
+  //                   fontFamily: 'Nanum',
+  //                   fontSize: 13,
+  //                   color: Color(0xFFFFA37C),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         SizedBox(height: 9.85),
+  //         ElevatedButton(
+  //           onPressed: _signup,
+  //           style: ElevatedButton.styleFrom(
+  //             primary: Color(0xFFFF6A2B), // 배경색
+  //             minimumSize: Size(261.32, 49.82), // 버튼 크기
+  //             shape: RoundedRectangleBorder(
+  //               borderRadius: BorderRadius.circular(30),
+  //             ),
+  //             padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+  //           ),
+  //           child: Text(
+  //             '시작하기',
+  //             style: TextStyle(
+  //               fontFamily: 'Nanum',
+  //               fontSize: 17,
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void _signup() {
     String nickname = _nicknameController.text;
