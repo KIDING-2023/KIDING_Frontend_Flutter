@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
+import 'kikisday_10_screen.dart';
 import 'kikisday_11_screen.dart';
 import 'kikisday_12_screen.dart';
 import 'kikisday_13_screen.dart';
@@ -11,6 +12,11 @@ import 'kikisday_14_screen.dart';
 import 'kikisday_15_screen.dart';
 import 'kikisday_16_screen.dart';
 import 'kikisday_17_screen.dart';
+import 'kikisday_18_screen.dart';
+import 'kikisday_19_screen.dart';
+import 'kikisday_20_screen.dart';
+import 'kikisday_8_screen.dart';
+import 'kikisday_9_screen.dart';
 
 class KikisdayRandomDice3Screen extends StatefulWidget {
   final int currentNumber;
@@ -88,6 +94,15 @@ class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
                   });
                   // 주사위값에 따른 다음 화면 설정
                   switch (totalDice) {
+                    case 8:
+                      nextScreen = Kikisday8Screen(currentNumber: totalDice,);
+                      break;
+                    case 9:
+                      nextScreen = Kikisday9Screen(currentNumber: totalDice,);
+                      break;
+                    case 10:
+                      nextScreen = Kikisday10Screen(currentNumber: totalDice,);
+                      break;
                     case 11:
                       nextScreen = Kikisday11Screen(currentNumber: totalDice,);
                       break;
@@ -100,14 +115,8 @@ class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
                     case 14:
                       nextScreen = Kikisday14Screen(currentNumber: totalDice,);
                       break;
-                    case 15:
-                      nextScreen = Kikisday15Screen(currentNumber: totalDice,);
-                      break;
-                    case 16:
-                      nextScreen = Kikisday16Screen(currentNumber: totalDice,);
-                      break;
                     default:
-                      nextScreen = Kikisday17Screen(currentNumber: totalDice,);
+                      nextScreen = Kikisday15Screen(currentNumber: totalDice,);
                       break;
                   }
                   // GIF 재생 시간 후 다음 화면으로 자동 전환

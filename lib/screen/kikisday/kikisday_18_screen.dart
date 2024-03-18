@@ -4,14 +4,14 @@ import 'package:provider/provider.dart';
 import '../../model/timer_model.dart';
 import 'kikisday_purple_complete_screen.dart';
 
-class Kikisday16Screen extends StatefulWidget {
-  const Kikisday16Screen({super.key, required int currentNumber});
+class Kikisday18Screen extends StatefulWidget {
+  const Kikisday18Screen({super.key, required int currentNumber});
 
   @override
-  State<Kikisday16Screen> createState() => _Kikisday16ScreenState();
+  State<Kikisday18Screen> createState() => _Kikisday18ScreenState();
 }
 
-class _Kikisday16ScreenState extends State<Kikisday16Screen> {
+class _Kikisday18ScreenState extends State<Kikisday18Screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,7 @@ class _Kikisday16ScreenState extends State<Kikisday16Screen> {
             top: 120,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_16_text.png',
+            child: Image.asset('assets/kikisday/kikisday_18_text.png',
                 width: 336.93, height: 118),
           ),
           // 카드 이미지
@@ -79,7 +79,7 @@ class _Kikisday16ScreenState extends State<Kikisday16Screen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => KikisdayPurpleCompleteScreen(
-                          currentNumber: 16,
+                          currentNumber: 18,
                         )),
                   );
                 },
@@ -88,12 +88,12 @@ class _Kikisday16ScreenState extends State<Kikisday16Screen> {
               )),
           // mark
           Positioned(
-            top: 505.86,
-            left: 120,
-            right: 205.91,
-            bottom: 260.05,
+            top: 699.67,
+            left: 163.25,
+            right: 146.64,
+            bottom: 50.22,
             child: Image.asset('assets/kikisday/mark.png',
-                width: 34.09, height: 34.09),
+                width: 50.11, height: 50.11),
           ),
         ],
       ),
