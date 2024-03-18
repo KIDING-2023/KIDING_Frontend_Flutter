@@ -33,25 +33,31 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
       body: Stack(
         children: <Widget>[
           Positioned(
-            left: 53.5,
             top: 94.76,
-            child: Text(
-              '안녕하세요 ${widget.nickname}님,\n캐릭터를 선택해주세요',
-              style: TextStyle(
-                fontFamily: 'Nanum',
-                fontSize: 23,
-                color: Colors.black,
-                height: 1.77,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Text(
+                '안녕하세요 ${widget.nickname}님,\n캐릭터를 선택해주세요',
+                style: TextStyle(
+                  fontFamily: 'Nanum',
+                  fontSize: 23,
+                  color: Colors.black,
+                  height: 1.77,
+                ),
               ),
             ),
           ),
           Positioned(
-              left: 55.04,
               top: 215,
-              child: Image.asset(
-                'assets/login/character_logo.png',
-                width: 249.93,
-                height: 35.29,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Image.asset(
+                  'assets/login/character_logo.png',
+                  width: 249.93,
+                  height: 35.29,
+                ),
               )),
           Positioned(
             top: 250.29,
