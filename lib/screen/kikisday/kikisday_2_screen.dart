@@ -86,15 +86,6 @@ class _Kikisday2ScreenState extends State<Kikisday2Screen> {
                 child: Image.asset('assets/kikisday/kikisday_green_btn.png',
                     width: 120, height: 40.58),
               )),
-          // mark
-          Positioned(
-            top: 687.81,
-            left: 117.85,
-            right: 192.46,
-            bottom: 62.5,
-            child: Image.asset('assets/kikisday/mark.png',
-                width: 49.69, height: 49.69),
-          ),
         ],
       ),
     );

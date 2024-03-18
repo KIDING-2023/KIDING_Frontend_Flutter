@@ -93,14 +93,6 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
             child: Image.asset('assets/kikisday/song_card.png',
                 width: 157.77, height: 221.39),
           ),
-          // mark
-          Positioned(
-            top: 528.28,
-            left: 54.5,
-            right: 226.28,
-            child: Image.asset('assets/kikisday/mark.png',
-                width: 79.22, height: 79.22),
-          ),
         ],
       ),
     );

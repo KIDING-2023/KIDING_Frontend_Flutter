@@ -15,7 +15,6 @@ class KikisdayTutorial1Screen extends StatefulWidget {
 }
 
 class _KikisdayTutorial1ScreenState extends State<KikisdayTutorial1Screen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +52,8 @@ class _KikisdayTutorial1ScreenState extends State<KikisdayTutorial1Screen> {
             ),
           ),
           Positioned(
-              left: 10.11,
+              left: 0,
+              right: 0,
               top: 125.22,
               child: Image.asset('assets/kikisday/kikisday_tutorial1_text.png',
                   width: 339.79, height: 296.58)),
@@ -62,7 +62,8 @@ class _KikisdayTutorial1ScreenState extends State<KikisdayTutorial1Screen> {
               child: Image.asset('assets/kikisday/kikisday_tutorial1_ch.png',
                   width: 360, height: 348.39)),
           Positioned(
-              left: 19.37,
+              left: 0,
+              right: 0,
               top: 695,
               child: GestureDetector(
                 child: Image.asset('assets/kikisday/kikisday_ok_btn.png',

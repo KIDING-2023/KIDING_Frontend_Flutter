@@ -48,7 +48,8 @@ class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
             ),
           ),
           Positioned(
-              left: 10.11,
+              left: 0,
+              right: 0,
               top: 125.22,
               child: Image.asset('assets/kikisday/kikisday_tutorial2_text.png',
                   width: 339.79, height: 229.08)),
@@ -57,7 +58,8 @@ class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
               child: Image.asset('assets/kikisday/kikisday_tutorial2_ch.png',
                   width: 360, height: 302.53)),
           Positioned(
-              left: 19.37,
+              left: 0,
+              right: 0,
               top: 695,
               child: GestureDetector(
                 child: Image.asset('assets/kikisday/kikisday_ok_btn.png',
