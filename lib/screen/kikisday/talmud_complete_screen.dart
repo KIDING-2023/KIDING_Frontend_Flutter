@@ -1,20 +1,22 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/talmud_story_1_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
 import 'kikisday_random_dice_screen.dart';
 
-class KikisdaySongScreen extends StatefulWidget {
-  const KikisdaySongScreen({super.key});
+class KikisdayTalmudCompleteScreen extends StatefulWidget {
+  final int currentNumber;
+
+  KikisdayTalmudCompleteScreen({Key? key, required this.currentNumber}) : super(key: key);
 
   @override
-  State<KikisdaySongScreen> createState() => _KikisdaySongScreenState();
+  State<KikisdayTalmudCompleteScreen> createState() => _KikisdayTalmudCompleteScreenState();
 }
 
-class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
+class _KikisdayTalmudCompleteScreenState extends State<KikisdayTalmudCompleteScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
 
@@ -34,11 +36,12 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayTalmudStory1Screen(
-          currentNumber: 1,
+        builder: (context) => KikisdayRandomDiceScreen(
+          currentNumber: widget.currentNumber,
         ),
       ),
     );
+    log('currentNumber: ${widget.currentNumber}');
   }
 
   @override
@@ -49,7 +52,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_bg.png',
+              'assets/kikisday/kikisday_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -78,25 +81,16 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
               ],
             ),
           ),
-          // 카드 텍스트 이미지
+          // 키딩칩 획득 이미지
           Positioned(
-            top: 120.44,
+            top: 127.66,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/song_card_text.png',
-                width: 339.79, height: 117.56),
-          ),
-          // 카드 이미지
-          Positioned(
-            top: 257.79,
-            left: 0,
-            right: 0,
-            child: Image.asset('assets/kikisday/song_card.png',
-                width: 157.77, height: 221.39),
+            child: Image.asset('assets/kikisday/red_complete.png',
+                width: 336.93, height: 370.14),
           ),
         ],
       ),
     );
   }
 }
-

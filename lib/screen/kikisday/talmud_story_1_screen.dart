@@ -1,22 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/talmud_story_1_screen.dart';
+import 'package:kiding/screen/kikisday/talmud_story_2_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_random_dice_screen.dart';
 
-class KikisdaySongScreen extends StatefulWidget {
-  const KikisdaySongScreen({super.key});
+class KikisdayTalmudStory1Screen extends StatefulWidget {
+  const KikisdayTalmudStory1Screen({super.key, required int currentNumber});
 
   @override
-  State<KikisdaySongScreen> createState() => _KikisdaySongScreenState();
+  State<KikisdayTalmudStory1Screen> createState() => _KikisdayTalmudStory1ScreenState();
 }
 
-class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
+class _KikisdayTalmudStory1ScreenState extends State<KikisdayTalmudStory1Screen> {
   late Timer _timer;
-  final int duration = 3; // 3초 후 화면 전환
+  final int duration = 5; // 3초 후 화면 전환
 
   @override
   void initState() {
@@ -34,7 +33,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayTalmudStory1Screen(
+        builder: (context) => KikisdayTalmudStory2Screen(
           currentNumber: 1,
         ),
       ),
@@ -49,7 +48,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_bg.png',
+              'assets/kikisday/kikisday_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -63,9 +62,11 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/kikisday/kikisday_back_btn.png', width: 13.16, height: 20.0),
+                  child: Image.asset('assets/kikisday/kikisday_back_btn.png',
+                      width: 13.16, height: 20.0),
                 ),
-                Consumer<TimerModel>( // TimerModel의 현재 시간을 소비합니다.
+                Consumer<TimerModel>(
+                  // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
@@ -78,25 +79,16 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
               ],
             ),
           ),
-          // 카드 텍스트 이미지
+          // 스토리 텍스트 이미지
           Positioned(
-            top: 120.44,
+            top: 125,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/song_card_text.png',
-                width: 339.79, height: 117.56),
-          ),
-          // 카드 이미지
-          Positioned(
-            top: 257.79,
-            left: 0,
-            right: 0,
-            child: Image.asset('assets/kikisday/song_card.png',
-                width: 157.77, height: 221.39),
+            child: Image.asset('assets/kikisday/talmud_story_1.png',
+                width: 339.79, height: 506.07),
           ),
         ],
       ),
     );
   }
 }
-
