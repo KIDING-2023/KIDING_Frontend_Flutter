@@ -5,7 +5,7 @@ import '../../model/timer_model.dart';
 import 'kikisday_pink_complete_screen.dart';
 
 class Kikisday17Screen extends StatefulWidget {
-  const Kikisday17Screen({super.key, required int currentNumber});
+  const Kikisday17Screen({super.key});
 
   @override
   State<Kikisday17Screen> createState() => _Kikisday17ScreenState();

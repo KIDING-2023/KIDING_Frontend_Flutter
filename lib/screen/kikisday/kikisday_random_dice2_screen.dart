@@ -1,25 +1,20 @@
+
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_10_screen.dart';
-import 'kikisday_11_screen.dart';
-import 'kikisday_12_screen.dart';
-import 'kikisday_5_screen.dart';
-import 'kikisday_6_screen.dart';
-import 'kikisday_7_screen.dart';
-import 'kikisday_8_screen.dart';
-import 'kikisday_9_screen.dart';
 
 class KikisdayRandomDice2Screen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayRandomDice2Screen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayRandomDice2Screen({Key? key, required this.currentNumber})
+      : super(key: key);
 
   @override
-  State<KikisdayRandomDice2Screen> createState() => _KikisdayRandomDice2ScreenState();
+  State<KikisdayRandomDice2Screen> createState() =>
+      _KikisdayRandomDice2ScreenState();
 }
 
 class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
@@ -52,8 +47,7 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
             top: 125.22,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png',
-                width: 339.79, height: 117.96),
+            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png', width: 339.79, height: 117.96),
           ),
           // 주사위 스와이프 이미지
           if (!_rolledDice)
@@ -85,39 +79,54 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
                   setState(() {
                     randomNumber = Random().nextInt(3) + 1;
                     totalDice = widget.currentNumber + randomNumber;
+                    // // 이전 컨트롤러가 있다면 해제합니다.
+                    // _controller.dispose();
+                    // _controller = VideoPlayerController.asset('assets/kikisday/dice_${randomNumber}.avi')
+                    //   ..initialize().then((_) {
+                    //     setState(() {});
+                    //     _controller.play();
+                    //   });
                     _rolledDice = true;
                   });
                   // 주사위값에 따른 다음 화면 설정
-                  switch (totalDice) {
-                    case 6:
-                      nextScreen = Kikisday6Screen(currentNumber: totalDice,);
-                      break;
-                    case 7:
-                      nextScreen = Kikisday7Screen(currentNumber: totalDice,);
-                      break;
-                    case 8:
-                      nextScreen = Kikisday8Screen(currentNumber: totalDice,);
-                      break;
-                    case 9:
-                      nextScreen = Kikisday9Screen(currentNumber: totalDice,);
-                      break;
-                    case 10:
-                      nextScreen = Kikisday10Screen(currentNumber: totalDice,);
-                      break;
-                    case 11:
-                      nextScreen = Kikisday11Screen(currentNumber: totalDice,);
-                      break;
-                    default:
-                      nextScreen = Kikisday12Screen(currentNumber: totalDice,);
-                      break;
-                  }
+                  nextScreen = '/kikisday${totalDice}';
+                  // switch (totalDice) {
+                  //   case 2:
+                  //     nextScreen = Kikisday2Screen(currentNumber: totalDice,);
+                  //     break;
+                  //   case 3:
+                  //     nextScreen = Kikisday3Screen(currentNumber: totalDice,);
+                  //     break;
+                  //   case 4:
+                  //     nextScreen = Kikisday4Screen(currentNumber: totalDice,);
+                  //     break;
+                  //   case 5:
+                  //     nextScreen = Kikisday5Screen(currentNumber: totalDice,);
+                  //     break;
+                  //   case 6:
+                  //     nextScreen = Kikisday6Screen(currentNumber: totalDice,);
+                  //     break;
+                  //   case 7:
+                  //     nextScreen = Kikisday7Screen(currentNumber: totalDice,);
+                  //     break;
+                  // }
+                  // _controller.addListener(() {
+                  //   if (!_controller.value.isPlaying && _rolledDice) {
+                  //     Navigator.push(
+                  //       context,
+                  //       MaterialPageRoute(builder: (context) => nextScreen),
+                  //     );
+                  //     // 상태 업데이트
+                  //     setState(() {
+                  //       _rolledDice = false;
+                  //     });
+                  //     _controller.dispose(); // 컨트롤러 해제
+                  //   }
+                  // });
                   // GIF 재생 시간 후 다음 화면으로 자동 전환
                   Future.delayed(Duration(seconds: 4), () {
                     // 여기에 다음 화면으로 넘어가는 코드를 작성하세요.
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => nextScreen),
-                    );
+                    Navigator.of(context).pushNamed(nextScreen);
                     // 상태 업데이트
                     setState(() {
                       _rolledDice = false;
@@ -128,6 +137,14 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
             ),
           ),
           // 주사위 GIF 애니메이션 (스와이프 후 전체 화면)
+          // Positioned.fill(
+          //   child: _rolledDice
+          //       ? AspectRatio(
+          //     aspectRatio: _controller.value.aspectRatio,
+          //     child: VideoPlayer(_controller),
+          //   )
+          //       : Container(),
+          // ),
           if (_rolledDice)
             Positioned.fill(
               child: Image.asset(
@@ -145,9 +162,11 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/kikisday/kikisday_back_btn.png', width: 13.16, height: 20.0),
+                  child: Image.asset('assets/kikisday/kikisday_back_btn.png',
+                      width: 13.16, height: 20.0),
                 ),
-                Consumer<TimerModel>( // TimerModel의 현재 시간을 소비합니다.
+                Consumer<TimerModel>(
+                  // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(

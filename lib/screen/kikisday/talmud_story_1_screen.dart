@@ -2,18 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/talmud_story_2_screen.dart';
-import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
+import 'package:kiding/screen/layout/talmud_story_layout.dart';
 
 class KikisdayTalmudStory1Screen extends StatefulWidget {
   const KikisdayTalmudStory1Screen({super.key, required int currentNumber});
 
   @override
-  State<KikisdayTalmudStory1Screen> createState() => _KikisdayTalmudStory1ScreenState();
+  State<KikisdayTalmudStory1Screen> createState() =>
+      _KikisdayTalmudStory1ScreenState();
 }
 
-class _KikisdayTalmudStory1ScreenState extends State<KikisdayTalmudStory1Screen> {
+class _KikisdayTalmudStory1ScreenState
+    extends State<KikisdayTalmudStory1Screen> {
   late Timer _timer;
   final int duration = 5; // 3초 후 화면 전환
 
@@ -42,53 +42,13 @@ class _KikisdayTalmudStory1ScreenState extends State<KikisdayTalmudStory1Screen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          // 배경 이미지
-          Positioned.fill(
-            child: Image.asset(
-              'assets/kikisday/kikisday_dice_bg.png',
-              fit: BoxFit.cover,
-            ),
-          ),
-          // 뒤로 가기 버튼 및 타이머
-          Positioned(
-            top: 45,
-            left: 30,
-            right: 30,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                      width: 13.16, height: 20.0),
-                ),
-                Consumer<TimerModel>(
-                  // TimerModel의 현재 시간을 소비합니다.
-                  builder: (context, timer, child) => Text(
-                    timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
-                    style: TextStyle(
-                      fontFamily: 'Nanum',
-                      fontSize: 15,
-                      color: Color(0xFF868686),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // 스토리 텍스트 이미지
-          Positioned(
-            top: 125,
-            left: 0,
-            right: 0,
-            child: Image.asset('assets/kikisday/talmud_story_1.png',
-                width: 339.79, height: 506.07),
-          ),
-        ],
-      ),
-    );
+    return TalmudStoryLayout(
+        bgStr: 'assets/kikisday/kikisday_dice_bg.png',
+        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+        storyWid: Image.asset(
+          'assets/kikisday/talmud_story_1.png',
+          width: 339.79,
+          height: 506.07,
+        ));
   }
 }

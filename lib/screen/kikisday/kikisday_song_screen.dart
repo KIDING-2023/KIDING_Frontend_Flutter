@@ -5,7 +5,6 @@ import 'package:kiding/screen/kikisday/talmud_story_1_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'kikisday_random_dice_screen.dart';
 
 class KikisdaySongScreen extends StatefulWidget {
   const KikisdaySongScreen({super.key});
