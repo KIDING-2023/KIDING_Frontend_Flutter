@@ -147,7 +147,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-          Center( // Center the following widgets in the available space
+          Positioned(
+            top: 351.64,
+            left: 0,
+            right: 0,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,// Takes up as little space as possible

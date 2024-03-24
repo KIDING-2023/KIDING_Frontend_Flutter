@@ -20,6 +20,7 @@ import 'package:kiding/screen/kikisday/kikisday_7_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_8_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_9_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
+import 'package:kiding/screen/kikisday/kikisday_green_complete_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/login/login_screen.dart';
