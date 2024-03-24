@@ -65,6 +65,7 @@ flutter:
     - assets/login/
     - assets/home/
     - assets/kikisday/
+    - assets/space/
 
   fonts:
     - family: Nanum

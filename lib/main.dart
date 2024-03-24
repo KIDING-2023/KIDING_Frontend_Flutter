@@ -24,6 +24,9 @@ import 'package:kiding/screen/kikisday/kikisday_green_complete_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/login/login_screen.dart';
+import 'package:kiding/screen/space/space_tutorial1_screen.dart';
+import 'package:kiding/screen/space/space_tutorial2_screen.dart';
+import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'model/timer_model.dart';
@@ -44,6 +47,9 @@ void main() {
           '/kikisday_tutorial1': (context) => KikisdayTutorial1Screen(),
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
           '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),
+          '/space_tutorial1': (context) => SpaceTutorial1Screen(),
+          '/space_tutorial2': (context) => SpaceTutorial2Screen(),
+          '/space_tutorial_dice': (context) => SpaceTutorialDiceScreen(),
           '/kikisday2': (context) => Kikisday2Screen(),
           '/kikisday3': (context) => Kikisday3Screen(),
           '/kikisday4': (context) => Kikisday4Screen(),

@@ -58,10 +58,10 @@ class _KikisdaySkyblueCompleteScreenState
   @override
   Widget build(BuildContext context) {
     return CompleteLayout(
-        bgStr: 'assets/kikisday/kikisday_2_dice_bg.png',
-        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-        completeStr: 'assets/kikisday/skyblue_complete.png');
+      bgStr: 'assets/kikisday/kikisday_2_dice_bg.png',
+      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+      completeStr: 'assets/kikisday/skyblue_complete.png',
+      timerColor: Color(0xFF868686),
+    );
   }
 }
-
-

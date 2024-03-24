@@ -8,13 +8,16 @@ import 'kikisday_random_dice3_screen.dart';
 class KikisdayOrangeComplete2Screen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayOrangeComplete2Screen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayOrangeComplete2Screen({Key? key, required this.currentNumber})
+      : super(key: key);
 
   @override
-  State<KikisdayOrangeComplete2Screen> createState() => _KikisdayOrangeComplete2ScreenState();
+  State<KikisdayOrangeComplete2Screen> createState() =>
+      _KikisdayOrangeComplete2ScreenState();
 }
 
-class _KikisdayOrangeComplete2ScreenState extends State<KikisdayOrangeComplete2Screen> {
+class _KikisdayOrangeComplete2ScreenState
+    extends State<KikisdayOrangeComplete2Screen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
 
@@ -45,8 +48,10 @@ class _KikisdayOrangeComplete2ScreenState extends State<KikisdayOrangeComplete2S
   @override
   Widget build(BuildContext context) {
     return CompleteLayout(
-        bgStr: 'assets/kikisday/kikisday_3_dice_bg.png',
-        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-        completeStr: 'assets/kikisday/orange_complete.png');
+      bgStr: 'assets/kikisday/kikisday_3_dice_bg.png',
+      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+      completeStr: 'assets/kikisday/orange_complete.png',
+      timerColor: Color(0xFF868686),
+    );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 
+import '../space/space_play_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -194,11 +196,11 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
           );
         } else {
-          // // space_play_screen으로 이동
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-          // );
+          // space_play_screen으로 이동
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SpacePlayScreen()),
+          );
         }
       },
       child: Container(

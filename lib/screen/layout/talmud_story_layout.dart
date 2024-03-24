@@ -7,8 +7,14 @@ class TalmudStoryLayout extends StatelessWidget {
   final String bgStr;
   final String backBtnStr;
   final Widget storyWid;
+  final Color timerColor;
 
-  const TalmudStoryLayout({super.key, required this.bgStr, required this.backBtnStr, required this.storyWid});
+  const TalmudStoryLayout(
+      {super.key,
+      required this.bgStr,
+      required this.backBtnStr,
+      required this.storyWid,
+      required this.timerColor});
 
   @override
   Widget build(BuildContext context) {
@@ -32,8 +38,7 @@ class TalmudStoryLayout extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
-                  child: Image.asset(backBtnStr,
-                      width: 13.16, height: 20.0),
+                  child: Image.asset(backBtnStr, width: 13.16, height: 20.0),
                 ),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
@@ -42,7 +47,7 @@ class TalmudStoryLayout extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 15,
-                      color: Color(0xFF868686),
+                      color: timerColor,
                     ),
                   ),
                 ),

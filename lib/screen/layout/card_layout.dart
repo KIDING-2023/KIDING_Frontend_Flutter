@@ -10,6 +10,7 @@ class CardLayout extends StatelessWidget {
   final String cardStr;
   final Widget completeScreen;
   final String okBtnStr;
+  final Color timerColor;
 
   const CardLayout(
       {super.key,
@@ -18,7 +19,8 @@ class CardLayout extends StatelessWidget {
       required this.textStr,
       required this.cardStr,
       required this.completeScreen,
-      required this.okBtnStr});
+      required this.okBtnStr,
+      required this.timerColor});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +53,7 @@ class CardLayout extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 15,
-                      color: Color(0xFF868686),
+                      color: timerColor,
                     ),
                   ),
                 ),

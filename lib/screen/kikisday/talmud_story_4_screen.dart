@@ -8,10 +8,12 @@ class KikisdayTalmudStory4Screen extends StatefulWidget {
   const KikisdayTalmudStory4Screen({super.key, required int currentNumber});
 
   @override
-  State<KikisdayTalmudStory4Screen> createState() => _KikisdayTalmudStory4ScreenState();
+  State<KikisdayTalmudStory4Screen> createState() =>
+      _KikisdayTalmudStory4ScreenState();
 }
 
-class _KikisdayTalmudStory4ScreenState extends State<KikisdayTalmudStory4Screen> {
+class _KikisdayTalmudStory4ScreenState
+    extends State<KikisdayTalmudStory4Screen> {
   late Timer _timer;
   final int duration = 5; // 3초 후 화면 전환
 
@@ -41,12 +43,14 @@ class _KikisdayTalmudStory4ScreenState extends State<KikisdayTalmudStory4Screen>
   @override
   Widget build(BuildContext context) {
     return TalmudStoryLayout(
-        bgStr: 'assets/kikisday/kikisday_dice_bg.png',
-        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-        storyWid: Image.asset(
-          'assets/kikisday/talmud_story_4.png',
-          width: 339.79,
-          height: 527.05,
-        ));
+      bgStr: 'assets/kikisday/kikisday_dice_bg.png',
+      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+      storyWid: Image.asset(
+        'assets/kikisday/talmud_story_4.png',
+        width: 339.79,
+        height: 527.05,
+      ),
+      timerColor: Color(0xFF868686),
+    );
   }
 }

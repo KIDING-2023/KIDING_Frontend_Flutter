@@ -11,14 +11,16 @@ class _KikisdayTutorial1ScreenState extends State<KikisdayTutorial1Screen> {
   @override
   Widget build(BuildContext context) {
     return TutorialLayout(
-        bgStr: 'assets/kikisday/kikisday_tutorial1_bg.png',
-        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-        textWid: Image.asset('assets/kikisday/kikisday_tutorial1_text.png',
-            width: 339.79, height: 296.58),
-        chTopDouble: 346.61,
-        characterWid: Image.asset('assets/kikisday/kikisday_tutorial1_ch.png',
-            width: 360, height: 348.39),
-        okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-        nextScreenStr: '/kikisday_tutorial2');
+      bgStr: 'assets/kikisday/kikisday_tutorial1_bg.png',
+      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+      textWid: Image.asset('assets/kikisday/kikisday_tutorial1_text.png',
+          width: 339.79, height: 296.58),
+      chTopDouble: 346.61,
+      characterWid: Image.asset('assets/kikisday/kikisday_tutorial1_ch.png',
+          width: 360, height: 348.39),
+      okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
+      nextScreenStr: '/kikisday_tutorial2',
+      timerColorStr: Color(0xFF868686),
+    );
   }
 }

@@ -6,13 +6,14 @@ import '../../model/timer_model.dart';
 class TutorialLayout extends StatelessWidget {
   final String bgStr;
   final String backBtnStr;
+  final Color timerColorStr;
   final Widget textWid;
   final double chTopDouble;
   final Widget characterWid;
   final String okBtnStr;
   final String nextScreenStr;
 
-  const TutorialLayout({super.key, required this.bgStr, required this.backBtnStr, required this.textWid, required this.chTopDouble, required this.characterWid, required this.okBtnStr, required this.nextScreenStr});
+  const TutorialLayout({super.key, required this.bgStr, required this.backBtnStr, required this.textWid, required this.chTopDouble, required this.characterWid, required this.okBtnStr, required this.nextScreenStr, required this.timerColorStr});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class TutorialLayout extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 15,
-                      color: Color(0xFF868686),
+                      color: timerColorStr,
                     ),
                   ),
                 ),

@@ -7,8 +7,14 @@ class CompleteLayout extends StatelessWidget {
   final String bgStr;
   final String backBtnStr;
   final String completeStr;
+  final Color timerColor;
 
-  const CompleteLayout({super.key, required this.bgStr, required this.backBtnStr, required this.completeStr});
+  const CompleteLayout(
+      {super.key,
+      required this.bgStr,
+      required this.backBtnStr,
+      required this.completeStr,
+      required this.timerColor});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +40,14 @@ class CompleteLayout extends StatelessWidget {
                   onTap: () => Navigator.pop(context),
                   child: Image.asset(backBtnStr, width: 13.16, height: 20.0),
                 ),
-                Consumer<TimerModel>( // TimerModel의 현재 시간을 소비합니다.
+                Consumer<TimerModel>(
+                  // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 15,
-                      color: Color(0xFF868686),
+                      color: timerColor,
                     ),
                   ),
                 ),
@@ -52,8 +59,7 @@ class CompleteLayout extends StatelessWidget {
             top: 127.66,
             left: 0,
             right: 0,
-            child: Image.asset(completeStr,
-                width: 336.93, height: 370.14),
+            child: Image.asset(completeStr, width: 336.93, height: 370.14),
           ),
         ],
       ),

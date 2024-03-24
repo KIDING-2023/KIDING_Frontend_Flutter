@@ -8,10 +8,12 @@ import 'kikisday_random_dice2_screen.dart';
 class KikisdayRedCompleteScreen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayRedCompleteScreen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayRedCompleteScreen({Key? key, required this.currentNumber})
+      : super(key: key);
 
   @override
-  State<KikisdayRedCompleteScreen> createState() => _KikisdayRedCompleteScreenState();
+  State<KikisdayRedCompleteScreen> createState() =>
+      _KikisdayRedCompleteScreenState();
 }
 
 class _KikisdayRedCompleteScreenState extends State<KikisdayRedCompleteScreen> {
@@ -45,8 +47,10 @@ class _KikisdayRedCompleteScreenState extends State<KikisdayRedCompleteScreen> {
   @override
   Widget build(BuildContext context) {
     return CompleteLayout(
-        bgStr: 'assets/kikisday/kikisday_2_dice_bg.png',
-        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-        completeStr: 'assets/kikisday/red_complete.png');
+      bgStr: 'assets/kikisday/kikisday_2_dice_bg.png',
+      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+      completeStr: 'assets/kikisday/red_complete.png',
+      timerColor: Color(0xFF868686),
+    );
   }
 }

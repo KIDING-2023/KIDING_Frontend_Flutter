@@ -13,11 +13,13 @@ class _Kikisday3ScreenState extends State<Kikisday3Screen> {
   @override
   Widget build(BuildContext context) {
     return CardLayout(
-        bgStr: 'assets/kikisday/kikisday_bg.png',
-        backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-        textStr: 'assets/kikisday/kikisday_3_text.png',
-        cardStr: 'assets/kikisday/kikisday_blue_card.png',
-        completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3),
-        okBtnStr: 'assets/kikisday/kikisday_blue_btn.png');
+      bgStr: 'assets/kikisday/kikisday_bg.png',
+      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
+      textStr: 'assets/kikisday/kikisday_3_text.png',
+      cardStr: 'assets/kikisday/kikisday_blue_card.png',
+      completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3),
+      okBtnStr: 'assets/kikisday/kikisday_blue_btn.png',
+      timerColor: Color(0xFF868686),
+    );
   }
 }
