@@ -90,7 +90,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
             top: 257.79,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/song_card.png',
+            child: Image.asset('assets/kikisday/talmud_card.png',
                 width: 157.77, height: 221.39),
           ),
         ],

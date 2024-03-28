@@ -50,7 +50,7 @@ class _KikisdayTalmudCompleteScreenState
     return CompleteLayout(
       bgStr: 'assets/kikisday/kikisday_dice_bg.png',
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-      completeStr: 'assets/kikisday/red_complete.png',
+      completeStr: 'assets/kikisday/talmud_complete.png',
       timerColor: Color(0xFF868686),
     );
   }
