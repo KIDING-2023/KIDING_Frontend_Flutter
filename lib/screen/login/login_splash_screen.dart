@@ -6,8 +6,9 @@ import 'choose_character_screen.dart';
 
 class LoginSplashScreen extends StatefulWidget {
   final String nickname;
+  final String password;
 
-  const LoginSplashScreen({required this.nickname, super.key});
+  const LoginSplashScreen({required this.nickname, super.key, required this.password});
 
   @override
   State<LoginSplashScreen> createState() => _LoginSplashScreenState();

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/login/password_screen.dart';
 
 import 'login_splash_screen.dart';
 
@@ -267,7 +268,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => LoginSplashScreen(
+            builder: (context) => PasswordScreen(
                   nickname: nickname,
                 )),
       );
