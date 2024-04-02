@@ -21,6 +21,7 @@ import 'package:kiding/screen/kikisday/kikisday_8_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_9_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_green_complete_screen.dart';
+import 'package:kiding/screen/kikisday/kikisday_qr_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/login/login_screen.dart';
@@ -44,6 +45,7 @@ void main() {
         initialRoute: '/',
         routes: {
           HOME_ROUTE: (context) => LoginScreen(),
+          '/kikisday_qr': (context) => KikisdayQrScreen(),
           '/kikisday_tutorial1': (context) => KikisdayTutorial1Screen(),
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
           '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),
