@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,9 +24,10 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   void reassemble() {
     super.reassemble();
     if (Platform.isAndroid) {
-      controller?.pauseCamera();
+      controller!.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller!.resumeCamera();
     }
-    controller?.resumeCamera();
   }
 
   @override
@@ -110,16 +112,24 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
             ),
           ),
           if (result != null)
-            Positioned(
-              bottom: 200,
-              child: Text(
-                'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'NanumRegular',
-                  color: Colors.white,
-                ),
-              ),
+            Builder(
+              builder: (BuildContext context) {
+                Future.microtask(() => _navigateToNextScreen(context, result!));
+                return Container(
+                  child: Positioned(
+                    bottom: 200,
+                    child: Text(
+                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!
+                          .code}',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'NanumRegular',
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                );
+              },
             )
           else
             Positioned(
@@ -197,5 +207,18 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
         const SnackBar(content: Text('no Permission')),
       );
     }
+  }
+
+  void _navigateToNextScreen(BuildContext context, Barcode result) {
+    // 컨트롤러 해제 및 카메라 종료
+    controller?.dispose();
+
+    // 여기서 result.code 값을 다음 화면에 전달할 수 있습니다.
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => KikisdayTutorial1Screen(),
+      ),
+    );
   }
 }
