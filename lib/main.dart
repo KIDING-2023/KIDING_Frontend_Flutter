@@ -26,6 +26,7 @@ import 'package:kiding/screen/kikisday/kikisday_qr_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/login/login_screen.dart';
+import 'package:kiding/screen/login/start_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:kiding/screen/space/space_tutorial2_screen.dart';
 import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
@@ -47,7 +48,7 @@ void main() async {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          HOME_ROUTE: (context) => LoginScreen(),
+          HOME_ROUTE: (context) => StartScreen(),
           '/kikisday_qr': (context) => KikisdayQrScreen(),
           '/kikisday_tutorial1': (context) => KikisdayTutorial1Screen(),
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
