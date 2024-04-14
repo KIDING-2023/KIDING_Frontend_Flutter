@@ -117,7 +117,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 ElevatedButton(
                   onPressed: _pw,
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFFF6A2B),
+                    backgroundColor: Color(0xFFFF6A2B),
                     minimumSize: Size(261.32, 49.82),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),

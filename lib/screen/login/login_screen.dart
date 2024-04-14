@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/login/password_screen.dart';
 
@@ -9,6 +10,50 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _phoneController = TextEditingController();
+  final _codeController = TextEditingController();
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+
+  late String _verificationId;
+
+  Future<void> _verifyPhoneNumber() async {
+    await _auth.verifyPhoneNumber(
+      phoneNumber: _phoneController.text,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await _auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Verification Failed. Code: ${e.code}")));
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        setState(() {
+          _verificationId = verificationId;
+        });
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        setState(() {
+          _verificationId = verificationId;
+        });
+      },
+    );
+  }
+
+  // Future<void> _signInWithPhoneNumber() async {
+  //   try {
+  //     final AuthCredential credential = PhoneAuthProvider.credential(
+  //       verificationId: _verificationId,
+  //       smsCode: _codeController.text,
+  //     );
+  //
+  //     final User? user = (await _auth.signInWithCredential(credential)).user;
+  //
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully signed in UID: ${user!.uid}")));
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to sign in")));
+  //   }
+  // }
+
   final TextEditingController _nicknameController = TextEditingController();
   bool _isEclipseVisible = false; // 초기 상태를 false로 설정하여 위젯을 숨깁니다.
   late String _inputErrorText = "";
@@ -149,13 +194,99 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           Positioned(
-            top: 351.64,
+            top: 300,
             left: 0,
             right: 0,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,// Takes up as little space as possible
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 200,
+                      height: 49.82,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24.91),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x26000000),
+                            blurRadius: 1.75,
+                            offset: Offset(0, 0.87),
+                            spreadRadius: 0,
+                          ),
+                        ],
+                      ),
+                      alignment: Alignment.center,
+                      child: TextField(
+                        controller: _phoneController,
+                        decoration: InputDecoration(
+                          hintText: '전화번호를 입력하세요 (+xx xxx-xxxx-xxxx)',
+                          hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.only(left: 26.22),
+                        ),
+                        style: TextStyle(
+                          fontFamily: 'Nanum',
+                          fontSize: 17,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: _verifyPhoneNumber,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFFFF6A2B),
+                        minimumSize: Size(100, 49.82),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                      ),
+                      child: Text(
+                        '인증번호 전송',
+                        style: TextStyle(
+                          fontFamily: 'Nanum',
+                          fontSize: 17,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  width: 261.32,
+                  height: 49.82,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24.91),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0x26000000),
+                        blurRadius: 1.75,
+                        offset: Offset(0, 0.87),
+                        spreadRadius: 0,
+                      ),
+                    ],
+                  ),
+                  alignment: Alignment.center,
+                  child: TextField(
+                    controller: _codeController,
+                    decoration: InputDecoration(
+                      hintText: '인증번호를 입력하세요',
+                      hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.only(left: 26.22),
+                    ),
+                    style: TextStyle(
+                      fontFamily: 'Nanum',
+                      fontSize: 17,
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
                 Container(
                   width: 261.32,
                   height: 49.82,
@@ -214,7 +345,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: _signup,
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xFFFF6A2B),
+                    backgroundColor: Color(0xFFFF6A2B),
                     minimumSize: Size(261.32, 49.82),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -226,6 +357,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 17,
+                      color: Colors.white
                     ),
                   ),
                 ),
@@ -238,7 +370,20 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
-  void _signup() {
+  Future<void> _signup() async {
+    try {
+      final AuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: _verificationId,
+        smsCode: _codeController.text,
+      );
+
+      final User? user = (await _auth.signInWithCredential(credential)).user;
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Successfully signed in UID: ${user!.uid}")));
+    } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to sign in")));
+    }
+
     String nickname = _nicknameController.text;
     // 닉네임 유효성 검사 로직
 

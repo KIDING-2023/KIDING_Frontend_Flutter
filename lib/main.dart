@@ -1,4 +1,5 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_10_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_11_screen.dart';
@@ -34,7 +35,9 @@ import 'model/timer_model.dart';
 
 const HOME_ROUTE = '/';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(
     MultiProvider( // 여러 Provider를 사용할 경우 MultiProvider 사용
       providers: [
