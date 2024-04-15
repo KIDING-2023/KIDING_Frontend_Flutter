@@ -154,7 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
     } else {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => PhoneScreen())
+        MaterialPageRoute(builder: (context) => PhoneScreen(nickname: nickname))
       );
     }
   }
