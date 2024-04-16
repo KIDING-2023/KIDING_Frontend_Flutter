@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
@@ -15,9 +14,6 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
   final _phoneController = TextEditingController();
   bool errorVisible = false;
   String errorMessage = "";
-
-  bool codeSent = false;
-  late String _verificationId;
 
   @override
   Widget build(BuildContext context) {

@@ -1,19 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'find_nickname_result_screen.dart';
+import 'find_password_result_screen.dart';
 
-class NicknamePhoneScreen extends StatefulWidget {
-  final String nickname;
+class PasswordPhoneScreen extends StatefulWidget {
+  final String password;
   final String phone;
 
-  const NicknamePhoneScreen({super.key, required this.nickname, required this.phone});
+  const PasswordPhoneScreen({super.key, required this.password, required this.phone});
 
   @override
-  State<NicknamePhoneScreen> createState() => _NicknamePhoneScreenState();
+  State<PasswordPhoneScreen> createState() => _PasswordPhoneScreenState();
 }
 
-class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
+class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
   final _codeController = TextEditingController();
   bool errorVisible = false;
   String errorMessage = "";
@@ -85,7 +85,7 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
                   ),
                 ],
               )),
-          // 닉네임 찾기 버튼
+          // 비밀번호 찾기 버튼
           Positioned(
               top: 439.01,
               left: 0,
@@ -93,7 +93,7 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
               child: IconButton(
                 onPressed: _verifyCode,
                 padding: EdgeInsets.zero,
-                icon: Image.asset('assets/login/find_nickname_btn.png',
+                icon: Image.asset('assets/login/find_password_btn.png',
                     width: 261.32, height: 49.82),
               )),
         ],
@@ -144,7 +144,7 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => FindNicknameResultScreen(nickname: widget.nickname)
+                builder: (context) => FindPasswordResultScreen(password: widget.password)
             )
         );
       }).catchError((error) {

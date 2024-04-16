@@ -164,10 +164,7 @@ class _StartScreenState extends State<StartScreen> {
 
     if (nickname == "전시원" && password == "5236cool") {
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  LoginSplashScreen(nickname: nickname, password: password)));
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     } else {
       setState(() {
         _isErrorVisible = true;
