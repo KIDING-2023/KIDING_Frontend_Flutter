@@ -13,127 +13,96 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController _pwController = TextEditingController();
-  late String _inputErrorText = "6글자 이상의 숫자로 입력하세요";
-  bool _isObscure = true; // 비밀번호 가시성 제어
-
-  void _togglePasswordVisibility() {
-    // 비밀번호 가시성 상태를 토글
-    setState(() {
-      _isObscure = !_isObscure;
-    });
-  }
+  bool errorVisible = false;
+  String errorMessage = "6글자 이상의 숫자로 입력하세요";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: <Widget>[
+        children: [
+          // 비밀번호 설정 안내문
           Positioned(
-            top: 100,
-            left: 0,
-            right: 0,
-            child: Center( // This widget is positioned at the top of the Column
-              child: Image.asset(
-                'assets/login/password_greeting_text.png',
-                width: 267.47,
-                height: 120.0,
-              ),
-            ),
+              top: 100,
+              left: 0,
+              right: 0,
+              child: Image.asset('assets/login/password_greeting_text.png',
+                  width: 267.47, height: 128)),
+          // 비밀번호 입력칸
+          Positioned(
+              top: 351.64,
+              left: 0,
+              right: 0,
+              child: Image.asset('assets/login/nickname_box.png',
+                  width: 261.32, height: 49.82)),
+          Positioned(
+              top: 351,
+              left: 78,
+              right: 0,
+              child: TextField(
+                controller: _pwController,
+                obscureText: true,
+                decoration: InputDecoration(
+                    hintText: '비밀번호를 입력하세요',
+                    hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                    border: InputBorder.none),
+                style: TextStyle(
+                    fontFamily: 'nanum', fontSize: 17, color: Colors.black),
+              )),
+          // 비밀번호 에러 표시
+          Positioned(
+              top: 413.29,
+              left: 76.46,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: errorVisible,
+                    child: Icon(
+                      Icons.circle,
+                      size: 2.63,
+                      fill: 1.0,
+                      color: Color(0xFFFFA37C),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(left: 5.0)),
+                  Text(
+                    errorMessage,
+                    style: TextStyle(
+                        fontFamily: 'nanum',
+                        fontSize: 13,
+                        color: Color(0xFFFFA37C)),
+                  ),
+                ],
+              )),
+          // 입력 완료 버튼
+          Positioned(
+              top: 439.01,
+              left: 0,
+              right: 0,
+              child: IconButton(
+                onPressed: _pw,
+                padding: EdgeInsets.zero,
+                icon: Image.asset('assets/login/input_finish_btn.png',
+                    width: 261.32, height: 49.82),
+              )),
+          // 진행 표시 선
+          Positioned(
+            top: 686.66,
+            left: 48.9,
+            child: Image.asset('assets/login/progress.png',
+                width: 82.76, height: 4.5),
           ),
           Positioned(
-            top: 351.64,
-            left: 0,
-            right: 0,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,// Takes up as little space as possible
-              children: <Widget>[
-                Container(
-                  width: 261.32,
-                  height: 49.82,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(24.91),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x26000000),
-                        blurRadius: 1.75,
-                        offset: Offset(0, 0.87),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
-                  alignment: Alignment.center,
-                  child: TextField(
-                    controller: _pwController,
-                    obscureText: _isObscure,
-                    decoration: InputDecoration(
-                      labelText: '비밀번호를 입력하세요',
-                      alignLabelWithHint: true, // 레이블을 hint와 정렬
-                      labelStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                      floatingLabelBehavior: FloatingLabelBehavior.never, // 항상 레이블 표시
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(left: 26.22),
-                      // 가시성 토글 버튼 추가
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          // 가시성 상태에 따라 아이콘 변경
-                          _isObscure ? Icons.visibility_off : Icons.visibility,
-                          color: Theme.of(context).primaryColorDark,
-                        ),
-                        onPressed: _togglePasswordVisibility, // 버튼 클릭 시 함수 호출
-                      ),
-                    ),
-                    style: TextStyle(
-                      fontFamily: 'Nanum',
-                      fontSize: 17,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 17.08),
-                Container(
-                  width: 195.23,
-                  height: 14.11,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Visibility(
-                        child: Image.asset('assets/login/eclipse.png'),
-                      ),
-                      SizedBox(width: 4.82),
-                      Text(
-                        _inputErrorText ?? '',
-                        style: TextStyle(
-                          fontFamily: 'Nanum',
-                          fontSize: 13,
-                          color: Color(0xFFFFA37C),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 9.85),
-                ElevatedButton(
-                  onPressed: _pw,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFFF6A2B),
-                    minimumSize: Size(261.32, 49.82),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
-                  ),
-                  child: Text(
-                    '시작하기',
-                    style: TextStyle(
-                      fontFamily: 'Nanum',
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            top: 686.66,
+            left: 138.2,
+            child: Image.asset('assets/login/progress.png',
+                width: 82.76, height: 4.5),
+          ),
+          Positioned(
+            top: 686.66,
+            left: 227.5,
+            child: Image.asset('assets/login/progress_colored.png',
+                width: 82.76, height: 4.5),
           ),
         ],
       ),
@@ -147,11 +116,13 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
     if (pw.isEmpty) {
       setState(() {
-        _inputErrorText = "비밀번호를 입력해주세요";
+        errorVisible = true;
+        errorMessage = "비밀번호를 입력해주세요";
       });
     } else if (pw.length < 6 || _containsNonNumericOrSpecialCharacters(pw)) {
       setState(() {
-        _inputErrorText = "6글자 이상의 숫자로 입력하세요";
+        errorVisible = true;
+        errorMessage = "6글자 이상의 숫자로 입력하세요";
       });
     } else {
       //_doSignup(nickname);

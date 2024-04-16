@@ -35,11 +35,14 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // 'assets/login_splash_text.png' 이미지가 표시될 위치
-            Image.asset(
-              'assets/login/login_splash_text.png', // 이미지 파일 경로를 확인하세요.
-              width: 269.64,
-              height: 40,
-            ),
+            Text(
+              '회원가입이 완료되었습니다',
+              style: TextStyle(
+                fontFamily: 'nanum',
+                fontSize: 20,
+                color: Color(0xFF838383)
+              ),
+            )
             // 여기에 추가 UI 구성 요소가 위치할 수 있습니다.
           ],
         ),
