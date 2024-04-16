@@ -1,11 +1,14 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'login_splash_screen.dart';
 
 class PasswordScreen extends StatefulWidget {
   final String nickname;
+  final String phoneNumber;
 
-  const PasswordScreen({super.key, required this.nickname});
+  const PasswordScreen(
+      {super.key, required this.nickname, required this.phoneNumber});
 
   @override
   State<PasswordScreen> createState() => _PasswordScreenState();
@@ -13,7 +16,6 @@ class PasswordScreen extends StatefulWidget {
 
 class _PasswordScreenState extends State<PasswordScreen> {
   final TextEditingController _pwController = TextEditingController();
-  bool errorVisible = false;
   String errorMessage = "6글자 이상의 숫자로 입력하세요";
 
   @override
@@ -56,7 +58,6 @@ class _PasswordScreenState extends State<PasswordScreen> {
               child: Row(
                 children: [
                   Visibility(
-                    visible: errorVisible,
                     child: Icon(
                       Icons.circle,
                       size: 2.63,
@@ -109,37 +110,39 @@ class _PasswordScreenState extends State<PasswordScreen> {
     );
   }
 
-
-  void _pw() {
+  void _pw() async {
     String pw = _pwController.text;
-    // 비밀번호 유효성 검사 로직ㅇ
-
+    // 비밀번호 유효성 검사 로직
     if (pw.isEmpty) {
       setState(() {
-        errorVisible = true;
         errorMessage = "비밀번호를 입력해주세요";
       });
     } else if (pw.length < 6 || _containsNonNumericOrSpecialCharacters(pw)) {
       setState(() {
-        errorVisible = true;
         errorMessage = "6글자 이상의 숫자로 입력하세요";
       });
     } else {
-      //_doSignup(nickname);
-      // 회원가입 성공 처리
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LoginSplashScreen(
-              nickname: widget.nickname,
-              password: pw
-            )),
-      );
+      // Firebase 데이터베이스에 사용자 정보 저장
+      final DatabaseReference dbRef = FirebaseDatabase.instance.ref("users");
+      final userRef = dbRef.child(widget.phoneNumber); // 전화번호를 키로 사용
+      userRef.set({
+        'nickname': widget.nickname,
+        'phone': widget.phoneNumber,
+        'password': pw
+      }).then((_) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LoginSplashScreen(nickname: widget.nickname, password: pw)),
+        );
+      }).catchError((error) {
+        setState(() {
+          errorMessage = '회원가입 중 문제가 발생했습니다: ${error.toString()}';
+        });
+      });
     }
   }
 
   bool _containsNonNumericOrSpecialCharacters(String s) {
     return RegExp(r'[^0-9]').hasMatch(s);
   }
-
 }
