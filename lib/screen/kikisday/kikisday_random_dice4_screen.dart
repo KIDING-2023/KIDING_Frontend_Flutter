@@ -53,7 +53,7 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
                     totalDice = widget.currentNumber + randomNumber;
                     // // 이전 컨트롤러가 있다면 해제합니다.
                     // _controller.dispose();
-                    _controller = VideoPlayerController.asset('assets/kikisday/dice${randomNumber}_video.mp4')
+                    _controller = VideoPlayerController.asset('assets/kikisday/kikisday_4_dice_${randomNumber}.mp4')
                       ..initialize().then((_) {
                         setState(() {});
                         _controller.play();
