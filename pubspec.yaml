@@ -34,8 +34,9 @@ dependencies:
   provider: ^6.1.2
   video_player: ^2.8.3
   qr_code_scanner: ^1.0.1
+  google_ml_kit: ^0.16.3
   image_picker: ^1.0.7
-  firebase_core: ^2.29.0
+  firebase_core: ^2.30.0
   firebase_auth: ^4.19.1
   firebase_database: ^10.5.1
 

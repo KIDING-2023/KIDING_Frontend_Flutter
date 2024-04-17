@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,9 +15,12 @@ class KikisdayQrScreen extends StatefulWidget {
 }
 
 class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
+  // mlkit.Barcode? mlresult;
+
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+
   bool useCamera = true;
   final picker = ImagePicker();
 
@@ -28,12 +32,6 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
     } else if (Platform.isIOS) {
       controller!.resumeCamera();
     }
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
   }
 
   @override
@@ -75,73 +73,52 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(6.0),
                 child: ToggleButtons(
-                  fillColor: Color(0xFFFF8A5B), // 선택된 버튼의 배경 색상
-                  selectedColor: Colors.white, // 선택된 버튼의 텍스트 색상
+                  fillColor:
+                      Colors.transparent, // ToggleButtons 자체의 배경색을 투명하게 설정
+                  splashColor: Colors.transparent, // Splash 효과를 없애기 위해 투명하게 설정
+                  highlightColor:
+                      Colors.transparent, // Highlight 효과를 없애기 위해 투명하게 설정
+                  selectedColor: Colors.white,
                   color: Colors.white,
                   renderBorder: false,
-                  borderRadius: BorderRadius.circular(100), // 버튼의 모서리 둥글기
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text('카메라'),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text('갤러리'),
-                    ),
+                    _buildToggleButton(
+                        '카메라', useCamera), // 변경된 _buildToggleButton 함수를 사용
+                    _buildToggleButton(
+                        '갤러리', !useCamera), // 변경된 _buildToggleButton 함수를 사용
                   ],
                   isSelected: [useCamera, !useCamera],
                   onPressed: (int index) {
                     if (index == 0) {
-                      // 카메라 사용
                       controller?.resumeCamera();
                     } else {
-                      // 갤러리 사용
-                      _getPictureFromGallery();
+                      //_getPictureFromGallery();
+                      // 이 부분을 제거합니다. _getPictureFromGallery 메소드 내부에서 상태를 관리하게 합니다.
                     }
-                    setState(() {
-                      useCamera = index == 0;
-                    });
                   },
                   textStyle: TextStyle(
                     fontFamily: 'Nanum',
-                    fontSize: 20, // 폰트 굵기
+                    fontSize: 20,
                   ),
                 ),
               ),
             ),
           ),
           if (result != null)
-            Builder(
-              builder: (BuildContext context) {
-                Future.microtask(() => _navigateToNextScreen(context, result!));
-                return Container(
-                  child: Positioned(
-                    bottom: 200,
-                    child: Text(
-                      'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!
-                          .code}',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'NanumRegular',
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
-          else
             Positioned(
-                bottom: 200,
-                child: const Text(
-                  'Scan a code',
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontFamily: 'NanumRegular',
-                    color: Colors.white,
-                  ),
-                )),
+              bottom: 200,
+              child: Text(
+                'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
+                style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
+              ),
+            ),
+          Positioned(
+            bottom: 200,
+            child: Text(
+              result == null ? 'Scan a code' : '',
+              style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
+            ),
+          ),
           Positioned(
             top: 30,
             left: 30,
@@ -159,18 +136,56 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
     );
   }
 
-  void _getPictureFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      QRView(
-        key: qrKey,
-        onQRViewCreated: _onQRViewCreated,
-      );
-      setState(() {
-        useCamera = true;
-      });
-    }
+  // _buildToggleButton 함수는 선택된 상태에 따라 다르게 보이는 버튼을 생성합니다.
+  Widget _buildToggleButton(String text, bool isSelected) {
+    return Container(
+      decoration: BoxDecoration(
+        color: isSelected
+            ? Color(0xFFFF8A5B)
+            : Colors.transparent, // 선택된 상태에 따른 색상
+        borderRadius: BorderRadius.circular(100), // 모든 모서리를 둥글게 설정
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Center(
+        child: Text(text),
+      ),
+    );
   }
+
+  // void _getPictureFromGallery() async {
+  //   final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+  //   if (pickedFile != null) {
+  //     final inputImage = mlkit.InputImage.fromFilePath(pickedFile.path);
+  //     final barcodeScanner = mlkit.GoogleMlKit.vision.barcodeScanner();
+  //
+  //     try {
+  //       final List<mlkit.Barcode> barcodes = await barcodeScanner.processImage(inputImage);
+  //
+  //       for (mlkit.Barcode barcode in barcodes) {
+  //         if (barcode.format == mlkit.BarcodeFormat.qrCode) {
+  //           // Assume barcode is of type text and access text property
+  //           final String qrCodeValue = barcode.displayValue ?? 'No QR code data';
+  //
+  //           // QR 코드의 값을 사용합니다.
+  //           print('Found QR Code: $qrCodeValue');
+  //
+  //           // Update the state with the scanned QR code
+  //           setState(() {
+  //             mlresult = barcode;
+  //           });
+  //
+  //           // Optionally, navigate to the next screen or perform other actions
+  //           // _navigateToNextScreen(context, barcode);
+  //         }
+  //       }
+  //     } on Exception catch (e) {
+  //       print('Error occurred while scanning the QR Code: $e');
+  //     } finally {
+  //       // 자원을 해제합니다.
+  //       barcodeScanner.close();
+  //     }
+  //   }
+  // }
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = 200.0;
@@ -193,10 +208,14 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
     setState(() {
       this.controller = controller;
     });
+
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
       });
+      if (result != null) {
+        _navigateToNextScreen();
+      }
     });
   }
 
@@ -209,16 +228,26 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
     }
   }
 
-  void _navigateToNextScreen(BuildContext context, Barcode result) {
-    // 컨트롤러 해제 및 카메라 종료
+  @override
+  void dispose() {
     controller?.dispose();
+    super.dispose();
+  }
 
-    // 여기서 result.code 값을 다음 화면에 전달할 수 있습니다.
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => KikisdayTutorial1Screen(),
-      ),
-    );
+  void _navigateToNextScreen() {
+    if (result != null) {
+      Future.delayed(Duration(seconds: 3), () {
+        setState(() {
+          controller?.pauseCamera();
+          controller?.dispose();
+        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => KikisdayTutorial1Screen(),
+          ),
+        );
+      });
+    }
   }
 }
