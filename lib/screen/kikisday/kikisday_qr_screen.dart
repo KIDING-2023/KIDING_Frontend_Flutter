@@ -1,9 +1,10 @@
 import 'dart:developer';
-import 'dart:io';
+import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -25,11 +26,49 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   final picker = ImagePicker();
 
   @override
+  void initState() {
+    super.initState();
+    _requestCameraPermission();
+  }
+
+  Future<void> _requestCameraPermission() async {
+    bool hasPermission = await requestCameraPermission(context);
+    if (hasPermission) {
+      print("Camera permission granted.");
+    } else {
+      print("Camera permission denied.");
+    }
+  }
+
+  Future<bool> requestCameraPermission(BuildContext context) async {
+    PermissionStatus status = await Permission.camera.request();
+
+    if(!status.isGranted) { // 허용이 안된 경우
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              content: Text("권한 설정을 확인해주세요."),
+              actions: [
+                ElevatedButton(
+                    onPressed: () {
+                      openAppSettings(); // 앱 설정으로 이동
+                    },
+                    child: Text('설정하기')),
+              ],
+            );
+          });
+      return false;
+    }
+    return true;
+  }
+
+  @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
+    if (io.Platform.isAndroid) {
       controller!.pauseCamera();
-    } else if (Platform.isIOS) {
+    } else if (io.Platform.isIOS) {
       controller!.resumeCamera();
     }
   }
