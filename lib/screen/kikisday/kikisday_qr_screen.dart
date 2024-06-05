@@ -81,7 +81,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
         children: <Widget>[
           _buildQrView(context),
           Positioned(
-            top: 216.09,
+            top: 150,
             left: 0,
             right: 0,
             child: RichText(

@@ -20,7 +20,6 @@ class _SpaceTutorial2ScreenState extends State<SpaceTutorial2Screen> {
         width: 339.79,
         height: 229.08,
       ),
-      chTopDouble: 370.14,
       characterWid: Image.asset(
         'assets/space/space_tutorial2_ch.png',
         width: 360,

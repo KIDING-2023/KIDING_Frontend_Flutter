@@ -23,94 +23,93 @@ class _PasswordScreenState extends State<PasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        children: [
-          // 비밀번호 설정 안내문
-          Positioned(
-              top: 100,
-              left: 0,
-              right: 0,
-              child: Image.asset('assets/login/password_greeting_text.png',
-                  width: 267.47, height: 128)),
-          // 비밀번호 입력칸
-          Positioned(
-              top: 351.64,
-              left: 0,
-              right: 0,
-              child: Image.asset('assets/login/nickname_box.png',
-                  width: 261.32, height: 49.82)),
-          Positioned(
-              top: 351,
-              left: 78,
-              right: 0,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        // 안내문
+        Image.asset('assets/login/password_greeting_text.png',
+            width: 267.47, height: 128),
+        Column(
+          // 비밀번호 입력 칸
+          children: [
+            Container(
+              width: screenSize.width * 0.7,
               child: TextField(
                 controller: _pwController,
                 obscureText: true,
                 decoration: InputDecoration(
                     hintText: '비밀번호를 입력하세요',
                     hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                    border: InputBorder.none),
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        borderRadius: BorderRadius.circular(100)),
+                    contentPadding: EdgeInsets.only(left: 20)),
                 style: TextStyle(
-                    fontFamily: 'nanum', fontSize: 17, color: Colors.black),
-              )),
-          // 비밀번호 에러 표시
-          Positioned(
-              top: 413.29,
-              left: 76.46,
-              child: Row(
-                children: [
-                  Visibility(
-                    child: Icon(
-                      Icons.circle,
-                      size: 2.63,
-                      fill: 1.0,
-                      color: Color(0xFFFFA37C),
-                    ),
+                  fontFamily: 'nanum',
+                  fontSize: 17,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            // 비밀번호 오류 메시지
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  child: Icon(
+                    Icons.circle,
+                    size: 2.63,
+                    fill: 1.0,
+                    color: Color(0xFFFFA37C),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 5.0)),
-                  Text(
-                    errorMessage,
-                    style: TextStyle(
-                        fontFamily: 'nanum',
-                        fontSize: 13,
-                        color: Color(0xFFFFA37C)),
-                  ),
-                ],
-              )),
-          // 입력 완료 버튼
-          Positioned(
-              top: 439.01,
-              left: 0,
-              right: 0,
-              child: IconButton(
-                onPressed: _pw,
-                padding: EdgeInsets.zero,
-                icon: Image.asset('assets/login/input_finish_btn.png',
-                    width: 261.32, height: 49.82),
-              )),
-          // 진행 표시 선
-          Positioned(
-            top: 686.66,
-            left: 48.9,
-            child: Image.asset('assets/login/progress.png',
+                ),
+                Padding(padding: EdgeInsets.only(left: 5.0)),
+                Text(
+                  errorMessage,
+                  style: TextStyle(
+                      fontFamily: 'nanum',
+                      fontSize: 13,
+                      color: Color(0xFFFFA37C)),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            // 입력 완료 버튼
+            IconButton(
+              onPressed: _pw,
+              padding: EdgeInsets.zero,
+              icon: Image.asset('assets/login/input_finish_btn.png',
+                  width: screenSize.width * 0.7),
+            ),
+          ],
+        ),
+        // 진행 표시 선
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset('assets/login/progress.png', width: 82.76, height: 4.5),
+            SizedBox(
+              width: 5,
+            ),
+            Image.asset('assets/login/progress.png', width: 82.76, height: 4.5),
+            SizedBox(
+              width: 5,
+            ),
+            Image.asset('assets/login/progress_colored.png',
                 width: 82.76, height: 4.5),
-          ),
-          Positioned(
-            top: 686.66,
-            left: 138.2,
-            child: Image.asset('assets/login/progress.png',
-                width: 82.76, height: 4.5),
-          ),
-          Positioned(
-            top: 686.66,
-            left: 227.5,
-            child: Image.asset('assets/login/progress_colored.png',
-                width: 82.76, height: 4.5),
-          ),
-        ],
-      ),
-    );
+          ],
+        )
+      ],
+    ));
   }
 
   void _pw() async {
@@ -150,22 +149,21 @@ class _PasswordScreenState extends State<PasswordScreen> {
   Future<void> _signup() async {
     String nickname = widget.nickname;
     String password = _pwController.text.trim();
-    String phone = widget.phoneNumber;  // 전화번호 입력 필드를 추가해야 합니다.
+    String phone = widget.phoneNumber; // 전화번호 입력 필드를 추가해야 합니다.
 
     var url = Uri.parse('http://3.37.76.76:8081/signup');
-    var response = await http.post(url, body: jsonEncode({
-      'nickname': nickname,
-      'password': password,
-      'phone': phone
-    }), headers: {
-      'Content-Type': 'application/json'
-    });
+    var response = await http.post(url,
+        body: jsonEncode(
+            {'nickname': nickname, 'password': password, 'phone': phone}),
+        headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {
       // 성공적인 회원가입 처리, 로그인 화면으로 이동
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => LoginSplashScreen(nickname: widget.nickname, password: password)),
+        MaterialPageRoute(
+            builder: (context) => LoginSplashScreen(
+                nickname: widget.nickname, password: password)),
       );
     } else {
       // 오류 메시지를 보여주는 로직

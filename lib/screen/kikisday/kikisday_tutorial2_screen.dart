@@ -18,7 +18,6 @@ class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
         width: 339.79,
         height: 229.08,
       ),
-      chTopDouble: 370.14,
       characterWid: Image.asset(
         'assets/kikisday/kikisday_tutorial2_ch.png',
         width: 360,

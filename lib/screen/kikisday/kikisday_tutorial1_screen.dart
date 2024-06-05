@@ -15,7 +15,6 @@ class _KikisdayTutorial1ScreenState extends State<KikisdayTutorial1Screen> {
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textWid: Image.asset('assets/kikisday/kikisday_tutorial1_text.png',
           width: 339.79, height: 296.58),
-      chTopDouble: 346.61,
       characterWid: Image.asset('assets/kikisday/kikisday_tutorial1_ch.png',
           width: 360, height: 348.39),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',

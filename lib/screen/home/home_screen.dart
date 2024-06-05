@@ -10,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 1; // 기본으로 홈이 선택된 상태
-
   // Initialize selected index to 'Main'
   int _selectedSortIndex = 0;
 
@@ -75,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             // Ranking box placeholder
             Padding(
-              padding: const EdgeInsets.only(top: 37.18),
+              padding: const EdgeInsets.only(top: 37.18, bottom: 30),
               child: Center(
                 child: Container(
                   width: 310,

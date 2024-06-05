@@ -16,41 +16,43 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // 비밀번호 찾기 안내문
-          Positioned(
-              top: 100,
-              left: 0,
-              right: 0,
-              child: Image.asset('assets/login/find_password_text.png',
-                  width: 267.47, height: 88)),
-          // 전화번호 입력칸
-          Positioned(
-              top: 350.74,
-              left: 0,
-              right: 0,
-              child: Image.asset('assets/login/nickname_box.png',
-                  width: 262, height: 50)),
-          Positioned(
-              top: 351,
-              left: 78,
-              right: 0,
-              child: TextField(
-                controller: _phoneController,
-                decoration: InputDecoration(
-                    hintText: '전화번호를 입력하세요',
-                    hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                    border: InputBorder.none),
-                style: TextStyle(
-                    fontFamily: 'nanum', fontSize: 17, color: Colors.black),
-              )),
-          // 전화번호 에러 표시
-          Positioned(
-              top: 412.29,
-              left: 76.95,
-              child: Row(
+          // 안내문
+          Image.asset('assets/login/find_password_text.png',
+              width: 267.47, height: 88),
+          Column(
+            // 전화번호 입력 칸
+            children: [
+              Container(
+                width: screenSize.width * 0.7,
+                child: TextField(
+                  controller: _phoneController,
+                  decoration: InputDecoration(
+                      hintText: '전화번호를 입력하세요',
+                      hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(100)),
+                      contentPadding: EdgeInsets.only(left: 20)),
+                  style: TextStyle(
+                    fontFamily: 'nanum',
+                    fontSize: 17,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              // 전화번호 오류 메시지
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Visibility(
                     visible: errorVisible,
@@ -70,20 +72,21 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                         color: Color(0xFFFFA37C)),
                   ),
                 ],
-              )),
-          // 비밀번호 찾기 버튼
-          Positioned(
-              top: 437.95,
-              left: 0,
-              right: 0,
-              child: IconButton(
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              // 비밀번호 찾기 버튼
+              IconButton(
                 onPressed: _findPassword,
                 padding: EdgeInsets.zero,
                 icon: Image.asset('assets/login/find_password_btn.png',
-                    width: 261.32, height: 49.82),
-              )),
+                    width: screenSize.width * 0.7),
+              ),
+            ],
+          ),
         ],
-      ),
+      )
     );
   }
 

@@ -30,81 +30,75 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 94.76,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Text(
-                '안녕하세요 ${widget.nickname}님,\n캐릭터를 선택해주세요',
-                style: TextStyle(
-                  fontFamily: 'Nanum',
-                  fontSize: 23,
-                  color: Colors.black,
-                  height: 1.77,
-                ),
-              ),
-            ),
+        body:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+      // 안내문
+      Text(
+        '안녕하세요 ${widget.nickname}님,\n캐릭터를 선택해주세요',
+        style: TextStyle(
+          fontFamily: 'Nanum',
+          fontSize: 23,
+          color: Colors.black,
+          height: 1.77,
+        ),
+      ),
+      // 로고
+      Column(
+        children: [
+          Image.asset(
+            'assets/login/character_logo.png',
+            width: 249.93,
+            height: 35.29,
           ),
-          Positioned(
-              top: 215,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Image.asset(
-                  'assets/login/character_logo.png',
-                  width: 249.93,
-                  height: 35.29,
-                ),
-              )),
-          Positioned(
-            top: 250.29,
-            left: 39.3,
-            right: 39.3,
-            child: Column(
-              children: [
-                for (int i = 0; i < characterImages.length; i += 2)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 22.71),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly, // 이미지를 균등하게 배치
-                      children: [
-                        for (int j = i; j < i + 2 && j < characterImages.length; j++)
-                          GestureDetector(
-                            onTap: () => setState(() => _selectedCharacterIndex = j),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: j % 2 == 0 ? 0 : 10.43, right: j % 2 == 0 ? 10.43 : 0),
-                              child: Image.asset(
-                                _selectedCharacterIndex == j ? characterSelectedImages[j] : characterImages[j],
-                                width: 114.25,
-                                height: 114.25,
-                              ),
+          // 캐릭터 이미지
+          Column(
+            children: [
+              for (int i = 0; i < characterImages.length; i += 2)
+                Padding(
+                  padding: const EdgeInsets.only(top: 22.71),
+                  child: Row(
+                    mainAxisAlignment:
+                        MainAxisAlignment.spaceEvenly, // 이미지를 균등하게 배치
+                    children: [
+                      for (int j = i;
+                          j < i + 2 && j < characterImages.length;
+                          j++)
+                        GestureDetector(
+                          onTap: () =>
+                              setState(() => _selectedCharacterIndex = j),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: j % 2 == 0 ? 0 : 10.43,
+                                right: j % 2 == 0 ? 10.43 : 0),
+                            child: Image.asset(
+                              _selectedCharacterIndex == j
+                                  ? characterSelectedImages[j]
+                                  : characterImages[j],
+                              width: 114.25,
+                              height: 114.25,
                             ),
                           ),
-                      ],
-                    ),
-                  ),
-                Visibility(
-                  visible: _selectedCharacterIndex != -1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 168.34),
-                    child: GestureDetector(
-                      onTap: () {
-                        // HomeScreen으로 화면을 전환합니다.
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
-                      },
-                      child: Image.asset('assets/login/character_start_btn.png', width: 312.22, height: 46.83),
-                    ),
+                        ),
+                    ],
                   ),
                 ),
-              ],
-            ),
+            ],
           ),
-
         ],
       ),
-    );
+      // 버튼
+      Visibility(
+        visible: _selectedCharacterIndex != -1,
+        child: GestureDetector(
+          onTap: () {
+            // HomeScreen으로 화면을 전환합니다.
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          },
+          child: Image.asset('assets/login/character_start_btn.png',
+              width: 312.22, height: 46.83),
+        ),
+      ),
+    ]));
   }
 }

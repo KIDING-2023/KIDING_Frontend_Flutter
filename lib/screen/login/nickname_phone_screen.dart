@@ -30,41 +30,43 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          // 전화번호 인증 안내문
-          Positioned(
-              top: 100,
-              left: 0,
-              right: 0,
-              child: Image.asset('assets/login/phone_greeting_text.png',
-                  width: 267.47, height: 128)),
-          // 인증번호 입력칸
-          Positioned(
-              top: 351.64,
-              left: 0,
-              right: 0,
-              child: Image.asset('assets/login/nickname_box.png',
-                  width: 261.32, height: 49.82)),
-          Positioned(
-              top: 351.64,
-              left: 80.56,
-              right: 0,
-              child: TextField(
-                controller: _codeController,
-                decoration: InputDecoration(
-                    hintText: '인증번호를 입력하세요',
-                    hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                    border: InputBorder.none),
-                style: TextStyle(
-                    fontFamily: 'nanum', fontSize: 17, color: Colors.black),
-              )),
-          // 인증번호 안내문
-          Positioned(
-              top: 413.29,
-              left: 76.93,
-              child: Row(
+          // 안내문
+          Image.asset('assets/login/phone_greeting_text.png',
+              width: 267.47, height: 128),
+          Column(
+            // 인증번호 입력 칸
+            children: [
+              Container(
+                width: screenSize.width * 0.7,
+                child: TextField(
+                  controller: _codeController,
+                  decoration: InputDecoration(
+                      hintText: '인증번호를 입력하세요',
+                      hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                      filled: true,
+                      fillColor: Colors.white,
+                      enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(100)),
+                      contentPadding: EdgeInsets.only(left: 20)),
+                  style: TextStyle(
+                    fontFamily: 'nanum',
+                    fontSize: 17,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              // 인증번호 오류 메시지
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Visibility(
                     visible: errorVisible,
@@ -84,20 +86,21 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
                         color: Color(0xFFFFA37C)),
                   ),
                 ],
-              )),
-          // 닉네임 찾기 버튼
-          Positioned(
-              top: 439.01,
-              left: 0,
-              right: 0,
-              child: IconButton(
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              // 닉네임 찾기 버튼
+              IconButton(
                 onPressed: _verifyCode,
                 padding: EdgeInsets.zero,
                 icon: Image.asset('assets/login/find_nickname_btn.png',
-                    width: 261.32, height: 49.82),
-              )),
+                    width: screenSize.width * 0.7),
+              ),
+            ],
+          ),
         ],
-      ),
+      )
     );
   }
 
