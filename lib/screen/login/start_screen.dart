@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiding/screen/home/home_screen.dart';
 import 'package:kiding/screen/login/login_splash_screen.dart';
 import 'package:kiding/screen/login/signup_screen.dart';
+import 'package:mysql1/mysql1.dart';
 
 import 'find_nickname_screen.dart';
 import 'find_password_screen.dart';
@@ -158,9 +159,9 @@ class _StartScreenState extends State<StartScreen> {
   }
 
   // 닉네임과 비밀번호를 검증하는 로직 추가
-  void _login() {
-    String nickname = _nicknameController.text;
-    String password = _passwordController.text;
+  Future<void> _login() async {
+    String nickname = _nicknameController.text.trim();
+    String password = _passwordController.text.trim();
 
     if (nickname == "전시원" && password == "5236cool") {
       Navigator.push(

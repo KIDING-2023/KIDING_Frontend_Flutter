@@ -169,4 +169,5 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _containsSpecialCharacter(String s) {
     return RegExp(r'[^A-Za-z0-9가-힣]').hasMatch(s);
   }
+
 }

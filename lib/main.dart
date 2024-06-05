@@ -1,4 +1,6 @@
 
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_10_screen.dart';
@@ -28,6 +30,7 @@ import 'package:kiding/screen/login/start_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:kiding/screen/space/space_tutorial2_screen.dart';
 import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:provider/provider.dart';
 
 import 'model/timer_model.dart';
@@ -35,6 +38,7 @@ import 'model/timer_model.dart';
 const HOME_ROUTE = '/';
 
 void main() async {
+  //dbConnector();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
@@ -78,3 +82,25 @@ void main() async {
     ),
   );
 }
+
+// // mysql 연결
+// Future<void> dbConnector() async {
+//   print("Connecting to mysql server...");
+//
+//   // MySQL 접속 설정
+//   final conn = await MySQLConnection.createConnection(
+//     host: 'kiding.cjmcuiii67x9.ap-northeast-2.rds.amazonaws.com',
+//     port: 3306,
+//     userName: 'admin',
+//     password: 'Abcd1234',
+//     //databaseName: 'testdb', // optional
+//   );
+//
+//   // 연결 대기
+//   await conn.connect();
+//
+//   log("log: Database Connected");
+//
+//   // 종료 대기
+//   await conn.close();
+// }

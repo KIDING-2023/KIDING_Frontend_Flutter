@@ -72,7 +72,7 @@ class _KikisdayTalmudQuestion2ScreenState extends State<KikisdayTalmudQuestion2S
           ),
           // 버튼
           Positioned(
-              top: 708.76,
+              top: 608.76,
               left: 0,
               right: 0,
               child: GestureDetector(
