@@ -97,7 +97,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                             child: VideoPlayer(_controller),
                           );
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return Center();
+                          // return Center(child: CircularProgressIndicator());
                         }
                       },
                     )
