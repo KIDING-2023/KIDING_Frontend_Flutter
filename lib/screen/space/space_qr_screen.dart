@@ -1,23 +1,21 @@
 import 'dart:developer';
-import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
-import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:image_picker/image_picker.dart';
+import 'dart:io' as io;
 
-class KikisdayQrScreen extends StatefulWidget {
-  const KikisdayQrScreen({Key? key}) : super(key: key);
+class SpaceQrScreen extends StatefulWidget {
+  const SpaceQrScreen({super.key});
 
   @override
-  State<KikisdayQrScreen> createState() => _KikisdayQrScreenState();
+  State<SpaceQrScreen> createState() => _SpaceQrScreenState();
 }
 
-class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
-  // mlkit.Barcode? mlresult;
-
+class _SpaceQrScreenState extends State<SpaceQrScreen> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
@@ -113,10 +111,10 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
           //       padding: const EdgeInsets.all(6.0),
           //       child: ToggleButtons(
           //         fillColor:
-          //             Colors.transparent, // ToggleButtons 자체의 배경색을 투명하게 설정
+          //         Colors.transparent, // ToggleButtons 자체의 배경색을 투명하게 설정
           //         splashColor: Colors.transparent, // Splash 효과를 없애기 위해 투명하게 설정
           //         highlightColor:
-          //             Colors.transparent, // Highlight 효과를 없애기 위해 투명하게 설정
+          //         Colors.transparent, // Highlight 효과를 없애기 위해 투명하게 설정
           //         selectedColor: Colors.white,
           //         color: Colors.white,
           //         renderBorder: false,
@@ -191,41 +189,6 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   //   );
   // }
 
-  // void _getPictureFromGallery() async {
-  //   final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-  //   if (pickedFile != null) {
-  //     final inputImage = mlkit.InputImage.fromFilePath(pickedFile.path);
-  //     final barcodeScanner = mlkit.GoogleMlKit.vision.barcodeScanner();
-  //
-  //     try {
-  //       final List<mlkit.Barcode> barcodes = await barcodeScanner.processImage(inputImage);
-  //
-  //       for (mlkit.Barcode barcode in barcodes) {
-  //         if (barcode.format == mlkit.BarcodeFormat.qrCode) {
-  //           // Assume barcode is of type text and access text property
-  //           final String qrCodeValue = barcode.displayValue ?? 'No QR code data';
-  //
-  //           // QR 코드의 값을 사용합니다.
-  //           print('Found QR Code: $qrCodeValue');
-  //
-  //           // Update the state with the scanned QR code
-  //           setState(() {
-  //             mlresult = barcode;
-  //           });
-  //
-  //           // Optionally, navigate to the next screen or perform other actions
-  //           // _navigateToNextScreen(context, barcode);
-  //         }
-  //       }
-  //     } on Exception catch (e) {
-  //       print('Error occurred while scanning the QR Code: $e');
-  //     } finally {
-  //       // 자원을 해제합니다.
-  //       barcodeScanner.close();
-  //     }
-  //   }
-  // }
-
   Widget _buildQrView(BuildContext context) {
     var scanArea = 200.0;
     // To ensure the Scanner view is properly sizes after rotation
@@ -283,7 +246,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => KikisdayTutorial1Screen(),
+            builder: (context) => SpaceTutorial1Screen(),
           ),
         );
       });

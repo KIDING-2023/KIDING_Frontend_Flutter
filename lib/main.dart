@@ -27,6 +27,11 @@ import 'package:kiding/screen/kikisday/kikisday_qr_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
+import 'package:kiding/screen/space/space_4_screen.dart';
+import 'package:kiding/screen/space/space_5_screen.dart';
+import 'package:kiding/screen/space/space_6_screen.dart';
+import 'package:kiding/screen/space/space_qr_screen.dart';
+import 'package:kiding/screen/space/space_random_dice_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:kiding/screen/space/space_tutorial2_screen.dart';
 import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
@@ -55,9 +60,11 @@ void main() async {
           '/kikisday_tutorial1': (context) => KikisdayTutorial1Screen(),
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
           '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),
+          '/space_qr': (context) => SpaceQrScreen(),
           '/space_tutorial1': (context) => SpaceTutorial1Screen(),
           '/space_tutorial2': (context) => SpaceTutorial2Screen(),
-          '/space_tutorial_dice': (context) => SpaceTutorialDiceScreen(),
+          // 우주여행 튜토리얼 주사위 화면으로 수정해야 함
+          '/space_tutorial_dice': (context) => SpaceRandomDiceScreen(currentNumber: 3,),
           '/kikisday2': (context) => Kikisday2Screen(),
           '/kikisday3': (context) => Kikisday3Screen(),
           '/kikisday4': (context) => Kikisday4Screen(),
@@ -77,6 +84,9 @@ void main() async {
           '/kikisday18': (context) => Kikisday18Screen(),
           '/kikisday19': (context) => Kikisday19Screen(),
           '/kikisday20': (context) => Kikisday20Screen(),
+          '/space4': (context) => Space4Screen(),
+          '/space5': (context) => Space5Screen(),
+          '/space6': (context) => Space6Screen()
         },
       ),
     ),
