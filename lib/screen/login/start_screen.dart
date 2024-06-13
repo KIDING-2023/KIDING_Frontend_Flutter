@@ -85,17 +85,6 @@ class _StartScreenState extends State<StartScreen> {
               SizedBox(
                 height: 10,
               ),
-              // 로그인 상태 유지 버튼
-              GestureDetector(
-                onTap: _toggleLoginState,
-                child: Image.asset(
-                  _isStayLoggedIn
-                      ? 'assets/login/keep_login_selected_btn.png' // 로그인 상태 유지 활성화 이미지
-                      : 'assets/login/keep_login_btn.png', // 로그인 상태 유지 비활성화 이미지
-                  width: 75,
-                  height: 18,
-                ),
-              ),
               // 시작하기 버튼
               Container(
                 width: screenSize.width * 0.7,
@@ -104,6 +93,28 @@ class _StartScreenState extends State<StartScreen> {
                   padding: EdgeInsets.zero,
                   icon: Image.asset('assets/login/start_btn.png'),
                 ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              // 로그인 상태 유지 버튼
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: _toggleLoginState,
+                    child: Image.asset(
+                      _isStayLoggedIn
+                          ? 'assets/login/keep_login_selected_btn.png' // 로그인 상태 유지 활성화 이미지
+                          : 'assets/login/keep_login_btn.png', // 로그인 상태 유지 비활성화 이미지
+                      width: 75,
+                      height: 18,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  )
+                ],
               ),
               SizedBox(
                 height: 10,
