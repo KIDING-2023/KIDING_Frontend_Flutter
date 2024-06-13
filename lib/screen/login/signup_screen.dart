@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kiding/screen/login/phone_screen.dart';
+import 'package:http/http.dart' as http;
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -123,8 +126,9 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   // 닉네임 오류 체크
-  void _checkNickname() {
+  Future<void> _checkNickname() async {
     String nickname = _nicknameController.text;
+    // bool isAvailable = await checkNicknameAvailability(nickname); // 서버에 닉네임 중복 검사 요청
 
     if (nickname.length > 5) {
       setState(() {
@@ -136,7 +140,14 @@ class _SignupScreenState extends State<SignupScreen> {
         errorVisible = true;
         errorMessage = "닉네임을 입력해주세요.";
       });
-    } else if (_containsSpecialCharacter(nickname)) {
+    }
+    // else if (!isAvailable) {
+    //   setState(() {
+    //     errorVisible = true;
+    //     errorMessage = "이미 사용 중인 닉네임입니다.";
+    //   });
+    // }
+    else if (_containsSpecialCharacter(nickname)) {
       setState(() {
         errorVisible = true;
         errorMessage = "특수문자는 포함할 수 없습니다.";
@@ -164,4 +175,21 @@ class _SignupScreenState extends State<SignupScreen> {
   bool _containsSpecialCharacter(String s) {
     return RegExp(r'[^A-Za-z0-9가-힣]').hasMatch(s);
   }
+
+  // // API 호출을 위한 함수
+  // Future<bool> checkNicknameAvailability(String nickname) async {
+  //   var url = Uri.parse('http://3.37.76.76:8081/signup');
+  //   try {
+  //     var response = await http.post(url, body: {'nickname': nickname});
+  //     if (response.statusCode == 200) {
+  //       var data = jsonDecode(response.body);
+  //       return data['isAvailable'];
+  //     } else {
+  //       throw Exception('Failed to load data');
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //     throw Exception('Failed to check nickname');
+  //   }
+  // }
 }

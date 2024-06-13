@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding/screen/home/home_screen.dart';
 import 'package:kiding/screen/login/login_splash_screen.dart';
 import 'package:kiding/screen/login/signup_screen.dart';
@@ -17,8 +18,10 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
-
   bool _isErrorVisible = false;
+  bool _isStayLoggedIn = false;  // 로그인 상태 유지
+  final _storage = FlutterSecureStorage();  // Secure storage 객체 생성
+
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +84,17 @@ class _StartScreenState extends State<StartScreen> {
               ),
               SizedBox(
                 height: 10,
+              ),
+              // 로그인 상태 유지 버튼
+              GestureDetector(
+                onTap: _toggleLoginState,
+                child: Image.asset(
+                  _isStayLoggedIn
+                      ? 'assets/login/keep_login_selected_btn.png' // 로그인 상태 유지 활성화 이미지
+                      : 'assets/login/keep_login_btn.png', // 로그인 상태 유지 비활성화 이미지
+                  width: 75,
+                  height: 18,
+                ),
               ),
               // 시작하기 버튼
               Container(
@@ -158,12 +172,25 @@ class _StartScreenState extends State<StartScreen> {
     ));
   }
 
+  void _toggleLoginState() {
+    setState(() {
+      _isStayLoggedIn = !_isStayLoggedIn; // 상태 토글
+    });
+  }
+
   // 닉네임과 비밀번호를 검증하는 로직 추가
   Future<void> _login() async {
     String nickname = _nicknameController.text.trim();
     String password = _passwordController.text.trim();
 
     if (nickname == "전시원" && password == "5236cool") {
+      if (_isStayLoggedIn) {
+        await _storage.write(key: 'isLoggedIn', value: 'true');
+        await _storage.write(key: 'nickname', value: nickname);
+      } else {
+        await _storage.delete(key: 'isLoggedIn');
+        await _storage.delete(key: 'nickname');
+      }
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
     } else {
@@ -171,6 +198,19 @@ class _StartScreenState extends State<StartScreen> {
         _isErrorVisible = true;
       });
     }
+  }
+
+  Future<void> checkLoginStatus() async {
+    String? isLoggedIn = await _storage.read(key: 'isLoggedIn');
+    if (isLoggedIn != null && isLoggedIn == 'true') {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    checkLoginStatus();
   }
 
   // 회원가입 화면으로 이동

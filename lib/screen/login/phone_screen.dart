@@ -39,7 +39,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
               child: TextField(
                 controller: codeSent ? _codeController : _phoneController,
                 decoration: InputDecoration(
-                    hintText: codeSent ? '인증번호를 입력하세요' : '전화번호를 입력하세요',
+                    hintText: codeSent ? '인증번호를 입력하세요' : 'ex.01012345678',
                     hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                     filled: true,
                     fillColor: Colors.white,

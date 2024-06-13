@@ -43,6 +43,7 @@ dependencies:
   mysql1: ^0.20.0
   http: ^1.2.1
   gif: ^2.3.0
+  flutter_secure_storage: ^9.2.2
 
 
   # The following adds the Cupertino Icons font to your application.
