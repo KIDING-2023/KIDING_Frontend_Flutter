@@ -6,16 +6,16 @@ import 'package:video_player/video_player.dart';
 
 import '../../model/timer_model.dart';
 
-class SpaceRandomDiceScreen extends StatefulWidget {
+class SpaceRandomDice3Screen extends StatefulWidget {
   final int currentNumber;
 
-  const SpaceRandomDiceScreen({super.key, required this.currentNumber});
+  const SpaceRandomDice3Screen({super.key, required this.currentNumber});
 
   @override
-  State<SpaceRandomDiceScreen> createState() => _SpaceRandomDiceScreenState();
+  State<SpaceRandomDice3Screen> createState() => _SpaceRandomDice3ScreenState();
 }
 
-class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
+class _SpaceRandomDice3ScreenState extends State<SpaceRandomDice3Screen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
@@ -67,7 +67,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/space/venus_dice_bg.png',
+              'assets/space/saturn_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -150,7 +150,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
-                    timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
+                    timer!.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 15,

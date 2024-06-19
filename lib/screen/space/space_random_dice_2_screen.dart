@@ -6,16 +6,16 @@ import 'package:video_player/video_player.dart';
 
 import '../../model/timer_model.dart';
 
-class SpaceRandomDiceScreen extends StatefulWidget {
+class SpaceRandomDice2Screen extends StatefulWidget {
   final int currentNumber;
 
-  const SpaceRandomDiceScreen({super.key, required this.currentNumber});
+  const SpaceRandomDice2Screen({super.key, required this.currentNumber});
 
   @override
-  State<SpaceRandomDiceScreen> createState() => _SpaceRandomDiceScreenState();
+  State<SpaceRandomDice2Screen> createState() => _SpaceRandomDice2ScreenState();
 }
 
-class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
+class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
@@ -67,7 +67,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/space/venus_dice_bg.png',
+              'assets/space/mars_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
