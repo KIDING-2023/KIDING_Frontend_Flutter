@@ -10,7 +10,9 @@ class ChooseCharacterScreen extends StatefulWidget {
   final String nickname;
   final int userId;
 
-  ChooseCharacterScreen({Key? key, required this.nickname, required this.userId}) : super(key: key);
+  ChooseCharacterScreen(
+      {Key? key, required this.nickname, required this.userId})
+      : super(key: key);
 
   @override
   _ChooseCharacterScreenState createState() => _ChooseCharacterScreenState();
@@ -110,20 +112,22 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
   Future<void> _chooseCharacter() async {
     int num = _selectedCharacterIndex;
 
-    var url = Uri.parse('http://3.37.76.76:8081/character');
-    var response = await http.post(url,
-        body: jsonEncode(
-            {'userId': /*로그인할 때 리턴값으로 받아와야 함*/2, 'num': num}),
-        headers: {'Content-Type': 'application/json'});
+    var url =
+        Uri.parse('http://3.37.76.76:8081/character/${widget.userId}/${num}');
+    var response =
+        await http.get(url, headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {
       // 성공적인 처리, 홈 화면으로 이동
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen(userId: widget.userId,)));
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                    userId: widget.userId,
+                  )));
     } else {
       // 오류 메시지 로그 출력
       log('캐릭터 설정에 실패하였습니다.');
     }
   }
-
 }
