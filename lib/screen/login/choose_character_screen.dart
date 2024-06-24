@@ -109,7 +109,7 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
   Future<void> _chooseCharacter() async {
     int num = _selectedCharacterIndex;
 
-    var url = Uri.parse('http://localhost:8081/character/1/2');
+    var url = Uri.parse('http://3.37.76.76:8081/character');
     var response = await http.post(url,
         body: jsonEncode(
             {'userId': /*로그인할 때 리턴값으로 받아와야 함*/2, 'num': num}),

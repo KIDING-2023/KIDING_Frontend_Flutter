@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_random_dice2_screen.dart';
 import '../layout/complete_layout.dart';
 import 'kikisday_random_dice3_screen.dart';
+
+import 'package:http/http.dart' as http;
 
 class KikisdaySkyblueCompleteScreen extends StatefulWidget {
   final int currentNumber;
@@ -42,17 +45,14 @@ class _KikisdaySkyblueCompleteScreenState
       case 10:
         nextScreen =
             KikisdayRandomDice3Screen(currentNumber: widget.currentNumber);
+        _answerSuccess();
         break;
       default:
         nextScreen =
             KikisdayRandomDice2Screen(currentNumber: widget.currentNumber);
+        _answerSuccess();
         break;
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextScreen),
-    );
-    log('currentNumber: ${widget.currentNumber}');
   }
 
   @override
@@ -63,5 +63,24 @@ class _KikisdaySkyblueCompleteScreenState
       completeStr: 'assets/kikisday/skyblue_complete.png',
       timerColor: Color(0xFF868686),
     );
+  }
+
+  // 답변 완료 데베 전달
+  Future<void> _answerSuccess() async {
+    var url = Uri.parse('http://3.37.76.76:8081/boardgame');
+    var response = await http.post(url,
+        body: jsonEncode({}),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      // 성공적인 처리, 주사위 화면으로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => nextScreen),
+      );
+      log('currentNumber: ${widget.currentNumber}');
+    } else {
+      // 오류 메시지 로그 출력
+      log('답변 완료에 실패하였습니다.');
+    }
   }
 }
