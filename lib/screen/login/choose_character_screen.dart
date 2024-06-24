@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../home/home_screen.dart';
 
@@ -91,9 +95,8 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
         visible: _selectedCharacterIndex != -1,
         child: GestureDetector(
           onTap: () {
-            // HomeScreen으로 화면을 전환합니다.
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+            // 데이터베이스 연결
+            _chooseCharacter();
           },
           child: Image.asset('assets/login/character_start_btn.png',
               width: 312.22, height: 46.83),
@@ -101,4 +104,25 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
       ),
     ]));
   }
+
+  // API를 통한 캐릭터 설정 요청
+  Future<void> _chooseCharacter() async {
+    int num = _selectedCharacterIndex;
+
+    var url = Uri.parse('http://localhost:8081/character/1/2');
+    var response = await http.post(url,
+        body: jsonEncode(
+            {'userId': /*로그인할 때 리턴값으로 받아와야 함*/2, 'num': num}),
+        headers: {'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      // 성공적인 처리, 홈 화면으로 이동
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    } else {
+      // 오류 메시지 로그 출력
+      log('캐릭터 설정에 실패하였습니다.');
+    }
+  }
+
 }
