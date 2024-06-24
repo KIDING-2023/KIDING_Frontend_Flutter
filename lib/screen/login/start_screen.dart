@@ -1,12 +1,15 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding/screen/home/home_screen.dart';
-import 'package:kiding/screen/login/login_splash_screen.dart';
 import 'package:kiding/screen/login/signup_screen.dart';
-import 'package:mysql1/mysql1.dart';
 
 import 'find_nickname_screen.dart';
 import 'find_password_screen.dart';
+
+import 'package:http/http.dart' as http;
 
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -19,9 +22,8 @@ class _StartScreenState extends State<StartScreen> {
   final _nicknameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isErrorVisible = false;
-  bool _isStayLoggedIn = false;  // 로그인 상태 유지
-  final _storage = FlutterSecureStorage();  // Secure storage 객체 생성
-
+  bool _isStayLoggedIn = false; // 로그인 상태 유지
+  final _storage = FlutterSecureStorage(); // Secure storage 객체 생성
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,7 @@ class _StartScreenState extends State<StartScreen> {
               Container(
                 width: screenSize.width * 0.7,
                 child: IconButton(
-                  onPressed: _login,
+                  onPressed: _loginSuccess,
                   padding: EdgeInsets.zero,
                   icon: Image.asset('assets/login/start_btn.png'),
                 ),
@@ -123,7 +125,7 @@ class _StartScreenState extends State<StartScreen> {
               Container(
                   child: _isErrorVisible
                       ? Image.asset('assets/login/start_error_text.png',
-                      width: 187.54, height: 36)
+                          width: 187.54, height: 36)
                       : SizedBox()),
             ],
           ),
@@ -189,32 +191,86 @@ class _StartScreenState extends State<StartScreen> {
     });
   }
 
-  // 닉네임과 비밀번호를 검증하는 로직 추가
-  Future<void> _login() async {
-    String nickname = _nicknameController.text.trim();
-    String password = _passwordController.text.trim();
+  // // 닉네임과 비밀번호를 검증하는 로직 추가
+  // Future<void> _login() async {
+  //   String nickname = _nicknameController.text.trim();
+  //   String password = _passwordController.text.trim();
+  //
+  //   if (nickname == "전시원" && password == "5236cool") {
+  //     if (_isStayLoggedIn) {
+  //       await _storage.write(key: 'isLoggedIn', value: 'true');
+  //       await _storage.write(key: 'nickname', value: nickname);
+  //     } else {
+  //       await _storage.delete(key: 'isLoggedIn');
+  //       await _storage.delete(key: 'nickname');
+  //     }
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  //   } else {
+  //     setState(() {
+  //       _isErrorVisible = true;
+  //     });
+  //   }
+  // }
 
-    if (nickname == "전시원" && password == "5236cool") {
+  Future<void> _loginSuccess() async {
+    String nickname = _nicknameController.text.trim();
+    String password = _passwordController.text.trim(); // password가 잘못되었던 부분을 수정
+
+    var url = Uri.parse('http://3.37.76.76:8081/login');
+    var response = await http.post(url,
+        body: jsonEncode({
+          'nickname': nickname,
+          'password': password,
+        }),
+        headers: {'Content-Type': 'application/json'});
+
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+
+      // 로그인 유지
       if (_isStayLoggedIn) {
         await _storage.write(key: 'isLoggedIn', value: 'true');
         await _storage.write(key: 'nickname', value: nickname);
+        await _storage.write(
+            key: 'userId', value: data['userId'].toString()); // userId를 저장
       } else {
         await _storage.delete(key: 'isLoggedIn');
         await _storage.delete(key: 'nickname');
+        await _storage.delete(key: 'userId'); // userId 삭제
       }
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                    userId: data['userId'],
+                  )));
     } else {
       setState(() {
         _isErrorVisible = true;
       });
+      // 오류 메시지 로그 출력
+      log('로그인에 실패했습니다.');
     }
   }
 
   Future<void> checkLoginStatus() async {
     String? isLoggedIn = await _storage.read(key: 'isLoggedIn');
     if (isLoggedIn != null && isLoggedIn == 'true') {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      String? userIdString = await _storage.read(key: 'userId');
+      int? userId = int.tryParse(userIdString ?? '');
+      if (userId != null) {
+        // userId가 null이 아니면, HomeScreen에 int 타입으로 userId를 전달합니다.
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    HomeScreen(userId: userId) // 여기서 int? 에러가 발생하지 않습니다.
+                ));
+      } else {
+        log('userId가 올바르지 않습니다.');
+      }
     }
   }
 

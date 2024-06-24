@@ -163,12 +163,13 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
         headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
       // 성공적인 회원가입 처리, 로그인 화면으로 이동
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => LoginSplashScreen(
-                nickname: widget.nickname, password: password)),
+                nickname: widget.nickname, userId: data['userId'])),
       );
     } else {
       // 오류 메시지를 보여주는 로직

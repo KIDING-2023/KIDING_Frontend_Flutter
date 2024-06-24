@@ -4,8 +4,12 @@ import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import '../space/space_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  final int userId;
+
+  const HomeScreen({super.key, required this.userId});
+
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {

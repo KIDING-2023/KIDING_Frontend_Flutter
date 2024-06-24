@@ -8,8 +8,9 @@ import '../home/home_screen.dart';
 
 class ChooseCharacterScreen extends StatefulWidget {
   final String nickname;
+  final int userId;
 
-  ChooseCharacterScreen({Key? key, required this.nickname}) : super(key: key);
+  ChooseCharacterScreen({Key? key, required this.nickname, required this.userId}) : super(key: key);
 
   @override
   _ChooseCharacterScreenState createState() => _ChooseCharacterScreenState();
@@ -118,7 +119,7 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
     if (response.statusCode == 200) {
       // 성공적인 처리, 홈 화면으로 이동
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context, MaterialPageRoute(builder: (context) => HomeScreen(userId: widget.userId,)));
     } else {
       // 오류 메시지 로그 출력
       log('캐릭터 설정에 실패하였습니다.');
