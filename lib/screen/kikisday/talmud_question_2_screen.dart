@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import '../../model/timer_model.dart';
 
 class KikisdayTalmudQuestion2Screen extends StatefulWidget {
-  const KikisdayTalmudQuestion2Screen({super.key, required int currentNumber});
+  final int userId;
+
+  const KikisdayTalmudQuestion2Screen({super.key, required int currentNumber, required this.userId});
 
   @override
   State<KikisdayTalmudQuestion2Screen> createState() => _KikisdayTalmudQuestion2ScreenState();
@@ -83,6 +85,7 @@ class _KikisdayTalmudQuestion2ScreenState extends State<KikisdayTalmudQuestion2S
                     MaterialPageRoute(
                         builder: (context) => KikisdayTalmudCompleteScreen(
                           currentNumber: 1,
+                          userId: widget.userId
                         )),
                   );
                 },

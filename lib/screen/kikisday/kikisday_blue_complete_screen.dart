@@ -11,8 +11,9 @@ import 'package:http/http.dart' as http;
 
 class KikisdayBlueCompleteScreen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  KikisdayBlueCompleteScreen({Key? key, required this.currentNumber})
+  KikisdayBlueCompleteScreen({Key? key, required this.currentNumber, required this.userId})
       : super(key: key);
 
   @override
@@ -44,12 +45,12 @@ class _KikisdayBlueCompleteScreenState
     switch (widget.currentNumber) {
       case 3:
         nextScreen =
-            KikisdayRandomDiceScreen(currentNumber: widget.currentNumber);
+            KikisdayRandomDiceScreen(currentNumber: widget.currentNumber, userId: widget.userId,);
         _answerSuccess();
         break;
       default:
         nextScreen =
-            KikisdayRandomDice2Screen(currentNumber: widget.currentNumber);
+            KikisdayRandomDice2Screen(currentNumber: widget.currentNumber, userId: widget.userId);
         _answerSuccess();
         break;
     }
@@ -69,7 +70,8 @@ class _KikisdayBlueCompleteScreenState
   Future<void> _answerSuccess() async {
     var url = Uri.parse('http://3.37.76.76:8081/boardgame');
     var response = await http.post(url,
-        body: jsonEncode({}),
+        body: jsonEncode(
+            {'name': '키키의 하루', 'userId': widget.userId}),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       // 성공적인 처리, 주사위 화면으로 이동

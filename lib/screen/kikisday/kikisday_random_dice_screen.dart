@@ -8,8 +8,9 @@ import '../../model/timer_model.dart';
 
 class KikisdayRandomDiceScreen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  KikisdayRandomDiceScreen({Key? key, required this.currentNumber})
+  KikisdayRandomDiceScreen({Key? key, required this.currentNumber, required this.userId})
       : super(key: key);
 
   @override
@@ -50,7 +51,14 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
+      // Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
+      // 다음 화면으로 전환하면서 userId 전달
+      Navigator.of(context).pushNamed(
+          nextScreen,
+          arguments: {
+            'userId': widget.userId, // 현재 위젯의 userId 속성을 전달
+          }
+      );
     }
   }
 

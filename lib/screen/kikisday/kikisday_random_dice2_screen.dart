@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -9,8 +8,10 @@ import '../../model/timer_model.dart';
 
 class KikisdayRandomDice2Screen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  KikisdayRandomDice2Screen({Key? key, required this.currentNumber})
+  KikisdayRandomDice2Screen(
+      {Key? key, required this.currentNumber, required this.userId})
       : super(key: key);
 
   @override
@@ -37,7 +38,8 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
   }
 
   void _initializeAndPlayVideo() {
-    _controller = VideoPlayerController.asset('assets/kikisday/kikisday_2_dice_${randomNumber}.mp4')
+    _controller = VideoPlayerController.asset(
+        'assets/kikisday/kikisday_2_dice_${randomNumber}.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller.play();
@@ -48,9 +50,10 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
   void _checkVideo() {
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller.value.position == _controller.value.duration) {
-      _controller.removeListener(_checkVideo);  // 리스너 제거
-      _controller.dispose();  // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
+      _controller.removeListener(_checkVideo); // 리스너 제거
+      _controller.dispose(); // 컨트롤러 해제
+      Navigator.of(context).pushNamed(nextScreen,
+          arguments: {'userId': widget.userId}); // 다음 화면으로 전환
     }
   }
 
@@ -89,41 +92,41 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
               },
               child: _rolledDice
                   ? FutureBuilder(
-                future: _initializeVideoPlayerFuture,
-                builder: (context, snapshot) {
-                  if (_controller.value.isInitialized) {
-                    return AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    );
-                  } else {
-                    return Center();
-                    //return Center(child: CircularProgressIndicator());
-                  }
-                },
-              )
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (_controller.value.isInitialized) {
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          return Center();
+                          //return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    )
                   : Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 315,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/kikisday/dice_swipe.png',
-                          width: 87.87, height: 139.91),
+                      children: <Widget>[
+                        Positioned(
+                          top: 315,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/kikisday/dice_swipe.png',
+                                width: 87.87, height: 139.91),
+                          ),
+                        ),
+                        Positioned(
+                          top: 380,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/kikisday/dice_img3.png',
+                                width: 360, height: 266.68),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Positioned(
-                    top: 380,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/kikisday/dice_img3.png',
-                          width: 360, height: 266.68),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
           // 주사위 텍스트 이미지
@@ -131,7 +134,8 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
             top: 125.22,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png', width: 339.79, height: 117.96),
+            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png',
+                width: 339.79, height: 117.96),
           ),
           // 뒤로 가기 버튼
           Positioned(

@@ -10,6 +10,22 @@ class Kikisday3Screen extends StatefulWidget {
 }
 
 class _Kikisday3ScreenState extends State<Kikisday3Screen> {
+  late int userId;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 인자를 추출합니다.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)!.settings.arguments as Map;
+      if (args != null) {
+        userId = args['userId']; // userId 인자 사용
+        // userId를 사용한 추가 로직
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CardLayout(
@@ -17,7 +33,7 @@ class _Kikisday3ScreenState extends State<Kikisday3Screen> {
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textStr: 'assets/kikisday/kikisday_3_text.png',
       cardStr: 'assets/kikisday/kikisday_blue_card.png',
-      completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3),
+      completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3, userId: userId),
       okBtnStr: 'assets/kikisday/kikisday_blue_btn.png',
       timerColor: Color(0xFF868686),
     );

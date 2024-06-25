@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/layout/tutorial_layout.dart';
 
 class KikisdayTutorial1Screen extends StatefulWidget {
+  final int userId;
+
+  const KikisdayTutorial1Screen({super.key, required this.userId});
+
   @override
   _KikisdayTutorial1ScreenState createState() =>
       _KikisdayTutorial1ScreenState();
@@ -18,8 +23,9 @@ class _KikisdayTutorial1ScreenState extends State<KikisdayTutorial1Screen> {
       characterWid: Image.asset('assets/kikisday/kikisday_tutorial1_ch.png',
           width: 360, height: 348.39),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-      nextScreenStr: '/kikisday_tutorial2',
       timerColorStr: Color(0xFF868686),
+      screenBuilder: (context) =>
+          KikisdayTutorial2Screen(userId: widget.userId),
     );
   }
 }

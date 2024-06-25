@@ -7,7 +7,9 @@ import 'package:provider/provider.dart';
 import '../../model/timer_model.dart';
 
 class KikisdaySongScreen extends StatefulWidget {
-  const KikisdaySongScreen({super.key});
+  final int userId;
+
+  const KikisdaySongScreen({super.key, required this.userId});
 
   @override
   State<KikisdaySongScreen> createState() => _KikisdaySongScreenState();
@@ -35,6 +37,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
       MaterialPageRoute(
         builder: (context) => KikisdayTalmudStory1Screen(
           currentNumber: 1,
+          userId: widget.userId
         ),
       ),
     );

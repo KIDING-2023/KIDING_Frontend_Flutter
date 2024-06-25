@@ -8,6 +8,10 @@ import 'package:video_player/video_player.dart';
 import '../../model/timer_model.dart';
 
 class KikisdayDiceScreen extends StatefulWidget {
+  final int userId;
+
+  const KikisdayDiceScreen({super.key, required this.userId});
+
   @override
   _KikisdayDiceScreenState createState() => _KikisdayDiceScreenState();
 }
@@ -40,7 +44,7 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
       _controller.dispose(); // 컨트롤러 해제
       Navigator.pushReplacement(  // 새 화면으로 전환
         context,
-        MaterialPageRoute(builder: (context) => KikisdaySongScreen()),
+        MaterialPageRoute(builder: (context) => KikisdaySongScreen(userId: widget.userId)),
       );
     }
   }

@@ -10,8 +10,9 @@ import 'package:http/http.dart' as http;
 
 class KikisdayOrangeComplete2Screen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  KikisdayOrangeComplete2Screen({Key? key, required this.currentNumber})
+  KikisdayOrangeComplete2Screen({Key? key, required this.currentNumber, required this.userId})
       : super(key: key);
 
   @override
@@ -50,14 +51,15 @@ class _KikisdayOrangeComplete2ScreenState
   Future<void> _answerSuccess() async {
     var url = Uri.parse('http://3.37.76.76:8081/boardgame');
     var response = await http.post(url,
-        body: jsonEncode({}),
+        body: jsonEncode(
+            {'name': '키키의 하루', 'userId': widget.userId}),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (context) => KikisdayRandomDice3Screen(
-            currentNumber: widget.currentNumber,
+            currentNumber: widget.currentNumber, userId: widget.userId,
           ),
         ),
       );

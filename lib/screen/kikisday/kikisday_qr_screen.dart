@@ -2,14 +2,15 @@ import 'dart:developer';
 import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 
 class KikisdayQrScreen extends StatefulWidget {
-  const KikisdayQrScreen({Key? key}) : super(key: key);
+  final int userId;
+
+  const KikisdayQrScreen({Key? key, required this.userId}) : super(key: key);
 
   @override
   State<KikisdayQrScreen> createState() => _KikisdayQrScreenState();
@@ -283,7 +284,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => KikisdayTutorial1Screen(),
+            builder: (context) => KikisdayTutorial1Screen(userId: widget.userId,),
           ),
         );
       });

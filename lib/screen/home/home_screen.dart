@@ -270,13 +270,19 @@ class _HomeScreenState extends State<HomeScreen> {
           // kikisday_play_screen으로 이동
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
+            MaterialPageRoute(
+                builder: (context) => KikisdayPlayScreen(
+                      userId: widget.userId,
+                    )),
           );
         } else {
           // space_play_screen으로 이동
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SpacePlayScreen()),
+            MaterialPageRoute(
+                builder: (context) => SpacePlayScreen(
+                      userId: widget.userId,
+                    )),
           );
         }
       },
@@ -309,7 +315,8 @@ class _HomeScreenState extends State<HomeScreen> {
               //             fontFamily: 'Nanum')),
               //   ],
               // ),
-              child: Text(userCountText,
+              child: Text(
+                userCountText,
                 style: TextStyle(
                   color: textColor,
                   fontSize: 11.38,

@@ -5,7 +5,9 @@ import 'package:kiding/screen/kikisday/talmud_question_1_screen.dart';
 import '../layout/talmud_story_layout.dart';
 
 class KikisdayTalmudStory4Screen extends StatefulWidget {
-  const KikisdayTalmudStory4Screen({super.key, required int currentNumber});
+  final int userId;
+
+  const KikisdayTalmudStory4Screen({super.key, required int currentNumber, required this.userId});
 
   @override
   State<KikisdayTalmudStory4Screen> createState() =>
@@ -35,6 +37,7 @@ class _KikisdayTalmudStory4ScreenState
       MaterialPageRoute(
         builder: (context) => KikisdayTalmudQuestion1Screen(
           currentNumber: 1,
+          userId: widget.userId
         ),
       ),
     );

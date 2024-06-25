@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
 
 import '../layout/tutorial_layout.dart';
 
 class SpaceTutorial2Screen extends StatefulWidget {
-  const SpaceTutorial2Screen({super.key});
+  final int userId;
+
+  const SpaceTutorial2Screen({super.key, required this.userId});
 
   @override
   State<SpaceTutorial2Screen> createState() => _SpaceTutorial2ScreenState();
@@ -26,8 +29,8 @@ class _SpaceTutorial2ScreenState extends State<SpaceTutorial2Screen> {
         height: 302.53,
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-      nextScreenStr: '/space_tutorial_dice',
       timerColorStr: Color(0xFFE7E7E7),
+      screenBuilder: (context) => SpaceTutorialDiceScreen(userId: widget.userId),
     );
   }
 }

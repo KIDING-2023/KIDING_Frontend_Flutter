@@ -10,8 +10,9 @@ import 'package:http/http.dart' as http;
 
 class KikisdayGreenCompleteScreen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  KikisdayGreenCompleteScreen({Key? key, required this.currentNumber})
+  KikisdayGreenCompleteScreen({Key? key, required this.currentNumber, required this.userId})
       : super(key: key);
 
   @override
@@ -50,7 +51,8 @@ class _KikisdayGreenCompleteScreenState
   Future<void> _answerSuccess() async {
     var url = Uri.parse('http://3.37.76.76:8081/boardgame');
     var response = await http.post(url,
-        body: jsonEncode({}),
+        body: jsonEncode(
+            {'name': '키키의 하루', 'userId': widget.userId}),
         headers: {'Content-Type': 'application/json'});
     if (response.statusCode == 200) {
       // 성공적인 처리, 주사위 화면으로 이동
@@ -59,6 +61,7 @@ class _KikisdayGreenCompleteScreenState
         MaterialPageRoute(
           builder: (context) => KikisdayRandomDiceScreen(
             currentNumber: widget.currentNumber,
+            userId: widget.userId,
           ),
         ),
       );

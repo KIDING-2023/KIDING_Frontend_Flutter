@@ -8,8 +8,9 @@ import '../../model/timer_model.dart';
 
 class KikisdayRandomDice4Screen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  KikisdayRandomDice4Screen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayRandomDice4Screen({Key? key, required this.currentNumber, required this.userId}) : super(key: key);
 
   @override
   State<KikisdayRandomDice4Screen> createState() => _KikisdayRandomDice4ScreenState();
@@ -47,7 +48,7 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo);  // 리스너 제거
       _controller.dispose();  // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
+      Navigator.of(context).pushNamed(nextScreen, arguments: {'userId': widget.userId}); // 다음 화면으로 전환
     }
   }
 

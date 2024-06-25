@@ -6,15 +6,15 @@ import '../../model/timer_model.dart';
 class PlayLayout extends StatelessWidget {
   final String bg;
   final String backIcon;
-  final String nextScreen;
+  final WidgetBuilder screenBuilder;
   final String playBtn;
 
   const PlayLayout(
       {super.key,
       required this.bg,
       required this.backIcon,
-      required this.nextScreen,
-      required this.playBtn});
+      required this.playBtn,
+      required this.screenBuilder});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,10 @@ class PlayLayout extends StatelessWidget {
                       Provider.of<TimerModel>(context, listen: false);
                   timerModel.startTimer();
                   // 각 튜토리얼 화면으로 이동
-                  Navigator.of(context).pushNamed(nextScreen);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: screenBuilder),
+                  );
                 },
                 child: Center(
                   child: Image.asset(playBtn, width: 300.0, height: 45.0),
