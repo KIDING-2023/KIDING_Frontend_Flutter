@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SpaceTutorialDiceScreen extends StatefulWidget {
-  const SpaceTutorialDiceScreen({super.key});
+  final int userId;
+
+  const SpaceTutorialDiceScreen({super.key, required this.userId});
 
   @override
   State<SpaceTutorialDiceScreen> createState() => _SpaceTutorialDiceScreenState();

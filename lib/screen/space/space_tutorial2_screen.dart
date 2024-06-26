@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/space/space_random_dice_screen.dart';
 import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
 
 import '../layout/tutorial_layout.dart';
@@ -30,7 +31,8 @@ class _SpaceTutorial2ScreenState extends State<SpaceTutorial2Screen> {
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
       timerColorStr: Color(0xFFE7E7E7),
-      screenBuilder: (context) => SpaceTutorialDiceScreen(userId: widget.userId),
+      // 튜토리얼 주사위 화면으로 수정 필요
+      screenBuilder: (context) => SpaceRandomDiceScreen(userId: widget.userId, currentNumber: 3,),
     );
   }
 }

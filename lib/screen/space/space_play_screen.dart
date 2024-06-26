@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/layout/play_layout.dart';
+import 'package:kiding/screen/space/space_qr_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 
 class SpacePlayScreen extends StatefulWidget {
@@ -17,7 +18,7 @@ class _SpacePlayScreenState extends State<SpacePlayScreen> {
     return PlayLayout(
         bg: 'assets/space/space_bg.png',
         backIcon: 'assets/space/back_icon_white.png',
-        screenBuilder: (context) => SpaceTutorial1Screen(userId: widget.userId),
+        screenBuilder: (context) => SpaceQrScreen(userId: widget.userId),
         playBtn: 'assets/kikisday/kikiplay_btn.png');
   }
 }

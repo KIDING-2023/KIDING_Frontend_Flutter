@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -6,10 +7,13 @@ import 'package:kiding/screen/space/space_random_dice_3_screen.dart';
 
 import '../layout/complete_layout.dart';
 
+import 'package:http/http.dart' as http;
+
 class SpaceSaturnCompleteScreen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  const SpaceSaturnCompleteScreen({super.key, required this.currentNumber});
+  const SpaceSaturnCompleteScreen({super.key, required this.currentNumber, required this.userId});
 
   @override
   State<SpaceSaturnCompleteScreen> createState() => _SpaceSaturnCompleteScreenState();
@@ -41,13 +45,10 @@ class _SpaceSaturnCompleteScreenState extends State<SpaceSaturnCompleteScreen> {
       //   break;
       default:
         nextScreen =
-            SpaceRandomDice3Screen(currentNumber: widget.currentNumber);
+            SpaceRandomDice3Screen(currentNumber: widget.currentNumber, userId: widget.userId,);
+        _answerSuccess();
         break;
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextScreen),
-    );
     log('currentNumber: ${widget.currentNumber}');
   }
 
@@ -59,5 +60,25 @@ class _SpaceSaturnCompleteScreenState extends State<SpaceSaturnCompleteScreen> {
       completeStr: 'assets/space/saturn_complete_text.png',
       timerColor: Color(0xFFE7E7E7),
     );
+  }
+
+  // 답변 완료 데베 전달
+  Future<void> _answerSuccess() async {
+    var url = Uri.parse('http://3.37.76.76:8081/boardgame');
+    var response = await http.post(url,
+        body: jsonEncode(
+            {'name': '키키의 우주여행', 'userId': widget.userId}),
+        headers: {'Content-Type': 'application/json'});
+    if (response.statusCode == 200) {
+      // 성공적인 처리, 주사위 화면으로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => nextScreen),
+      );
+      log('currentNumber: ${widget.currentNumber}');
+    } else {
+      // 오류 메시지 로그 출력
+      log('답변 완료에 실패하였습니다.');
+    }
   }
 }

@@ -9,7 +9,9 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io' as io;
 
 class SpaceQrScreen extends StatefulWidget {
-  const SpaceQrScreen({super.key});
+  final int userId;
+
+  const SpaceQrScreen({super.key, required this.userId});
 
   @override
   State<SpaceQrScreen> createState() => _SpaceQrScreenState();
@@ -246,7 +248,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SpaceTutorial1Screen(),
+            builder: (context) => SpaceTutorial1Screen(userId: widget.userId,),
           ),
         );
       });

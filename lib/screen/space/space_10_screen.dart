@@ -12,6 +12,22 @@ class Space10Screen extends StatefulWidget {
 }
 
 class _Space10ScreenState extends State<Space10Screen> {
+  late int userId;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // 인자를 추출합니다.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)!.settings.arguments as Map;
+      if (args != null) {
+        userId = args['userId']; // userId 인자 사용
+        // userId를 사용한 추가 로직
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return CardLayout(
@@ -20,7 +36,7 @@ class _Space10ScreenState extends State<Space10Screen> {
         textStr: 'assets/space/10_text.png',
         cardStr: 'assets/space/saturn_card.png',
         completeScreen: SpaceSaturnCompleteScreen(
-          currentNumber: 10,
+          currentNumber: 10, userId: userId
         ),
         okBtnStr: 'assets/space/saturn_card_btn.png',
         timerColor: Color(0xFFE7E7E7));

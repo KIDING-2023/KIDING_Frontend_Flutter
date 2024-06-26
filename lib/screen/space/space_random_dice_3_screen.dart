@@ -8,8 +8,9 @@ import '../../model/timer_model.dart';
 
 class SpaceRandomDice3Screen extends StatefulWidget {
   final int currentNumber;
+  final int userId;
 
-  const SpaceRandomDice3Screen({super.key, required this.currentNumber});
+  const SpaceRandomDice3Screen({super.key, required this.currentNumber, required this.userId});
 
   @override
   State<SpaceRandomDice3Screen> createState() => _SpaceRandomDice3ScreenState();
