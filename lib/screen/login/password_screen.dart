@@ -77,8 +77,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     ),
                     // 비밀번호 오류 메시지
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(padding: EdgeInsets.only(left: 70.0)),
                         Visibility(
                           child: Icon(
                             Icons.circle,

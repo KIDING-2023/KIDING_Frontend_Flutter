@@ -79,8 +79,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
                     ),
                     // 인증번호 메시지
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+                        Padding(padding: EdgeInsets.only(left: 70.0)),
                         Visibility(
                           visible: errorVisible,
                           child: Icon(

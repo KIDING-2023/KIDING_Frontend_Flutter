@@ -70,8 +70,8 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                   ),
                   // 전화번호 오류 메시지
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Padding(padding: EdgeInsets.only(left: 70.0)),
                       Visibility(
                         visible: errorVisible,
                         child: Icon(
