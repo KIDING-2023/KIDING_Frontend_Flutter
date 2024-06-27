@@ -40,7 +40,7 @@ class PlayLayout extends StatelessWidget {
               ),
             ),
             Positioned(
-              bottom: 10.0,
+              bottom: 30.0,
               left: 0,
               right: 0,
               child: GestureDetector(
