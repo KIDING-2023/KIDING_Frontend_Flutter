@@ -44,6 +44,7 @@ import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:provider/provider.dart';
 
+import 'firebase_options.dart';
 import 'model/timer_model.dart';
 
 const HOME_ROUTE = '/';
@@ -51,7 +52,7 @@ const HOME_ROUTE = '/';
 void main() async {
   //dbConnector();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(
     MultiProvider( // 여러 Provider를 사용할 경우 MultiProvider 사용
       providers: [

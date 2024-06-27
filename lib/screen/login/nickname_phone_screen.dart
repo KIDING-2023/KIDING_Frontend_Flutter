@@ -32,70 +32,89 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: Stack(
         children: [
-          // 안내문
-          Image.asset('assets/login/phone_greeting_text.png',
-              width: 267.47, height: 128),
+          // 뒤로가기 버튼
+          Positioned(
+            top: 30.0,
+            left: 30.0,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Image.asset('assets/kikisday/back_icon.png',
+                    width: 13.16, height: 20.0),
+              ),
+            ),
+          ),
           Column(
-            // 인증번호 입력 칸
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                width: screenSize.width * 0.7,
-                child: TextField(
-                  controller: _codeController,
-                  decoration: InputDecoration(
-                      hintText: '인증번호를 입력하세요',
-                      hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                      filled: true,
-                      fillColor: Colors.white,
-                      enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(100)),
-                      contentPadding: EdgeInsets.only(left: 20)),
-                  style: TextStyle(
-                    fontFamily: 'nanum',
-                    fontSize: 17,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              // 인증번호 오류 메시지
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              // 안내문
+              Image.asset('assets/login/phone_greeting_text.png',
+                  width: 267.47, height: 128),
+              Column(
+                // 인증번호 입력 칸
                 children: [
-                  Visibility(
-                    visible: errorVisible,
-                    child: Icon(
-                      Icons.circle,
-                      size: 2.63,
-                      fill: 1.0,
-                      color: Color(0xFFFFA37C),
+                  Container(
+                    width: screenSize.width * 0.7,
+                    child: TextField(
+                      controller: _codeController,
+                      decoration: InputDecoration(
+                          hintText: '인증번호를 입력하세요',
+                          hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(100)),
+                          contentPadding: EdgeInsets.only(left: 20)),
+                      style: TextStyle(
+                        fontFamily: 'nanum',
+                        fontSize: 17,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
-                  Padding(padding: EdgeInsets.only(left: 5.0)),
-                  Text(
-                    errorMessage,
-                    style: TextStyle(
-                        fontFamily: 'nanum',
-                        fontSize: 13,
-                        color: Color(0xFFFFA37C)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  // 인증번호 오류 메시지
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Visibility(
+                        visible: errorVisible,
+                        child: Icon(
+                          Icons.circle,
+                          size: 2.63,
+                          fill: 1.0,
+                          color: Color(0xFFFFA37C),
+                        ),
+                      ),
+                      Padding(padding: EdgeInsets.only(left: 5.0)),
+                      Text(
+                        errorMessage,
+                        style: TextStyle(
+                            fontFamily: 'nanum',
+                            fontSize: 13,
+                            color: Color(0xFFFFA37C)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  // 닉네임 찾기 버튼
+                  IconButton(
+                    onPressed: _verifyCode,
+                    padding: EdgeInsets.zero,
+                    icon: Image.asset('assets/login/find_nickname_btn.png',
+                        width: screenSize.width * 0.7),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              // 닉네임 찾기 버튼
-              IconButton(
-                onPressed: _verifyCode,
-                padding: EdgeInsets.zero,
-                icon: Image.asset('assets/login/find_nickname_btn.png',
-                    width: screenSize.width * 0.7),
               ),
             ],
           ),
