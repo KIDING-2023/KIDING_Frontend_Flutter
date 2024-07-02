@@ -36,7 +36,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
   void _initializeAndPlayVideo() {
     _controller = VideoPlayerController.asset(
       // 우주여행 주사위로 변경해야 함
-        'assets/kikisday/dice${randomNumber}_video.mp4')
+        'assets/space/dice_${randomNumber}_venus.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller.play();
