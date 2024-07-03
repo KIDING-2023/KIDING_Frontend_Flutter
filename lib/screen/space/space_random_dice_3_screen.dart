@@ -67,7 +67,7 @@ class _SpaceRandomDice3ScreenState extends State<SpaceRandomDice3Screen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/space/saturn_dice_bg.png',
+              'assets/space/saturn_blur_bg.png',
               fit: BoxFit.cover,
             ),
           ),
