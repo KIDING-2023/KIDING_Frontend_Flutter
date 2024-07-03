@@ -113,13 +113,11 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
                     ),
                   ),
                   Positioned(
-                    top: 380,
+                    top: 80,
                     left: 0,
                     right: 0,
                     child: Center(
-                      // 우주여행 주사위 이미지로 변경해야 함
-                      child: Image.asset('assets/kikisday/dice_img3.png',
-                          width: 360, height: 266.68),
+                      child: Image.asset('assets/space/dice.png'),
                     ),
                   ),
                 ],
