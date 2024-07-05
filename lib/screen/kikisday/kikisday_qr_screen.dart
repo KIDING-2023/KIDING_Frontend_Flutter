@@ -81,7 +81,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
         children: <Widget>[
           _buildQrView(context),
           Positioned(
-            top: 150,
+            top: 200,
             left: 0,
             right: 0,
             child: RichText(
@@ -227,7 +227,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   // }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 200.0;
+    var scanArea = 250.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
@@ -236,8 +236,8 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
       overlay: QrScannerOverlayShape(
           borderColor: Color(0xFFFF8A5B),
           borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
+          borderLength: 50,
+          borderWidth: 20,
           cutOutSize: scanArea),
       onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
     );
