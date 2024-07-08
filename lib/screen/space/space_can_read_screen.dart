@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
 
+// 필요 없어질 예정...
+
 class SpaceCanReadScreen extends StatefulWidget {
   const SpaceCanReadScreen({super.key});
 
@@ -65,7 +67,7 @@ class _SpaceCanReadScreenState extends State<SpaceCanReadScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SpaceTutorial1Screen(canread: true)));
+                              SpaceTutorial1Screen()));
                 },
                 child: Image.asset('assets/space/can_read_button.png',
                     width: 268.06, height: 44.75),
@@ -80,7 +82,7 @@ class _SpaceCanReadScreenState extends State<SpaceCanReadScreen> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              SpaceTutorial1Screen(canread: false)));
+                              SpaceTutorial1Screen()));
                 },
                 child: Image.asset('assets/space/can_not_read_button.png',
                     width: 268.06, height: 44.75),

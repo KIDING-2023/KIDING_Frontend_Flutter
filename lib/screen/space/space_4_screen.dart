@@ -13,29 +13,29 @@ class Space4Screen extends StatefulWidget {
 }
 
 class _Space4ScreenState extends State<Space4Screen> {
-  late bool canread;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // 인자를 추출합니다.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)!.settings.arguments as Map;
-      if (args != null) {
-        canread = args['canread'];
-        // canread가 false인 경우 3초 후에 화면 전환
-        if (!canread) {
-          Timer(Duration(seconds: 3), () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => SpaceBarcodeTextScreen(currentNumber: 4, canread: canread)),
-            );
-          });
-        }
-      }
-    });
-  }
+  // late bool canread;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   // 인자를 추출합니다.
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     final args = ModalRoute.of(context)!.settings.arguments as Map;
+  //     if (args != null) {
+  //       canread = args['canread'];
+  //       // canread가 false인 경우 3초 후에 화면 전환
+  //       if (!canread) {
+  //         Timer(Duration(seconds: 3), () {
+  //           Navigator.pushReplacement(
+  //             context,
+  //             MaterialPageRoute(builder: (context) => SpaceBarcodeTextScreen(currentNumber: 4, canread: canread)),
+  //           );
+  //         });
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _Space4ScreenState extends State<Space4Screen> {
         textStr: 'assets/space/4_text.png',
         cardStr: 'assets/space/venus_card.png',
         completeScreen: SpaceVenusCompleteScreen(
-          currentNumber: 4, canread: true,
+          currentNumber: 4
         ),
         okBtnStr: 'assets/space/venus_card_btn.png',
         timerColor: Color(0xFFE7E7E7));

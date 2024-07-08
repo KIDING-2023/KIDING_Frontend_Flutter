@@ -8,10 +8,10 @@ import '../../model/timer_model.dart';
 
 class SpaceRandomDiceScreen extends StatefulWidget {
   final int currentNumber;
-  final bool canread;
+  // final bool canread;
 
   const SpaceRandomDiceScreen(
-      {super.key, required this.currentNumber, required this.canread});
+      {super.key, required this.currentNumber});
 
   @override
   State<SpaceRandomDiceScreen> createState() => _SpaceRandomDiceScreenState();
@@ -51,9 +51,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen, arguments: {
-        'canread': widget.canread, // 현재 위젯의 userId 속성을 전달
-      }); // 다음 화면으로 전환
+      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
     }
   }
 

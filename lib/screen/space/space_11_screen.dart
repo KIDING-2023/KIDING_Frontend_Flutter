@@ -15,29 +15,29 @@ class Space11Screen extends StatefulWidget {
 }
 
 class _Space11ScreenState extends State<Space11Screen> {
-  late bool canread;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // 인자를 추출합니다.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)!.settings.arguments as Map;
-      if (args != null) {
-        canread = args['canread'];
-        // canread가 false인 경우 3초 후에 화면 전환
-        if (!canread) {
-          Timer(Duration(seconds: 3), () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => SpaceBarcodeTextScreen(currentNumber: 11, canread: canread)),
-            );
-          });
-        }
-      }
-    });
-  }
+  // late bool canread;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   // 인자를 추출합니다.
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     final args = ModalRoute.of(context)!.settings.arguments as Map;
+  //     if (args != null) {
+  //       canread = args['canread'];
+  //       // canread가 false인 경우 3초 후에 화면 전환
+  //       if (!canread) {
+  //         Timer(Duration(seconds: 3), () {
+  //           Navigator.pushReplacement(
+  //             context,
+  //             MaterialPageRoute(builder: (context) => SpaceBarcodeTextScreen(currentNumber: 11, canread: canread)),
+  //           );
+  //         });
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class _Space11ScreenState extends State<Space11Screen> {
         textStr: 'assets/space/11_text.png',
         cardStr: 'assets/space/saturn_card.png',
         completeScreen: SpaceSaturnCompleteScreen(
-          currentNumber: 11, canread: true,
+          currentNumber: 11
         ),
         okBtnStr: 'assets/space/saturn_card_btn.png',
         timerColor: Color(0xFFE7E7E7));

@@ -205,11 +205,11 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
     });
     // 각 카드덱의 답변 완료 화면으로 이동
     if (widget.currentNumber <= 6) {
-      nextScreen = SpaceVenusCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread,);
+      nextScreen = SpaceVenusCompleteScreen(currentNumber: widget.currentNumber);
     } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
-      nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread);
+      nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber);
     } else {
-      nextScreen = SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread);
+      nextScreen = SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber);
     }
     Navigator.pushReplacement(
       context,

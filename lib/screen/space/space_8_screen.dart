@@ -14,29 +14,29 @@ class Space8Screen extends StatefulWidget {
 }
 
 class _Space8ScreenState extends State<Space8Screen> {
-  late bool canread;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // 인자를 추출합니다.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)!.settings.arguments as Map;
-      if (args != null) {
-        canread = args['canread'];
-        // canread가 false인 경우 3초 후에 화면 전환
-        if (!canread) {
-          Timer(Duration(seconds: 3), () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => SpaceBarcodeTextScreen(currentNumber: 8, canread: canread)),
-            );
-          });
-        }
-      }
-    });
-  }
+  // late bool canread;
+  //
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   // 인자를 추출합니다.
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     final args = ModalRoute.of(context)!.settings.arguments as Map;
+  //     if (args != null) {
+  //       canread = args['canread'];
+  //       // canread가 false인 경우 3초 후에 화면 전환
+  //       if (!canread) {
+  //         Timer(Duration(seconds: 3), () {
+  //           Navigator.pushReplacement(
+  //             context,
+  //             MaterialPageRoute(builder: (context) => SpaceBarcodeTextScreen(currentNumber: 8, canread: canread)),
+  //           );
+  //         });
+  //       }
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class _Space8ScreenState extends State<Space8Screen> {
         textStr: 'assets/space/8_text.png',
         cardStr: 'assets/space/mars_card.png',
         completeScreen: SpaceMarsCompleteScreen(
-          currentNumber: 8, canread: true,
+          currentNumber: 8
         ),
         okBtnStr: 'assets/space/mars_card_btn.png',
         timerColor: Color(0xFFE7E7E7));

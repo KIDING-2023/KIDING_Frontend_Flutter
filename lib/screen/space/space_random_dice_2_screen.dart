@@ -7,10 +7,10 @@ import 'package:video_player/video_player.dart';
 import '../../model/timer_model.dart';
 
 class SpaceRandomDice2Screen extends StatefulWidget {
-  final bool canread;
+  //final bool canread;
   final int currentNumber;
 
-  const SpaceRandomDice2Screen({super.key, required this.currentNumber, required this.canread});
+  const SpaceRandomDice2Screen({super.key, required this.currentNumber});
 
   @override
   State<SpaceRandomDice2Screen> createState() => _SpaceRandomDice2ScreenState();
@@ -50,9 +50,7 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen, arguments: {
-        'canread': widget.canread, // 현재 위젯의 userId 속성을 전달
-      }); // 다음 화면으로 전환
+      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
     }
   }
 
