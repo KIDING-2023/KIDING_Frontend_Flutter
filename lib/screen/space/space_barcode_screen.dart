@@ -160,7 +160,7 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
       overlay: QrScannerOverlayShape(
           borderColor: Color(0xFFFF8A5B),
           borderRadius: 10,
-          borderLength: 50,
+          borderLength: 30,
           borderWidth: 20,
           cutOutWidth: scanWidth,
           cutOutHeight: scanHeight),
@@ -199,26 +199,22 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
   }
 
   void _navigateToNextScreen() {
-    if (result != null) {
-      Future.delayed(Duration(seconds: 3), () {
-        setState(() {
-          controller?.pauseCamera();
-          controller?.dispose();
-        });
-        // 각 카드덱의 답변 완료 화면으로 이동
-        if (widget.currentNumber <= 6) {
-          nextScreen = SpaceVenusCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread,);
-        } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
-          nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread);
-        } else {
-          nextScreen = SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread);
-        }
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => nextScreen),
-        );
-        log('currentNumber: ${widget.currentNumber}');
-      });
+    setState(() {
+      controller?.pauseCamera();
+      controller?.dispose();
+    });
+    // 각 카드덱의 답변 완료 화면으로 이동
+    if (widget.currentNumber <= 6) {
+      nextScreen = SpaceVenusCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread,);
+    } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
+      nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread);
+    } else {
+      nextScreen = SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber, canread: widget.canread);
     }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => nextScreen),
+    );
+    log('currentNumber: ${widget.currentNumber}');
   }
 }

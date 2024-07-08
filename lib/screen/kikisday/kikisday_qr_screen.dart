@@ -274,19 +274,15 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   }
 
   void _navigateToNextScreen() {
-    if (result != null) {
-      Future.delayed(Duration(seconds: 3), () {
-        setState(() {
-          controller?.pauseCamera();
-          controller?.dispose();
-        });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => KikisdayTutorial1Screen(),
-          ),
-        );
-      });
-    }
+    setState(() {
+      controller?.pauseCamera();
+      controller?.dispose();
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => KikisdayTutorial1Screen(),
+      ),
+    );
   }
 }

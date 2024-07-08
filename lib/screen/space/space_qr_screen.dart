@@ -238,19 +238,29 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   }
 
   void _navigateToNextScreen() {
-    if (result != null) {
-      Future.delayed(Duration(seconds: 3), () {
-        setState(() {
-          controller?.pauseCamera();
-          controller?.dispose();
-        });
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SpaceCanReadScreen(),
-          ),
-        );
-      });
-    }
+    setState(() {
+      controller?.pauseCamera();
+      controller?.dispose();
+    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => SpaceCanReadScreen(),
+      ),
+    );
+    // if (result != null) {
+    //   Future.delayed(Duration(seconds: 3), () {
+    //     setState(() {
+    //       controller?.pauseCamera();
+    //       controller?.dispose();
+    //     });
+    //     Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //         builder: (context) => SpaceCanReadScreen(),
+    //       ),
+    //     );
+    //   });
+    // }
   }
 }
