@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/space/space_random_dice_screen.dart';
 
 import '../layout/tutorial_layout.dart';
 
 class SpaceTutorial2Screen extends StatefulWidget {
-  const SpaceTutorial2Screen({super.key});
+  final bool canread;
+
+  const SpaceTutorial2Screen({super.key, required this.canread});
 
   @override
   State<SpaceTutorial2Screen> createState() => _SpaceTutorial2ScreenState();
@@ -26,7 +29,7 @@ class _SpaceTutorial2ScreenState extends State<SpaceTutorial2Screen> {
         height: 302.53,
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-      nextScreenStr: '/space_tutorial_dice',
+      nextScreen: SpaceRandomDiceScreen(canread: widget.canread, currentNumber: 3,),
       timerColorStr: Color(0xFFE7E7E7),
     );
   }

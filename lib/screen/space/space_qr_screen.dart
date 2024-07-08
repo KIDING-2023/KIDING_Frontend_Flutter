@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:image_picker/image_picker.dart';
+import 'package:kiding/screen/space/space_can_read_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -162,7 +163,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Image.asset(
-                'assets/kikisday/back_icon.png',
+                'assets/space/back_icon_white.png',
                 width: 13.16,
                 height: 20.0,
               ),
@@ -246,7 +247,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SpaceTutorial1Screen(),
+            builder: (context) => SpaceCanReadScreen(),
           ),
         );
       });

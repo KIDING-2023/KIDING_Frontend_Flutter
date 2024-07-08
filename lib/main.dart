@@ -68,10 +68,6 @@ void main() async {
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
           '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),
           '/space_qr': (context) => SpaceQrScreen(),
-          '/space_tutorial1': (context) => SpaceTutorial1Screen(),
-          '/space_tutorial2': (context) => SpaceTutorial2Screen(),
-          // 우주여행 튜토리얼 주사위 화면으로 수정해야 함
-          '/space_tutorial_dice': (context) => SpaceRandomDiceScreen(currentNumber: 3,),
           '/kikisday2': (context) => Kikisday2Screen(),
           '/kikisday3': (context) => Kikisday3Screen(),
           '/kikisday4': (context) => Kikisday4Screen(),

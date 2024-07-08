@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
 import 'package:kiding/screen/layout/tutorial_layout.dart';
 
 class KikisdayTutorial2Screen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
         height: 302.53,
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-      nextScreenStr: '/kikisday_tutorial_dice',
+      nextScreen: KikisdayDiceScreen(),
       timerColorStr: Color(0xFF868686),
     );
   }

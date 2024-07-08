@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/layout/tutorial_layout.dart';
+import 'package:kiding/screen/space/space_tutorial2_screen.dart';
 
 class SpaceTutorial1Screen extends StatefulWidget {
-  const SpaceTutorial1Screen({super.key});
+  final bool canread;
+
+  const SpaceTutorial1Screen({super.key, required this.canread});
 
   @override
   State<SpaceTutorial1Screen> createState() => _SpaceTutorial1ScreenState();
@@ -19,7 +22,7 @@ class _SpaceTutorial1ScreenState extends State<SpaceTutorial1Screen> {
       characterWid: Image.asset('assets/space/space_tutorial1_ch.png',
           width: 360, height: 348.39),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-      nextScreenStr: '/space_tutorial2',
+      nextScreen: SpaceTutorial2Screen(canread: widget.canread),
       timerColorStr: Color(0xFFE7E7E7),
     );
   }

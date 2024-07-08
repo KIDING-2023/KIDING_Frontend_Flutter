@@ -10,7 +10,7 @@ class TutorialLayout extends StatelessWidget {
   final Widget textWid;
   final Widget characterWid;
   final String okBtnStr;
-  final String nextScreenStr;
+  final Widget nextScreen;
 
   const TutorialLayout(
       {super.key,
@@ -19,7 +19,7 @@ class TutorialLayout extends StatelessWidget {
       required this.textWid,
       required this.characterWid,
       required this.okBtnStr,
-      required this.nextScreenStr,
+      required this.nextScreen,
       required this.timerColorStr});
 
   @override
@@ -64,8 +64,9 @@ class TutorialLayout extends StatelessWidget {
               child: GestureDetector(
                 child: Image.asset(okBtnStr, width: 322.07, height: 44.75),
                 onTap: () {
-                  // 튜토리얼2로 이동
-                  Navigator.of(context).pushNamed(nextScreenStr);
+                  Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => nextScreen)
+                  );
                 },
               )),
         ],

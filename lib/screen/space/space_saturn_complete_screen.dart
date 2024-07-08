@@ -8,8 +8,9 @@ import '../layout/complete_layout.dart';
 
 class SpaceSaturnCompleteScreen extends StatefulWidget {
   final int currentNumber;
+  final bool canread;
 
-  const SpaceSaturnCompleteScreen({super.key, required this.currentNumber});
+  const SpaceSaturnCompleteScreen({super.key, required this.currentNumber, required this.canread});
 
   @override
   State<SpaceSaturnCompleteScreen> createState() => _SpaceSaturnCompleteScreenState();
@@ -41,7 +42,7 @@ class _SpaceSaturnCompleteScreenState extends State<SpaceSaturnCompleteScreen> {
       //   break;
       default:
         nextScreen =
-            SpaceRandomDice3Screen(currentNumber: widget.currentNumber);
+            SpaceRandomDice3Screen(currentNumber: widget.currentNumber, canread: widget.canread,);
         break;
     }
     Navigator.pushReplacement(

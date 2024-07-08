@@ -8,8 +8,10 @@ import '../../model/timer_model.dart';
 
 class SpaceRandomDiceScreen extends StatefulWidget {
   final int currentNumber;
+  final bool canread;
 
-  const SpaceRandomDiceScreen({super.key, required this.currentNumber});
+  const SpaceRandomDiceScreen(
+      {super.key, required this.currentNumber, required this.canread});
 
   @override
   State<SpaceRandomDiceScreen> createState() => _SpaceRandomDiceScreenState();
@@ -35,7 +37,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
 
   void _initializeAndPlayVideo() {
     _controller = VideoPlayerController.asset(
-      // 우주여행 주사위로 변경해야 함
+        // 우주여행 주사위로 변경해야 함
         'assets/space/dice_${randomNumber}_venus.mp4')
       ..initialize().then((_) {
         setState(() {});
@@ -49,7 +51,9 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
+      Navigator.of(context).pushNamed(nextScreen, arguments: {
+        'canread': widget.canread, // 현재 위젯의 userId 속성을 전달
+      }); // 다음 화면으로 전환
     }
   }
 
@@ -88,40 +92,40 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
               },
               child: _rolledDice
                   ? FutureBuilder(
-                future: _initializeVideoPlayerFuture,
-                builder: (context, snapshot) {
-                  if (_controller.value.isInitialized) {
-                    return AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    );
-                  } else {
-                    return Center();
-                    // return Center(child: CircularProgressIndicator());
-                  }
-                },
-              )
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (_controller.value.isInitialized) {
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          return Center();
+                          // return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    )
                   : Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 315,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/space/dice_swipe.png',
-                          width: 87.87, height: 139.91),
+                      children: <Widget>[
+                        Positioned(
+                          top: 315,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/space/dice_swipe.png',
+                                width: 87.87, height: 139.91),
+                          ),
+                        ),
+                        Positioned(
+                          top: 80,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/space/dice.png'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Positioned(
-                    top: 80,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/space/dice.png'),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
           // 주사위 텍스트 이미지
