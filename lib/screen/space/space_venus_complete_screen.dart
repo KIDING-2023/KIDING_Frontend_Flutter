@@ -19,7 +19,7 @@ class SpaceVenusCompleteScreen extends StatefulWidget {
 
 class _SpaceVenusCompleteScreenState extends State<SpaceVenusCompleteScreen> {
   late Timer _timer;
-  final int duration = 3; // 3초 후 화면 전환
+  final int duration = 5; // 3초 후 화면 전환
   // 다음 화면
   late var nextScreen;
 

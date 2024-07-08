@@ -19,7 +19,7 @@ class SpaceMarsCompleteScreen extends StatefulWidget {
 
 class _SpaceMarsCompleteScreenState extends State<SpaceMarsCompleteScreen> {
   late Timer _timer;
-  final int duration = 3; // 3초 후 화면 전환
+  final int duration = 5; // 3초 후 화면 전환
   // 다음 화면
   late var nextScreen;
 
