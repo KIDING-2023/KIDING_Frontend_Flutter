@@ -13,9 +13,9 @@ import 'dart:io' as io;
 
 class SpaceBarcodeScreen extends StatefulWidget {
   final int currentNumber;
-  final bool canread;
+  //final bool canread;
 
-  const SpaceBarcodeScreen({super.key, required this.currentNumber, required this.canread});
+  const SpaceBarcodeScreen({super.key, required this.currentNumber});
 
   @override
   State<SpaceBarcodeScreen> createState() => _SpaceBarcodeScreenState();

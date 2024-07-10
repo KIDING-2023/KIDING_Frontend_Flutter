@@ -6,6 +6,7 @@ import 'package:kiding/screen/space/space_mars_complete_screen.dart';
 import 'package:kiding/screen/space/space_saturn_complete_screen.dart';
 
 import '../layout/card_layout.dart';
+import '../layout/space_card_layout.dart';
 
 class Space10Screen extends StatefulWidget {
   const Space10Screen({super.key});
@@ -41,7 +42,7 @@ class _Space10ScreenState extends State<Space10Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return CardLayout(
+    return SpaceCardLayout(
         bgStr: 'assets/space/saturn_card_bg.png',
         backBtnStr: 'assets/space/back_icon_white.png',
         textStr: 'assets/space/10_text.png',
@@ -50,6 +51,6 @@ class _Space10ScreenState extends State<Space10Screen> {
           currentNumber: 10
         ),
         okBtnStr: 'assets/space/saturn_card_btn.png',
-        timerColor: Color(0xFFE7E7E7));
+        timerColor: Color(0xFFE7E7E7), currentNumber: 10,);
   }
 }

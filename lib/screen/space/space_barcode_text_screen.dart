@@ -6,10 +6,10 @@ import 'package:kiding/screen/space/space_barcode_screen.dart';
 
 class SpaceBarcodeTextScreen extends StatefulWidget {
   final int currentNumber;
-  final bool canread;
+  //final bool canread;
 
   const SpaceBarcodeTextScreen(
-      {super.key, required this.currentNumber, required this.canread});
+      {super.key, required this.currentNumber});
 
   @override
   State<SpaceBarcodeTextScreen> createState() => _SpaceBarcodeTextScreenState();
@@ -36,7 +36,7 @@ class _SpaceBarcodeTextScreenState extends State<SpaceBarcodeTextScreen> {
       context,
       MaterialPageRoute(
           builder: (context) => SpaceBarcodeScreen(
-              currentNumber: widget.currentNumber, canread: widget.canread)),
+              currentNumber: widget.currentNumber)),
     );
     log('currentNumber: ${widget.currentNumber}');
   }

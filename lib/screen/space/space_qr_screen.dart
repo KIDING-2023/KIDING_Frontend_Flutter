@@ -245,7 +245,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SpaceCanReadScreen(),
+        builder: (context) => SpaceTutorial1Screen(),
       ),
     );
     // if (result != null) {

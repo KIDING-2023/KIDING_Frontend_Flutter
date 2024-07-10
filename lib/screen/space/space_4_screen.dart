@@ -5,6 +5,8 @@ import 'package:kiding/screen/layout/card_layout.dart';
 import 'package:kiding/screen/space/space_barcode_text_screen.dart';
 import 'package:kiding/screen/space/space_venus_complete_screen.dart';
 
+import '../layout/space_card_layout.dart';
+
 class Space4Screen extends StatefulWidget {
   const Space4Screen({super.key});
 
@@ -39,7 +41,7 @@ class _Space4ScreenState extends State<Space4Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return CardLayout(
+    return SpaceCardLayout(
         bgStr: 'assets/space/venus_card_bg.png',
         backBtnStr: 'assets/space/back_icon_white.png',
         textStr: 'assets/space/4_text.png',
@@ -48,6 +50,6 @@ class _Space4ScreenState extends State<Space4Screen> {
           currentNumber: 4
         ),
         okBtnStr: 'assets/space/venus_card_btn.png',
-        timerColor: Color(0xFFE7E7E7));
+        timerColor: Color(0xFFE7E7E7), currentNumber: 4,);
   }
 }
