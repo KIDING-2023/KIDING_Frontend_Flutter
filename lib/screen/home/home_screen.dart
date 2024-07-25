@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 
+import '../mypage/mypage_screen.dart';
+import '../mypage/mypage_test_screen.dart';
 import '../space/space_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -417,16 +419,21 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             IconButton(
-              icon: Image.asset('assets/home/ranking_under.png'),
+              icon: Image.asset('assets/home/ranking_unselected.png'),
               onPressed: () {},
             ),
             IconButton(
-              icon: Image.asset('assets/home/home_under.png'),
+              icon: Image.asset('assets/home/home_selected.png'),
               onPressed: () {},
             ),
             IconButton(
-              icon: Image.asset('assets/home/mypage_under.png'),
-              onPressed: () {},
+              icon: Image.asset('assets/home/mypage_unselected.png'),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MyPageScreen()),
+                );
+              },
             ),
           ],
         ),
