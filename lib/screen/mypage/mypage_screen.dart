@@ -16,6 +16,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
   int ranking = 4; // 순위 임시
   int sameScore = 12; // 동점자수 임시
 
+  // GlobalKey를 사용하여 각 애니메이션 아이템의 상태를 참조
+  final GlobalKey<ChipsItemState> _chipsItemKey = GlobalKey<ChipsItemState>();
+  final GlobalKey<FriendsItemState> _friendsItemKey = GlobalKey<FriendsItemState>();
+  final GlobalKey<RankingItemState> _rankingItemKey = GlobalKey<RankingItemState>();
+  final GlobalKey<TriangleItemState> _triangleItemKey = GlobalKey<TriangleItemState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,71 +65,71 @@ class _MyPageScreenState extends State<MyPageScreen> {
         ),
         // 하단바
         bottomNavigationBar: _buildBottomNavigationBar(),
-        body: Stack(
-          children: <Widget>[
-            // 오늘의 랭킹
-            Positioned(
-              top: 10,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 29.54, right: 29.54),
-                child: Container(
-                  width: 300.93,
-                  height: 117.73,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/mypage/ranking_box_mypage.png'),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: Stack(
-                    children: <Widget>[
-                      // 대답수
-                      Positioned(
-                        top: 55.11,
-                        left: 37.29,
-                        child: Text("대답수" + answerCount.toString() + "번",
-                            style: TextStyle(
-                                color: Color(0xFFFFc3a0),
-                                fontSize: 25,
-                                fontFamily: 'Nanum')),
-                      ),
-                      // 순위
-                      Positioned(
-                        top: 55.11,
-                        right: 37.29,
-                        child: Text(ranking.toString() + "위",
-                            style: TextStyle(
-                                color: Color(0xFFFF8a5b),
-                                fontSize: 25,
-                                fontFamily: 'Nanum')),
-                      ),
-                      // 동점자
-                      Positioned(
-                        top: 97.71,
-                        left: 0,
-                        right: 0,
-                        child: Center(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              // 오늘의 랭킹
+              Padding(
+                padding: const EdgeInsets.only(top: 15),
+                child: Center(
+                  child: Container(
+                    width: 300.93,
+                    height: 117.73,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'assets/mypage/ranking_box_mypage.png'),
+                            fit: BoxFit.fill)),
+                    child: Stack(
+                      children: [
+                        // 대답수
+                        Positioned(
+                          top: 55.11,
+                          left: 37.29,
                           child: Text(
-                            "동점자:" + sameScore.toString() + "명",
+                            "대답수 " + answerCount.toString() + "번",
                             style: TextStyle(
-                                color: Color(0xFFFFc3a0),
-                                fontSize: 12,
+                                color: Color(0xfffad7a0),
+                                fontSize: 25,
                                 fontFamily: 'Nanum'),
                           ),
                         ),
-                      )
-                    ],
+                        // 순위
+                        Positioned(
+                            top: 55.11,
+                            right: 37.29,
+                            child: Text(
+                              ranking.toString() + "위",
+                              style: TextStyle(
+                                  color: Color(0xffff8a5b),
+                                  fontSize: 25,
+                                  fontFamily: 'Nanum'),
+                            )),
+                        // 동점자
+                        Positioned(
+                          top: 97,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Text(
+                              "동점자:" + sameScore.toString() + "명",
+                              style: TextStyle(
+                                  color: Color(0xfffad7a0),
+                                  fontSize: 12,
+                                  fontFamily: 'Nanum'),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            // 나의 기록, 새로고침
-            Positioned(
-                top: 155.14,
-                left: 39.54,
-                right: 39.54,
+              // 나의 기록 텍스트, 새로고침 버튼
+              Padding(
+                padding:
+                    const EdgeInsets.only(top: 10, left: 29.54, right: 29.54),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -131,22 +137,46 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     Image.asset('assets/mypage/my_record_text.png',
                         width: 61, height: 17),
                     // 새로고침 버튼
-                    GestureDetector(
-                      child: Image.asset('assets/mypage/reset_btn.png',
-                          width: 15.52, height: 15.52),
-                      onTap: () {},
-                    )
+                    IconButton(
+                        onPressed: _restartAnimations,
+                        icon: Image.asset('assets/mypage/reset_btn.png',
+                            width: 15.52, height: 15.52))
                   ],
-                )),
-            // 나의 기록 아이템들
-            Positioned(
-                top: 177.01,
-                left: 29.54,
-                right: 29.54,
-                child: FallingItems()
-            )
-          ],
+                ),
+              ),
+              // 나의 기록 박스
+              Center(
+                child: Container(
+                    width: 300.93,
+                    height: 461.18,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image:
+                                AssetImage('assets/mypage/my_record_bg.png'),
+                            fit: BoxFit.fill)),
+                    child: Stack(
+                      children: [
+                        // 키딩칩 개수
+                        ChipsItem(key: _chipsItemKey),
+                        // 친구 수
+                        FriendsItem(key: _friendsItemKey),
+                        // 1위 경험 횟수
+                        RankingItem(key: _rankingItemKey),
+                        // 삼각형 모양
+                        TriangleItem(key: _triangleItemKey)
+                      ],
+                    )),
+              )
+            ],
+          ),
         ));
+  }
+
+  void _restartAnimations() {
+    _chipsItemKey.currentState?.restartAnimation();
+    _friendsItemKey.currentState?.restartAnimation();
+    _rankingItemKey.currentState?.restartAnimation();
+    _triangleItemKey.currentState?.restartAnimation();
   }
 
   BottomAppBar _buildBottomNavigationBar() {
@@ -180,40 +210,45 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 }
 
-class FallingItems extends StatefulWidget {
-  const FallingItems({super.key});
+class ChipsItem extends StatefulWidget {
+  const ChipsItem({super.key});
 
   @override
-  State<FallingItems> createState() => _FallingItemsState();
+  State<ChipsItem> createState() => ChipsItemState();
 }
 
-class _FallingItemsState extends State<FallingItems> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<double> _rankingAnimation;
-  double _topPosition = -100;
+class ChipsItemState extends State<ChipsItem>
+    with SingleTickerProviderStateMixin {
+  int chipsNum = 8; // 키딩칩 수 임시
+
+  late AnimationController _chipsController;
+  late Animation<double> _chipsAnimation;
+  double _chipsTopPosition = -252;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
+    _chipsController = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,
     );
 
-    _rankingAnimation = Tween<double>(begin: -100, end: 276.55).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.bounceOut),
+    _chipsAnimation =
+        Tween<double>(begin: _chipsTopPosition, end: -_chipsTopPosition)
+            .animate(
+      CurvedAnimation(parent: _chipsController, curve: Curves.bounceOut),
     );
 
-    _controller.addListener(() {
+    _chipsController.addListener(() {
       setState(() {
-        _topPosition = _rankingAnimation.value;
+        _chipsTopPosition = _chipsAnimation.value;
       });
     });
 
-    _controller.addStatusListener((status) {
+    _chipsController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
         // 애니메이션이 완료되면 컨트롤러를 정지
-        _controller.stop();
+        _chipsController.stop();
       }
     });
 
@@ -222,69 +257,304 @@ class _FallingItemsState extends State<FallingItems> with SingleTickerProviderSt
 
   @override
   void dispose() {
-    _controller.dispose();
+    _chipsController.dispose();
     super.dispose();
   }
 
   void _startAnimation() {
-    _controller.reset();
-    _controller.forward();
+    _chipsController.reset();
+    _chipsController.forward();
+  }
+
+  void restartAnimation() {
+    _startAnimation();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 300.93,
-      height: 461.18,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/mypage/my_record_bg.png'),
-          fit: BoxFit.fill,
+    return Positioned(
+      top: _chipsTopPosition,
+      left: 22,
+      child: Transform.rotate(
+        angle: pi / 7,
+        child: Container(
+          width: 184.63,
+          height: 184.63,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/chips_bg.png'),
+                  fit: BoxFit.fill)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 53.06),
+            child: Center(
+              child: Text(
+                chipsNum.toString() + "개",
+                style: TextStyle(
+                    color: Colors.white, fontSize: 30, fontFamily: 'Nanum'),
+              ),
+            ),
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: _topPosition,
-            left: MediaQuery.of(context).size.width / 2 - 25,
-            child: Transform.rotate(
-              angle: pi / 4,
-              child: Container(
-                width: 184.63,
-                height: 184.63,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/mypage/chips_bg.png'),
-                    fit: BoxFit.fill
-                  )
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 113.06),
-                  child: Text(
-                    "8개",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30,
-                      fontFamily: 'Nanum'
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ElevatedButton(
-                onPressed: _startAnimation,
-                child: Text('Start Animation'),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
 }
 
+class FriendsItem extends StatefulWidget {
+  const FriendsItem({super.key});
+
+  @override
+  State<FriendsItem> createState() => FriendsItemState();
+}
+
+class FriendsItemState extends State<FriendsItem>
+    with SingleTickerProviderStateMixin {
+  int friendsNum = 3; // 친구 수 임시
+
+  late AnimationController _friendsController;
+  late Animation<double> _friendsAnimation;
+  double _friendsTopPosition = -100;
+
+  @override
+  void initState() {
+    super.initState();
+    _friendsController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _friendsAnimation =
+        Tween<double>(begin: _friendsTopPosition, end: -_friendsTopPosition)
+            .animate(
+      CurvedAnimation(parent: _friendsController, curve: Curves.bounceOut),
+    );
+
+    _friendsController.addListener(() {
+      setState(() {
+        _friendsTopPosition = _friendsAnimation.value;
+      });
+    });
+
+    _friendsController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // 애니메이션이 완료되면 컨트롤러를 정지
+        _friendsController.stop();
+      }
+    });
+
+    _startAnimation();
+  }
+
+  @override
+  void dispose() {
+    _friendsController.dispose();
+    super.dispose();
+  }
+
+  void _startAnimation() {
+    _friendsController.reset();
+    _friendsController.forward();
+  }
+
+  void restartAnimation() {
+    _startAnimation();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: _friendsTopPosition,
+      right: 0,
+      child: Transform.rotate(
+        angle: -pi / 7,
+        child: Container(
+          width: 180.19,
+          height: 180.19,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/friends_bg.png'),
+                  fit: BoxFit.fill)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 45),
+            child: Center(
+              child: Text(
+                friendsNum.toString() + "명",
+                style: TextStyle(
+                    color: Colors.white, fontSize: 25, fontFamily: 'Nanum'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class RankingItem extends StatefulWidget {
+  const RankingItem({super.key});
+
+  @override
+  State<RankingItem> createState() => RankingItemState();
+}
+
+class RankingItemState extends State<RankingItem>
+    with SingleTickerProviderStateMixin {
+  int rankingNum = 5; // 1위 경험 횟수 임시
+
+  late AnimationController _rankingController;
+  late Animation<double> _rankingAnimation;
+  double _rankingTopPosition = -50;
+
+  @override
+  void initState() {
+    super.initState();
+    _rankingController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _rankingAnimation =
+        Tween<double>(begin: _rankingTopPosition, end: -_rankingTopPosition)
+            .animate(
+      CurvedAnimation(parent: _rankingController, curve: Curves.bounceOut),
+    );
+
+    _rankingController.addListener(() {
+      setState(() {
+        _rankingTopPosition = _rankingAnimation.value;
+      });
+    });
+
+    _rankingController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // 애니메이션이 완료되면 컨트롤러를 정지
+        _rankingController.stop();
+      }
+    });
+
+    _startAnimation();
+  }
+
+  @override
+  void dispose() {
+    _rankingController.dispose();
+    super.dispose();
+  }
+
+  void _startAnimation() {
+    _rankingController.reset();
+    _rankingController.forward();
+  }
+
+  void restartAnimation() {
+    _startAnimation();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: _rankingTopPosition,
+      left: -8,
+      child: Transform.rotate(
+        angle: -pi / 20,
+        child: Container(
+          width: 152.28,
+          height: 152.28,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/ranking_bg.png'),
+                  fit: BoxFit.fill)),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Center(
+              child: Text(
+                rankingNum.toString() + "번",
+                style: TextStyle(
+                    color: Colors.white, fontSize: 20, fontFamily: 'Nanum'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class TriangleItem extends StatefulWidget {
+  const TriangleItem({super.key});
+
+  @override
+  State<TriangleItem> createState() => TriangleItemState();
+}
+
+class TriangleItemState extends State<TriangleItem>
+    with SingleTickerProviderStateMixin {
+
+  late AnimationController _triangleController;
+  late Animation<double> _triangleAnimation;
+  double _triangleTopPosition = -200;
+
+  @override
+  void initState() {
+    super.initState();
+    _triangleController = AnimationController(
+      duration: const Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _triangleAnimation =
+        Tween<double>(begin: _triangleTopPosition, end: -65)
+            .animate(
+      CurvedAnimation(parent: _triangleController, curve: Curves.bounceOut),
+    );
+
+    _triangleController.addListener(() {
+      setState(() {
+        _triangleTopPosition = _triangleAnimation.value;
+      });
+    });
+
+    _triangleController.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        // 애니메이션이 완료되면 컨트롤러를 정지
+        _triangleController.stop();
+      }
+    });
+
+    _startAnimation();
+  }
+
+  @override
+  void dispose() {
+    _triangleController.dispose();
+    super.dispose();
+  }
+
+  void _startAnimation() {
+    _triangleController.reset();
+    _triangleController.forward();
+  }
+
+  void restartAnimation() {
+    _startAnimation();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: _triangleTopPosition,
+      right: 40,
+      child: Transform.rotate(
+        angle: -pi / 7,
+        child: Container(
+          width: 121.06,
+          height: 121.06,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/triangle_bg.png'),
+                  fit: BoxFit.fill)),
+        ),
+      ),
+    );
+  }
+}

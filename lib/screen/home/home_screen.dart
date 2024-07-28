@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 
 import '../mypage/mypage_screen.dart';
-import '../mypage/mypage_test_screen.dart';
 import '../space/space_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
