@@ -30,6 +30,9 @@ import 'package:kiding/screen/login/start_screen.dart';
 import 'package:kiding/screen/space/space_10_screen.dart';
 import 'package:kiding/screen/space/space_11_screen.dart';
 import 'package:kiding/screen/space/space_12_screen.dart';
+import 'package:kiding/screen/space/space_1_screen.dart';
+import 'package:kiding/screen/space/space_2_screen.dart';
+import 'package:kiding/screen/space/space_3_screen.dart';
 import 'package:kiding/screen/space/space_4_screen.dart';
 import 'package:kiding/screen/space/space_5_screen.dart';
 import 'package:kiding/screen/space/space_6_screen.dart';
@@ -40,11 +43,10 @@ import 'package:kiding/screen/space/space_qr_screen.dart';
 import 'package:kiding/screen/space/space_random_dice_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:kiding/screen/space/space_tutorial2_screen.dart';
-import 'package:kiding/screen/space/space_tutorial_dice_screen.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:provider/provider.dart';
 
-import 'firebase_options.dart';
+import 'firebase_option.dart';
 import 'model/timer_model.dart';
 
 const HOME_ROUTE = '/';
@@ -87,6 +89,9 @@ void main() async {
           '/kikisday18': (context) => Kikisday18Screen(),
           '/kikisday19': (context) => Kikisday19Screen(),
           '/kikisday20': (context) => Kikisday20Screen(),
+          '/space1': (context) => Space1Screen(),
+          '/space2': (context) => Space2Screen(),
+          '/space3': (context) => Space3Screen(),
           '/space4': (context) => Space4Screen(),
           '/space5': (context) => Space5Screen(),
           '/space6': (context) => Space6Screen(),

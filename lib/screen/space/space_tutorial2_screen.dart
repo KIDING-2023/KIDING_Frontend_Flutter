@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/space/space_random_dice_screen.dart';
+import 'package:kiding/screen/space/space_random_dice_earth_screen.dart';
 
 import '../layout/tutorial_layout.dart';
 
@@ -29,7 +29,7 @@ class _SpaceTutorial2ScreenState extends State<SpaceTutorial2Screen> {
         height: 302.53,
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
-      nextScreen: SpaceRandomDiceScreen(currentNumber: 3,),
+      nextScreen: SpaceRandomDiceEarthScreen(currentNumber: 0,),
       timerColorStr: Color(0xFFE7E7E7),
     );
   }
