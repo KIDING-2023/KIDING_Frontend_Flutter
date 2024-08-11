@@ -24,43 +24,49 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   bool useCamera = true;
   final picker = ImagePicker();
 
-  @override
-  void initState() {
-    super.initState();
-    _requestCameraPermission();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _requestCameraPermission();
+  // }
+  //
+  // Future<void> _requestCameraPermission() async {
+  //   PermissionStatus status = await Permission.camera.status;
+  //   if (status.isGranted) {
+  //     print("Camera permission already granted.");
+  //     return;
+  //   }
+  //
+  //   bool hasPermission = await requestCameraPermission(context);
+  //   if (hasPermission) {
+  //     print("Camera permission granted.");
+  //   } else {
+  //     print("Camera permission denied.");
+  //   }
+  // }
 
-  Future<void> _requestCameraPermission() async {
-    bool hasPermission = await requestCameraPermission(context);
-    if (hasPermission) {
-      print("Camera permission granted.");
-    } else {
-      print("Camera permission denied.");
-    }
-  }
-
-  Future<bool> requestCameraPermission(BuildContext context) async {
-    PermissionStatus status = await Permission.camera.request();
-
-    if(!status.isGranted) { // 허용이 안된 경우
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: Text("권한 설정을 확인해주세요."),
-              actions: [
-                ElevatedButton(
-                    onPressed: () {
-                      openAppSettings(); // 앱 설정으로 이동
-                    },
-                    child: Text('설정하기')),
-              ],
-            );
-          });
-      return false;
-    }
-    return true;
-  }
+  // Future<bool> requestCameraPermission(BuildContext context) async {
+  //   PermissionStatus status = await Permission.camera.request();
+  //
+  //   if(!status.isGranted) { // 허용이 안된 경우
+  //     showDialog(
+  //         context: context,
+  //         builder: (BuildContext context) {
+  //           return AlertDialog(
+  //             content: Text("권한 설정을 확인해주세요."),
+  //             actions: [
+  //               ElevatedButton(
+  //                   onPressed: () {
+  //                     openAppSettings(); // 앱 설정으로 이동
+  //                   },
+  //                   child: Text('설정하기')),
+  //             ],
+  //           );
+  //         });
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   @override
   void reassemble() {
