@@ -1,19 +1,15 @@
 import 'dart:developer';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
-import 'package:image_picker/image_picker.dart';
+import 'package:flutter_qr_bar_scanner/qr_bar_scanner_camera.dart';
+import 'package:kiding/screen/space/space_earth_complete_screen.dart';
 import 'package:kiding/screen/space/space_mars_complete_screen.dart';
 import 'package:kiding/screen/space/space_saturn_complete_screen.dart';
 import 'package:kiding/screen/space/space_venus_complete_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'dart:io' as io;
+import 'package:mysql_client/mysql_protocol.dart';
 
 class SpaceBarcodeScreen extends StatefulWidget {
   final int currentNumber;
-  //final bool canread;
 
   const SpaceBarcodeScreen({super.key, required this.currentNumber});
 
@@ -22,73 +18,86 @@ class SpaceBarcodeScreen extends StatefulWidget {
 }
 
 class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
-  Barcode? result;
-  QRViewController? controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'Barcode');
-
-  bool useCamera = true;
-  final picker = ImagePicker();
+  String? _qrInfo = 'Scan a QR/Bar code';
+  bool _camState = false;
 
   // 다음 화면
   late var nextScreen;
 
+  _qrCallback(String? code) {
+    setState(() {
+      _camState = false;
+      _qrInfo = code;
+    });
+
+    // 3초의 딜레이 후 다음 화면으로 전환
+    Future.delayed(Duration(seconds: 3), () {
+      _navigateToNextScreen();
+    });
+  }
+
+  _scanCode() {
+    setState(() {
+      _camState = true;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    _requestCameraPermission();
-  }
-
-  Future<void> _requestCameraPermission() async {
-    bool hasPermission = await requestCameraPermission(context);
-    if (hasPermission) {
-      print("Camera permission granted.");
-    } else {
-      print("Camera permission denied.");
-    }
-  }
-
-  Future<bool> requestCameraPermission(BuildContext context) async {
-    PermissionStatus status = await Permission.camera.request();
-
-    if(!status.isGranted) { // 허용이 안된 경우
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              content: Text("권한 설정을 확인해주세요."),
-              actions: [
-                ElevatedButton(
-                    onPressed: () {
-                      openAppSettings(); // 앱 설정으로 이동
-                    },
-                    child: Text('설정하기')),
-              ],
-            );
-          });
-      return false;
-    }
-    return true;
+    _scanCode();
   }
 
   @override
-  void reassemble() {
-    super.reassemble();
-    if (io.Platform.isAndroid) {
-      controller!.pauseCamera();
-    } else if (io.Platform.isIOS) {
-      controller!.resumeCamera();
+  void dispose() {
+    super.dispose();
+  }
+
+  void _navigateToNextScreen() {
+    // 각 카드덱의 답변 완료 화면으로 이동
+    if (widget.currentNumber <= 3) {
+      nextScreen =
+          SpaceEarthCompleteScreen(currentNumber: widget.currentNumber);
+    } else if (widget.currentNumber >= 4 && widget.currentNumber <= 6) {
+      nextScreen =
+          SpaceVenusCompleteScreen(currentNumber: widget.currentNumber);
+    } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
+      nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber);
+    } else {
+      nextScreen =
+          SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber);
     }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => nextScreen),
+    );
+    log('currentNumber: ${widget.currentNumber}');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Color(0xFF363E7C).withOpacity(0.5),
+        color: Color(0xFF363E7C),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            _buildQrView(context),
+            _camState
+                ? Center(
+                    child: SizedBox(
+                    width: 250,
+                    height: 150,
+                    child: QRBarScannerCamera(
+                      onError: (context, error) => Text(
+                        error.toString(),
+                        style: TextStyle(color: Colors.red),
+                      ),
+                      qrCodeCallback: (code) {
+                        _qrCallback(code);
+                      },
+                    ),
+                  ))
+                : Positioned(bottom: 200, child: Text(_qrInfo!)),
             Positioned(
               top: 220,
               left: 0,
@@ -107,28 +116,14 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
                     ),
                     TextSpan(
                       text: '바코드',
-                      style: TextStyle(fontFamily: 'Nanum', color: Color(0xFFFF8A5B)),
+                      style: TextStyle(
+                          fontFamily: 'Nanum', color: Color(0xFFFF8A5B)),
                     ),
                     TextSpan(
                         text: '를 인식해주세요',
                         style: TextStyle(fontFamily: 'NanumRegular')),
                   ],
                 ),
-              ),
-            ),
-            if (result != null)
-              Positioned(
-                bottom: 200,
-                child: Text(
-                  'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
-                  style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
-                ),
-              ),
-            Positioned(
-              bottom: 200,
-              child: Text(
-                result == null ? 'Scan a code' : '',
-                style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
               ),
             ),
             Positioned(
@@ -147,74 +142,5 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
         ),
       ),
     );
-  }
-
-  Widget _buildQrView(BuildContext context) {
-    var scanWidth = 250.0;
-    var scanHeight = 150.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
-    return QRView(
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-          borderColor: Color(0xFFFF8A5B),
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 20,
-          cutOutWidth: scanWidth,
-          cutOutHeight: scanHeight),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-    );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-      if (result != null) {
-        _navigateToNextScreen();
-      }
-    });
-  }
-
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
-    }
-  }
-
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
-  }
-
-  void _navigateToNextScreen() {
-    setState(() {
-      controller?.pauseCamera();
-      controller?.dispose();
-    });
-    // 각 카드덱의 답변 완료 화면으로 이동
-    if (widget.currentNumber <= 6) {
-      nextScreen = SpaceVenusCompleteScreen(currentNumber: widget.currentNumber);
-    } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
-      nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber);
-    } else {
-      nextScreen = SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber);
-    }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => nextScreen),
-    );
-    log('currentNumber: ${widget.currentNumber}');
   }
 }

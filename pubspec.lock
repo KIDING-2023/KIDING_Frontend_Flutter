@@ -230,6 +230,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.19"
+  flutter_qr_bar_scanner:
+    dependency: "direct main"
+    description:
+      name: flutter_qr_bar_scanner
+      sha256: "32f8f8dc93e308f177ce8c0379f575a9a14c2d7cb98d6a136c0108e67e7ac379"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -444,10 +452,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_picker
-      sha256: fe9ee64ccb8d599a5dfb0e21cc6652232c610bcf667af4e79b9eb175cc30a7a5
+      sha256: "021834d9c0c3de46bf0fe40341fa07168407f694d9b2bb18d532dc1261867f7a"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.0"
+    version: "1.1.2"
   image_picker_android:
     dependency: transitive
     description:
@@ -600,6 +608,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.27"
+  native_device_orientation:
+    dependency: transitive
+    description:
+      name: native_device_orientation
+      sha256: "744a03030fad5a332a54833cd34f1e2ee51ae9acf477b4ef85bacc8823af9937"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.1"
   nested:
     dependency: transitive
     description:
