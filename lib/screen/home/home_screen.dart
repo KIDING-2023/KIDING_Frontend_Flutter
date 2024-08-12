@@ -111,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
+          // 바디
           Positioned(
             top: 0,
             child: SingleChildScrollView(
@@ -165,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Positioned(
                                 right: 22.89,
-                                bottom: 22.89,
+                                bottom: 19.89,
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
@@ -184,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               Positioned(
                                 right: 5.0 + 22.89 + 48, // '00번' 텍스트와의 간격을 조정
-                                bottom: 22.89,
+                                bottom: 19.89,
                                 child: Text("이용자",
                                     style: TextStyle(
                                         color: Colors.black,

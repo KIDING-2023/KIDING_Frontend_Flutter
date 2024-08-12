@@ -121,6 +121,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 ),
               ),
             ),
+            // 바디
             Positioned(
               top: 0,
               child: SizedBox(
@@ -145,7 +146,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               children: [
                                 // 대답수
                                 Positioned(
-                                  top: 55.11,
+                                  top: 56.11,
                                   left: 37.29,
                                   child: Text(
                                     "대답수 " + answerCount.toString() + "번",
@@ -157,7 +158,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 ),
                                 // 순위
                                 Positioned(
-                                    top: 55.11,
+                                    top: 56.11,
                                     right: 37.29,
                                     child: Text(
                                       ranking.toString() + "위",
