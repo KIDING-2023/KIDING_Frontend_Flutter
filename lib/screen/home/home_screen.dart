@@ -246,13 +246,29 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildMainSortSection() {
     return Container(
       height: 317.79,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          _buildKikisdayCard(),
-          _buildSpaceCard()
-          // 추가 카드를 이곳에 배치
-        ],
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Colors.white.withOpacity(1.0), // 왼쪽의 불투명한 흰색
+              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
+              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
+              Colors.white.withOpacity(1.0), // 오른쪽의 불투명한 흰색
+            ],
+            stops: [0.0, 0.15, 0.85, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: <Widget>[
+            _buildKikisdayCard(),
+            _buildSpaceCard(),
+            // 추가 카드를 이곳에 배치
+          ],
+        ),
       ),
     );
   }
