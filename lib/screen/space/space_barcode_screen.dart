@@ -8,6 +8,8 @@ import 'package:kiding/screen/space/space_saturn_complete_screen.dart';
 import 'package:kiding/screen/space/space_venus_complete_screen.dart';
 import 'package:mysql_client/mysql_protocol.dart';
 
+import '../layout/exit_layout.dart';
+
 class SpaceBarcodeScreen extends StatefulWidget {
   final int currentNumber;
 
@@ -128,15 +130,19 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
             ),
             Positioned(
               top: 30,
-              left: 30,
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Image.asset(
-                  'assets/space/back_icon_white.png',
-                  width: 13.16,
-                  height: 20.0,
-                ),
-              ),
+              left: 15,
+              child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ExitLayout()),
+                    );
+                  },
+                  icon: Image.asset(
+                    'assets/space/back_icon_white.png',
+                    width: 13.16,
+                    height: 20.0,
+                  )),
             ),
           ],
         ),

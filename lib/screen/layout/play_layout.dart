@@ -30,14 +30,13 @@ class PlayLayout extends StatelessWidget {
           children: <Widget>[
             Positioned(
               top: 30.0,
-              left: 30.0,
+              left: 15.0,
               child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context), // 홈 화면으로 돌아가기
-                  child: Image.asset(backIcon, width: 13.16, height: 20.0),
-                ),
-              ),
+                  padding: const EdgeInsets.only(top: 15),
+                  child: IconButton(
+                    icon: Image.asset(backIcon, width: 13.16, height: 20.0),
+                    onPressed: () => Navigator.pop(context),
+                  )),
             ),
             Positioned(
               bottom: 30.0,

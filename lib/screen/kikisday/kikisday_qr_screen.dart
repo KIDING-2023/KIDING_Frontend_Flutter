@@ -8,6 +8,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../layout/exit_layout.dart';
+
 class KikisdayQrScreen extends StatefulWidget {
   const KikisdayQrScreen({Key? key}) : super(key: key);
 
@@ -148,27 +150,37 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
               bottom: 200,
               child: Text(
                 'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
-                style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'NanumRegular',
+                    color: Colors.white),
               ),
             ),
           Positioned(
             bottom: 200,
             child: Text(
               result == null ? 'Scan a code' : '',
-              style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
+              style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'NanumRegular',
+                  color: Colors.white),
             ),
           ),
           Positioned(
             top: 30,
-            left: 30,
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Image.asset(
-                'assets/kikisday/back_icon.png',
-                width: 13.16,
-                height: 20.0,
-              ),
-            ),
+            left: 15,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ExitLayout()),
+                  );
+                },
+                icon: Image.asset(
+                  'assets/kikisday/back_icon.png',
+                  width: 13.16,
+                  height: 20.0,
+                )),
           ),
         ],
       ),

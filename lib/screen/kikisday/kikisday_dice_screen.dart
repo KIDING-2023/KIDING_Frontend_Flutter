@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../model/timer_model.dart';
+import '../layout/exit_layout.dart';
 
 class KikisdayDiceScreen extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class KikisdayDiceScreen extends StatefulWidget {
 class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
+
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
 
@@ -36,10 +38,11 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
   void _checkVideo() {
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller.value.position == _controller.value.duration) {
-      _controller.removeListener(_checkVideo);  // 리스너 제거
+      _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
       Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushReplacement(  // 새 화면으로 전환
+        Navigator.pushReplacement(
+          // 새 화면으로 전환
           context,
           MaterialPageRoute(builder: (context) => KikisdaySongScreen()),
         );
@@ -126,16 +129,20 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
           // 뒤로 가기 버튼
           Positioned(
             top: 45,
-            left: 30,
+            left: 15,
             right: 30,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                      width: 13.16, height: 20.0),
-                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                      );
+                    },
+                    icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
+                        width: 13.16, height: 20.0)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(

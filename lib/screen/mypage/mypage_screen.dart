@@ -126,6 +126,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               top: 0,
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.76,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

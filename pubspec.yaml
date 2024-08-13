@@ -80,6 +80,7 @@ flutter:
     - assets/kikisday/
     - assets/space/
     - assets/mypage/
+    - assets/exit/
 
   fonts:
     - family: Nanum

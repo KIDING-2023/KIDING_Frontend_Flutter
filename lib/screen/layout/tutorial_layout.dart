@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
+import 'exit_layout.dart';
 
 class TutorialLayout extends StatelessWidget {
   final String bgStr;
@@ -33,14 +34,18 @@ class TutorialLayout extends StatelessWidget {
                     image: AssetImage(bgStr), fit: BoxFit.cover)),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 45.0, left: 30.0, right: 30.0),
+            padding: const EdgeInsets.only(top: 45.0, left: 15.0, right: 30.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Image.asset(backBtnStr, width: 13.16, height: 20.0),
-                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                      );
+                    },
+                    icon: Image.asset(backBtnStr, width: 13.16, height: 20.0)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
@@ -64,9 +69,8 @@ class TutorialLayout extends StatelessWidget {
               child: GestureDetector(
                 child: Image.asset(okBtnStr, width: 322.07, height: 44.75),
                 onTap: () {
-                  Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => nextScreen)
-                  );
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => nextScreen));
                 },
               )),
         ],

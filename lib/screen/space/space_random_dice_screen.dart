@@ -5,13 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../model/timer_model.dart';
+import '../layout/exit_layout.dart';
 
 class SpaceRandomDiceScreen extends StatefulWidget {
   final int currentNumber;
+
   // final bool canread;
 
-  const SpaceRandomDiceScreen(
-      {super.key, required this.currentNumber});
+  const SpaceRandomDiceScreen({super.key, required this.currentNumber});
 
   @override
   State<SpaceRandomDiceScreen> createState() => _SpaceRandomDiceScreenState();
@@ -20,12 +21,16 @@ class SpaceRandomDiceScreen extends StatefulWidget {
 class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
+
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
+
   // 랜덤 주사위값
   late int randomNumber;
+
   // 주사위 굴린 후 넘겨줄 주사위값
   late int totalDice;
+
   // 다음 화면
   late var nextScreen;
 
@@ -140,16 +145,23 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
           // 뒤로 가기 버튼
           Positioned(
             top: 45,
-            left: 30,
+            left: 15,
             right: 30,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Image.asset('assets/space/back_icon_white.png',
-                      width: 13.16, height: 20.0),
-                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                      );
+                    },
+                    icon: Image.asset(
+                      'assets/space/back_icon_white.png',
+                      width: 13.16,
+                      height: 20.0,
+                    )),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(

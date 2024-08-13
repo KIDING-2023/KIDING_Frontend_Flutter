@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -37,14 +38,19 @@ class CardLayout extends StatelessWidget {
           // 뒤로 가기 버튼 및 타이머
           Positioned(
             top: 45,
-            left: 30,
+            left: 15,
             right: 30,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Image.asset(backBtnStr, width: 13.16, height: 20.0),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ExitLayout()),
+                    );
+                  },
+                  icon: Image.asset(backBtnStr, width: 13.16, height: 20.0),
                 ),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.

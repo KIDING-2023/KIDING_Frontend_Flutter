@@ -9,6 +9,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'dart:io' as io;
 
+import '../layout/exit_layout.dart';
+
 class SpaceQrScreen extends StatefulWidget {
   const SpaceQrScreen({super.key});
 
@@ -165,15 +167,19 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
           ),
           Positioned(
             top: 30,
-            left: 30,
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Image.asset(
-                'assets/space/back_icon_white.png',
-                width: 13.16,
-                height: 20.0,
-              ),
-            ),
+            left: 15,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ExitLayout()),
+                  );
+                },
+                icon: Image.asset(
+                  'assets/space/back_icon_white.png',
+                  width: 13.16,
+                  height: 20.0,
+                )),
           ),
         ],
       ),

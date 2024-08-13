@@ -208,6 +208,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildSortOption(String title, int index) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -220,8 +222,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Image.asset(
               'assets/home/eclipse.png',
-              width: 5.55,
-              height: 5.55,
+              width: 6.35,
+              height: 6.35,
               color: _selectedSortIndex == index
                   ? Colors.orange
                   : Colors.transparent,
@@ -405,93 +407,93 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Widget _buildCard(String imageName, String userCountText, Color textColor) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       print('$imageName card tapped');
-  //       // 여기에서 Navigator.push를 사용하여 새로운 화면으로 이동
-  //       if ('$imageName' == 'kikisday_card.png') {
-  //         // kikisday_play_screen으로 이동
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
-  //         );
-  //       } else {
-  //         // space_play_screen으로 이동
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-  //         );
-  //       }
-  //     },
-  //     child: Container(
-  //       width: 231.11,
-  //       margin: EdgeInsets.only(left: 30),
-  //       child: Stack(
-  //         children: <Widget>[
-  //           Image.asset('assets/home/$imageName', fit: BoxFit.cover), // 박스 이미지
-  //           Positioned(
-  //             // '플레이 00명' 텍스트 위치 조정
-  //             left: 20, // 이미지의 좌측으로부터의 거리
-  //             top: 13.18, // 이미지의 상단으로부터의 거리
-  //             child: Row(
-  //               children: <Widget>[
-  //                 Text('플레이 ',
-  //                     style: TextStyle(
-  //                         color: textColor,
-  //                         fontSize: 11.38,
-  //                         fontFamily: 'Nanum')),
-  //                 Text('00',
-  //                     style: TextStyle(
-  //                         color: textColor,
-  //                         fontSize: 11.38,
-  //                         fontFamily: 'Nanum')),
-  //                 Text('명',
-  //                     style: TextStyle(
-  //                         color: textColor,
-  //                         fontSize: 11.38,
-  //                         fontFamily: 'Nanum')),
-  //               ],
-  //             ),
-  //           ),
-  //           // 즐겨찾기 버튼
-  //           Positioned(
-  //             right: 15,
-  //             top: 13.18,
-  //             child: GestureDetector(
-  //               onTap: () {
-  //                 if ('$imageName' == 'kikisday_card.png') {
-  //                   if (!_kikiStar) {
-  //                     setState(() {
-  //                       _kikiStar = true;
-  //                       kikiStarImage = 'selected_star.png';
-  //                     });
-  //                   } else {
-  //                     setState(() {
-  //                       _kikiStar = false;
-  //                       kikiStarImage = 'unselected_star.png';
-  //                     });
-  //                   }
-  //                 } else {
-  //                   if (!_spaceStar) {
-  //                     setState(() {
-  //                       _spaceStar = true;
-  //                       SpaceStarImage = 'selected_star.png';
-  //                     });
-  //                   } else {
-  //                     setState(() {
-  //                       _spaceStar = false;
-  //                       SpaceStarImage = 'unselected_star.png';
-  //                     });
-  //                   }
-  //                 }
-  //               },
-  //               child: Image.asset('assets/home/$starImage', width: 19.79, height: 19.79)
-  //             )
-  //           )
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
+// Widget _buildCard(String imageName, String userCountText, Color textColor) {
+//   return GestureDetector(
+//     onTap: () {
+//       print('$imageName card tapped');
+//       // 여기에서 Navigator.push를 사용하여 새로운 화면으로 이동
+//       if ('$imageName' == 'kikisday_card.png') {
+//         // kikisday_play_screen으로 이동
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
+//         );
+//       } else {
+//         // space_play_screen으로 이동
+//         Navigator.push(
+//           context,
+//           MaterialPageRoute(builder: (context) => SpacePlayScreen()),
+//         );
+//       }
+//     },
+//     child: Container(
+//       width: 231.11,
+//       margin: EdgeInsets.only(left: 30),
+//       child: Stack(
+//         children: <Widget>[
+//           Image.asset('assets/home/$imageName', fit: BoxFit.cover), // 박스 이미지
+//           Positioned(
+//             // '플레이 00명' 텍스트 위치 조정
+//             left: 20, // 이미지의 좌측으로부터의 거리
+//             top: 13.18, // 이미지의 상단으로부터의 거리
+//             child: Row(
+//               children: <Widget>[
+//                 Text('플레이 ',
+//                     style: TextStyle(
+//                         color: textColor,
+//                         fontSize: 11.38,
+//                         fontFamily: 'Nanum')),
+//                 Text('00',
+//                     style: TextStyle(
+//                         color: textColor,
+//                         fontSize: 11.38,
+//                         fontFamily: 'Nanum')),
+//                 Text('명',
+//                     style: TextStyle(
+//                         color: textColor,
+//                         fontSize: 11.38,
+//                         fontFamily: 'Nanum')),
+//               ],
+//             ),
+//           ),
+//           // 즐겨찾기 버튼
+//           Positioned(
+//             right: 15,
+//             top: 13.18,
+//             child: GestureDetector(
+//               onTap: () {
+//                 if ('$imageName' == 'kikisday_card.png') {
+//                   if (!_kikiStar) {
+//                     setState(() {
+//                       _kikiStar = true;
+//                       kikiStarImage = 'selected_star.png';
+//                     });
+//                   } else {
+//                     setState(() {
+//                       _kikiStar = false;
+//                       kikiStarImage = 'unselected_star.png';
+//                     });
+//                   }
+//                 } else {
+//                   if (!_spaceStar) {
+//                     setState(() {
+//                       _spaceStar = true;
+//                       SpaceStarImage = 'selected_star.png';
+//                     });
+//                   } else {
+//                     setState(() {
+//                       _spaceStar = false;
+//                       SpaceStarImage = 'unselected_star.png';
+//                     });
+//                   }
+//                 }
+//               },
+//               child: Image.asset('assets/home/$starImage', width: 19.79, height: 19.79)
+//             )
+//           )
+//         ],
+//       ),
+//     ),
+//   );
+// }
 }
