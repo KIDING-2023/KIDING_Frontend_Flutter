@@ -2,20 +2,22 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/space/space_barcode_screen.dart';
+import 'package:kiding/screen/layout/barcode_screen.dart';
 
-class SpaceBarcodeTextScreen extends StatefulWidget {
+class BarcodeTextScreen extends StatefulWidget {
   final int currentNumber;
+  final Widget completeScreen;
+
   //final bool canread;
 
-  const SpaceBarcodeTextScreen(
-      {super.key, required this.currentNumber});
+  const BarcodeTextScreen(
+      {super.key, required this.currentNumber, required this.completeScreen});
 
   @override
-  State<SpaceBarcodeTextScreen> createState() => _SpaceBarcodeTextScreenState();
+  State<BarcodeTextScreen> createState() => _BarcodeTextScreenState();
 }
 
-class _SpaceBarcodeTextScreenState extends State<SpaceBarcodeTextScreen> {
+class _BarcodeTextScreenState extends State<BarcodeTextScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
 
@@ -35,8 +37,9 @@ class _SpaceBarcodeTextScreenState extends State<SpaceBarcodeTextScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (context) => SpaceBarcodeScreen(
-              currentNumber: widget.currentNumber)),
+          builder: (context) => BarcodeScreen(
+              currentNumber: widget.currentNumber,
+              completeScreen: widget.completeScreen)),
     );
     log('currentNumber: ${widget.currentNumber}');
   }

@@ -8,18 +8,20 @@ import 'package:kiding/screen/space/space_saturn_complete_screen.dart';
 import 'package:kiding/screen/space/space_venus_complete_screen.dart';
 import 'package:mysql_client/mysql_protocol.dart';
 
-import '../layout/exit_layout.dart';
+import 'exit_layout.dart';
 
-class SpaceBarcodeScreen extends StatefulWidget {
+class BarcodeScreen extends StatefulWidget {
   final int currentNumber;
+  final Widget completeScreen;
 
-  const SpaceBarcodeScreen({super.key, required this.currentNumber});
+  const BarcodeScreen(
+      {super.key, required this.currentNumber, required this.completeScreen});
 
   @override
-  State<SpaceBarcodeScreen> createState() => _SpaceBarcodeScreenState();
+  State<BarcodeScreen> createState() => _BarcodeScreenState();
 }
 
-class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
+class _BarcodeScreenState extends State<BarcodeScreen> {
   String? _qrInfo = 'Scan a QR/Bar code';
   bool _camState = false;
 
@@ -56,22 +58,22 @@ class _SpaceBarcodeScreenState extends State<SpaceBarcodeScreen> {
   }
 
   void _navigateToNextScreen() {
-    // 각 카드덱의 답변 완료 화면으로 이동
-    if (widget.currentNumber <= 3) {
-      nextScreen =
-          SpaceEarthCompleteScreen(currentNumber: widget.currentNumber);
-    } else if (widget.currentNumber >= 4 && widget.currentNumber <= 6) {
-      nextScreen =
-          SpaceVenusCompleteScreen(currentNumber: widget.currentNumber);
-    } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
-      nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber);
-    } else {
-      nextScreen =
-          SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber);
-    }
+    // // 각 카드덱의 답변 완료 화면으로 이동
+    // if (widget.currentNumber <= 3) {
+    //   nextScreen =
+    //       SpaceEarthCompleteScreen(currentNumber: widget.currentNumber);
+    // } else if (widget.currentNumber >= 4 && widget.currentNumber <= 6) {
+    //   nextScreen =
+    //       SpaceVenusCompleteScreen(currentNumber: widget.currentNumber);
+    // } else if (widget.currentNumber >= 7 && widget.currentNumber <= 9) {
+    //   nextScreen = SpaceMarsCompleteScreen(currentNumber: widget.currentNumber);
+    // } else {
+    //   nextScreen =
+    //       SpaceSaturnCompleteScreen(currentNumber: widget.currentNumber);
+    // }
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => nextScreen),
+      MaterialPageRoute(builder: (context) => widget.completeScreen),
     );
     log('currentNumber: ${widget.currentNumber}');
   }

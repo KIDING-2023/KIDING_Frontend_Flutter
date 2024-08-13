@@ -3,6 +3,7 @@ import 'package:kiding/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
+import 'barcode_text_screen.dart';
 
 class CardLayout extends StatelessWidget {
   final String bgStr;
@@ -12,6 +13,7 @@ class CardLayout extends StatelessWidget {
   final Widget completeScreen;
   final String okBtnStr;
   final Color timerColor;
+  final int currentNumber;
 
   const CardLayout(
       {super.key,
@@ -21,7 +23,8 @@ class CardLayout extends StatelessWidget {
       required this.cardStr,
       required this.completeScreen,
       required this.okBtnStr,
-      required this.timerColor});
+      required this.timerColor,
+      required this.currentNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +98,23 @@ class CardLayout extends StatelessWidget {
                 },
                 child: Image.asset(okBtnStr, width: 120, height: 40.58),
               )),
+          // 카드덱 읽기 버튼
+          Positioned(
+              top: 540,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  // 바코드 인식 안내 화면으로 이동
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              BarcodeTextScreen(currentNumber: currentNumber, completeScreen: completeScreen)));
+                },
+                child: Image.asset('assets/space/read_card_btn.png',
+                    width: 112.3, height: 32.68),
+              ))
         ],
       ),
     );

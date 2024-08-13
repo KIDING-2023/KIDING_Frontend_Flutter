@@ -20,6 +20,7 @@ class _Kikisday2ScreenState extends State<Kikisday2Screen> {
       completeScreen: KikisdayGreenCompleteScreen(currentNumber: 2),
       okBtnStr: 'assets/kikisday/kikisday_green_btn.png',
       timerColor: Color(0xFF868686),
+      currentNumber: 2,
     );
   }
 }

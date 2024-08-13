@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/space/space_barcode_text_screen.dart';
+import 'package:kiding/screen/layout/barcode_text_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -108,8 +108,10 @@ class SpaceCardLayout extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SpaceBarcodeTextScreen(
-                              currentNumber: currentNumber)));
+                          builder: (context) => BarcodeTextScreen(
+                                currentNumber: currentNumber,
+                                completeScreen: completeScreen,
+                              )));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
                     width: 112.3, height: 32.68),

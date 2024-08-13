@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/layout/card_layout.dart';
-import 'package:kiding/screen/space/space_barcode_text_screen.dart';
+import 'package:kiding/screen/layout/barcode_text_screen.dart';
 import 'package:kiding/screen/space/space_venus_complete_screen.dart';
 
 import '../layout/space_card_layout.dart';
