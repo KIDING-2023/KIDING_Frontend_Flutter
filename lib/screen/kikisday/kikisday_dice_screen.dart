@@ -40,13 +40,11 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.pushReplacement(
-          // 새 화면으로 전환
-          context,
-          MaterialPageRoute(builder: (context) => KikisdaySongScreen()),
-        );
-      });
+      Navigator.pushReplacement(
+        // 새 화면으로 전환
+        context,
+        MaterialPageRoute(builder: (context) => KikisdaySongScreen()),
+      );
     }
   }
 

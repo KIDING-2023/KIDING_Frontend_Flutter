@@ -51,9 +51,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Future.delayed(Duration(seconds: 3), () {
-        Navigator.of(context).pushNamed(nextScreen);
-      });
+      Navigator.of(context).pushNamed(nextScreen);
     }
   }
 
