@@ -35,7 +35,11 @@ class PlayLayout extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 15),
                   child: IconButton(
                     icon: Image.asset(backIcon, width: 13.16, height: 20.0),
-                    onPressed: () => Navigator.pop(context),
+                    onPressed: () {
+                      final timerModel = Provider.of<TimerModel>(context, listen: false);
+                      timerModel.resetTimer();  // 타이머 종료
+                      Navigator.pop(context);
+                    },
                   )),
             ),
             Positioned(
