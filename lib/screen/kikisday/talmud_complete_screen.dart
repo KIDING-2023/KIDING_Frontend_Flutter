@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/layout/complete_layout.dart';
+import '../layout/exit_layout.dart';
 import 'kikisday_random_dice_screen.dart';
 
 class KikisdayTalmudCompleteScreen extends StatefulWidget {
@@ -20,11 +21,26 @@ class _KikisdayTalmudCompleteScreenState
     extends State<KikisdayTalmudCompleteScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
+  int remainingTime = 3;
 
   @override
   void initState() {
     super.initState();
+    _startTimer(remainingTime);
+  }
+
+  void _startTimer(int duration) {
     _timer = Timer(Duration(seconds: duration), _navigateToRandomDiceScreen);
+  }
+
+  void _pauseTimer() {
+    if (_timer != null && _timer!.isActive) {
+      _timer?.cancel();
+    }
+  }
+
+  void _resumeTimer() {
+    _startTimer(remainingTime);
   }
 
   @override
@@ -45,6 +61,20 @@ class _KikisdayTalmudCompleteScreenState
     log('currentNumber: ${widget.currentNumber}');
   }
 
+  void _onBackButtonPressed() {
+    _timer?.cancel(); // 타이머 취소
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => ExitLayout(
+                onKeepPressed: _resumeTimer,
+                onExitPressed: () {},
+                isFromDiceOrCamera: false,
+                isFromCard: false,
+              )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return CompleteLayout(
@@ -52,6 +82,7 @@ class _KikisdayTalmudCompleteScreenState
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       completeStr: 'assets/kikisday/talmud_complete.png',
       timerColor: Color(0xFF868686),
+      onBackButtonPressed: _onBackButtonPressed,
     );
   }
 }

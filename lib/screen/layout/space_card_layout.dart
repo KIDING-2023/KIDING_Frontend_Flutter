@@ -50,7 +50,13 @@ class SpaceCardLayout extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: () {},
+                                  onExitPressed: () {},
+                                  isFromDiceOrCamera: false,
+                                  isFromCard: true,
+                                )),
                       );
                     },
                     icon: Image.asset(backBtnStr, width: 13.16, height: 20.0)),

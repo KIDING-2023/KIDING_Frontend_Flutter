@@ -100,9 +100,16 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
             left: 15,
             child: IconButton(
                 onPressed: () {
+                  _pauseCamera();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ExitLayout()),
+                    MaterialPageRoute(
+                        builder: (context) => ExitLayout(
+                              onKeepPressed: _resumeCamera,
+                              onExitPressed: _disposeCamera,
+                              isFromDiceOrCamera: true,
+                              isFromCard: false,
+                            )),
                   );
                 },
                 icon: Image.asset(
@@ -161,6 +168,18 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  void _pauseCamera() {
+    controller?.pauseCamera();
+  }
+
+  void _resumeCamera() {
+    controller?.resumeCamera();
+  }
+
+  void _disposeCamera() {
+    controller?.dispose();
   }
 
   void _navigateToNextScreen() {

@@ -59,6 +59,23 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
     }
   }
 
+  void _pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    }
+  }
+
+  void _resumeVideo() {
+    if (!_controller.value.isPlaying) {
+      _controller.play();
+    }
+  }
+
+  void _stopVideo() {
+    _controller.removeListener(_checkVideo);
+    _controller.dispose();
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -151,7 +168,13 @@ class _KikisdayRandomDice2ScreenState extends State<KikisdayRandomDice2Screen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeVideo,
+                                  onExitPressed: _stopVideo,
+                                  isFromDiceOrCamera: true,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',

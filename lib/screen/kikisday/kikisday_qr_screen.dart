@@ -27,44 +27,6 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   bool useCamera = true;
   final picker = ImagePicker();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _requestCameraPermission();
-  // }
-  //
-  // Future<void> _requestCameraPermission() async {
-  //   bool hasPermission = await requestCameraPermission(context);
-  //   if (hasPermission) {
-  //     print("Camera permission granted.");
-  //   } else {
-  //     print("Camera permission denied.");
-  //   }
-  // }
-  //
-  // Future<bool> requestCameraPermission(BuildContext context) async {
-  //   PermissionStatus status = await Permission.camera.request();
-  //
-  //   if(!status.isGranted) { // 허용이 안된 경우
-  //     showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             content: Text("권한 설정을 확인해주세요."),
-  //             actions: [
-  //               ElevatedButton(
-  //                   onPressed: () {
-  //                     openAppSettings(); // 앱 설정으로 이동
-  //                   },
-  //                   child: Text('설정하기')),
-  //             ],
-  //           );
-  //         });
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
   @override
   void reassemble() {
     super.reassemble();
@@ -105,46 +67,6 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
               ),
             ),
           ),
-          // Positioned(
-          //   bottom: 100,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //         color: Color(0xFF788CC2),
-          //         borderRadius: BorderRadius.circular(100)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(6.0),
-          //       child: ToggleButtons(
-          //         fillColor:
-          //             Colors.transparent, // ToggleButtons 자체의 배경색을 투명하게 설정
-          //         splashColor: Colors.transparent, // Splash 효과를 없애기 위해 투명하게 설정
-          //         highlightColor:
-          //             Colors.transparent, // Highlight 효과를 없애기 위해 투명하게 설정
-          //         selectedColor: Colors.white,
-          //         color: Colors.white,
-          //         renderBorder: false,
-          //         children: <Widget>[
-          //           _buildToggleButton(
-          //               '카메라', useCamera), // 변경된 _buildToggleButton 함수를 사용
-          //           _buildToggleButton(
-          //               '갤러리', !useCamera), // 변경된 _buildToggleButton 함수를 사용
-          //         ],
-          //         isSelected: [useCamera, !useCamera],
-          //         onPressed: (int index) {
-          //           if (index == 0) {
-          //             controller?.resumeCamera();
-          //           } else {
-          //             //_getPictureFromGallery();
-          //             // 이 부분을 제거합니다. _getPictureFromGallery 메소드 내부에서 상태를 관리하게 합니다.
-          //           }
-          //         },
-          //         textStyle: TextStyle(
-          //           fontFamily: 'Nanum',
-          //           fontSize: 20,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           if (result != null)
             Positioned(
               bottom: 200,
@@ -171,9 +93,16 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
             left: 15,
             child: IconButton(
                 onPressed: () {
+                  _pauseCamera(); // 카메라 일시정지
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ExitLayout()),
+                    MaterialPageRoute(
+                        builder: (context) => ExitLayout(
+                              onKeepPressed: _resumeCamera,
+                              onExitPressed: _disposeCamera,
+                              isFromDiceOrCamera: true,
+                              isFromCard: false,
+                            )),
                   );
                 },
                 icon: Image.asset(
@@ -186,57 +115,6 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
       ),
     );
   }
-
-  // // _buildToggleButton 함수는 선택된 상태에 따라 다르게 보이는 버튼을 생성합니다.
-  // Widget _buildToggleButton(String text, bool isSelected) {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       color: isSelected
-  //           ? Color(0xFFFF8A5B)
-  //           : Colors.transparent, // 선택된 상태에 따른 색상
-  //       borderRadius: BorderRadius.circular(100), // 모든 모서리를 둥글게 설정
-  //     ),
-  //     padding: const EdgeInsets.symmetric(horizontal: 16),
-  //     child: Center(
-  //       child: Text(text),
-  //     ),
-  //   );
-  // }
-
-  // void _getPictureFromGallery() async {
-  //   final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
-  //   if (pickedFile != null) {
-  //     final inputImage = mlkit.InputImage.fromFilePath(pickedFile.path);
-  //     final barcodeScanner = mlkit.GoogleMlKit.vision.barcodeScanner();
-  //
-  //     try {
-  //       final List<mlkit.Barcode> barcodes = await barcodeScanner.processImage(inputImage);
-  //
-  //       for (mlkit.Barcode barcode in barcodes) {
-  //         if (barcode.format == mlkit.BarcodeFormat.qrCode) {
-  //           // Assume barcode is of type text and access text property
-  //           final String qrCodeValue = barcode.displayValue ?? 'No QR code data';
-  //
-  //           // QR 코드의 값을 사용합니다.
-  //           print('Found QR Code: $qrCodeValue');
-  //
-  //           // Update the state with the scanned QR code
-  //           setState(() {
-  //             mlresult = barcode;
-  //           });
-  //
-  //           // Optionally, navigate to the next screen or perform other actions
-  //           // _navigateToNextScreen(context, barcode);
-  //         }
-  //       }
-  //     } on Exception catch (e) {
-  //       print('Error occurred while scanning the QR Code: $e');
-  //     } finally {
-  //       // 자원을 해제합니다.
-  //       barcodeScanner.close();
-  //     }
-  //   }
-  // }
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = 250.0;
@@ -283,6 +161,18 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  void _pauseCamera() {
+    controller?.pauseCamera();
+  }
+
+  void _resumeCamera() {
+    controller?.resumeCamera();
+  }
+
+  void _disposeCamera() {
+    controller?.dispose();
   }
 
   void _navigateToNextScreen() {

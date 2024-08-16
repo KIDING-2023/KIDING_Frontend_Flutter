@@ -20,12 +20,16 @@ class SpaceRandomDice2Screen extends StatefulWidget {
 class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
+
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
+
   // 랜덤 주사위값
   late int randomNumber;
+
   // 주사위 굴린 후 넘겨줄 주사위값
   late int totalDice;
+
   // 다음 화면
   late var nextScreen;
 
@@ -37,7 +41,7 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
 
   void _initializeAndPlayVideo() {
     _controller = VideoPlayerController.asset(
-      // 우주여행 주사위로 변경해야 함
+        // 우주여행 주사위로 변경해야 함
         'assets/space/dice_${randomNumber}_mars.mp4')
       ..initialize().then((_) {
         setState(() {});
@@ -56,6 +60,23 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
         Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
       });
     }
+  }
+
+  void _pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    }
+  }
+
+  void _resumeVideo() {
+    if (!_controller.value.isPlaying) {
+      _controller.play();
+    }
+  }
+
+  void _stopVideo() {
+    _controller.removeListener(_checkVideo);
+    _controller.dispose();
   }
 
   @override
@@ -93,40 +114,40 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
               },
               child: _rolledDice
                   ? FutureBuilder(
-                future: _initializeVideoPlayerFuture,
-                builder: (context, snapshot) {
-                  if (_controller.value.isInitialized) {
-                    return AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    );
-                  } else {
-                    return Center();
-                    // return Center(child: CircularProgressIndicator());
-                  }
-                },
-              )
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (_controller.value.isInitialized) {
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          return Center();
+                          // return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    )
                   : Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 315,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/space/dice_swipe.png',
-                          width: 87.87, height: 139.91),
+                      children: <Widget>[
+                        Positioned(
+                          top: 315,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/space/dice_swipe.png',
+                                width: 87.87, height: 139.91),
+                          ),
+                        ),
+                        Positioned(
+                          top: 80,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/space/dice.png'),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Positioned(
-                    top: 80,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/space/dice.png'),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
           // 주사위 텍스트 이미지
@@ -149,7 +170,13 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeVideo,
+                                  onExitPressed: _stopVideo,
+                                  isFromDiceOrCamera: true,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset(

@@ -17,11 +17,26 @@ class KikisdaySongScreen extends StatefulWidget {
 class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
+  int remainingTime = 3;
 
   @override
   void initState() {
     super.initState();
+    _startTimer(remainingTime);
+  }
+
+  void _startTimer(int duration) {
     _timer = Timer(Duration(seconds: duration), _navigateToRandomDiceScreen);
+  }
+
+  void _pauseTimer() {
+    if (_timer != null && _timer!.isActive) {
+      _timer?.cancel();
+    }
+  }
+
+  void _resumeTimer() {
+    _startTimer(remainingTime);
   }
 
   @override
@@ -65,12 +80,19 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeTimer,
+                                  onExitPressed: () {},
+                                  isFromDiceOrCamera: false,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
                         width: 13.16, height: 20.0)),
-                Consumer<TimerModel>( // TimerModel의 현재 시간을 소비합니다.
+                Consumer<TimerModel>(
+                  // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
@@ -104,4 +126,3 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
     );
   }
 }
-

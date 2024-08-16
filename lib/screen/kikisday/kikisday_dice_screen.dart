@@ -48,6 +48,23 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
     }
   }
 
+  void _pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    }
+  }
+
+  void _resumeVideo() {
+    if (!_controller.value.isPlaying) {
+      _controller.play();
+    }
+  }
+
+  void _stopVideo() {
+    _controller.removeListener(_checkVideo);
+    _controller.dispose();
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -134,9 +151,16 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
               children: [
                 IconButton(
                     onPressed: () {
+                      _pauseVideo(); // 동영상 일시정지
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeVideo,
+                                  onExitPressed: _stopVideo,
+                                  isFromDiceOrCamera: true,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',

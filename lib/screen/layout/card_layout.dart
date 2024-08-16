@@ -50,7 +50,13 @@ class CardLayout extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ExitLayout()),
+                      MaterialPageRoute(
+                          builder: (context) => ExitLayout(
+                                onKeepPressed: () {},
+                                onExitPressed: () {},
+                                isFromDiceOrCamera: false,
+                                isFromCard: true,
+                              )),
                     );
                   },
                   icon: Image.asset(backBtnStr, width: 13.16, height: 20.0),
@@ -109,8 +115,9 @@ class CardLayout extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              BarcodeTextScreen(currentNumber: currentNumber, completeScreen: completeScreen)));
+                          builder: (context) => BarcodeTextScreen(
+                              currentNumber: currentNumber,
+                              completeScreen: completeScreen)));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
                     width: 112.3, height: 32.68),

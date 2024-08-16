@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:image_picker/image_picker.dart';
-import 'package:kiding/screen/space/space_can_read_screen.dart';
 import 'package:kiding/screen/space/space_tutorial1_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -155,14 +154,20 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
               bottom: 200,
               child: Text(
                 'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
-                style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
+                style: TextStyle(
+                    fontSize: 15,
+                    fontFamily: 'NanumRegular',
+                    color: Colors.white),
               ),
             ),
           Positioned(
             bottom: 200,
             child: Text(
               result == null ? 'Scan a code' : '',
-              style: TextStyle(fontSize: 15, fontFamily: 'NanumRegular', color: Colors.white),
+              style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'NanumRegular',
+                  color: Colors.white),
             ),
           ),
           Positioned(
@@ -170,9 +175,16 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
             left: 15,
             child: IconButton(
                 onPressed: () {
+                  _pauseCamera();
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ExitLayout()),
+                    MaterialPageRoute(
+                        builder: (context) => ExitLayout(
+                              onKeepPressed: _resumeCamera,
+                              onExitPressed: _disposeCamera,
+                              isFromDiceOrCamera: true,
+                              isFromCard: false,
+                            )),
                   );
                 },
                 icon: Image.asset(
@@ -247,6 +259,18 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+
+  void _pauseCamera() {
+    controller?.pauseCamera();
+  }
+
+  void _resumeCamera() {
+    controller?.resumeCamera();
+  }
+
+  void _disposeCamera() {
+    controller?.dispose();
   }
 
   void _navigateToNextScreen() {

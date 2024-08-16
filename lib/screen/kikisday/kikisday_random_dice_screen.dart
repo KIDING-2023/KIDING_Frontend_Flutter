@@ -21,12 +21,16 @@ class KikisdayRandomDiceScreen extends StatefulWidget {
 class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
+
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
+
   // 랜덤 주사위값
   late int randomNumber;
+
   // 주사위 굴린 후 넘겨줄 주사위값
   late int totalDice;
+
   // 다음 화면
   late var nextScreen;
 
@@ -53,6 +57,23 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
       _controller.dispose(); // 컨트롤러 해제
       Navigator.of(context).pushNamed(nextScreen);
     }
+  }
+
+  void _pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    }
+  }
+
+  void _resumeVideo() {
+    if (!_controller.value.isPlaying) {
+      _controller.play();
+    }
+  }
+
+  void _stopVideo() {
+    _controller.removeListener(_checkVideo);
+    _controller.dispose();
   }
 
   @override
@@ -147,7 +168,13 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeVideo,
+                                  onExitPressed: _stopVideo,
+                                  isFromDiceOrCamera: true,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',

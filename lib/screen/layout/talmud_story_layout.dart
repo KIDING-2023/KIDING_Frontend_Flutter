@@ -9,13 +9,15 @@ class TalmudStoryLayout extends StatelessWidget {
   final String backBtnStr;
   final Widget storyWid;
   final Color timerColor;
+  final VoidCallback onBackButtonPressed;
 
   const TalmudStoryLayout(
       {super.key,
       required this.bgStr,
       required this.backBtnStr,
       required this.storyWid,
-      required this.timerColor});
+      required this.timerColor,
+      required this.onBackButtonPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +40,7 @@ class TalmudStoryLayout extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
-                      );
-                    },
+                    onPressed: onBackButtonPressed,
                     icon: Image.asset(backBtnStr, width: 13.16, height: 20.0)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.

@@ -63,6 +63,23 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
     }
   }
 
+  void _pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    }
+  }
+
+  void _resumeVideo() {
+    if (!_controller.value.isPlaying) {
+      _controller.play();
+    }
+  }
+
+  void _stopVideo() {
+    _controller.removeListener(_checkVideo);
+    _controller.dispose();
+  }
+
   @override
   void dispose() {
     _controller.dispose();
@@ -154,7 +171,13 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeVideo,
+                                  onExitPressed: _stopVideo,
+                                  isFromDiceOrCamera: true,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset(

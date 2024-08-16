@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -10,21 +9,27 @@ import '../layout/exit_layout.dart';
 class KikisdayRandomDice4Screen extends StatefulWidget {
   final int currentNumber;
 
-  KikisdayRandomDice4Screen({Key? key, required this.currentNumber}) : super(key: key);
+  KikisdayRandomDice4Screen({Key? key, required this.currentNumber})
+      : super(key: key);
 
   @override
-  State<KikisdayRandomDice4Screen> createState() => _KikisdayRandomDice4ScreenState();
+  State<KikisdayRandomDice4Screen> createState() =>
+      _KikisdayRandomDice4ScreenState();
 }
 
 class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
   late VideoPlayerController _controller;
   Future<void>? _initializeVideoPlayerFuture;
+
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
   bool _rolledDice = false;
+
   // 랜덤 주사위값
   late int randomNumber;
+
   // 주사위 굴린 후 넘겨줄 주사위값
   late int totalDice;
+
   // 다음 화면
   late var nextScreen;
 
@@ -35,7 +40,8 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
   }
 
   void _initializeAndPlayVideo() {
-    _controller = VideoPlayerController.asset('assets/kikisday/kikisday_4_dice_${randomNumber}.mp4')
+    _controller = VideoPlayerController.asset(
+        'assets/kikisday/kikisday_4_dice_${randomNumber}.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller.play();
@@ -46,10 +52,27 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
   void _checkVideo() {
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller.value.position == _controller.value.duration) {
-      _controller.removeListener(_checkVideo);  // 리스너 제거
-      _controller.dispose();  // 컨트롤러 해제
+      _controller.removeListener(_checkVideo); // 리스너 제거
+      _controller.dispose(); // 컨트롤러 해제
       Navigator.of(context).pushNamed(nextScreen);
     }
+  }
+
+  void _pauseVideo() {
+    if (_controller.value.isPlaying) {
+      _controller.pause();
+    }
+  }
+
+  void _resumeVideo() {
+    if (!_controller.value.isPlaying) {
+      _controller.play();
+    }
+  }
+
+  void _stopVideo() {
+    _controller.removeListener(_checkVideo);
+    _controller.dispose();
   }
 
   @override
@@ -87,41 +110,41 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
               },
               child: _rolledDice
                   ? FutureBuilder(
-                future: _initializeVideoPlayerFuture,
-                builder: (context, snapshot) {
-                  if (_controller.value.isInitialized) {
-                    return AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
-                    );
-                  } else {
-                    return Center();
-                    //return Center(child: CircularProgressIndicator());
-                  }
-                },
-              )
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (_controller.value.isInitialized) {
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          return Center();
+                          //return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    )
                   : Stack(
-                children: <Widget>[
-                  Positioned(
-                    top: 315,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/kikisday/dice_swipe.png',
-                          width: 87.87, height: 139.91),
+                      children: <Widget>[
+                        Positioned(
+                          top: 315,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/kikisday/dice_swipe.png',
+                                width: 87.87, height: 139.91),
+                          ),
+                        ),
+                        Positioned(
+                          top: 380,
+                          left: 0,
+                          right: 0,
+                          child: Center(
+                            child: Image.asset('assets/kikisday/dice_img3.png',
+                                width: 360, height: 266.68),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  Positioned(
-                    top: 380,
-                    left: 0,
-                    right: 0,
-                    child: Center(
-                      child: Image.asset('assets/kikisday/dice_img3.png',
-                          width: 360, height: 266.68),
-                    ),
-                  ),
-                ],
-              ),
             ),
           ),
           // 주사위 텍스트 이미지
@@ -129,7 +152,8 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
             top: 125.22,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png', width: 339.79, height: 117.96),
+            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png',
+                width: 339.79, height: 117.96),
           ),
           // 뒤로 가기 버튼
           Positioned(
@@ -143,7 +167,13 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ExitLayout()),
+                        MaterialPageRoute(
+                            builder: (context) => ExitLayout(
+                                  onKeepPressed: _resumeVideo,
+                                  onExitPressed: _stopVideo,
+                                  isFromDiceOrCamera: true,
+                                  isFromCard: false,
+                                )),
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
