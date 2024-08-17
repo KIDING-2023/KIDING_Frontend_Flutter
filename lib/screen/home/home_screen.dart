@@ -264,6 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
         child: ListView(
+          padding: EdgeInsets.only(right: 30),
           scrollDirection: Axis.horizontal,
           children: <Widget>[
             _buildKikisdayCard(),
