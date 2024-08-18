@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/login/password_screen.dart';
-
 import 'back_screen.dart';
 
+// 회원가입 전화번호 인증 화면
 class PhoneScreen extends StatefulWidget {
   final String nickname;
 
@@ -14,131 +14,154 @@ class PhoneScreen extends StatefulWidget {
 }
 
 class _PhoneScreenState extends State<PhoneScreen> {
-  final _phoneController = TextEditingController();
-  final _codeController = TextEditingController();
-  bool codeSent = false;
-  bool errorVisible = false;
-  String errorMessage = "";
-
-  late String _verificationId;
-  late String smsCode;
+  final _phoneController = TextEditingController(); // 전화번호 입력 컨트롤러
+  final _codeController = TextEditingController(); // 인증 코드 입력 컨트롤러
+  bool codeSent = false; // 인증 코드 전송 여부
+  bool errorVisible = false; // 에러 발생 여부
+  String errorMessage = ""; // 에러 메시지
+  late String _verificationId; // 인증 코드
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size; // 기기 화면 크기
     return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            // 뒤로가기 버튼
-            Positioned(
-              top: 30.0,
-              left: 30.0,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 15),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => BackScreen()));
-                  },
-                  child: Image.asset('assets/kikisday/back_icon.png',
-                      width: 13.16, height: 20.0),
-                ),
-              ),
+        body: Container(
+      color: Colors.white,
+      child: Stack(
+        children: <Widget>[
+          // 뒤로가기 버튼
+          Positioned(
+            top: screenSize.height * 0.06,
+            left: screenSize.width * 0.03,
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => BackScreen()));
+              },
+              icon: Image.asset('assets/kikisday/back_icon.png',
+                  width: screenSize.width * 0.04,
+                  height: screenSize.height * 0.03),
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // 안내문
-                Image.asset('assets/login/phone_greeting_text.png',
-                    width: 248.78, height: 120),
-                Column(
-                  // 전화번호 입력칸 || 인증번호 입력칸
-                  children: [
-                    Container(
-                      width: screenSize.width * 0.7,
-                      child: TextField(
-                        controller: codeSent ? _codeController : _phoneController,
-                        decoration: InputDecoration(
-                            hintText: codeSent ? '인증번호를 입력하세요' : 'ex.01012345678',
-                            hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                            filled: true,
-                            fillColor: Colors.white,
-                            enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(100)),
-                            contentPadding: EdgeInsets.only(left: 20)),
-                        style: TextStyle(
-                          fontFamily: 'nanum',
-                          fontSize: 17,
-                          color: Colors.black,
-                        ),
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // '전화번호 인증을 진행합니다' 텍스트
+              Image.asset('assets/login/phone_greeting_text.png',
+                  width: screenSize.width * 0.74,
+                  height: screenSize.height * 0.16),
+              Column(
+                // 전화번호 입력칸 || 인증번호 입력칸
+                children: [
+                  Container(
+                    width: screenSize.width * 0.73,
+                    height: screenSize.height * 0.06,
+                    // 텍스트 박스 하단 그림자
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff000000).withOpacity(0.15),
+                            spreadRadius: 0,
+                            blurRadius: 1.75,
+                            offset:
+                                Offset(0, 0.87), // changes position of shadow
+                          )
+                        ]),
+                    child: TextField(
+                      controller: codeSent ? _codeController : _phoneController,
+                      decoration: InputDecoration(
+                          hintText: codeSent ? '인증번호를 입력하세요' : 'ex.01012345678',
+                          hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(100)),
+                          contentPadding: EdgeInsets.only(left: 20)),
+                      style: TextStyle(
+                        fontFamily: 'nanum',
+                        fontSize: 17,
+                        color: Colors.black,
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    // 인증번호 메시지
-                    Row(
-                      children: [
-                        Padding(padding: EdgeInsets.only(left: 70.0)),
-                        Visibility(
-                          visible: errorVisible,
-                          child: Icon(
-                            Icons.circle,
-                            size: 2.63,
-                            fill: 1.0,
-                            color: Color(0xFFFFA37C),
-                          ),
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  // 인증번호 전송 여부 메세지
+                  Row(
+                    children: [
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.21)),
+                      Visibility(
+                        visible: errorVisible,
+                        child: Icon(
+                          Icons.circle,
+                          size: screenSize.width * 0.01,
+                          fill: 1.0,
+                          color: Color(0xFFFFA37C),
                         ),
-                        Padding(padding: EdgeInsets.only(left: 5.0)),
-                        Text(
-                          errorMessage,
-                          style: TextStyle(
-                              fontFamily: 'nanum',
-                              fontSize: 13,
-                              color: Color(0xFFFFA37C)),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    // 입력 완료 버튼
-                    IconButton(
-                      onPressed: codeSent ? _verifyCode : _sendCode,
-                      padding: EdgeInsets.zero,
-                      icon: Image.asset('assets/login/input_finish_btn.png',
-                          width: screenSize.width * 0.7),
-                    ),
-                  ],
-                ),
-                // 진행 표시 선
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/login/progress.png', width: 82.76, height: 4.5),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Image.asset('assets/login/progress_colored.png',
-                        width: 82.76, height: 4.5),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Image.asset('assets/login/progress.png', width: 82.76, height: 4.5),
-                  ],
-                )
-              ],
-            ),
-          ],
-        ));
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.01)),
+                      Text(
+                        errorMessage,
+                        style: TextStyle(
+                            fontFamily: 'nanum',
+                            fontSize: 13,
+                            color: Color(0xFFFFA37C)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  // 입력 완료 버튼
+                  IconButton(
+                    onPressed: codeSent ? _verifyCode : _sendCode,
+                    padding: EdgeInsets.zero,
+                    icon: Image.asset('assets/login/input_finish_btn.png',
+                        width: screenSize.width * 0.73),
+                  ),
+                ],
+              ),
+              // 진행 표시 선
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/login/progress.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                  SizedBox(
+                    width: screenSize.width * 0.02,
+                  ),
+                  Image.asset('assets/login/progress_colored.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                  SizedBox(
+                    width: screenSize.width * 0.02,
+                  ),
+                  Image.asset('assets/login/progress.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
+    ));
   }
 
   // 인증번호 전송
   void _sendCode() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.verifyPhoneNumber(
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 180),
+      // 3분 시간 제한
       phoneNumber: _phoneController.text.replaceFirst('0', '+82'),
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential);
@@ -173,21 +196,21 @@ class _PhoneScreenState extends State<PhoneScreen> {
       await auth
           .signInWithCredential(credential)
           .then((UserCredential userCredential) {
-        // 인증 성공, 다음 화면으로 네비게이션
+        // 인증 성공, 다음 화면으로 이동
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => PasswordScreen(
                     nickname: widget.nickname, phoneNumber: phoneNumber)));
       }).catchError((error) {
-        // 인증 실패, 에러 메시지 설정
+        // 인증 실패, 에러 메시지 표시
         setState(() {
           errorVisible = true;
           errorMessage = '인증번호가 일치하지 않습니다.';
         });
       });
     } catch (e) {
-      // 다른 예외 처리, 예를 들어 네트워크 에러 등
+      // 다른 예외 처리
       setState(() {
         errorVisible = true;
         errorMessage = '인증 처리 중 문제가 발생했습니다: ${e.toString()}';
