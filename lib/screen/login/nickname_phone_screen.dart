@@ -1,65 +1,82 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/login/start_screen.dart';
 
 import 'find_nickname_result_screen.dart';
 
+// 닉네임 찾기 - 전화번호 인증 코드 입력 화면
 class NicknamePhoneScreen extends StatefulWidget {
-  final String nickname;
-  final String phone;
+  final String nickname; // 닉네임 받아오기
+  final String phone; // 전화번호 받아오기
 
-  const NicknamePhoneScreen({super.key, required this.nickname, required this.phone});
+  const NicknamePhoneScreen(
+      {super.key, required this.nickname, required this.phone});
 
   @override
   State<NicknamePhoneScreen> createState() => _NicknamePhoneScreenState();
 }
 
 class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
-  final _codeController = TextEditingController();
-  bool errorVisible = false;
-  String errorMessage = "";
-
-  bool codeSent = false;
-  late String _verificationId;
-  late String smsCode;
+  final _codeController = TextEditingController(); // 인증 코드 입력 컨트롤러
+  bool errorVisible = false; // 에러 메시지 가시성
+  String errorMessage = ""; // 에러 메시지
+  bool codeSent = false; // 인증 코드 전송 여부
+  late String _verificationId; // 인증 코드
 
   @override
   void initState() {
     super.initState();
-    _sendCode();  // 화면 로드 시 인증번호 전송 함수 실행
+    _sendCode(); // 화면 로드 시 인증번호 전송 함수 실행
   }
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size; // 기기 화면 크기
     return Scaffold(
-      body: Stack(
+        body: Container(
+      color: Colors.white,
+      child: Stack(
         children: [
           // 뒤로가기 버튼
           Positioned(
-            top: 30.0,
-            left: 30.0,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset('assets/kikisday/back_icon.png',
-                    width: 13.16, height: 20.0),
-              ),
+            top: screenSize.height * 0.06,
+            left: screenSize.width * 0.03,
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => StartScreen()));
+              },
+              icon: Image.asset('assets/kikisday/back_icon.png',
+                  width: screenSize.width * 0.04,
+                  height: screenSize.height * 0.03),
             ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // 안내문
+              // '전화번호 인증을 진행합니다.' 텍스트
               Image.asset('assets/login/phone_greeting_text.png',
-                  width: 267.47, height: 128),
+                  width: screenSize.width * 0.74,
+                  height: screenSize.height * 0.16),
+              // 인증번호 입력칸, 닉네임 찾기 버튼
               Column(
-                // 인증번호 입력 칸
+                // 인증번호 입력칸
                 children: [
                   Container(
-                    width: screenSize.width * 0.7,
+                    width: screenSize.width * 0.73,
+                    height: screenSize.height * 0.06,
+                    // 텍스트 박스 하단 그림자
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff000000).withOpacity(0.15),
+                            spreadRadius: 0,
+                            blurRadius: 1.75,
+                            offset:
+                                Offset(0, 0.87), // changes position of shadow
+                          )
+                        ]),
                     child: TextField(
                       controller: _codeController,
                       decoration: InputDecoration(
@@ -79,22 +96,22 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: screenSize.height * 0.01,
                   ),
                   // 인증번호 오류 메시지
                   Row(
                     children: [
-                      Padding(padding: EdgeInsets.only(left: 70.0)),
+                      Padding(padding: EdgeInsets.only(left: screenSize.width * 0.21)),
                       Visibility(
                         visible: errorVisible,
                         child: Icon(
                           Icons.circle,
-                          size: 2.63,
+                          size: screenSize.width * 0.01,
                           fill: 1.0,
                           color: Color(0xFFFFA37C),
                         ),
                       ),
-                      Padding(padding: EdgeInsets.only(left: 5.0)),
+                      Padding(padding: EdgeInsets.only(left: screenSize.width * 0.01)),
                       Text(
                         errorMessage,
                         style: TextStyle(
@@ -105,29 +122,29 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 5,
+                    height: screenSize.height * 0.01,
                   ),
                   // 닉네임 찾기 버튼
                   IconButton(
                     onPressed: _verifyCode,
                     padding: EdgeInsets.zero,
                     icon: Image.asset('assets/login/find_nickname_btn.png',
-                        width: screenSize.width * 0.7),
+                        width: screenSize.width * 0.73),
                   ),
                 ],
               ),
             ],
           ),
         ],
-      )
-    );
+      ),
+    ));
   }
 
   // 인증번호 전송
   void _sendCode() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     await auth.verifyPhoneNumber(
-      timeout: const Duration(seconds: 120),
+      timeout: const Duration(seconds: 180),
       phoneNumber: widget.phone,
       verificationCompleted: (PhoneAuthCredential credential) async {
         await auth.signInWithCredential(credential);
@@ -152,23 +169,21 @@ class _NicknamePhoneScreenState extends State<NicknamePhoneScreen> {
     );
   }
 
-
   // 인증번호 확인
   void _verifyCode() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: _verificationId,
-          smsCode: _codeController.text
-      );
-      await auth.signInWithCredential(credential).then((UserCredential userCredential) {
+          verificationId: _verificationId, smsCode: _codeController.text);
+      await auth
+          .signInWithCredential(credential)
+          .then((UserCredential userCredential) {
         // 인증 성공, 다음 화면으로 네비게이션
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => FindNicknameResultScreen(nickname: widget.nickname)
-            )
-        );
+                builder: (context) =>
+                    FindNicknameResultScreen(nickname: widget.nickname)));
       }).catchError((error) {
         // 인증 실패, 에러 메시지 설정
         setState(() {

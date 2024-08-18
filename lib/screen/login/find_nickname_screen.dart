@@ -1,8 +1,9 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
+import 'package:kiding/screen/login/start_screen.dart';
 import 'nickname_phone_screen.dart';
 
+// 닉네임 찾기 - 전화번호 입력 화면
 class FindNicknameScreen extends StatefulWidget {
   const FindNicknameScreen({super.key});
 
@@ -11,42 +12,58 @@ class FindNicknameScreen extends StatefulWidget {
 }
 
 class _FindNicknameScreenState extends State<FindNicknameScreen> {
-  final _phoneController = TextEditingController();
-  bool errorVisible = false;
-  String errorMessage = "";
+  final _phoneController = TextEditingController(); // 전화번호 입력 컨트롤러
+  bool errorVisible = false; // 에러 메시지 가시성
+  String errorMessage = ""; // 에러 메시지
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size; // 기기 화면 크기
     return Scaffold(
-      body: Stack(
+        body: Container(
+      color: Colors.white,
+      child: Stack(
         children: [
           // 뒤로가기 버튼
           Positioned(
-            top: 30.0,
-            left: 30.0,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: Image.asset('assets/kikisday/back_icon.png',
-                    width: 13.16, height: 20.0),
-              ),
+            top: screenSize.height * 0.06,
+            left: screenSize.width * 0.03,
+            child: IconButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => StartScreen()));
+              },
+              icon: Image.asset('assets/kikisday/back_icon.png',
+                  width: screenSize.width * 0.04,
+                  height: screenSize.height * 0.03),
             ),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // 안내문
+              // '닉네임 찾기' 텍스트
               Image.asset('assets/login/find_nickname_text.png',
-                  width: 267.47, height: 88),
+                  width: screenSize.width * 0.74,
+                  height: screenSize.height * 0.11),
+              // 전화번호 입력칸, 닉네임 찾기 버튼
               Column(
-                // 전화번호 입력 칸
+                // 전화번호 입력칸
                 children: [
                   Container(
-                    width: screenSize.width * 0.7,
+                    width: screenSize.width * 0.73,
+                    height: screenSize.height * 0.06,
+                    // 텍스트 박스 하단 그림자
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff000000).withOpacity(0.15),
+                            spreadRadius: 0,
+                            blurRadius: 1.75,
+                            offset:
+                                Offset(0, 0.87), // changes position of shadow
+                          )
+                        ]),
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(
@@ -66,22 +83,26 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 5,
+                    height: screenSize.height * 0.01,
                   ),
                   // 전화번호 오류 메시지
                   Row(
                     children: [
-                      Padding(padding: EdgeInsets.only(left: 70.0)),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.21)),
                       Visibility(
                         visible: errorVisible,
                         child: Icon(
                           Icons.circle,
-                          size: 2.63,
+                          size: screenSize.width * 0.01,
                           fill: 1.0,
                           color: Color(0xFFFFA37C),
                         ),
                       ),
-                      Padding(padding: EdgeInsets.only(left: 5.0)),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.01)),
                       Text(
                         errorMessage,
                         style: TextStyle(
@@ -92,60 +113,71 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 5,
+                    height: screenSize.height * 0.01,
                   ),
                   // 닉네임 찾기 버튼
                   IconButton(
                     onPressed: _findNickname,
                     padding: EdgeInsets.zero,
                     icon: Image.asset('assets/login/find_nickname_btn.png',
-                        width: screenSize.width * 0.7),
+                        width: screenSize.width * 0.73),
                   ),
                 ],
               ),
             ],
           ),
         ],
-      )
-    );
+      ),
+    ));
   }
 
+  // 닉네임 찾기 로직 추가 필요
   void _findNickname() async {
-    final DatabaseReference dbRef = FirebaseDatabase.instance.ref('users');
-    final String phone = _phoneController.text;
-
-    DataSnapshot snapshot = await dbRef.child(phone).get();
-
-    if (snapshot.exists && snapshot.value != null) {
-      try {
-        // snapshot.value를 안전하게 Map으로 변환
-        Map<dynamic, dynamic> userData =
-            snapshot.value as Map<dynamic, dynamic>;
-        String nickname = userData['nickname'] as String; // 닉네임 추출
-        setState(() {
-          errorVisible = false;
-          errorMessage = '';
-        });
-        print('찾은 닉네임: $nickname');
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => NicknamePhoneScreen(
-                    nickname: nickname,
-                    phone: _phoneController.text.replaceFirst('0', '+82'))));
-      } catch (e) {
-        // 타입 변환 실패 시
-        print('Data type conversion error: $e');
-        setState(() {
-          errorVisible = true;
-          errorMessage = '데이터 형식 오류';
-        });
-      }
-    } else {
-      setState(() {
-        errorVisible = true;
-        errorMessage = '없는 전화번호입니다.';
-      });
-    }
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NicknamePhoneScreen(
+                nickname: "닉네임",
+                phone: _phoneController.text.replaceFirst('0', '+82'))));
   }
+
+// 닉네임 찾기 (파이어베이스)
+// void _findNickname() async {
+//   final DatabaseReference dbRef = FirebaseDatabase.instance.ref('users');
+//   final String phone = _phoneController.text;
+//
+//   DataSnapshot snapshot = await dbRef.child(phone).get();
+//
+//   if (snapshot.exists && snapshot.value != null) {
+//     try {
+//       // snapshot.value를 안전하게 Map으로 변환
+//       Map<dynamic, dynamic> userData =
+//           snapshot.value as Map<dynamic, dynamic>;
+//       String nickname = userData['nickname'] as String; // 닉네임 추출
+//       setState(() {
+//         errorVisible = false;
+//         errorMessage = '';
+//       });
+//       print('찾은 닉네임: $nickname');
+//       Navigator.push(
+//           context,
+//           MaterialPageRoute(
+//               builder: (context) => NicknamePhoneScreen(
+//                   nickname: nickname,
+//                   phone: _phoneController.text.replaceFirst('0', '+82'))));
+//     } catch (e) {
+//       // 타입 변환 실패 시
+//       print('Data type conversion error: $e');
+//       setState(() {
+//         errorVisible = true;
+//         errorMessage = '데이터 형식 오류';
+//       });
+//     }
+//   } else {
+//     setState(() {
+//       errorVisible = true;
+//       errorMessage = '없는 전화번호입니다.';
+//     });
+//   }
+// }
 }
