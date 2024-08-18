@@ -168,41 +168,47 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
     String pw_test = _pwController.text;
     String pw = widget.password;
 
-    if (pw_test == pw) {
+    if (pw_test != pw) {
       setState(() {
         _isErrorVisible = true;
         errorMessage = "비밀번호가 일치하지 않습니다.";
       });
     } else {
-      _signup();
-    }
-  }
-
-  // API를 통한 회원가입 요청
-  Future<void> _signup() async {
-    String nickname = widget.nickname;
-    String password = _pwController.text.trim();
-    String phone = widget.phoneNumber; // 전화번호 입력 필드를 추가해야 합니다.
-
-    var url = Uri.parse('http://3.37.76.76:8081/signup');
-    var response = await http.post(url,
-        body: jsonEncode(
-            {'nickname': nickname, 'password': password, 'phone': phone}),
-        headers: {'Content-Type': 'application/json'});
-
-    if (response.statusCode == 200) {
       // 성공적인 회원가입 처리, 로그인 화면으로 이동
       Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => LoginSplashScreen(
-                nickname: widget.nickname, password: password)),
+                nickname: widget.nickname, password: pw_test)),
       );
-    } else {
-      // 오류 메시지를 보여주는 로직
-      setState(() {
-        errorMessage = "회원가입에 실패했습니다.";
-      });
     }
   }
+
+  // // API를 통한 회원가입 요청
+  // Future<void> _signup() async {
+  //   String nickname = widget.nickname;
+  //   String password = _pwController.text.trim();
+  //   String phone = widget.phoneNumber; // 전화번호 입력 필드를 추가해야 합니다.
+  //
+  //   var url = Uri.parse('http://3.37.76.76:8081/signup');
+  //   var response = await http.post(url,
+  //       body: jsonEncode(
+  //           {'nickname': nickname, 'password': password, 'phone': phone}),
+  //       headers: {'Content-Type': 'application/json'});
+  //
+  //   if (response.statusCode == 200) {
+  //     // 성공적인 회원가입 처리, 로그인 화면으로 이동
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => LoginSplashScreen(
+  //               nickname: widget.nickname, password: password)),
+  //     );
+  //   } else {
+  //     // 오류 메시지를 보여주는 로직
+  //     setState(() {
+  //       errorMessage = "회원가입에 실패했습니다.";
+  //     });
+  //   }
+  // }
 }
