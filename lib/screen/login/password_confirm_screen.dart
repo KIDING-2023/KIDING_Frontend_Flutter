@@ -1,145 +1,173 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import 'back_screen.dart';
 import 'login_splash_screen.dart';
 
+// 회원가입 비밀번호 입력 확인 화면
 class PasswordConfirmScreen extends StatefulWidget {
-  final String nickname;
-  final String phoneNumber;
-  final String password;
+  final String nickname; // 닉네임 받아오기
+  final String phoneNumber; // 전화번호 받아오기
+  final String password; // 비밀번호 받아오기
 
-  const PasswordConfirmScreen({super.key, required this.nickname, required this.phoneNumber, required this.password});
+  const PasswordConfirmScreen(
+      {super.key,
+      required this.nickname,
+      required this.phoneNumber,
+      required this.password});
 
   @override
   State<PasswordConfirmScreen> createState() => _PasswordConfirmScreenState();
 }
 
 class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
-  final TextEditingController _pwController = TextEditingController();
-  String errorMessage = "비밀번호를 다시 입력하세요";
-  bool _isErrorVisible = false;
+  final TextEditingController _pwController =
+      TextEditingController(); // 비밀번호 입력 컨트롤러
+  String errorMessage = "비밀번호를 다시 입력하세요"; // 에러 메시지 (항상 표시)
+  bool _isErrorVisible = true; // 에러 메시지 앞 동그라미 가시성
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size; // 기기 화면 크기
     return Scaffold(
-        body: Stack(
-      children: [
-        // 뒤로가기 버튼
-        Positioned(
-          top: 30.0,
-          left: 30.0,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: GestureDetector(
-              onTap: () {
+        body: Container(
+      color: Colors.white,
+      child: Stack(
+        children: [
+          // 뒤로가기 버튼
+          Positioned(
+            top: screenSize.height * 0.06,
+            left: screenSize.width * 0.03,
+            child: IconButton(
+              onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => BackScreen()));
               },
-              child: Image.asset('assets/kikisday/back_icon.png',
-                  width: 13.16, height: 20.0),
+              icon: Image.asset('assets/kikisday/back_icon.png',
+                  width: screenSize.width * 0.04,
+                  height: screenSize.height * 0.03),
             ),
           ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // 안내문
-            Image.asset('assets/login/password_confirm_text.png',
-                width: 267.47, height: 128),
-            Column(
-              // 비밀번호 입력 칸
-              children: [
-                Container(
-                  width: screenSize.width * 0.7,
-                  child: TextField(
-                    controller: _pwController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        hintText: '비밀번호를 다시 입력하세요',
-                        hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.only(left: 20)),
-                    style: TextStyle(
-                      fontFamily: 'nanum',
-                      fontSize: 17,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                // 비밀번호 오류 메시지
-                Row(
-                  children: [
-                    Padding(padding: EdgeInsets.only(left: 70.0)),
-                    Visibility(
-                      visible: _isErrorVisible,
-                      child: Icon(
-                        Icons.circle,
-                        size: 2.63,
-                        fill: 1.0,
-                        color: Color(0xFFFFA37C),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // 안내문
+              Image.asset('assets/login/password_confirm_text.png',
+                  width: screenSize.width * 0.74,
+                  height: screenSize.height * 0.16),
+              // 비밀번호 입력칸, 입력 완료 버튼
+              Column(
+                // 비밀번호 입력 칸
+                children: [
+                  Container(
+                    width: screenSize.width * 0.73,
+                    height: screenSize.height * 0.06,
+                    // 텍스트 박스 하단 그림자
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff000000).withOpacity(0.15),
+                            spreadRadius: 0,
+                            blurRadius: 1.75,
+                            offset:
+                                Offset(0, 0.87), // changes position of shadow
+                          )
+                        ]),
+                    child: TextField(
+                      controller: _pwController,
+                      obscureText: true,
+                      decoration: InputDecoration(
+                          hintText: '비밀번호를 다시 입력하세요',
+                          hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(100)),
+                          contentPadding: EdgeInsets.only(left: 20)),
+                      style: TextStyle(
+                        fontFamily: 'nanum',
+                        fontSize: 17,
+                        color: Colors.black,
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 5.0)),
-                    Text(
-                      errorMessage,
-                      style: TextStyle(
-                          fontFamily: 'nanum',
-                          fontSize: 13,
-                          color: Color(0xFFFFA37C)),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                // 입력 완료 버튼
-                IconButton(
-                  onPressed: _pw,
-                  padding: EdgeInsets.zero,
-                  icon: Image.asset('assets/login/input_finish_btn.png',
-                      width: screenSize.width * 0.7),
-                ),
-              ],
-            ),
-            // 진행 표시 선
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/login/progress.png',
-                    width: 82.76, height: 4.5),
-                SizedBox(
-                  width: 5,
-                ),
-                Image.asset('assets/login/progress.png',
-                    width: 82.76, height: 4.5),
-                SizedBox(
-                  width: 5,
-                ),
-                Image.asset('assets/login/progress_colored.png',
-                    width: 82.76, height: 4.5),
-              ],
-            )
-          ],
-        ),
-      ],
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  // 비밀번호 오류 메시지
+                  Row(
+                    children: [
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.21)),
+                      Visibility(
+                        visible: _isErrorVisible,
+                        child: Icon(
+                          Icons.circle,
+                          size: screenSize.width * 0.01,
+                          fill: 1.0,
+                          color: Color(0xFFFFA37C),
+                        ),
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.01)),
+                      Text(
+                        errorMessage,
+                        style: TextStyle(
+                            fontFamily: 'nanum',
+                            fontSize: 13,
+                            color: Color(0xFFFFA37C)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  // 입력 완료 버튼
+                  IconButton(
+                    onPressed: _pw,
+                    padding: EdgeInsets.zero,
+                    icon: Image.asset('assets/login/input_finish_btn.png',
+                        width: screenSize.width * 0.73),
+                  ),
+                ],
+              ),
+              // 진행 표시 선
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/login/progress.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                  SizedBox(
+                    width: screenSize.width * 0.02,
+                  ),
+                  Image.asset('assets/login/progress.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                  SizedBox(
+                    width: screenSize.width * 0.02,
+                  ),
+                  Image.asset('assets/login/progress_colored.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     ));
   }
 
+  // 비밀번호 일치 여부 확인
   void _pw() async {
     String pw_test = _pwController.text;
     String pw = widget.password;
-    // 비밀번호 확인 로직
+
     if (pw_test == pw) {
       setState(() {
         _isErrorVisible = true;
@@ -176,9 +204,5 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
         errorMessage = "회원가입에 실패했습니다.";
       });
     }
-  }
-
-  bool _containsNonNumericOrSpecialCharacters(String s) {
-    return RegExp(r'[^0-9]').hasMatch(s);
   }
 }
