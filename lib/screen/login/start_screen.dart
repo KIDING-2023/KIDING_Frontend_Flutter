@@ -6,6 +6,7 @@ import 'package:kiding/screen/login/signup_screen.dart';
 import 'find_nickname_screen.dart';
 import 'find_password_screen.dart';
 
+// 시작 화면 (로그인 화면)
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
 

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +5,7 @@ import 'package:kiding/screen/login/back_screen.dart';
 import 'package:kiding/screen/login/phone_screen.dart';
 import 'package:http/http.dart' as http;
 
+// 회원가입 화면
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -15,9 +14,9 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-  final _nicknameController = TextEditingController();
-  bool errorVisible = false;
-  String errorMessage = "";
+  final _nicknameController = TextEditingController(); // 닉네임 입력 컨트롤러
+  bool errorVisible = false; // 에러 메시지 가시성
+  String errorMessage = ""; // 에러 메시지
 
   // 금지어 목록
   final List<String> prohibitedWords = [
@@ -42,121 +41,143 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size; // 기기 화면 크기
     return Scaffold(
-        body: Stack(
-      children: <Widget>[
-        // 뒤로가기 버튼
-        Positioned(
-          top: 30.0,
-          left: 30.0,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15),
-            child: GestureDetector(
-              onTap: () {
+        body: Container(
+      color: Colors.white,
+      child: Stack(
+        children: <Widget>[
+          // 뒤로가기 버튼
+          Positioned(
+            top: screenSize.height * 0.06,
+            left: screenSize.width * 0.03,
+            child: IconButton(
+              onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => BackScreen()));
               },
-              child: Image.asset('assets/kikisday/back_icon.png',
-                  width: 13.16, height: 20.0),
+              icon: Image.asset('assets/kikisday/back_icon.png',
+                  width: screenSize.width * 0.04,
+                  height: screenSize.height * 0.03),
             ),
           ),
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // 안내문
-            Image.asset('assets/login/greeting_text.png',
-                width: 248.78, height: 120),
-            Column(
-              // 닉네임 입력 칸
-              children: [
-                Container(
-                  width: screenSize.width * 0.7,
-                  child: TextField(
-                    controller: _nicknameController,
-                    decoration: InputDecoration(
-                        hintText: '닉네임',
-                        hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
-                        filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.only(left: 20)),
-                    style: TextStyle(
-                      fontFamily: 'nanum',
-                      fontSize: 17,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                // 닉네임 오류 메시지
-                Row(
-                  children: [
-                    Padding(padding: EdgeInsets.only(left: 70.0)),
-                    Visibility(
-                      visible: errorVisible,
-                      child: Icon(
-                        Icons.circle,
-                        size: 2.63,
-                        fill: 1.0,
-                        color: Color(0xFFFFA37C),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              // '안녕하세요! 닉네임을 설정해주세요' 텍스트
+              Image.asset('assets/login/greeting_text.png',
+                  width: screenSize.width * 0.69,
+                  height: screenSize.height * 0.15),
+              // 닉네임 입력칸, 입력 완료 버튼
+              Column(
+                // 닉네임 입력칸
+                children: [
+                  Container(
+                    width: screenSize.width * 0.73,
+                    height: screenSize.height * 0.06,
+                    // 텍스트 박스 하단 그림자
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0xff000000).withOpacity(0.15),
+                            spreadRadius: 0,
+                            blurRadius: 1.75,
+                            offset:
+                                Offset(0, 0.87), // changes position of shadow
+                          )
+                        ]),
+                    child: TextField(
+                      controller: _nicknameController,
+                      decoration: InputDecoration(
+                          hintText: '닉네임',
+                          hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
+                          filled: true,
+                          fillColor: Colors.white,
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(100)),
+                          contentPadding: EdgeInsets.only(left: 20)),
+                      style: TextStyle(
+                        fontFamily: 'nanum',
+                        fontSize: 17,
+                        color: Colors.black,
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(left: 5.0)),
-                    Text(
-                      errorMessage,
-                      style: TextStyle(
-                          fontFamily: 'nanum',
-                          fontSize: 13,
-                          color: Color(0xFFFFA37C)),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 5,
-                ),
-                // 입력 완료 버튼
-                IconButton(
-                  onPressed: _checkNickname,
-                  padding: EdgeInsets.zero,
-                  icon: Image.asset('assets/login/input_finish_btn.png',
-                      width: screenSize.width * 0.7),
-                ),
-              ],
-            ),
-            // 진행 표시 선
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/login/progress_colored.png',
-                    width: 82.76, height: 4.5),
-                SizedBox(
-                  width: 5,
-                ),
-                Image.asset('assets/login/progress.png',
-                    width: 82.76, height: 4.5),
-                SizedBox(
-                  width: 5,
-                ),
-                Image.asset('assets/login/progress.png',
-                    width: 82.76, height: 4.5),
-              ],
-            )
-          ],
-        ),
-      ],
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  // 닉네임 오류 메시지
+                  Row(
+                    children: [
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.21)),
+                      Visibility(
+                        visible: errorVisible,
+                        child: Icon(
+                          Icons.circle,
+                          size: screenSize.width * 0.01,
+                          fill: 1.0,
+                          color: Color(0xFFFFA37C),
+                        ),
+                      ),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.01)),
+                      Text(
+                        errorMessage,
+                        style: TextStyle(
+                            fontFamily: 'nanum',
+                            fontSize: 13,
+                            color: Color(0xFFFFA37C)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: screenSize.height * 0.01,
+                  ),
+                  // 입력 완료 버튼
+                  IconButton(
+                    onPressed: _checkNickname,
+                    padding: EdgeInsets.zero,
+                    icon: Image.asset('assets/login/input_finish_btn.png',
+                        width: screenSize.width * 0.73),
+                  ),
+                ],
+              ),
+              // 진행 표시 선
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/login/progress_colored.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                  SizedBox(
+                    width: screenSize.width * 0.02,
+                  ),
+                  Image.asset('assets/login/progress.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                  SizedBox(
+                    width: screenSize.width * 0.02,
+                  ),
+                  Image.asset('assets/login/progress.png',
+                      width: screenSize.width * 0.23,
+                      height: screenSize.height * 0.01),
+                ],
+              )
+            ],
+          ),
+        ],
+      ),
     ));
   }
 
-  // 닉네임 오류 체크
+  // 닉네임 유효성 검사 로직 추가 필요
   Future<void> _checkNickname() async {
     String nickname = _nicknameController.text;
-    // bool isAvailable = await checkNicknameAvailability(nickname); // 서버에 닉네임 중복 검사 요청
 
     if (nickname.length > 5) {
       setState(() {
@@ -168,14 +189,7 @@ class _SignupScreenState extends State<SignupScreen> {
         errorVisible = true;
         errorMessage = "닉네임을 입력해주세요.";
       });
-    }
-    // else if (!isAvailable) {
-    //   setState(() {
-    //     errorVisible = true;
-    //     errorMessage = "이미 사용 중인 닉네임입니다.";
-    //   });
-    // }
-    else if (_containsSpecialCharacter(nickname)) {
+    } else if (_containsSpecialCharacter(nickname)) {
       setState(() {
         errorVisible = true;
         errorMessage = "특수문자는 포함할 수 없습니다.";
@@ -193,31 +207,14 @@ class _SignupScreenState extends State<SignupScreen> {
     }
   }
 
-  // 금지어가 있는 지 확인
+  // 금지어 포함 여부 확인
   bool _containsProhibitedWord(String s) {
     return prohibitedWords
         .any((word) => s.toLowerCase().contains(word.toLowerCase()));
   }
 
-  // 특수문자가 있는 지 확인
+  // 특수문자 포함 여부 확인
   bool _containsSpecialCharacter(String s) {
     return RegExp(r'[^A-Za-z0-9가-힣]').hasMatch(s);
   }
-
-  // // API 호출을 위한 함수
-  // Future<bool> checkNicknameAvailability(String nickname) async {
-  //   var url = Uri.parse('http://3.37.76.76:8081/signup');
-  //   try {
-  //     var response = await http.post(url, body: {'nickname': nickname});
-  //     if (response.statusCode == 200) {
-  //       var data = jsonDecode(response.body);
-  //       return data['isAvailable'];
-  //     } else {
-  //       throw Exception('Failed to load data');
-  //     }
-  //   } catch (e) {
-  //     print('Error: $e');
-  //     throw Exception('Failed to check nickname');
-  //   }
-  // }
 }
