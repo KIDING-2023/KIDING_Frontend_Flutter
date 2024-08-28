@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -60,156 +61,155 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Stack(
         children: [
-          // 하단바
-          Positioned(
-              bottom: 75,
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: 0.1,
-                color: Colors.black,
-              )),
-          Positioned(
-            bottom: 10,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 65,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/ranking_unselected.png',
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      height: MediaQuery.of(context).size.height * 0.04,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/home_selected.png',
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      height: MediaQuery.of(context).size.height * 0.04,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/mypage_unselected.png',
-                      width: MediaQuery.of(context).size.width * 0.1,
-                      height: MediaQuery.of(context).size.height * 0.04,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyPageScreen()),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ),
           // 바디
           Positioned(
-            top: 0,
-            child: SingleChildScrollView(
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30.0, top: 30.0),
-                      child: Image.asset('assets/home/home_title.png',
-                          width: 192.35, height: 52.02),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30.0, top: 28.35),
-                      child: Row(
-                        children: <Widget>[
-                          _buildSortOption('메인', 0),
-                          _buildSortOption('인기순', 1),
-                          _buildSortOption('최근순', 2),
-                        ],
+              top: 0,
+              left: 0,
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: screenSize.width,
+                  height: screenSize.height * 0.79,
+                  child: Stack(
+                    children: [
+                      // let's play 텍스트
+                      Positioned(
+                          left: screenSize.width * 0.08,
+                          top: screenSize.height * 0.04,
+                          child: Image.asset(
+                            'assets/home/home_title.png',
+                            width: screenSize.width * 0.53,
+                            height: screenSize.height * 0.07,
+                          )),
+                      // 메인, 인기순, 최근순 버튼
+                      Positioned(
+                        left: screenSize.width * 0.08,
+                        top: screenSize.height * 0.15,
+                        child: Row(
+                          children: <Widget>[
+                            _buildSortOption('메인', 0),
+                            _buildSortOption('인기순', 1),
+                            _buildSortOption('최근순', 2),
+                          ],
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Column(
-                        children: <Widget>[
-                          _buildMainSortSection(),
-                        ],
-                      ),
-                    ),
-                    // Ranking box placeholder
-                    Padding(
-                      padding: const EdgeInsets.only(top: 37.18, bottom: 30),
-                      child: Center(
+                      // 카드 리스트
+                      Positioned(
+                        left: 0,
+                        top: screenSize.height * 0.185,
                         child: Container(
-                          width: 310,
-                          height: 111,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/home/ranking_box.png'),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          child: Stack(
+                          width: screenSize.width,
+                          child: Column(
                             children: <Widget>[
-                              Positioned(
-                                right: 17.02,
-                                top: 19.08,
-                                child: Image.asset('assets/home/plus.png',
-                                    width: 19.98, height: 19.98),
-                              ),
-                              Positioned(
-                                right: 22.89,
-                                bottom: 19.89,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Text("00",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 18.96,
-                                            fontFamily: 'Nanum')),
-                                    Text("번",
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 18.96,
-                                            fontFamily: 'Nanum')),
-                                  ],
-                                ),
-                              ),
-                              Positioned(
-                                right: 5.0 + 22.89 + 48, // '00번' 텍스트와의 간격을 조정
-                                bottom: 19.89,
-                                child: Text("이용자",
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18.96,
-                                        fontFamily: 'Nanum')),
-                              ),
+                              _buildMainSortSection(),
                             ],
                           ),
                         ),
                       ),
+                      // 랭킹 박스
+                      Positioned(
+                          left: 0,
+                          right: 0,
+                          top: screenSize.height * 0.63,
+                          child: Image.asset(
+                            'assets/home/ranking_box.png',
+                            width: screenSize.width * 0.83,
+                            height: screenSize.height * 0.14,
+                          )),
+                      // 플러스 버튼
+                      Positioned(
+                          left: screenSize.width * 0.81,
+                          top: screenSize.height * 0.64,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Image.asset(
+                              'assets/home/plus.png',
+                              width: screenSize.width * 0.06,
+                              height: screenSize.height * 0.02,
+                            ),
+                          )),
+                      // 1위 사용자 이름 (백엔드 연결 필요)
+                      Positioned(
+                        right: screenSize.width * 0.29,
+                        top: screenSize.height * 0.715,
+                        child: Text(
+                          '사용자',
+                          style: TextStyle(
+                              fontSize: 18.96,
+                              color: Colors.black,
+                              fontFamily: 'Nanum'),
+                        ),
+                      ),
+                      // 플레이 횟수 (백엔드 연결 필요)
+                      Positioned(
+                          left: screenSize.width * 0.73,
+                          top: screenSize.height * 0.715,
+                          child: Text(
+                            '00번',
+                            style: TextStyle(
+                                fontSize: 18.96,
+                                color: Color(0xff75777e),
+                                fontFamily: 'Nanum'),
+                          )),
+                    ],
+                  ),
+                ),
+              )),
+          // 하단바 구분선
+          Positioned(
+              top: screenSize.height * 0.79,
+              child: Container(
+                width: screenSize.width,
+                height: 0.1,
+                color: Colors.black,
+              )),
+          // 하단바
+          Positioned(
+              top: screenSize.height * 0.8,
+              left: 0,
+              right: 0,
+              child: Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/home/ranking_unselected.png',
+                        width: screenSize.width * 0.1,
+                        height: screenSize.height * 0.04,
+                      ),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/home/home_selected.png',
+                        width: screenSize.width * 0.1,
+                        height: screenSize.height * 0.04,
+                      ),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Image.asset(
+                        'assets/home/mypage_unselected.png',
+                        width: screenSize.width * 0.1,
+                        height: screenSize.height * 0.04,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyPageScreen()),
+                        );
+                      },
                     ),
                   ],
                 ),
-              ),
-            ),
-          ),
+              ))
         ],
       ),
     );
   }
 
   Widget _buildSortOption(String title, int index) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -246,8 +246,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildMainSortSection() {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return Container(
-      height: 317.79,
+      height: screenSize.height * 0.4,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {
           return LinearGradient(
@@ -277,6 +278,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildKikisdayCard() {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return GestureDetector(
       onTap: () {
         print('kikisday card tapped');
@@ -286,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       child: Container(
-        width: 231.11,
+        width: screenSize.width * 0.64,
         margin: EdgeInsets.only(left: 30),
         child: Stack(
           children: <Widget>[
@@ -343,6 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildSpaceCard() {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return GestureDetector(
       onTap: () {
         print('space card tapped');
@@ -352,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       child: Container(
-        width: 231.11,
+        width: screenSize.width * 0.64,
         margin: EdgeInsets.only(left: 30),
         child: Stack(
           children: <Widget>[
