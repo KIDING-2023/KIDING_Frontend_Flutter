@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/barcode_text_screen.dart';
+import 'package:kiding/screen/layout/card_qr_text_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -114,7 +114,7 @@ class SpaceCardLayout extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => BarcodeTextScreen(
+                          builder: (context) => CardQRTextScreen(
                                 currentNumber: currentNumber,
                                 completeScreen: completeScreen,
                               )));

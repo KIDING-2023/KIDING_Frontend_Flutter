@@ -10,18 +10,18 @@ import 'exit_layout.dart';
 
 import 'dart:io' as io;
 
-class BarcodeScreen extends StatefulWidget {
+class CardQRScreen extends StatefulWidget {
   final int currentNumber;
   final Widget completeScreen;
 
-  const BarcodeScreen(
+  const CardQRScreen(
       {super.key, required this.currentNumber, required this.completeScreen});
 
   @override
-  State<BarcodeScreen> createState() => _BarcodeScreenState();
+  State<CardQRScreen> createState() => _CardQRScreenState();
 }
 
-class _BarcodeScreenState extends State<BarcodeScreen> {
+class _CardQRScreenState extends State<CardQRScreen> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');

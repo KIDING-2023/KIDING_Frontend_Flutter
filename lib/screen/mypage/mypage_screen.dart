@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../home/home_screen.dart';
+import '../kikisday/kikisday_play_screen.dart';
+import '../space/space_play_screen.dart';
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({super.key});
@@ -12,6 +14,7 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
+  List<bool> _isFavoriteList = [true, true];  // 각 카드의 즐겨찾기 상태를 관리
   int answerCount = 8; // 대답수 임시
   int ranking = 4; // 순위 임시
   int sameScore = 12; // 동점자수 임시
@@ -27,6 +30,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: Colors.white,
         // 상단바
@@ -188,6 +192,21 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           ),
                         ),
                       ),
+                      // 즐겨찾기 텍스트
+                      Padding(
+                        padding: const EdgeInsets.only(left: 29.54, top: 20),
+                        child: Image.asset('assets/mypage/favorites_text.png',
+                            width: 57, height: 17),
+                      ),
+                      // 즐겨찾기 카드 목록
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Column(
+                          children: <Widget>[
+                            _buildFavorites(),
+                          ],
+                        ),
+                      ),
                       // 나의 기록 텍스트, 새로고침 버튼
                       Padding(
                         padding: const EdgeInsets.only(
@@ -236,6 +255,117 @@ class _MyPageScreenState extends State<MyPageScreen> {
             ),
           ],
         ));
+  }
+
+  Widget _buildFavorites() {
+    return Container(
+      height: 120,
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Colors.white.withOpacity(1.0), // 왼쪽의 불투명한 흰색
+              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
+              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
+              Colors.white.withOpacity(1.0), // 오른쪽의 불투명한 흰색
+            ],
+            stops: [0.0, 0.15, 0.85, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
+        child: ListView(
+          padding: EdgeInsets.only(right: 30),
+          scrollDirection: Axis.horizontal,
+          children: _buildFavoriteCards()
+        ),
+      ),
+    );
+  }
+
+  // 즐겨찾기 카드 목록을 생성
+  List<Widget> _buildFavoriteCards() {
+    List<Widget> cards = [];
+    if (_isFavoriteList[0]) {
+      cards.add(_buildFavoriteCard1());
+    }
+    if (_isFavoriteList[1]) {
+      cards.add(_buildFavoriteCard2());
+    }
+    return cards;
+  }
+
+  // 즐겨찾기 버튼을 클릭했을 때 호출되는 함수
+  void _toggleFavorite(int index) {
+    setState(() {
+      _isFavoriteList[index] = !_isFavoriteList[index];
+    });
+  }
+
+  // 임시 배치 (백엔드와 연결해야 함)
+  Widget _buildFavoriteCard1() {
+    return GestureDetector(
+      onTap: () {
+        print('kikisday card tapped');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
+        );
+      },
+      child: Container(
+        width: 230,
+        margin: EdgeInsets.only(left: 30),
+        child: Stack(
+          children: <Widget>[
+            Image.asset('assets/mypage/favorites_kikisday.png',
+                fit: BoxFit.cover),
+            // 즐겨찾기 버튼
+            Positioned(
+                left: 15,
+                top: 13.18,
+                child: GestureDetector(
+                    onTap: () {
+                      _toggleFavorite(0);
+                    },
+                    child: Image.asset('assets/home/selected_star.png',
+                        width: 19.79, height: 19.79)))
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 임시 배치 (백엔드와 연결해야 함)
+  Widget _buildFavoriteCard2() {
+    return GestureDetector(
+      onTap: () {
+        print('space card tapped');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SpacePlayScreen()),
+        );
+      },
+      child: Container(
+        width: 230,
+        margin: EdgeInsets.only(left: 30),
+        child: Stack(
+          children: <Widget>[
+            Image.asset('assets/mypage/favorites_space.png', fit: BoxFit.cover),
+            // 즐겨찾기 버튼
+            Positioned(
+                left: 15,
+                top: 13.18,
+                child: GestureDetector(
+                    onTap: () {
+                      _toggleFavorite(1);
+                    },
+                    child: Image.asset('assets/home/selected_star.png',
+                        width: 19.79, height: 19.79)))
+          ],
+        ),
+      ),
+    );
   }
 
   void _restartAnimations() {

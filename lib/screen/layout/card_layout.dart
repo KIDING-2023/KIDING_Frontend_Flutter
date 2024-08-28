@@ -3,7 +3,7 @@ import 'package:kiding/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'barcode_text_screen.dart';
+import 'card_qr_text_screen.dart';
 
 class CardLayout extends StatelessWidget {
   final String bgStr;
@@ -115,7 +115,7 @@ class CardLayout extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => BarcodeTextScreen(
+                          builder: (context) => CardQRTextScreen(
                               currentNumber: currentNumber,
                               completeScreen: completeScreen)));
                 },

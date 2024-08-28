@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/barcode_text_screen.dart';
+import 'package:kiding/screen/layout/card_qr_text_screen.dart';
 import 'package:kiding/screen/space/space_mars_complete_screen.dart';
 import 'package:kiding/screen/space/space_saturn_complete_screen.dart';
 

@@ -2,22 +2,22 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/barcode_screen.dart';
+import 'package:kiding/screen/layout/card_qr_screen.dart';
 
-class BarcodeTextScreen extends StatefulWidget {
+class CardQRTextScreen extends StatefulWidget {
   final int currentNumber;
   final Widget completeScreen;
 
   //final bool canread;
 
-  const BarcodeTextScreen(
+  const CardQRTextScreen(
       {super.key, required this.currentNumber, required this.completeScreen});
 
   @override
-  State<BarcodeTextScreen> createState() => _BarcodeTextScreenState();
+  State<CardQRTextScreen> createState() => _CardQRTextScreenState();
 }
 
-class _BarcodeTextScreenState extends State<BarcodeTextScreen> {
+class _CardQRTextScreenState extends State<CardQRTextScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
 
@@ -37,7 +37,7 @@ class _BarcodeTextScreenState extends State<BarcodeTextScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-          builder: (context) => BarcodeScreen(
+          builder: (context) => CardQRScreen(
               currentNumber: widget.currentNumber,
               completeScreen: widget.completeScreen)),
     );
@@ -50,7 +50,7 @@ class _BarcodeTextScreenState extends State<BarcodeTextScreen> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/space/barcode_text_screen.png'),
+                image: AssetImage('assets/space/card_qr_text_screen.png'),
                 fit: BoxFit.cover)),
       ),
     );
