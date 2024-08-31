@@ -14,7 +14,7 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  List<bool> _isFavoriteList = [true, true];  // 각 카드의 즐겨찾기 상태를 관리
+  List<bool> _isFavoriteList = [true, true]; // 각 카드의 즐겨찾기 상태를 관리
   int answerCount = 8; // 대답수 임시
   int ranking = 4; // 순위 임시
   int sameScore = 12; // 동점자수 임시
@@ -40,22 +40,17 @@ class _MyPageScreenState extends State<MyPageScreen> {
           elevation: 0,
           // AppBar의 그림자 제거
           leading: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10),
-            child: IconButton(
-              icon: Image.asset(
-                'assets/home/menu.png',
-                width: 21.65,
-                height: 20,
+              padding: const EdgeInsets.only(left: 10, top: 10),
+              child: SizedBox()),
+          title: Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(
+              '마이페이지',
+              style: TextStyle(
+                color: Colors.black, // 텍스트 색상
+                fontSize: 18, // 텍스트 크기
+                fontFamily: 'Nanum', // 폰트
               ),
-              onPressed: () {},
-            ),
-          ),
-          title: Text(
-            '마이페이지',
-            style: TextStyle(
-              color: Colors.black, // 텍스트 색상
-              fontSize: 18, // 텍스트 크기
-              fontFamily: 'Nanum', // 폰트
             ),
           ),
           actions: [
@@ -72,169 +67,121 @@ class _MyPageScreenState extends State<MyPageScreen> {
             ),
           ],
         ),
+        // 바디
         body: Stack(
           children: [
-            // 하단바
-            Positioned(
-                bottom: 75,
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 0.1,
-                  color: Colors.black,
-                )),
-            Positioned(
-              bottom: 10,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 65,
-                color: Colors.white,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/mypage/ranking_unselected.png',
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/mypage/home_unselected.png',
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/mypage/mypage_selected.png',
-                        width: MediaQuery.of(context).size.width * 0.1,
-                        height: MediaQuery.of(context).size.height * 0.04,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            // 바디
             Positioned(
               top: 0,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height * 0.76,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      // 오늘의 랭킹
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: Center(
-                          child: Container(
-                            width: 300.93,
-                            height: 117.73,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/mypage/ranking_box_mypage.png'),
-                                    fit: BoxFit.fill)),
-                            child: Stack(
-                              children: [
-                                // 대답수
-                                Positioned(
-                                  top: 56.11,
-                                  left: 37.29,
-                                  child: Text(
-                                    "대답수 " + answerCount.toString() + "번",
-                                    style: TextStyle(
-                                        color: Color(0xfffad7a0),
-                                        fontSize: 25,
-                                        fontFamily: 'Nanum'),
-                                  ),
-                                ),
-                                // 순위
-                                Positioned(
-                                    top: 56.11,
-                                    right: 37.29,
-                                    child: Text(
-                                      ranking.toString() + "위",
-                                      style: TextStyle(
-                                          color: Color(0xffff8a5b),
-                                          fontSize: 25,
-                                          fontFamily: 'Nanum'),
-                                    )),
-                                // 동점자
-                                Positioned(
-                                  top: 97,
-                                  left: 0,
-                                  right: 0,
-                                  child: Center(
-                                    child: Text(
-                                      "동점자:" + sameScore.toString() + "명",
-                                      style: TextStyle(
-                                          color: Color(0xfffad7a0),
-                                          fontSize: 12,
-                                          fontFamily: 'Nanum'),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+              left: 0,
+              child: SingleChildScrollView(
+                  child: SizedBox(
+                width: screenSize.width,
+                height: screenSize.height * 0.79,
+                child: Stack(
+                  children: [
+                    // 오늘의 랭킹 박스
+                    Positioned(
+                        top: screenSize.height * 0.03,
+                        left: 0,
+                        right: 0,
+                        child: Image.asset(
+                          'assets/mypage/ranking_box_mypage.png',
+                          width: screenSize.width * 0.84,
+                          height: screenSize.height * 0.15,
+                        )),
+                    // 대답수 8번 (임시 - 백엔드와 연동 필요)
+                    Positioned(
+                        left: screenSize.width * 0.19,
+                        top: screenSize.height * 0.105,
+                        child: Text(
+                          '대답수 8번',
+                          style: TextStyle(
+                              fontSize: 25,
+                              fontFamily: 'Nanum',
+                              color: Color(0xffff8a5b).withOpacity(0.5)),
+                        )),
+                    // 4위 (임시 - 백엔드 연동 필요)
+                    Positioned(
+                        left: screenSize.width * 0.698,
+                        top: screenSize.height * 0.105,
+                        child: Text(
+                          '4위',
+                          style: TextStyle(
+                            fontFamily: 'Nanum',
+                            fontSize: 25,
+                            color: Color(0xffff8a5b),
                           ),
-                        ),
-                      ),
-                      // 즐겨찾기 텍스트
-                      Padding(
-                        padding: const EdgeInsets.only(left: 29.54, top: 20),
-                        child: Image.asset('assets/mypage/favorites_text.png',
-                            width: 57, height: 17),
-                      ),
-                      // 즐겨찾기 카드 목록
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        )),
+                    // 동점자: 12명 (임시 - 백엔드 연동 필요) -- 위젯 안 보이는 문제 해결 필요
+                    Positioned(
+                        top: screenSize.height * 0.153,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: Text(
+                            '동점자: 12명',
+                            style: TextStyle(
+                                fontSize: 12,
+                                fontFamily: 'Nanum',
+                                color: Color(0xffff8a5b).withOpacity(0.7)),
+                          ),
+                        )),
+                    // 즐겨찾기 텍스트
+                    Positioned(
+                        left: screenSize.width * 0.082,
+                        top: screenSize.height * 0.209,
+                        child: Image.asset(
+                          'assets/mypage/favorites_text.png',
+                          width: screenSize.width * 0.158,
+                          height: screenSize.height * 0.021,
+                        )),
+                    // 즐겨찾기한 카드덱 리스트
+                    Positioned(
+                      top: screenSize.height * 0.236,
+                      child: Container(
+                        width: screenSize.width,
                         child: Column(
                           children: <Widget>[
                             _buildFavorites(),
                           ],
                         ),
                       ),
-                      // 나의 기록 텍스트, 새로고침 버튼
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 10, left: 29.54, right: 29.54),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // 나의 기록 텍스트
-                            Image.asset('assets/mypage/my_record_text.png',
-                                width: 61, height: 17),
-                            // 새로고침 버튼
-                            IconButton(
-                                onPressed: _restartAnimations,
-                                icon: Image.asset('assets/mypage/reset_btn.png',
-                                    width: 15.52, height: 15.52))
-                          ],
-                        ),
-                      ),
-                      // 나의 기록 박스
-                      Center(
-                        child: Container(
-                            width: 300.93,
-                            height: 461.18,
+                    ),
+                    // 나의 기록 텍스트
+                    Positioned(
+                        left: screenSize.width * 0.082,
+                        top: screenSize.height * 0.416,
+                        child: Image.asset(
+                          'assets/mypage/my_record_text.png',
+                          width: screenSize.width * 0.169,
+                          height: screenSize.height * 0.021,
+                        )),
+                    // 새로고침 버튼
+                    Positioned(
+                        left: screenSize.width * 0.835,
+                        top: screenSize.height * 0.4,
+                        child: IconButton(
+                          icon: Image.asset(
+                            'assets/mypage/reset_btn.png',
+                            width: screenSize.width * 0.043,
+                            height: screenSize.height * 0.019,
+                          ),
+                          onPressed: _restartAnimations,
+                        )),
+                    // 나의 기록 박스
+                    Positioned(
+                        top: screenSize.height * 0.444,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: Container(
                             decoration: BoxDecoration(
                                 image: DecorationImage(
                                     image: AssetImage(
                                         'assets/mypage/my_record_bg.png'),
                                     fit: BoxFit.fill)),
+                            width: screenSize.width * 0.835,
+                            height: screenSize.height * 0.576,
                             child: Stack(
                               children: [
                                 // 키딩칩 개수
@@ -246,13 +193,63 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 // 삼각형 모양
                                 TriangleItem(key: _triangleItemKey)
                               ],
-                            )),
-                      )
+                            ),
+                          ),
+                        )),
+                  ],
+                ),
+              )),
+            ),
+            // 하단바 구분선
+            Positioned(
+                top: screenSize.height * 0.79,
+                child: Container(
+                  width: screenSize.width,
+                  height: 0.1,
+                  color: Colors.black,
+                )),
+            // 하단바
+            Positioned(
+                top: screenSize.height * 0.8,
+                left: 0,
+                right: 0,
+                child: Container(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Image.asset(
+                          'assets/mypage/ranking_unselected.png',
+                          width: screenSize.width * 0.1,
+                          height: screenSize.height * 0.04,
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Image.asset(
+                          'assets/mypage/home_unselected.png',
+                          width: screenSize.width * 0.1,
+                          height: screenSize.height * 0.04,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: Image.asset(
+                          'assets/mypage/mypage_selected.png',
+                          width: screenSize.width * 0.1,
+                          height: screenSize.height * 0.04,
+                        ),
+                        onPressed: () {},
+                      ),
                     ],
                   ),
-                ),
-              ),
-            ),
+                ))
           ],
         ));
   }
@@ -276,10 +273,9 @@ class _MyPageScreenState extends State<MyPageScreen> {
         },
         blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
         child: ListView(
-          padding: EdgeInsets.only(right: 30),
-          scrollDirection: Axis.horizontal,
-          children: _buildFavoriteCards()
-        ),
+            padding: EdgeInsets.only(right: 30),
+            scrollDirection: Axis.horizontal,
+            children: _buildFavoriteCards()),
       ),
     );
   }
@@ -368,14 +364,20 @@ class _MyPageScreenState extends State<MyPageScreen> {
     );
   }
 
+  // 새로고침
   void _restartAnimations() {
-    _chipsItemKey.currentState?.restartAnimation();
-    _friendsItemKey.currentState?.restartAnimation();
-    _rankingItemKey.currentState?.restartAnimation();
-    _triangleItemKey.currentState?.restartAnimation();
+    _chipsItemKey.currentState
+        ?.restartAnimation(MediaQuery.of(context).size.height);
+    _friendsItemKey.currentState
+        ?.restartAnimation(MediaQuery.of(context).size.height);
+    _rankingItemKey.currentState
+        ?.restartAnimation(MediaQuery.of(context).size.height);
+    _triangleItemKey.currentState
+        ?.restartAnimation(MediaQuery.of(context).size.height);
   }
 }
 
+// 키딩칩 개수
 class ChipsItem extends StatefulWidget {
   const ChipsItem({super.key});
 
@@ -389,7 +391,7 @@ class ChipsItemState extends State<ChipsItem>
 
   late AnimationController _chipsController;
   late Animation<double> _chipsAnimation;
-  double _chipsTopPosition = -252;
+  double _chipsTopPosition = 0; // 초기 위치 값 변경
 
   @override
   void initState() {
@@ -399,6 +401,17 @@ class ChipsItemState extends State<ChipsItem>
       vsync: this,
     );
 
+    // initState에서는 MediaQuery.of(context)를 사용할 수 없으므로, 애니메이션 초기화는 나중에 함.
+  }
+
+  @override
+  void dispose() {
+    _chipsController.dispose();
+    super.dispose();
+  }
+
+  void restartAnimation(double screenHeight) {
+    _chipsTopPosition = -0.3 * screenHeight; // 화면 높이의 -30%로 위치 설정
     _chipsAnimation =
         Tween<double>(begin: _chipsTopPosition, end: -_chipsTopPosition)
             .animate(
@@ -418,45 +431,43 @@ class ChipsItemState extends State<ChipsItem>
       }
     });
 
-    _startAnimation();
-  }
-
-  @override
-  void dispose() {
-    _chipsController.dispose();
-    super.dispose();
-  }
-
-  void _startAnimation() {
     _chipsController.reset();
     _chipsController.forward();
   }
 
-  void restartAnimation() {
-    _startAnimation();
-  }
-
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
+    double screenHeight = screenSize.height;
+    double screenWidth = screenSize.width;
+
+    // 애니메이션을 화면 크기 기준으로 시작
+    if (_chipsController.status == AnimationStatus.dismissed) {
+      restartAnimation(screenHeight);
+    }
+
     return Positioned(
       top: _chipsTopPosition,
-      left: 22,
+      left: 0.06 * screenWidth, // 화면 너비의 6%로 위치 설정
       child: Transform.rotate(
         angle: pi / 7,
         child: Container(
-          width: 184.63,
-          height: 184.63,
+          width: 0.5 * screenWidth, // 화면 너비의 50%로 크기 설정
+          height: 0.5 * screenWidth, // 화면 너비의 50%로 크기 설정
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/mypage/chips_bg.png'),
                   fit: BoxFit.fill)),
           child: Padding(
-            padding: const EdgeInsets.only(top: 53.06),
+            padding: EdgeInsets.only(top: 0.3 * 0.5 * screenWidth),
+            // 이미지 높이의 30%로 패딩 설정
             child: Center(
               child: Text(
                 chipsNum.toString() + "개",
                 style: TextStyle(
-                    color: Colors.white, fontSize: 30, fontFamily: 'Nanum'),
+                    color: Colors.white,
+                    fontSize: 0.08 * screenWidth,
+                    fontFamily: 'Nanum'), // 화면 너비의 8%로 폰트 크기 설정
               ),
             ),
           ),
@@ -466,6 +477,7 @@ class ChipsItemState extends State<ChipsItem>
   }
 }
 
+// 친구 수
 class FriendsItem extends StatefulWidget {
   const FriendsItem({super.key});
 
@@ -479,7 +491,7 @@ class FriendsItemState extends State<FriendsItem>
 
   late AnimationController _friendsController;
   late Animation<double> _friendsAnimation;
-  double _friendsTopPosition = -100;
+  double _friendsTopPosition = 0; // 초기 위치 값 변경
 
   @override
   void initState() {
@@ -489,6 +501,17 @@ class FriendsItemState extends State<FriendsItem>
       vsync: this,
     );
 
+    // initState에서는 MediaQuery.of(context)를 사용할 수 없으므로, 애니메이션 초기화는 나중에 함.
+  }
+
+  @override
+  void dispose() {
+    _friendsController.dispose();
+    super.dispose();
+  }
+
+  void restartAnimation(double screenHeight) {
+    _friendsTopPosition = -0.135 * screenHeight; // 화면 높이의 -10%로 위치 설정
     _friendsAnimation =
         Tween<double>(begin: _friendsTopPosition, end: -_friendsTopPosition)
             .animate(
@@ -508,45 +531,43 @@ class FriendsItemState extends State<FriendsItem>
       }
     });
 
-    _startAnimation();
-  }
-
-  @override
-  void dispose() {
-    _friendsController.dispose();
-    super.dispose();
-  }
-
-  void _startAnimation() {
     _friendsController.reset();
     _friendsController.forward();
   }
 
-  void restartAnimation() {
-    _startAnimation();
-  }
-
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
+    double screenHeight = screenSize.height;
+    double screenWidth = screenSize.width;
+
+    // 애니메이션을 화면 크기 기준으로 시작
+    if (_friendsController.status == AnimationStatus.dismissed) {
+      restartAnimation(screenHeight);
+    }
+
     return Positioned(
       top: _friendsTopPosition,
-      right: 0,
+      right: 0.01 * screenWidth, // 화면 너비의 5%로 위치 설정
       child: Transform.rotate(
         angle: -pi / 7,
         child: Container(
-          width: 180.19,
-          height: 180.19,
+          width: 0.45 * screenWidth, // 화면 너비의 45%로 크기 설정
+          height: 0.45 * screenWidth, // 화면 너비의 45%로 크기 설정
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/mypage/friends_bg.png'),
                   fit: BoxFit.fill)),
           child: Padding(
-            padding: const EdgeInsets.only(top: 45),
+            padding: EdgeInsets.only(top: 0.25 * 0.45 * screenWidth),
+            // 이미지 높이의 25%로 패딩 설정
             child: Center(
               child: Text(
                 friendsNum.toString() + "명",
                 style: TextStyle(
-                    color: Colors.white, fontSize: 25, fontFamily: 'Nanum'),
+                    color: Colors.white,
+                    fontSize: 0.07 * screenWidth,
+                    fontFamily: 'Nanum'), // 화면 너비의 7%로 폰트 크기 설정
               ),
             ),
           ),
@@ -556,6 +577,7 @@ class FriendsItemState extends State<FriendsItem>
   }
 }
 
+// 1위 경험
 class RankingItem extends StatefulWidget {
   const RankingItem({super.key});
 
@@ -569,7 +591,7 @@ class RankingItemState extends State<RankingItem>
 
   late AnimationController _rankingController;
   late Animation<double> _rankingAnimation;
-  double _rankingTopPosition = -50;
+  double _rankingTopPosition = 0; // 초기 위치 값 변경
 
   @override
   void initState() {
@@ -579,6 +601,17 @@ class RankingItemState extends State<RankingItem>
       vsync: this,
     );
 
+    // initState에서는 MediaQuery.of(context)를 사용할 수 없으므로, 애니메이션 초기화는 나중에 함.
+  }
+
+  @override
+  void dispose() {
+    _rankingController.dispose();
+    super.dispose();
+  }
+
+  void restartAnimation(double screenHeight) {
+    _rankingTopPosition = -0.06 * screenHeight; // 화면 높이의 -5%로 위치 설정
     _rankingAnimation =
         Tween<double>(begin: _rankingTopPosition, end: -_rankingTopPosition)
             .animate(
@@ -598,45 +631,43 @@ class RankingItemState extends State<RankingItem>
       }
     });
 
-    _startAnimation();
-  }
-
-  @override
-  void dispose() {
-    _rankingController.dispose();
-    super.dispose();
-  }
-
-  void _startAnimation() {
     _rankingController.reset();
     _rankingController.forward();
   }
 
-  void restartAnimation() {
-    _startAnimation();
-  }
-
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
+    double screenHeight = screenSize.height;
+    double screenWidth = screenSize.width;
+
+    // 애니메이션을 화면 크기 기준으로 시작
+    if (_rankingController.status == AnimationStatus.dismissed) {
+      restartAnimation(screenHeight);
+    }
+
     return Positioned(
       top: _rankingTopPosition,
-      left: -8,
+      left: -0.01 * screenWidth, // 화면 너비의 -2%로 위치 설정
       child: Transform.rotate(
         angle: -pi / 20,
         child: Container(
-          width: 152.28,
-          height: 152.28,
+          width: 0.46 * screenWidth, // 화면 너비의 40%로 크기 설정
+          height: 0.46 * screenWidth, // 화면 너비의 40%로 크기 설정
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/mypage/ranking_bg.png'),
                   fit: BoxFit.fill)),
           child: Padding(
-            padding: const EdgeInsets.only(top: 30),
+            padding: EdgeInsets.only(top: 0.2 * 0.4 * screenWidth),
+            // 이미지 높이의 20%로 패딩 설정
             child: Center(
               child: Text(
                 rankingNum.toString() + "번",
                 style: TextStyle(
-                    color: Colors.white, fontSize: 20, fontFamily: 'Nanum'),
+                    color: Colors.white,
+                    fontSize: 0.05 * screenWidth,
+                    fontFamily: 'Nanum'), // 화면 너비의 5%로 폰트 크기 설정
               ),
             ),
           ),
@@ -657,7 +688,7 @@ class TriangleItemState extends State<TriangleItem>
     with SingleTickerProviderStateMixin {
   late AnimationController _triangleController;
   late Animation<double> _triangleAnimation;
-  double _triangleTopPosition = -200;
+  double _triangleTopPosition = 0; // 초기 위치 값 변경
 
   @override
   void initState() {
@@ -667,8 +698,20 @@ class TriangleItemState extends State<TriangleItem>
       vsync: this,
     );
 
+    // initState에서는 MediaQuery.of(context)를 사용할 수 없으므로, 애니메이션 초기화는 나중에 함.
+  }
+
+  @override
+  void dispose() {
+    _triangleController.dispose();
+    super.dispose();
+  }
+
+  void restartAnimation(double screenHeight) {
+    _triangleTopPosition = -0.25 * screenHeight; // 화면 높이의 -25%로 위치 설정
     _triangleAnimation =
-        Tween<double>(begin: _triangleTopPosition, end: -65).animate(
+        Tween<double>(begin: _triangleTopPosition, end: -0.065 * screenHeight)
+            .animate(
       CurvedAnimation(parent: _triangleController, curve: Curves.bounceOut),
     );
 
@@ -685,34 +728,29 @@ class TriangleItemState extends State<TriangleItem>
       }
     });
 
-    _startAnimation();
-  }
-
-  @override
-  void dispose() {
-    _triangleController.dispose();
-    super.dispose();
-  }
-
-  void _startAnimation() {
     _triangleController.reset();
     _triangleController.forward();
   }
 
-  void restartAnimation() {
-    _startAnimation();
-  }
-
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
+    double screenHeight = screenSize.height;
+    double screenWidth = screenSize.width;
+
+    // 애니메이션을 화면 크기 기준으로 시작
+    if (_triangleController.status == AnimationStatus.dismissed) {
+      restartAnimation(screenHeight);
+    }
+
     return Positioned(
       top: _triangleTopPosition,
-      right: 40,
+      right: 0.1 * screenWidth, // 화면 너비의 10%로 위치 설정
       child: Transform.rotate(
         angle: -pi / 7,
         child: Container(
-          width: 121.06,
-          height: 121.06,
+          width: 0.3 * screenWidth, // 화면 너비의 30%로 크기 설정
+          height: 0.3 * screenWidth, // 화면 너비의 30%로 크기 설정
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/mypage/triangle_bg.png'),
