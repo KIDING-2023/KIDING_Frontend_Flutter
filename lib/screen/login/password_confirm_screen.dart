@@ -25,6 +25,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
       TextEditingController(); // 비밀번호 입력 컨트롤러
   String errorMessage = "비밀번호를 다시 입력하세요"; // 에러 메시지 (항상 표시)
   bool _isErrorVisible = true; // 에러 메시지 앞 동그라미 가시성
+  bool _isLoading = false; // 로딩 상태 표시
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +164,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
     ));
   }
 
-  // 비밀번호 일치 여부 확인
+  // 비밀번호 일치 여부 확인 및 서버로 회원가입 요청
   void _pw() async {
     String pw_test = _pwController.text;
     String pw = widget.password;
@@ -174,41 +175,54 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
         errorMessage = "비밀번호가 일치하지 않습니다.";
       });
     } else {
-      // 성공적인 회원가입 처리, 로그인 화면으로 이동
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => LoginSplashScreen(
-                nickname: widget.nickname, password: pw_test)),
-      );
+      // 비밀번호가 일치하는 경우 회원가입 요청
+      setState(() {
+        _isLoading = true; // 로딩 상태 표시
+      });
+      bool success = await signup(widget.nickname, pw_test, widget.phoneNumber);
+      setState(() {
+        _isLoading = false; // 로딩 상태 해제
+      });
+
+      if (success) {
+        // 회원가입 성공 시 로그인 화면으로 이동
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => LoginSplashScreen(
+                  nickname: widget.nickname, password: pw_test)),
+        );
+      } else {
+        // 회원가입 실패 시 오류 메시지 표시
+        setState(() {
+          _isErrorVisible = true;
+          errorMessage = "회원가입에 실패했습니다.";
+        });
+      }
     }
   }
 
-  // // API를 통한 회원가입 요청
-  // Future<void> _signup() async {
-  //   String nickname = widget.nickname;
-  //   String password = _pwController.text.trim();
-  //   String phone = widget.phoneNumber; // 전화번호 입력 필드를 추가해야 합니다.
-  //
-  //   var url = Uri.parse('http://3.37.76.76:8081/signup');
-  //   var response = await http.post(url,
-  //       body: jsonEncode(
-  //           {'nickname': nickname, 'password': password, 'phone': phone}),
-  //       headers: {'Content-Type': 'application/json'});
-  //
-  //   if (response.statusCode == 200) {
-  //     // 성공적인 회원가입 처리, 로그인 화면으로 이동
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => LoginSplashScreen(
-  //               nickname: widget.nickname, password: password)),
-  //     );
-  //   } else {
-  //     // 오류 메시지를 보여주는 로직
-  //     setState(() {
-  //       errorMessage = "회원가입에 실패했습니다.";
-  //     });
-  //   }
-  // }
+  // 서버로 회원가입 요청
+  Future<bool> signup(String nickname, String password, String phoneNumber) async {
+    final url = Uri.parse('http://3.37.76.76:8081/signup');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode({
+      'nickname': nickname,
+      'password': password,
+      'phone': phoneNumber,
+    });
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        return data['isSuccess'];
+      } else {
+        return false; // 서버 오류
+      }
+    } catch (e) {
+      print('Error: $e');
+      return false; // 네트워크 오류
+    }
+  }
 }

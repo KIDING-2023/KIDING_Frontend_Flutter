@@ -5,11 +5,10 @@ import 'find_password_result_screen.dart';
 
 // 비밀번호 찾기 - 전화번호 인증 코드 입력 화면
 class PasswordPhoneScreen extends StatefulWidget {
-  final String password; // 비밀번호 받아오기
   final String phone; // 전화번호 받아오기
 
   const PasswordPhoneScreen(
-      {super.key, required this.password, required this.phone});
+      {super.key, required this.phone});
 
   @override
   State<PasswordPhoneScreen> createState() => _PasswordPhoneScreenState();
@@ -182,7 +181,7 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    FindPasswordResultScreen(password: widget.password)));
+                    FindPasswordResultScreen()));
       }).catchError((error) {
         // 인증 실패, 에러 메시지 설정
         setState(() {
@@ -198,4 +197,6 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
       });
     }
   }
+
+  // 전화번호를 통해 uid (or token) 받아오는 로직 추가 필요 -> 다음 화면으로 전달
 }
