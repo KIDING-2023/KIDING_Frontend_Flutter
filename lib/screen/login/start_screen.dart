@@ -6,6 +6,9 @@ import 'package:kiding/screen/login/signup_screen.dart';
 import 'find_nickname_screen.dart';
 import 'find_password_screen.dart';
 
+import 'dart:convert';  // JSON 인코딩, 디코딩을 위한 패키지
+import 'package:http/http.dart' as http;
+
 // 시작 화면 (로그인 화면)
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
@@ -226,24 +229,60 @@ class _StartScreenState extends State<StartScreen> {
     });
   }
 
-  // 닉네임, 비밀번호 검증 로직 추가 필요
   Future<void> _login() async {
     String nickname = _nicknameController.text.trim();
     String password = _passwordController.text.trim();
 
-    if (nickname == "전시원" && password == "5236cool") {
-      if (_isStayLoggedIn) {
-        await _storage.write(key: 'isLoggedIn', value: 'true');
-        await _storage.write(key: 'nickname', value: nickname);
+    try {
+      var response = await http.post(
+        Uri.parse('http://3.37.76.76:8081/signin'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, String>{
+          'nickname': nickname,
+          'password': password,
+        }),
+      );
+
+      // 서버 응답 데이터
+      var responseData = json.decode(response.body);
+      print("서버 응답 데이터: $responseData");  // 서버 응답 로그 출력
+
+      // 로그인 성공 여부를 토큰의 유무로 판단
+      if (responseData['accessToken'] != null && responseData['refreshToken'] != null) {
+        // 로그인 상태 유지 옵션이 선택된 경우 토큰 저장
+        if (_isStayLoggedIn) {
+          await _storage.write(key: 'isLoggedIn', value: 'true');
+          await _storage.write(key: 'nickname', value: nickname);
+          await _storage.write(key: 'accessToken', value: responseData['accessToken']);
+          await _storage.write(key: 'refreshToken', value: responseData['refreshToken']);
+        }
+
+        // 홈 화면으로 이동
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
-        await _storage.delete(key: 'isLoggedIn');
-        await _storage.delete(key: 'nickname');
+        // 토큰이 없으면 로그인 실패 처리
+        print("로그인 실패: 서버에서 토큰을 반환하지 않았습니다.");
+        setState(() {
+          _isErrorVisible = true;  // 에러 메시지 표시
+        });
       }
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
-    } else {
+    } catch (error) {
+      // 에러가 발생한 경우, 에러 로그 출력
+      print("에러 발생: $error");
+
+      if (error is http.ClientException) {
+        print("HTTP 요청 중 오류 발생: ${error.message}");
+      } else if (error is FormatException) {
+        print("응답 형식 오류: ${error.message}");
+      } else {
+        print("기타 오류: ${error.toString()}");
+      }
+
       setState(() {
-        _isErrorVisible = true;
+        _isErrorVisible = true;  // 에러 메시지 표시
       });
     }
   }
