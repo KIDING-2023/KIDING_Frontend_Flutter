@@ -136,47 +136,6 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
         context,
         MaterialPageRoute(
             builder: (context) => PasswordPhoneScreen(
-                password: "비밀번호",
                 phone: _phoneController.text.replaceFirst('0', '+82'))));
   }
-
-  // 비밀번호 찾기 (파이어베이스)
-  // void _findPassword() async {
-  //   final DatabaseReference dbRef = FirebaseDatabase.instance.ref('users');
-  //   final String phone = _phoneController.text;
-  //
-  //   DataSnapshot snapshot = await dbRef.child(phone).get();
-  //
-  //   if (snapshot.exists && snapshot.value != null) {
-  //     try {
-  //       // snapshot.value를 안전하게 Map으로 변환
-  //       Map<dynamic, dynamic> userData =
-  //           snapshot.value as Map<dynamic, dynamic>;
-  //       String password = userData['password'] as String; // 닉네임 추출
-  //       setState(() {
-  //         errorVisible = false;
-  //         errorMessage = '';
-  //       });
-  //       print('찾은 비밀번호: $password');
-  //       Navigator.push(
-  //           context,
-  //           MaterialPageRoute(
-  //               builder: (context) => PasswordPhoneScreen(
-  //                   password: password,
-  //                   phone: _phoneController.text.replaceFirst('0', '+82'))));
-  //     } catch (e) {
-  //       // 타입 변환 실패 시
-  //       print('Data type conversion error: $e');
-  //       setState(() {
-  //         errorVisible = true;
-  //         errorMessage = '데이터 형식 오류';
-  //       });
-  //     }
-  //   } else {
-  //     setState(() {
-  //       errorVisible = true;
-  //       errorMessage = '없는 전화번호입니다.';
-  //     });
-  //   }
-  // }
 }

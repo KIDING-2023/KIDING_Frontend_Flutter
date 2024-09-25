@@ -4,9 +4,8 @@ import 'find_nickname_screen.dart';
 
 // 비밀번호 찾기 - 결과 화면
 class FindPasswordResultScreen extends StatefulWidget {
-  final String password; // 비밀번호 받아오기
 
-  const FindPasswordResultScreen({super.key, required this.password});
+  const FindPasswordResultScreen({super.key});
 
   @override
   State<FindPasswordResultScreen> createState() =>
@@ -22,7 +21,7 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
       color: Colors.white,
       child: Stack(
         children: [
-          // '비밀번호를 찾았습니다!' 텍스트
+          // '비밀번호가 재설정 되었습니다!' 텍스트
           Positioned(
             top: screenSize.height * 0.125,
             left: 0,
@@ -30,18 +29,6 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
             child: Image.asset('assets/login/password_result_text.png',
                 width: screenSize.width * 0.74,
                 height: screenSize.height * 0.11),
-          ),
-          // 비밀번호 결과 텍스트
-          Positioned(
-            top: screenSize.height * 0.46,
-            left: 0,
-            right: 0,
-            child: Text(
-              '비밀번호: ${widget.password}입니다.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'nanum', fontSize: 17, color: Colors.black),
-            ),
           ),
           // 로그인 & 닉네임 찾기 버튼 배경
           Positioned(
