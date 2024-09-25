@@ -6,8 +6,9 @@ import 'package:http/http.dart' as http;
 // 캐릭터 선택 화면
 class ChooseCharacterScreen extends StatefulWidget {
   final String nickname; // 닉네임 받아오기
+  final int userId; // userId 받아오기
 
-  ChooseCharacterScreen({Key? key, required this.nickname}) : super(key: key);
+  ChooseCharacterScreen({Key? key, required this.nickname, required this.userId}) : super(key: key);
 
   @override
   _ChooseCharacterScreenState createState() => _ChooseCharacterScreenState();
@@ -192,9 +193,7 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
               visible: _selectedCharacterIndex != -1,
               child: GestureDetector(
                 onTap: () async {
-                  // 예시로 userId를 1로 설정 (실제로는 로그인 시 받아와야 함)
-                  int userId = 1;
-                  await _setCharacter(userId, _selectedCharacterIndex);
+                  await _setCharacter(widget.userId, _selectedCharacterIndex);
                 },
                 child: Image.asset('assets/login/character_start_btn.png',
                     width: screenSize.width * 0.87, height: screenSize.height * 0.06),
@@ -206,37 +205,33 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
     ));
   }
 
+  // 서버 연결
   Future<void> _setCharacter(int userId, int num) async {
-    var url = Uri.parse('http://3.37.76.76:8081/set-character'); // 서버 URL
-    var headers = {'Content-Type': 'application/json'}; // 요청 헤더 설정
-    var body = jsonEncode({
-      "userId": userId,
-      "num": num,
-    }); // 요청 데이터
+    // 서버 URL에 userId와 num 값을 포함
+    var url = Uri.parse('http://3.37.76.76:8081/character/$userId/$num');
+    var headers = {
+      'Content-Type': 'application/json',
+    };
 
     try {
-      // 서버에 POST 요청 보내기
-      var response = await http.post(url, headers: headers, body: body);
+      var response = await http.post(url, headers: headers);
 
-      // 응답 상태 코드 확인
       if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body); // JSON 응답 파싱
+        var jsonResponse = jsonDecode(response.body);
         if (jsonResponse["isSuccess"]) {
-          // 성공 응답 처리
           print("캐릭터 설정 성공: ${jsonResponse["message"]}");
-          // HomeScreen으로 이동
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => HomeScreen()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
         } else {
-          // 실패 응답 처리
           print("캐릭터 설정 실패: ${jsonResponse["message"]}");
         }
       } else {
-        // 서버 오류 처리
-        print("서버 오류 발생");
+        print("서버 오류 발생: 상태 코드 ${response.statusCode}");
+        print("응답 본문: ${response.body}");
       }
     } catch (e) {
-      // 네트워크 오류 처리
       print("네트워크 오류 발생: $e");
     }
   }

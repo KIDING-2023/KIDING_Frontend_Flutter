@@ -179,18 +179,24 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
       setState(() {
         _isLoading = true; // 로딩 상태 표시
       });
-      bool success = await signup(widget.nickname, pw_test, widget.phoneNumber);
+
+      // 회원가입 요청 후 userId 받아오기
+      int? userId = await signup(widget.nickname, pw_test, widget.phoneNumber);
+
       setState(() {
         _isLoading = false; // 로딩 상태 해제
       });
 
-      if (success) {
-        // 회원가입 성공 시 로그인 화면으로 이동
+      if (userId != null) {
+        // 회원가입 성공 시 userId를 LoginSplashScreen으로 전달
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => LoginSplashScreen(
-                  nickname: widget.nickname, password: pw_test)),
+            builder: (context) => LoginSplashScreen(
+              nickname: widget.nickname,
+              userId: userId, // userId 전달
+            ),
+          ),
         );
       } else {
         // 회원가입 실패 시 오류 메시지 표시
@@ -203,7 +209,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
   }
 
   // 서버로 회원가입 요청
-  Future<bool> signup(String nickname, String password, String phoneNumber) async {
+  Future<int?> signup(String nickname, String password, String phoneNumber) async {
     final url = Uri.parse('http://3.37.76.76:8081/signup');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
@@ -216,13 +222,24 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
       final response = await http.post(url, headers: headers, body: body);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        return data['isSuccess'];
+        print('Response Data: $data'); // 서버에서 받아온 데이터 출력
+        // flutter: Response Data: {isSuccess: true, code: 200, message: 요청에 성공했습니다, result: {id: 6, nickname: 테스트, role: ROLE_USER}}
+
+        if (data['isSuccess']) {
+          final int userId = data['result']['id']; // id 값 추출
+          return userId; // 성공 시 userId 반환
+        } else {
+          print('Signup failed: ${data['message']}');
+          return null; // 실패 시 null 반환
+        }
       } else {
-        return false; // 서버 오류
+        print('Server Error: ${response.statusCode}');
+        print('Response Body: ${response.body}');
+        return null; // 서버 오류 시 null 반환
       }
     } catch (e) {
       print('Error: $e');
-      return false; // 네트워크 오류
+      return null; // 네트워크 오류 시 null 반환
     }
   }
 }
