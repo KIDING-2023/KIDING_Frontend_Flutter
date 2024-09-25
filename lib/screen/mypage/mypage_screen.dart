@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -5,6 +6,8 @@ import 'package:flutter/material.dart';
 import '../home/home_screen.dart';
 import '../kikisday/kikisday_play_screen.dart';
 import '../space/space_play_screen.dart';
+
+import 'package:http/http.dart' as http;
 
 class MyPageScreen extends StatefulWidget {
   const MyPageScreen({super.key});
@@ -19,6 +22,59 @@ class _MyPageScreenState extends State<MyPageScreen> {
   int ranking = 4; // 순위 임시
   int sameScore = 12; // 동점자수 임시
 
+  String nickname = "";
+  int answers = 0;
+  int score = 0;
+  int playersWith = 0;
+  int kidingChip = 0;
+  bool isLoading = true;
+  String errorMessage = "";
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
+  }
+
+  Future<void> fetchMyPageData() async {
+    var url = Uri.parse('http://3.37.76.76:8081/mypage');
+
+    try {
+      final response = await http.get(url);
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data['isSuccess']) {
+          // 응답이 성공일 경우 데이터 업데이트
+          setState(() {
+            nickname = data['result']['nickname'];
+            answers = data['result']['answers'];
+            score = data['result']['score'];
+            playersWith = data['result']['players_with'];
+            kidingChip = data['result']['kiding_chip'];
+            isLoading = false; // 로딩 상태 해제
+          });
+        } else {
+          setState(() {
+            errorMessage = data['message'];
+            isLoading = false;
+          });
+        }
+      } else {
+        setState(() {
+          errorMessage = "서버 오류: ${response.statusCode}";
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = "네트워크 오류: $e";
+        isLoading = false;
+      });
+    }
+  }
+
   // GlobalKey를 사용하여 각 애니메이션 아이템의 상태를 참조
   final GlobalKey<ChipsItemState> _chipsItemKey = GlobalKey<ChipsItemState>();
   final GlobalKey<FriendsItemState> _friendsItemKey =
@@ -31,6 +87,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator()); // 로딩 표시
+    }
+
+    if (errorMessage.isNotEmpty) {
+      return Center(child: Text(errorMessage)); // 오류 메시지 표시
+    }
+
     return Scaffold(
         backgroundColor: Colors.white,
         // 상단바
