@@ -6,6 +6,9 @@ import 'package:kiding/screen/ranking/ranking_screen.dart';
 import '../mypage/mypage_screen.dart';
 import '../space/space_play_screen.dart';
 
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -14,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   var _index = 0; // 기본으로 홈이 선택된 상태
   // Initialize selected index to 'Main'
+  int _userId = 1; // 임시 사용자 ID (서버 연동 시 필요)
   int _selectedSortIndex = 0;
   bool _kikiStar = false;
   bool _spaceStar = false;
@@ -324,17 +328,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 top: 13.18,
                 child: GestureDetector(
                     onTap: () {
-                      if (!_kikiStar) {
-                        setState(() {
-                          _kikiStar = true;
-                          kikiStarImage = 'selected_star.png';
-                        });
-                      } else {
-                        setState(() {
-                          _kikiStar = false;
-                          kikiStarImage = 'unselected_star.png';
-                        });
-                      }
+                      // if (!_kikiStar) {
+                      //   setState(() {
+                      //     _kikiStar = true;
+                      //     kikiStarImage = 'selected_star.png';
+                      //   });
+                      // } else {
+                      //   setState(() {
+                      //     _kikiStar = false;
+                      //     kikiStarImage = 'unselected_star.png';
+                      //   });
+                      // }
+                      _toggleFavorite(_userId, 1, _kikiStar); // 1은 Kikisday 게임의 ID
                     },
                     child: Image.asset('assets/home/$kikiStarImage',
                         width: 19.79, height: 19.79)))
@@ -391,17 +396,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 top: 13.18,
                 child: GestureDetector(
                     onTap: () {
-                      if (!_spaceStar) {
-                        setState(() {
-                          _spaceStar = true;
-                          spaceStarImage = 'selected_star.png';
-                        });
-                      } else {
-                        setState(() {
-                          _spaceStar = false;
-                          spaceStarImage = 'unselected_star.png';
-                        });
-                      }
+                      // if (!_spaceStar) {
+                      //   setState(() {
+                      //     _spaceStar = true;
+                      //     spaceStarImage = 'selected_star.png';
+                      //   });
+                      // } else {
+                      //   setState(() {
+                      //     _spaceStar = false;
+                      //     spaceStarImage = 'unselected_star.png';
+                      //   });
+                      // }
+                      _toggleFavorite(_userId, 2, _spaceStar); // 2는 Space 게임의 ID
                     },
                     child: Image.asset('assets/home/$spaceStarImage',
                         width: 19.79, height: 19.79)))
@@ -411,93 +417,32 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-// Widget _buildCard(String imageName, String userCountText, Color textColor) {
-//   return GestureDetector(
-//     onTap: () {
-//       print('$imageName card tapped');
-//       // 여기에서 Navigator.push를 사용하여 새로운 화면으로 이동
-//       if ('$imageName' == 'kikisday_card.png') {
-//         // kikisday_play_screen으로 이동
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
-//         );
-//       } else {
-//         // space_play_screen으로 이동
-//         Navigator.push(
-//           context,
-//           MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-//         );
-//       }
-//     },
-//     child: Container(
-//       width: 231.11,
-//       margin: EdgeInsets.only(left: 30),
-//       child: Stack(
-//         children: <Widget>[
-//           Image.asset('assets/home/$imageName', fit: BoxFit.cover), // 박스 이미지
-//           Positioned(
-//             // '플레이 00명' 텍스트 위치 조정
-//             left: 20, // 이미지의 좌측으로부터의 거리
-//             top: 13.18, // 이미지의 상단으로부터의 거리
-//             child: Row(
-//               children: <Widget>[
-//                 Text('플레이 ',
-//                     style: TextStyle(
-//                         color: textColor,
-//                         fontSize: 11.38,
-//                         fontFamily: 'Nanum')),
-//                 Text('00',
-//                     style: TextStyle(
-//                         color: textColor,
-//                         fontSize: 11.38,
-//                         fontFamily: 'Nanum')),
-//                 Text('명',
-//                     style: TextStyle(
-//                         color: textColor,
-//                         fontSize: 11.38,
-//                         fontFamily: 'Nanum')),
-//               ],
-//             ),
-//           ),
-//           // 즐겨찾기 버튼
-//           Positioned(
-//             right: 15,
-//             top: 13.18,
-//             child: GestureDetector(
-//               onTap: () {
-//                 if ('$imageName' == 'kikisday_card.png') {
-//                   if (!_kikiStar) {
-//                     setState(() {
-//                       _kikiStar = true;
-//                       kikiStarImage = 'selected_star.png';
-//                     });
-//                   } else {
-//                     setState(() {
-//                       _kikiStar = false;
-//                       kikiStarImage = 'unselected_star.png';
-//                     });
-//                   }
-//                 } else {
-//                   if (!_spaceStar) {
-//                     setState(() {
-//                       _spaceStar = true;
-//                       SpaceStarImage = 'selected_star.png';
-//                     });
-//                   } else {
-//                     setState(() {
-//                       _spaceStar = false;
-//                       SpaceStarImage = 'unselected_star.png';
-//                     });
-//                   }
-//                 }
-//               },
-//               child: Image.asset('assets/home/$starImage', width: 19.79, height: 19.79)
-//             )
-//           )
-//         ],
-//       ),
-//     ),
-//   );
-// }
+  // 즐겨찾기 토글 함수
+  void _toggleFavorite(int userId, int boardgameId, bool isFavorite) async {
+    String url = 'http://3.37.76.76:8081/bookmark/$userId/$boardgameId';
+    try {
+      var response = await http.post(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var jsonResponse = jsonDecode(response.body);
+        if (jsonResponse["isSuccess"]) {
+          setState(() {
+            if (boardgameId == 1) {
+              _kikiStar = !_kikiStar;
+              kikiStarImage = _kikiStar ? 'selected_star.png' : 'unselected_star.png';
+            } else if (boardgameId == 2) {
+              _spaceStar = !_spaceStar;
+              spaceStarImage = _spaceStar ? 'selected_star.png' : 'unselected_star.png';
+            }
+          });
+          print(jsonResponse["message"]);
+        } else {
+          print("즐겨찾기 실패: ${jsonResponse["message"]}");
+        }
+      } else {
+        print("서버 오류: 상태 코드 ${response.statusCode}");
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+    }
+  }
 }
