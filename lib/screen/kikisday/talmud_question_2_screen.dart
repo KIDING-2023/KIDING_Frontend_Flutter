@@ -17,6 +17,9 @@ class _KikisdayTalmudQuestion2ScreenState extends State<KikisdayTalmudQuestion2S
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -29,16 +32,16 @@ class _KikisdayTalmudQuestion2ScreenState extends State<KikisdayTalmudQuestion2S
           ),
           // 뒤로 가기 버튼 및 타이머
           Positioned(
-            top: 45,
-            left: 30,
-            right: 30,
+            top: screenHeight * 0.05625,
+            left: screenWidth * 0.0833,
+            right: screenWidth * 0.0833,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                      width: 13.16, height: 20.0),
+                      width: screenWidth * 0.0366, height: screenHeight * 0.025),
                 ),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
@@ -56,23 +59,23 @@ class _KikisdayTalmudQuestion2ScreenState extends State<KikisdayTalmudQuestion2S
           ),
           // 질문 텍스트 이미지
           Positioned(
-            top: 124.04,
+            top: screenHeight * 0.15505,
             left: 0,
             right: 0,
             child: Image.asset('assets/kikisday/talmud_question_2_text.png',
-                width: 339.79, height: 190.35),
+                width: screenWidth * 0.9439, height: screenHeight * 0.2379),
           ),
           // 질문 캐릭터 이미지
           Positioned(
-            top: 228.53,
+            top: screenHeight * 0.2857,
             left: 0,
             right: 0,
             child: Image.asset('assets/kikisday/talmud_question_1_ch.png',
-                width: 427.14, height: 413.36),
+                width: screenWidth * 1.1865, height: screenHeight * 0.5167),
           ),
           // 버튼
           Positioned(
-              top: 608.76,
+              top: screenHeight * 0.76095,
               left: 0,
               right: 0,
               child: GestureDetector(
@@ -87,7 +90,7 @@ class _KikisdayTalmudQuestion2ScreenState extends State<KikisdayTalmudQuestion2S
                   );
                 },
                 child: Image.asset('assets/kikisday/talmud_question_2_btn.png',
-                    width: 322.07, height: 44.75),
+                    width: screenWidth * 0.8946, height: screenHeight * 0.0559),
               )),
         ],
       ),

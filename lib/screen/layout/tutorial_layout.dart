@@ -25,6 +25,9 @@ class TutorialLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -51,7 +54,7 @@ class TutorialLayout extends StatelessWidget {
                                 )),
                       );
                     },
-                    icon: Image.asset(backBtnStr, width: 13.16, height: 20.0)),
+                    icon: Image.asset(backBtnStr, width: screenWidth * 0.0366, height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
@@ -66,14 +69,14 @@ class TutorialLayout extends StatelessWidget {
               ],
             ),
           ),
-          Positioned(left: 0, right: 0, top: 100, child: textWid),
-          Positioned(left: 0, right: 0, top: 320, child: characterWid),
+          Positioned(left: 0, right: 0, top: screenHeight * 0.125, child: textWid),
+          Positioned(left: 0, right: 0, top: screenHeight * 0.4, child: characterWid),
           Positioned(
               left: 0,
               right: 0,
               bottom: 20,
               child: GestureDetector(
-                child: Image.asset(okBtnStr, width: 322.07, height: 44.75),
+                child: Image.asset(okBtnStr, width: screenWidth * 0.8946, height: screenHeight * 0.0559),
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => nextScreen));

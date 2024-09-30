@@ -18,6 +18,9 @@ class PlayLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -29,12 +32,12 @@ class PlayLayout extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Positioned(
-              top: 30.0,
-              left: 15.0,
+              top: screenHeight * 0.0375,
+              left: screenWidth * 0.0417,
               child: Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: IconButton(
-                    icon: Image.asset(backIcon, width: 13.16, height: 20.0),
+                    icon: Image.asset(backIcon, width: screenWidth * 0.0366, height: screenHeight * 0.025),
                     onPressed: () {
                       final timerModel = Provider.of<TimerModel>(context, listen: false);
                       timerModel.resetTimer();  // 타이머 종료
@@ -43,7 +46,7 @@ class PlayLayout extends StatelessWidget {
                   )),
             ),
             Positioned(
-              bottom: 30.0,
+              bottom: screenHeight * 0.0375,
               left: 0,
               right: 0,
               child: GestureDetector(
@@ -56,7 +59,7 @@ class PlayLayout extends StatelessWidget {
                   Navigator.of(context).pushNamed(nextScreen);
                 },
                 child: Center(
-                  child: Image.asset(playBtn, width: 300.0, height: 45.0),
+                  child: Image.asset(playBtn, width: screenWidth * 0.8333, height: screenHeight * 0.05625),
                 ),
               ),
             ),

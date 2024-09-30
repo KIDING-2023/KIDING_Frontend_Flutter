@@ -28,6 +28,8 @@ class CardLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -40,9 +42,9 @@ class CardLayout extends StatelessWidget {
           ),
           // 뒤로 가기 버튼 및 타이머
           Positioned(
-            top: 45,
-            left: 15,
-            right: 30,
+            top: screenHeight * 0.05625,
+            left: screenWidth * 0.0417,
+            right: screenWidth * 0.0833,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -59,7 +61,7 @@ class CardLayout extends StatelessWidget {
                               )),
                     );
                   },
-                  icon: Image.asset(backBtnStr, width: 13.16, height: 20.0),
+                  icon: Image.asset(backBtnStr, width: screenWidth * 0.0366, height: screenHeight * 0.025),
                 ),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
@@ -77,21 +79,21 @@ class CardLayout extends StatelessWidget {
           ),
           // 카드 텍스트 이미지
           Positioned(
-            top: 120,
+            top: screenHeight * 0.15,
             left: 0,
             right: 0,
-            child: Image.asset(textStr, width: 336.93, height: 118),
+            child: Image.asset(textStr, width: screenWidth * 0.9359, height: screenHeight * 0.1475),
           ),
           // 카드 이미지
           Positioned(
-            top: 270,
+            top: screenHeight * 0.3375,
             left: 0,
             right: 0,
-            child: Image.asset(cardStr, width: 170.57, height: 239.34),
+            child: Image.asset(cardStr, width: screenWidth * 0.4738, height: screenHeight * 0.2992),
           ),
           // 버튼
           Positioned(
-              top: 448.44,
+              top: screenHeight * 0.56055,
               left: 0,
               right: 0,
               child: GestureDetector(
@@ -102,11 +104,11 @@ class CardLayout extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => completeScreen),
                   );
                 },
-                child: Image.asset(okBtnStr, width: 120, height: 40.58),
+                child: Image.asset(okBtnStr, width: screenWidth * 0.3333, height: screenHeight * 0.0507),
               )),
           // 카드덱 읽기 버튼
           Positioned(
-              top: 540,
+              top: screenHeight * 0.675,
               left: 0,
               right: 0,
               child: GestureDetector(
@@ -120,7 +122,7 @@ class CardLayout extends StatelessWidget {
                               completeScreen: completeScreen)));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
-                    width: 112.3, height: 32.68),
+                    width: screenWidth * 0.3119, height: screenHeight * 0.04085),
               ))
         ],
       ),

@@ -83,6 +83,9 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -126,21 +129,21 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
                   : Stack(
                       children: <Widget>[
                         Positioned(
-                          top: 315,
+                          top: screenHeight * 0.39375,
                           left: 0,
                           right: 0,
                           child: Center(
                             child: Image.asset('assets/kikisday/dice_swipe.png',
-                                width: 87.87, height: 139.91),
+                                width: screenWidth * 0.2441, height: screenHeight * 0.1749),
                           ),
                         ),
                         Positioned(
-                          top: 380,
+                          top: screenHeight * 0.475,
                           left: 0,
                           right: 0,
                           child: Center(
                             child: Image.asset('assets/kikisday/dice_img3.png',
-                                width: 360, height: 266.68),
+                                width: screenWidth, height: screenHeight * 0.33335),
                           ),
                         ),
                       ],
@@ -149,17 +152,17 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
           ),
           // 주사위 텍스트 이미지
           Positioned(
-            top: 125.22,
+            top: screenHeight * 0.156525,
             left: 0,
             right: 0,
             child: Image.asset('assets/kikisday/kikisday_random_dice_text.png',
-                width: 339.79, height: 117.96),
+                width: screenWidth * 0.9439, height: screenHeight * 0.14745),
           ),
           // 뒤로 가기 버튼
           Positioned(
-            top: 45,
-            left: 15,
-            right: 30,
+            top: screenHeight * 0.05625,
+            left: screenWidth * 0.0417,
+            right: screenWidth * 0.0833,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -177,7 +180,7 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                        width: 13.16, height: 20.0)),
+                        width: screenWidth * 0.0366, height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(

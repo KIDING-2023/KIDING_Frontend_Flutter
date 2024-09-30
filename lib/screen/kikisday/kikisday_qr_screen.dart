@@ -39,13 +39,16 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
           _buildQrView(context),
           Positioned(
-            top: 200,
+            top: screenHeight * 0.25,
             left: 0,
             right: 0,
             child: RichText(
@@ -69,7 +72,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
           ),
           if (result != null)
             Positioned(
-              bottom: 200,
+              bottom: screenHeight * 0.25,
               child: Text(
                 'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
                 style: TextStyle(
@@ -79,7 +82,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
               ),
             ),
           Positioned(
-            bottom: 200,
+            bottom: screenHeight * 0.25,
             child: Text(
               result == null ? 'Scan a code' : '',
               style: TextStyle(
@@ -89,8 +92,8 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
             ),
           ),
           Positioned(
-            top: 30,
-            left: 15,
+            top: screenHeight * 0.0375,
+            left: screenWidth * 0.0417,
             child: IconButton(
                 onPressed: () {
                   _pauseCamera(); // 카메라 일시정지
@@ -107,8 +110,8 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
                 },
                 icon: Image.asset(
                   'assets/kikisday/back_icon.png',
-                  width: 13.16,
-                  height: 20.0,
+                  width: screenWidth * 0.0366,
+                  height: screenHeight * 0.025,
                 )),
           ),
         ],

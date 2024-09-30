@@ -58,6 +58,9 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -90,7 +93,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                        width: 13.16, height: 20.0)),
+                        width: screenWidth * 0.0366, height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
@@ -107,19 +110,19 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
           ),
           // 카드 텍스트 이미지
           Positioned(
-            top: 120.44,
+            top: screenHeight * 0.15055,
             left: 0,
             right: 0,
             child: Image.asset('assets/kikisday/song_card_text.png',
-                width: 339.79, height: 117.56),
+                width: screenWidth * 0.9439, height: screenHeight * 0.14695),
           ),
           // 카드 이미지
           Positioned(
-            top: 257.79,
+            top: screenHeight * 0.3222,
             left: 0,
             right: 0,
             child: Image.asset('assets/kikisday/talmud_card.png',
-                width: 157.77, height: 221.39),
+                width: screenWidth * 0.43825, height: screenHeight * 0.2767),
           ),
         ],
       ),

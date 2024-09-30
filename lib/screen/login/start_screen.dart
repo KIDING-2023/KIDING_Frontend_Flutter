@@ -6,7 +6,7 @@ import 'package:kiding/screen/login/signup_screen.dart';
 import 'find_nickname_screen.dart';
 import 'find_password_screen.dart';
 
-import 'dart:convert';  // JSON 인코딩, 디코딩을 위한 패키지
+import 'dart:convert'; // JSON 인코딩, 디코딩을 위한 패키지
 import 'package:http/http.dart' as http;
 
 // 시작 화면 (로그인 화면)
@@ -18,26 +18,28 @@ class StartScreen extends StatefulWidget {
 }
 
 class _StartScreenState extends State<StartScreen> {
-  final _nicknameController = TextEditingController();  // 닉네임 컨트롤러
-  final _passwordController = TextEditingController();  // 비밀번호 컨트롤러
-  bool _isErrorVisible = false;  // 로그인 에러 발생 체크
-  bool _isStayLoggedIn = false;  // 로그인 상태 유지 체크
-  final _storage = FlutterSecureStorage();  // Secure storage 객체 생성
-
+  final _nicknameController = TextEditingController(); // 닉네임 컨트롤러
+  final _passwordController = TextEditingController(); // 비밀번호 컨트롤러
+  bool _isErrorVisible = false; // 로그인 에러 발생 체크
+  bool _isStayLoggedIn = false; // 로그인 상태 유지 체크
+  final _storage = FlutterSecureStorage(); // Secure storage 객체 생성
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;  // 기기의 화면 크기
+    Size screenSize = MediaQuery.of(context).size; // 기기의 화면 크기
     return Scaffold(
-        body: Center(  // 중앙 정렬
+        body: Center(
+      // 중앙 정렬
       child: Container(
-        color: Colors.white,  // 배경색: white
+        color: Colors.white, // 배경색: white
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,  // 동일한 간격으로 위젯 배치
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          // 동일한 간격으로 위젯 배치
           children: [
             // '환영합니다! 키딩북' 텍스트
             Image.asset('assets/login/start_greeting_text.png',
-                width: screenSize.width * 0.69, height: screenSize.height * 0.1),
+                width: screenSize.width * 0.69,
+                height: screenSize.height * 0.1),
             // 닉네임 입력칸
             Column(
               children: [
@@ -46,16 +48,15 @@ class _StartScreenState extends State<StartScreen> {
                   height: screenSize.height * 0.06,
                   // 텍스트 박스 하단 그림자
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0xff000000).withOpacity(0.15),
-                        spreadRadius: 0,
-                        blurRadius: 1.75,
-                        offset: Offset(0, 0.87), // changes position of shadow
-                      )
-                    ]
-                  ),
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Color(0xff000000).withOpacity(0.15),
+                          spreadRadius: 0,
+                          blurRadius: 1.75,
+                          offset: Offset(0, 0.87), // changes position of shadow
+                        )
+                      ]),
                   child: TextField(
                     controller: _nicknameController,
                     decoration: InputDecoration(
@@ -92,8 +93,7 @@ class _StartScreenState extends State<StartScreen> {
                           blurRadius: 1.75,
                           offset: Offset(0, 0.87), // changes position of shadow
                         )
-                      ]
-                  ),
+                      ]),
                   child: TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -135,11 +135,12 @@ class _StartScreenState extends State<StartScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     GestureDetector(
-                      onTap: _toggleLoginState,
+                      onTap: /*_toggleLoginState*/ () {},
                       child: Image.asset(
                         _isStayLoggedIn
                             ? 'assets/login/keep_login_selected_btn.png' // 로그인 상태 유지 활성화 이미지
-                            : 'assets/login/keep_login_btn.png', // 로그인 상태 유지 비활성화 이미지
+                            : 'assets/login/keep_login_btn.png',
+                        // 로그인 상태 유지 비활성화 이미지
                         width: 75,
                         height: 18,
                       ),
@@ -158,7 +159,8 @@ class _StartScreenState extends State<StartScreen> {
                 Container(
                     child: _isErrorVisible
                         ? Image.asset('assets/login/start_error_text.png',
-                        width: screenSize.width * 0.52, height: screenSize.height * 0.05)
+                            width: screenSize.width * 0.52,
+                            height: screenSize.height * 0.05)
                         : SizedBox()),
               ],
             ),
@@ -181,7 +183,8 @@ class _StartScreenState extends State<StartScreen> {
                 ),
                 // 구분선
                 Image.asset('assets/login/vertical_line.png',
-                    width: screenSize.width * 0.01, height: screenSize.height * 0.02),
+                    width: screenSize.width * 0.01,
+                    height: screenSize.height * 0.02),
                 SizedBox(
                   width: screenSize.width * 0.01,
                 ),
@@ -200,7 +203,8 @@ class _StartScreenState extends State<StartScreen> {
                 ),
                 // 구분선
                 Image.asset('assets/login/vertical_line.png',
-                    width: screenSize.width * 0.01, height: screenSize.height * 0.02),
+                    width: screenSize.width * 0.01,
+                    height: screenSize.height * 0.02),
                 SizedBox(
                   width: screenSize.width * 0.01,
                 ),
@@ -222,76 +226,83 @@ class _StartScreenState extends State<StartScreen> {
     ));
   }
 
-  // 로그인 유지 버튼 토글
-  void _toggleLoginState() {
-    setState(() {
-      _isStayLoggedIn = !_isStayLoggedIn; // 상태 토글
-    });
+  // 로그인 임시
+  void _login() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomeScreen()));
   }
 
-  Future<void> _login() async {
-    String nickname = _nicknameController.text.trim();
-    String password = _passwordController.text.trim();
-
-    try {
-      var response = await http.post(
-        Uri.parse('http://3.37.76.76:8081/signin'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
-          'nickname': nickname,
-          'password': password,
-        }),
-      );
-
-      // 서버 응답 데이터
-      var responseData = json.decode(response.body);
-      print("서버 응답 데이터: $responseData");  // 서버 응답 로그 출력
-
-      // 로그인 성공 여부를 토큰의 유무로 판단
-      if (responseData['accessToken'] != null && responseData['refreshToken'] != null) {
-        // 로그인 상태 유지 옵션이 선택된 경우 토큰 저장
-        if (_isStayLoggedIn) {
-          await _storage.write(key: 'isLoggedIn', value: 'true');
-          await _storage.write(key: 'nickname', value: nickname);
-          await _storage.write(key: 'accessToken', value: responseData['accessToken']);
-          await _storage.write(key: 'refreshToken', value: responseData['refreshToken']);
-        }
-
-        // 홈 화면으로 이동
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomeScreen()));
-      } else {
-        // 토큰이 없으면 로그인 실패 처리
-        print("로그인 실패: 서버에서 토큰을 반환하지 않았습니다.");
-        setState(() {
-          _isErrorVisible = true;  // 에러 메시지 표시
-        });
-      }
-    } catch (error) {
-      // 에러가 발생한 경우, 에러 로그 출력
-      print("에러 발생: $error");
-
-      if (error is http.ClientException) {
-        print("HTTP 요청 중 오류 발생: ${error.message}");
-      } else if (error is FormatException) {
-        print("응답 형식 오류: ${error.message}");
-      } else {
-        print("기타 오류: ${error.toString()}");
-      }
-
-      setState(() {
-        _isErrorVisible = true;  // 에러 메시지 표시
-      });
-    }
-  }
+  // // 로그인 유지 버튼 토글
+  // void _toggleLoginState() {
+  //   setState(() {
+  //     _isStayLoggedIn = !_isStayLoggedIn; // 상태 토글
+  //   });
+  // }
+  //
+  // Future<void> _login() async {
+  //   String nickname = _nicknameController.text.trim();
+  //   String password = _passwordController.text.trim();
+  //
+  //   try {
+  //     var response = await http.post(
+  //       Uri.parse('http://3.37.76.76:8081/signin'),
+  //       headers: <String, String>{
+  //         'Content-Type': 'application/json; charset=UTF-8',
+  //       },
+  //       body: jsonEncode(<String, String>{
+  //         'nickname': nickname,
+  //         'password': password,
+  //       }),
+  //     );
+  //
+  //     // 서버 응답 데이터
+  //     var responseData = json.decode(response.body);
+  //     print("서버 응답 데이터: $responseData");  // 서버 응답 로그 출력
+  //
+  //     // 로그인 성공 여부를 토큰의 유무로 판단
+  //     if (responseData['accessToken'] != null && responseData['refreshToken'] != null) {
+  //       // 로그인 상태 유지 옵션이 선택된 경우 토큰 저장
+  //       if (_isStayLoggedIn) {
+  //         await _storage.write(key: 'isLoggedIn', value: 'true');
+  //         await _storage.write(key: 'nickname', value: nickname);
+  //         await _storage.write(key: 'accessToken', value: responseData['accessToken']);
+  //         await _storage.write(key: 'refreshToken', value: responseData['refreshToken']);
+  //       }
+  //
+  //       // 홈 화면으로 이동
+  //       Navigator.push(
+  //           context, MaterialPageRoute(builder: (context) => HomeScreen()));
+  //     } else {
+  //       // 토큰이 없으면 로그인 실패 처리
+  //       print("로그인 실패: 서버에서 토큰을 반환하지 않았습니다.");
+  //       setState(() {
+  //         _isErrorVisible = true;  // 에러 메시지 표시
+  //       });
+  //     }
+  //   } catch (error) {
+  //     // 에러가 발생한 경우, 에러 로그 출력
+  //     print("에러 발생: $error");
+  //
+  //     if (error is http.ClientException) {
+  //       print("HTTP 요청 중 오류 발생: ${error.message}");
+  //     } else if (error is FormatException) {
+  //       print("응답 형식 오류: ${error.message}");
+  //     } else {
+  //       print("기타 오류: ${error.toString()}");
+  //     }
+  //
+  //     setState(() {
+  //       _isErrorVisible = true;  // 에러 메시지 표시
+  //     });
+  //   }
+  // }
 
   // 로그인 유지 여부 확인
   Future<void> checkLoginStatus() async {
     String? isLoggedIn = await _storage.read(key: 'isLoggedIn');
     if (isLoggedIn != null && isLoggedIn == 'true') {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomeScreen()));
     }
   }
 
