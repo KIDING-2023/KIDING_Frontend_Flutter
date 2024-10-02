@@ -25,50 +25,6 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   bool useCamera = true;
   final picker = ImagePicker();
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _requestCameraPermission();
-  // }
-  //
-  // Future<void> _requestCameraPermission() async {
-  //   PermissionStatus status = await Permission.camera.status;
-  //   if (status.isGranted) {
-  //     print("Camera permission already granted.");
-  //     return;
-  //   }
-  //
-  //   bool hasPermission = await requestCameraPermission(context);
-  //   if (hasPermission) {
-  //     print("Camera permission granted.");
-  //   } else {
-  //     print("Camera permission denied.");
-  //   }
-  // }
-
-  // Future<bool> requestCameraPermission(BuildContext context) async {
-  //   PermissionStatus status = await Permission.camera.request();
-  //
-  //   if(!status.isGranted) { // 허용이 안된 경우
-  //     showDialog(
-  //         context: context,
-  //         builder: (BuildContext context) {
-  //           return AlertDialog(
-  //             content: Text("권한 설정을 확인해주세요."),
-  //             actions: [
-  //               ElevatedButton(
-  //                   onPressed: () {
-  //                     openAppSettings(); // 앱 설정으로 이동
-  //                   },
-  //                   child: Text('설정하기')),
-  //             ],
-  //           );
-  //         });
-  //     return false;
-  //   }
-  //   return true;
-  // }
-
   @override
   void reassemble() {
     super.reassemble();
@@ -81,13 +37,16 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
           _buildQrView(context),
           Positioned(
-            top: 200,
+            top: screenHeight * 0.25,
             left: 0,
             right: 0,
             child: RichText(
@@ -109,49 +68,9 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
               ),
             ),
           ),
-          // Positioned(
-          //   bottom: 100,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //         color: Color(0xFF788CC2),
-          //         borderRadius: BorderRadius.circular(100)),
-          //     child: Padding(
-          //       padding: const EdgeInsets.all(6.0),
-          //       child: ToggleButtons(
-          //         fillColor:
-          //         Colors.transparent, // ToggleButtons 자체의 배경색을 투명하게 설정
-          //         splashColor: Colors.transparent, // Splash 효과를 없애기 위해 투명하게 설정
-          //         highlightColor:
-          //         Colors.transparent, // Highlight 효과를 없애기 위해 투명하게 설정
-          //         selectedColor: Colors.white,
-          //         color: Colors.white,
-          //         renderBorder: false,
-          //         children: <Widget>[
-          //           _buildToggleButton(
-          //               '카메라', useCamera), // 변경된 _buildToggleButton 함수를 사용
-          //           _buildToggleButton(
-          //               '갤러리', !useCamera), // 변경된 _buildToggleButton 함수를 사용
-          //         ],
-          //         isSelected: [useCamera, !useCamera],
-          //         onPressed: (int index) {
-          //           if (index == 0) {
-          //             controller?.resumeCamera();
-          //           } else {
-          //             //_getPictureFromGallery();
-          //             // 이 부분을 제거합니다. _getPictureFromGallery 메소드 내부에서 상태를 관리하게 합니다.
-          //           }
-          //         },
-          //         textStyle: TextStyle(
-          //           fontFamily: 'Nanum',
-          //           fontSize: 20,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
           if (result != null)
             Positioned(
-              bottom: 200,
+              bottom: screenHeight * 0.25,
               child: Text(
                 'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
                 style: TextStyle(
@@ -161,7 +80,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
               ),
             ),
           Positioned(
-            bottom: 200,
+            bottom: screenHeight * 0.25,
             child: Text(
               result == null ? 'Scan a code' : '',
               style: TextStyle(
@@ -171,8 +90,8 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
             ),
           ),
           Positioned(
-            top: 30,
-            left: 15,
+            top: screenHeight * 0.0375,
+            left: screenWidth * 0.0417,
             child: IconButton(
                 onPressed: () {
                   _pauseCamera();
@@ -189,30 +108,14 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
                 },
                 icon: Image.asset(
                   'assets/space/back_icon_white.png',
-                  width: 13.16,
-                  height: 20.0,
+                  width: screenWidth * 0.0366,
+                  height: screenHeight * 0.025,
                 )),
           ),
         ],
       ),
     );
   }
-
-  // // _buildToggleButton 함수는 선택된 상태에 따라 다르게 보이는 버튼을 생성합니다.
-  // Widget _buildToggleButton(String text, bool isSelected) {
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       color: isSelected
-  //           ? Color(0xFFFF8A5B)
-  //           : Colors.transparent, // 선택된 상태에 따른 색상
-  //       borderRadius: BorderRadius.circular(100), // 모든 모서리를 둥글게 설정
-  //     ),
-  //     padding: const EdgeInsets.symmetric(horizontal: 16),
-  //     child: Center(
-  //       child: Text(text),
-  //     ),
-  //   );
-  // }
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = 250.0;
@@ -284,19 +187,5 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
         builder: (context) => SpaceTutorial1Screen(),
       ),
     );
-    // if (result != null) {
-    //   Future.delayed(Duration(seconds: 3), () {
-    //     setState(() {
-    //       controller?.pauseCamera();
-    //       controller?.dispose();
-    //     });
-    //     Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //         builder: (context) => SpaceCanReadScreen(),
-    //       ),
-    //     );
-    //   });
-    // }
   }
 }
