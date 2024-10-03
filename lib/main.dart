@@ -26,6 +26,7 @@ import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_qr_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
+import 'package:kiding/screen/kikisday/set_player_number_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
 import 'package:kiding/screen/space/space_10_screen.dart';
 import 'package:kiding/screen/space/space_11_screen.dart';
@@ -66,6 +67,7 @@ void main() async {
         routes: {
           HOME_ROUTE: (context) => StartScreen(),
           '/kikisday_qr': (context) => KikisdayQrScreen(),
+          '/kikisday_set_player_num': (context) => SetPlayerNumberScreen(),
           '/kikisday_tutorial1': (context) => KikisdayTutorial1Screen(),
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
           '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),

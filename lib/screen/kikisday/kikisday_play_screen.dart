@@ -7,7 +7,7 @@ class KikisdayPlayScreen extends StatelessWidget {
     return PlayLayout(
         bg: 'assets/kikisday/kikiplay_bg.png',
         backIcon: 'assets/kikisday/back_icon.png',
-        nextScreen: '/kikisday_qr',
+        nextScreen: '/kikisday_set_player_num',
         playBtn: 'assets/kikisday/kikiplay_btn.png');
   }
 }
