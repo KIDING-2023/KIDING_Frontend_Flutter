@@ -104,7 +104,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: screenSize.width,
                           child: Column(
                             children: <Widget>[
-                              _buildMainSortSection(),
+                              if (_selectedSortIndex == 0)
+                                _buildMainSortSection(),
+                              if (_selectedSortIndex == 1)
+                                _buildPopularSortSection(),
+                              if (_selectedSortIndex == 2)
+                                _buildRecentSortSection(),
                             ],
                           ),
                         ),
@@ -281,6 +286,38 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget _buildPopularSortSection() {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
+    return Stack(
+      children: [
+        Positioned(
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/home/no_game.png',
+              width: screenSize.width * 0.8333,
+              height: screenSize.height * 0.3135375,
+            ))
+      ],
+    );
+  }
+
+  Widget _buildRecentSortSection() {
+    Size screenSize = MediaQuery.of(context).size; // 화면 크기
+    return Stack(
+      children: [
+        Positioned(
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              'assets/home/no_game.png',
+              width: screenSize.width * 0.8333,
+              height: screenSize.height * 0.3135375,
+            ))
+      ],
+    );
+  }
+
   Widget _buildKikisdayCard() {
     Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return GestureDetector(
@@ -339,7 +376,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     kikiStarImage = 'unselected_star.png';
                       //   });
                       // }
-                      _toggleFavorite(_userId, 1, _kikiStar); // 1은 Kikisday 게임의 ID
+                      _toggleFavorite(
+                          _userId, 1, _kikiStar); // 1은 Kikisday 게임의 ID
                     },
                     child: Image.asset('assets/home/$kikiStarImage',
                         width: 19.79, height: 19.79)))
@@ -407,7 +445,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       //     spaceStarImage = 'unselected_star.png';
                       //   });
                       // }
-                      _toggleFavorite(_userId, 2, _spaceStar); // 2는 Space 게임의 ID
+                      _toggleFavorite(
+                          _userId, 2, _spaceStar); // 2는 Space 게임의 ID
                     },
                     child: Image.asset('assets/home/$spaceStarImage',
                         width: 19.79, height: 19.79)))
@@ -428,10 +467,12 @@ class _HomeScreenState extends State<HomeScreen> {
           setState(() {
             if (boardgameId == 1) {
               _kikiStar = !_kikiStar;
-              kikiStarImage = _kikiStar ? 'selected_star.png' : 'unselected_star.png';
+              kikiStarImage =
+                  _kikiStar ? 'selected_star.png' : 'unselected_star.png';
             } else if (boardgameId == 2) {
               _spaceStar = !_spaceStar;
-              spaceStarImage = _spaceStar ? 'selected_star.png' : 'unselected_star.png';
+              spaceStarImage =
+                  _spaceStar ? 'selected_star.png' : 'unselected_star.png';
             }
           });
           print(jsonResponse["message"]);
