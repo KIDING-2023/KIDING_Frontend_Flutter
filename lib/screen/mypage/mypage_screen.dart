@@ -105,8 +105,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
           elevation: 0,
           // AppBar의 그림자 제거
           leading: Padding(
-              padding: const EdgeInsets.only(left: 10, top: 10),
-              child: SizedBox()),
+            padding: const EdgeInsets.only(left: 10, top: 10),
+            child: IconButton(
+              icon: Image.asset(
+                'assets/home/notice.png',
+                width: 17.08,
+                height: 20,
+              ),
+              onPressed: () {},
+            ),
+          ),
           title: Padding(
             padding: const EdgeInsets.only(top: 10),
             child: Text(

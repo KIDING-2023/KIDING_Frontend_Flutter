@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: const EdgeInsets.only(left: 10, top: 10),
           child: IconButton(
             icon: Image.asset(
-              'assets/home/menu.png',
-              width: 21.65,
+              'assets/home/notice.png',
+              width: 17.08,
               height: 20,
             ),
             onPressed: () {},
