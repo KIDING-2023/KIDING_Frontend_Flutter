@@ -69,13 +69,13 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
               left: 0,
               right: 0,
               top: screenHeight * 0.125,
-              child: Image.asset('assets/kikisday/kikisday_tutorial1_text.png',
+              child: Image.asset('assets/kikisday/set_player_number_text.png',
                   width: screenWidth * 0.9439,
-                  height: screenHeight * 0.156525)),
+                  height: screenHeight * 0.326)),
           // 마이너스 버튼
           Positioned(
-              top: screenHeight * 0.39085,
-              left: screenWidth * 0.3162,
+              top: screenHeight * 0.345,
+              left: screenWidth * 0.29,
               child: IconButton(
                   onPressed: () {
                     setState(() {
@@ -86,15 +86,16 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
                   },
                   icon: Image.asset(
                     'assets/kikisday/num_minus.png',
-                    width: screenWidth * 0.5814,
-                    height: screenHeight * 0.261625,
+                    width: screenWidth * 0.0581,
+                    height: screenHeight * 0.026,
                   ))),
           // 플레이어 숫자
           Positioned(
-            top: screenHeight * 0.39085,
+            top: screenHeight * 0.345,
             left: 0,
             right: 0,
             child: Container(
+              margin: EdgeInsets.only(left: screenWidth * 0.4, right: screenWidth * 0.4),
               width: screenWidth * 0.19825,
               height: screenHeight * 0.052225,
               alignment: Alignment.center,
@@ -115,8 +116,8 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
           ),
           // 플러스 버튼
           Positioned(
-              top: screenHeight * 0.39085,
-              right: screenWidth * 0.3162,
+              top: screenHeight * 0.345,
+              right: screenWidth * 0.29,
               child: IconButton(
                   onPressed: () {
                     setState(() {
@@ -125,8 +126,8 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
                   },
                   icon: Image.asset(
                     'assets/kikisday/num_plus.png',
-                    width: screenWidth * 0.5814,
-                    height: screenHeight * 0.261625,
+                    width: screenWidth * 0.0581,
+                    height: screenHeight * 0.026,
                   ))),
           Positioned(
               left: 0,
@@ -137,7 +138,7 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
           Positioned(
               left: 0,
               right: 0,
-              bottom: screenHeight * 0.025,
+              bottom: screenHeight * 0.05,
               child: GestureDetector(
                 child: Image.asset('assets/kikisday/kikisday_ok_btn.png',
                     width: screenWidth * 0.8946, height: screenHeight * 0.0559),

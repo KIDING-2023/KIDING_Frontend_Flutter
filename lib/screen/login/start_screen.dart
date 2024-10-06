@@ -44,30 +44,20 @@ class _StartScreenState extends State<StartScreen> {
             Column(
               children: [
                 Container(
-                  width: screenSize.width * 0.73,
-                  height: screenSize.height * 0.06,
-                  // 텍스트 박스 하단 그림자
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff000000).withOpacity(0.15),
-                          spreadRadius: 0,
-                          blurRadius: 1.75,
-                          offset: Offset(0, 0.87), // changes position of shadow
-                        )
-                      ]),
+                  width: screenSize.width * 0.7259,
+                  height: screenSize.height * 0.0623,
                   child: TextField(
                     controller: _nicknameController,
                     decoration: InputDecoration(
                         hintText: '닉네임',
                         hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                         filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.only(left: 20)),
+                        fillColor: Color(0xfff6f6f6),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(100)
+                        ),
+                        contentPadding: EdgeInsets.all(20)),
                     style: TextStyle(
                       fontFamily: 'nanum',
                       fontSize: 17,
@@ -81,19 +71,8 @@ class _StartScreenState extends State<StartScreen> {
                 ),
                 // 비밀번호 입력칸
                 Container(
-                  width: screenSize.width * 0.73,
-                  height: screenSize.height * 0.06,
-                  // 텍스트 박스 하단 그림자
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color(0xff000000).withOpacity(0.15),
-                          spreadRadius: 0,
-                          blurRadius: 1.75,
-                          offset: Offset(0, 0.87), // changes position of shadow
-                        )
-                      ]),
+                  width: screenSize.width * 0.7259,
+                  height: screenSize.height * 0.0623,
                   child: TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -101,11 +80,12 @@ class _StartScreenState extends State<StartScreen> {
                         hintText: '비밀번호',
                         hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                         filled: true,
-                        fillColor: Colors.white,
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.only(left: 20)),
+                        fillColor: Color(0xfff6f6f6),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(100)
+                        ),
+                        contentPadding: EdgeInsets.all(20)),
                     style: TextStyle(
                       fontFamily: 'nanum',
                       fontSize: 17,
@@ -119,7 +99,8 @@ class _StartScreenState extends State<StartScreen> {
                 ),
                 // 시작하기 버튼
                 Container(
-                  width: screenSize.width * 0.73,
+                  width: screenSize.width * 0.7259,
+                  height: screenSize.height * 0.0623,
                   child: IconButton(
                     onPressed: _login,
                     padding: EdgeInsets.zero,

@@ -41,7 +41,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                   )),
             ),
             Positioned(
-                top: screenHeight * 0.1106,
+                top: screenHeight * 0.13,
                 left: screenWidth * 0.0831,
                 child: Text(
                   '친구요청',
@@ -51,7 +51,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                       color: Colors.black),
                 )),
             Positioned(
-                top: screenHeight * 0.1464,
+                top: screenHeight * 0.11,
                 left: 0,
                 right: 0,
                 child: SizedBox(
@@ -64,20 +64,13 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                             friendRequests[index]['rank']!);
                       }),
                 )),
-            // 하단바 구분선
-            Positioned(
-                top: screenHeight * 0.79,
-                child: Container(
-                  width: screenWidth,
-                  height: 0.1,
-                  color: Colors.black,
-                )),
             // 하단바
             Positioned(
-                top: screenHeight * 0.8,
+                top: screenHeight * 0.91,
                 left: 0,
                 right: 0,
                 child: Container(
+                  height: screenHeight * 0.09,
                   color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -124,9 +117,9 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      margin: const EdgeInsets.only(bottom: 16.0),
+      margin: const EdgeInsets.only(bottom: 15, left: 30, right: 30),
       width: screenWidth * 0.8332,
-      height: screenHeight * 0.1464,
+      height: screenHeight * 0.1602,
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/friends/request_box.png'),
@@ -160,11 +153,11 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                     color: Color(0xFFb3b3b3)),
               )),
           Positioned(
-              top: screenHeight * 0.1128,
+              top: screenHeight * 0.105,
               left: 0,
               right: 0,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
                     onPressed: () {},

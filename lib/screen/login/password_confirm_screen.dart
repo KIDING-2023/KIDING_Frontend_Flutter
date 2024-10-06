@@ -63,18 +63,6 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
                   Container(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
-                    // 텍스트 박스 하단 그림자
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xff000000).withOpacity(0.15),
-                            spreadRadius: 0,
-                            blurRadius: 1.75,
-                            offset:
-                                Offset(0, 0.87), // changes position of shadow
-                          )
-                        ]),
                     child: TextField(
                       controller: _pwController,
                       obscureText: true,
@@ -82,11 +70,11 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
                           hintText: '비밀번호를 다시 입력하세요',
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Color(0xfff6f6f6),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(100)),
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
                         fontSize: 17,
@@ -209,7 +197,8 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
   }
 
   // 서버로 회원가입 요청
-  Future<int?> signup(String nickname, String password, String phoneNumber) async {
+  Future<int?> signup(
+      String nickname, String password, String phoneNumber) async {
     final url = Uri.parse('http://3.37.76.76:8081/signup');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({

@@ -72,6 +72,7 @@ void main() async {
           '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
           '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),
           '/space_qr': (context) => SpaceQrScreen(),
+          '/space_tutorial1': (context) => SpaceTutorial1Screen(),
           '/kikisday2': (context) => Kikisday2Screen(),
           '/kikisday3': (context) => Kikisday3Screen(),
           '/kikisday4': (context) => Kikisday4Screen(),

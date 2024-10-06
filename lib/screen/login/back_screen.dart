@@ -44,11 +44,11 @@ class _BackScreenState extends State<BackScreen> {
                         height: screenSize.height * 0.15,
                       )),
                   // 버튼 세로 배치
-                  Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12.46, bottom: 12.46),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 5),
+                    child: Center(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           // 중단 버튼
                           IconButton(
@@ -58,7 +58,6 @@ class _BackScreenState extends State<BackScreen> {
                                   MaterialPageRoute(
                                       builder: (context) => StartScreen()));
                             },
-                            padding: EdgeInsets.zero,
                             icon: Image.asset('assets/login/to_start_btn.png',
                                 width: screenSize.width * 0.66,
                                 height: screenSize.height * 0.05),
@@ -66,7 +65,6 @@ class _BackScreenState extends State<BackScreen> {
                           // 계속 버튼
                           IconButton(
                             onPressed: () => Navigator.pop(context),
-                            padding: EdgeInsets.zero,
                             icon: Image.asset('assets/login/keep_signup_btn.png',
                                 width: screenSize.width * 0.66,
                                 height: screenSize.height * 0.05),

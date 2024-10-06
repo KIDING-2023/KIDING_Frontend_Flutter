@@ -56,29 +56,17 @@ class _PhoneScreenState extends State<PhoneScreen> {
                   Container(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
-                    // 텍스트 박스 하단 그림자
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xff000000).withOpacity(0.15),
-                            spreadRadius: 0,
-                            blurRadius: 1.75,
-                            offset:
-                                Offset(0, 0.87), // changes position of shadow
-                          )
-                        ]),
                     child: TextField(
                       controller: codeSent ? _codeController : _phoneController,
                       decoration: InputDecoration(
                           hintText: codeSent ? '인증번호를 입력하세요' : 'ex.01012345678',
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Color(0xfff6f6f6),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(100)),
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
                         fontSize: 17,

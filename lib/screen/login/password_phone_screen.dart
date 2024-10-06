@@ -7,8 +7,7 @@ import 'find_password_result_screen.dart';
 class PasswordPhoneScreen extends StatefulWidget {
   final String phone; // 전화번호 받아오기
 
-  const PasswordPhoneScreen(
-      {super.key, required this.phone});
+  const PasswordPhoneScreen({super.key, required this.phone});
 
   @override
   State<PasswordPhoneScreen> createState() => _PasswordPhoneScreenState();
@@ -63,29 +62,17 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                   Container(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
-                    // 텍스트 박스 하단 그림자
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(100),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xff000000).withOpacity(0.15),
-                            spreadRadius: 0,
-                            blurRadius: 1.75,
-                            offset:
-                                Offset(0, 0.87), // changes position of shadow
-                          )
-                        ]),
                     child: TextField(
                       controller: _codeController,
                       decoration: InputDecoration(
                           hintText: '인증번호를 입력하세요',
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
-                          fillColor: Colors.white,
+                          fillColor: Color(0xfff6f6f6),
                           enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(100)),
-                          contentPadding: EdgeInsets.only(left: 20)),
+                          contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
                         fontSize: 17,
@@ -99,7 +86,9 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                   // 인증번호 오류 메시지
                   Row(
                     children: [
-                      Padding(padding: EdgeInsets.only(left: screenSize.width * 0.21)),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.21)),
                       Visibility(
                         visible: errorVisible,
                         child: Icon(
@@ -109,7 +98,9 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                           color: Color(0xFFFFA37C),
                         ),
                       ),
-                      Padding(padding: EdgeInsets.only(left: screenSize.width * 0.01)),
+                      Padding(
+                          padding:
+                              EdgeInsets.only(left: screenSize.width * 0.01)),
                       Text(
                         errorMessage,
                         style: TextStyle(
@@ -180,8 +171,7 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    FindPasswordResultScreen()));
+                builder: (context) => FindPasswordResultScreen()));
       }).catchError((error) {
         // 인증 실패, 에러 메시지 설정
         setState(() {
@@ -198,5 +188,5 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
     }
   }
 
-  // 전화번호를 통해 uid (or token) 받아오는 로직 추가 필요 -> 다음 화면으로 전달
+// 전화번호를 통해 uid (or token) 받아오는 로직 추가 필요 -> 다음 화면으로 전달
 }

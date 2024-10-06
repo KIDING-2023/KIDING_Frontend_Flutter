@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/friends/friends_request_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
 
@@ -46,7 +47,12 @@ class _HomeScreenState extends State<HomeScreen> {
               width: 17.08,
               height: 20,
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+              );
+            },
           ),
         ),
         actions: [
@@ -102,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         top: screenSize.height * 0.185,
                         child: Container(
                           width: screenSize.width,
+                          height: screenSize.height * 0.6,
                           child: Column(
                             children: <Widget>[
                               if (_selectedSortIndex == 0)
@@ -288,33 +295,41 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildPopularSortSection() {
     Size screenSize = MediaQuery.of(context).size; // 화면 크기
-    return Stack(
-      children: [
-        Positioned(
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/home/no_game.png',
-              width: screenSize.width * 0.8333,
-              height: screenSize.height * 0.3135375,
-            ))
-      ],
+    return Container(
+      width: screenSize.width * 0.8,
+      height: screenSize.height * 0.6,
+      child: Stack(
+        children: [
+          Positioned(
+              left: 0,
+              right: 0,
+              child: Image.asset(
+                'assets/home/no_game.png',
+                width: screenSize.width * 0.8333,
+                height: screenSize.height * 0.3135375,
+              ))
+        ],
+      ),
     );
   }
 
   Widget _buildRecentSortSection() {
     Size screenSize = MediaQuery.of(context).size; // 화면 크기
-    return Stack(
-      children: [
-        Positioned(
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/home/no_game.png',
-              width: screenSize.width * 0.8333,
-              height: screenSize.height * 0.3135375,
-            ))
-      ],
+    return Container(
+      width: screenSize.width * 0.8,
+      height: screenSize.height * 0.6,
+      child: Stack(
+        children: [
+          Positioned(
+              left: 0,
+              right: 0,
+              child: Image.asset(
+                'assets/home/no_game.png',
+                width: screenSize.width * 0.8333,
+                height: screenSize.height * 0.3135375,
+              ))
+        ],
+      ),
     );
   }
 
