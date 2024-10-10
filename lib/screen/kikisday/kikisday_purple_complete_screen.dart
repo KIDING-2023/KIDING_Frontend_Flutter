@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/finish_screen.dart';
 import '../layout/complete_layout.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice4_screen.dart';
@@ -22,6 +23,9 @@ class _KikisdayPurpleCompleteScreenState
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
   int remainingTime = 3;
+
+  // 다음 화면
+  late var nextScreen;
 
   @override
   void initState() {
@@ -50,13 +54,18 @@ class _KikisdayPurpleCompleteScreenState
   }
 
   void _navigateToRandomDiceScreen() {
+    switch (widget.currentNumber) {
+      case 16:
+        nextScreen =
+            KikisdayRandomDice4Screen(currentNumber: widget.currentNumber);
+        break;
+      default:
+        nextScreen = FinishScreen();
+        break;
+    }
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (context) => KikisdayRandomDice4Screen(
-          currentNumber: widget.currentNumber,
-        ),
-      ),
+      MaterialPageRoute(builder: (context) => nextScreen),
     );
     log('currentNumber: ${widget.currentNumber}');
   }

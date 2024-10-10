@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/finish_screen.dart';
 import '../layout/complete_layout.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice4_screen.dart';
@@ -53,9 +54,7 @@ class _KikisdayRedComplete3ScreenState
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayRandomDice4Screen(
-          currentNumber: widget.currentNumber,
-        ),
+        builder: (context) => FinishScreen()
       ),
     );
     log('currentNumber: ${widget.currentNumber}');
