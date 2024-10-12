@@ -9,8 +9,9 @@ import 'kikisday_random_dice4_screen.dart';
 
 class KikisdayRedComplete3Screen extends StatefulWidget {
   final int currentNumber;
+  final int chips;
 
-  KikisdayRedComplete3Screen({Key? key, required this.currentNumber})
+  KikisdayRedComplete3Screen({Key? key, required this.currentNumber, required this.chips})
       : super(key: key);
 
   @override
@@ -54,7 +55,7 @@ class _KikisdayRedComplete3ScreenState
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => FinishScreen()
+        builder: (context) => FinishScreen(chips: widget.chips + 1)
       ),
     );
     log('currentNumber: ${widget.currentNumber}');

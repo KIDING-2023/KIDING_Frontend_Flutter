@@ -6,14 +6,15 @@ import '../../model/timer_model.dart';
 import 'kikisday_tutorial1_screen.dart';
 
 class FinishScreen extends StatefulWidget {
-  const FinishScreen({super.key});
+  final int chips;
+
+  const FinishScreen({super.key, required this.chips});
 
   @override
   State<FinishScreen> createState() => _FinishScreenState();
 }
 
 class _FinishScreenState extends State<FinishScreen> {
-  int chipsResult = 30;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class _FinishScreenState extends State<FinishScreen> {
               right: 0,
               child: Center(
                 child: Text(
-                  chipsResult.toString() + '개',
+                  widget.chips.toString() + '개',
                   style: TextStyle(
                       fontSize: 30,
                       fontFamily: 'Nanum',

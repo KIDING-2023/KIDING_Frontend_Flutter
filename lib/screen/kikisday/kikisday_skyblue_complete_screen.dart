@@ -9,8 +9,9 @@ import 'kikisday_random_dice3_screen.dart';
 
 class KikisdaySkyblueCompleteScreen extends StatefulWidget {
   final int currentNumber;
+  final int chips;
 
-  KikisdaySkyblueCompleteScreen({Key? key, required this.currentNumber})
+  KikisdaySkyblueCompleteScreen({Key? key, required this.currentNumber, required this.chips})
       : super(key: key);
 
   @override
@@ -57,11 +58,11 @@ class _KikisdaySkyblueCompleteScreenState
     switch (widget.currentNumber) {
       case 10:
         nextScreen =
-            KikisdayRandomDice3Screen(currentNumber: widget.currentNumber);
+            KikisdayRandomDice3Screen(currentNumber: widget.currentNumber, chips: widget.chips + 1,);
         break;
       default:
         nextScreen =
-            KikisdayRandomDice2Screen(currentNumber: widget.currentNumber);
+            KikisdayRandomDice2Screen(currentNumber: widget.currentNumber, chips: widget.chips + 1,);
         break;
     }
     Navigator.pushReplacement(

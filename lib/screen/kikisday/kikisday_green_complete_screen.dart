@@ -8,8 +8,9 @@ import 'kikisday_random_dice_screen.dart';
 
 class KikisdayGreenCompleteScreen extends StatefulWidget {
   final int currentNumber;
+  final int chips;
 
-  KikisdayGreenCompleteScreen({Key? key, required this.currentNumber})
+  KikisdayGreenCompleteScreen({Key? key, required this.currentNumber, required this.chips})
       : super(key: key);
 
   @override
@@ -55,6 +56,7 @@ class _KikisdayGreenCompleteScreenState
       MaterialPageRoute(
         builder: (context) => KikisdayRandomDiceScreen(
           currentNumber: widget.currentNumber,
+          chips: widget.chips + 1,
         ),
       ),
     );

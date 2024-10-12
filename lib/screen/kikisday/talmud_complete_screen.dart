@@ -23,6 +23,9 @@ class _KikisdayTalmudCompleteScreenState
   final int duration = 3; // 3초 후 화면 전환
   int remainingTime = 3;
 
+  // 초기 키딩칩 개수
+  int chips = 0;
+
   @override
   void initState() {
     super.initState();
@@ -50,15 +53,17 @@ class _KikisdayTalmudCompleteScreenState
   }
 
   void _navigateToRandomDiceScreen() {
+    chips += 3;
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => KikisdayRandomDiceScreen(
           currentNumber: widget.currentNumber,
+          chips: chips
         ),
       ),
     );
-    log('currentNumber: ${widget.currentNumber}');
+    log('currentNumber: ${widget.currentNumber}, chips: ${chips}');
   }
 
   void _onBackButtonPressed() {

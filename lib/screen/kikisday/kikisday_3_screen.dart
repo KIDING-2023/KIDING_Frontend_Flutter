@@ -12,12 +12,16 @@ class Kikisday3Screen extends StatefulWidget {
 class _Kikisday3ScreenState extends State<Kikisday3Screen> {
   @override
   Widget build(BuildContext context) {
+    // 전달된 인자를 받기
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    int chips = arguments['chips'];
+
     return CardLayout(
       bgStr: 'assets/kikisday/kikisday_bg.png',
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textStr: 'assets/kikisday/kikisday_3_text.png',
       cardStr: 'assets/kikisday/kikisday_blue_card.png',
-      completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3),
+      completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3, chips: chips),
       okBtnStr: 'assets/kikisday/kikisday_blue_btn.png',
       timerColor: Color(0xFF868686),
       currentNumber: 3,

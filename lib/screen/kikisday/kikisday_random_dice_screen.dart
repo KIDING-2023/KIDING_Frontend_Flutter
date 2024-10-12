@@ -9,9 +9,10 @@ import '../layout/exit_layout.dart';
 
 class KikisdayRandomDiceScreen extends StatefulWidget {
   final int currentNumber;
+  final int chips;
 
-  KikisdayRandomDiceScreen({Key? key, required this.currentNumber})
-      : super(key: key);
+  KikisdayRandomDiceScreen(
+      {super.key, required this.currentNumber, required this.chips});
 
   @override
   State<KikisdayRandomDiceScreen> createState() =>
@@ -55,7 +56,13 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
       _controller.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen);
+      Navigator.of(context).pushNamed(
+        nextScreen,
+        arguments: {
+          'currentNumber': widget.currentNumber,
+          'chips': widget.chips
+        },
+      );
     }
   }
 
@@ -135,7 +142,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                           right: 0,
                           child: Center(
                             child: Image.asset('assets/kikisday/dice_swipe.png',
-                                width: screenWidth * 0.2441, height: screenHeight * 0.1749),
+                                width: screenWidth * 0.2441,
+                                height: screenHeight * 0.1749),
                           ),
                         ),
                         Positioned(
@@ -144,7 +152,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                           right: 0,
                           child: Center(
                             child: Image.asset('assets/kikisday/dice_img3.png',
-                                width: screenWidth, height: screenHeight * 0.33335),
+                                width: screenWidth,
+                                height: screenHeight * 0.33335),
                           ),
                         ),
                       ],
@@ -181,7 +190,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                        width: screenWidth * 0.0366, height: screenHeight * 0.025)),
+                        width: screenWidth * 0.0366,
+                        height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
