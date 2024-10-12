@@ -5,9 +5,8 @@ import 'choose_character_screen.dart';
 // '회원가입이 완료되었습니다.' 화면
 class LoginSplashScreen extends StatefulWidget {
   final String nickname;  // 닉네임 받아오기
-  final int userId; // userId 받아오기
 
-  const LoginSplashScreen({required this.nickname, super.key, required this.userId});
+  const LoginSplashScreen({required this.nickname, super.key});
 
   @override
   State<LoginSplashScreen> createState() => _LoginSplashScreenState();
@@ -20,7 +19,7 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
     Timer(Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(
-          builder: (_) => ChooseCharacterScreen(nickname: widget.nickname, userId: widget.userId),
+          builder: (_) => ChooseCharacterScreen(nickname: widget.nickname,
         ),
       );
     });

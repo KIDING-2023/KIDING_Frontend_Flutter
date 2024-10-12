@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'back_screen.dart';
 import 'login_splash_screen.dart';
@@ -168,21 +169,21 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
         _isLoading = true; // 로딩 상태 표시
       });
 
-      // 회원가입 요청 후 userId 받아오기
-      int? userId = await signup(widget.nickname, pw_test, widget.phoneNumber);
+      // 회원가입 요청 후 토큰 받아오기
+      String? token = await signupAndLogin(widget.nickname, pw_test, widget.phoneNumber);
 
       setState(() {
         _isLoading = false; // 로딩 상태 해제
       });
 
-      if (userId != null) {
-        // 회원가입 성공 시 userId를 LoginSplashScreen으로 전달
+      if (token != null) {
+        // 회원가입 및 로그인 성공 시 토큰을 LoginSplashScreen으로 전달
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => LoginSplashScreen(
               nickname: widget.nickname,
-              userId: userId, // userId 전달
+              //token: token, // 토큰 전달
             ),
           ),
         );
@@ -196,35 +197,60 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
     }
   }
 
-  // 서버로 회원가입 요청
-  Future<int?> signup(
-      String nickname, String password, String phoneNumber) async {
-    final url = Uri.parse('http://3.37.76.76:8081/signup');
+  // Flutter Secure Storage 인스턴스
+  final storage = FlutterSecureStorage();
+
+  Future<String?> signupAndLogin(String nickname, String password, String phoneNumber) async {
+    final signupUrl = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/signup');
+    final loginUrl = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/signin');
     final headers = {'Content-Type': 'application/json'};
-    final body = jsonEncode({
+
+    final signupBody = jsonEncode({
       'nickname': nickname,
       'password': password,
       'phone': phoneNumber,
     });
 
     try {
-      final response = await http.post(url, headers: headers, body: body);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        print('Response Data: $data'); // 서버에서 받아온 데이터 출력
-        // flutter: Response Data: {isSuccess: true, code: 200, message: 요청에 성공했습니다, result: {id: 6, nickname: 테스트, role: ROLE_USER}}
+      // 회원가입 요청
+      final signupResponse = await http.post(signupUrl, headers: headers, body: signupBody);
 
-        if (data['isSuccess']) {
-          final int userId = data['result']['id']; // id 값 추출
-          return userId; // 성공 시 userId 반환
+      if (signupResponse.statusCode == 200) {
+        final signupData = jsonDecode(signupResponse.body);
+        print('Signup Response Data: $signupData');
+
+        if (signupData['isSuccess']) {
+          // 로그인 요청
+          final loginBody = jsonEncode({
+            'nickname': nickname,
+            'password': password,
+          });
+
+          final loginResponse = await http.post(loginUrl, headers: headers, body: loginBody);
+          if (loginResponse.statusCode == 200) {
+            final loginData = jsonDecode(loginResponse.body);
+            print('Login Response Data: $loginData');
+
+            if (loginData['isSuccess']) {
+              final String token = loginData['result']['accessToken']; // 토큰 받기
+              return token; // 토큰 반환
+            } else {
+              print('Login failed: ${loginData['message']}');
+              return null;
+            }
+          } else {
+            print('Login Server Error: ${loginResponse.statusCode}');
+            print('Login Response Body: ${loginResponse.body}');
+            return null;
+          }
         } else {
-          print('Signup failed: ${data['message']}');
-          return null; // 실패 시 null 반환
+          print('Signup failed: ${signupData['message']}');
+          return null;
         }
       } else {
-        print('Server Error: ${response.statusCode}');
-        print('Response Body: ${response.body}');
-        return null; // 서버 오류 시 null 반환
+        print('Signup Server Error: ${signupResponse.statusCode}');
+        print('Signup Response Body: ${signupResponse.body}');
+        return null;
       }
     } catch (e) {
       print('Error: $e');

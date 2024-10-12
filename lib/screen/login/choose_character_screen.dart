@@ -6,9 +6,8 @@ import 'package:http/http.dart' as http;
 // 캐릭터 선택 화면
 class ChooseCharacterScreen extends StatefulWidget {
   final String nickname; // 닉네임 받아오기
-  final int userId; // userId 받아오기
 
-  ChooseCharacterScreen({Key? key, required this.nickname, required this.userId}) : super(key: key);
+  ChooseCharacterScreen({Key? key, required this.nickname}) : super(key: key);
 
   @override
   _ChooseCharacterScreenState createState() => _ChooseCharacterScreenState();
