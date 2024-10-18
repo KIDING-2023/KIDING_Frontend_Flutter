@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/home/home_screen.dart';
 import 'package:kiding/screen/login/signup_screen.dart';
 
@@ -226,7 +227,7 @@ class _StartScreenState extends State<StartScreen> {
 
     try {
       var response = await http.post(
-        Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/signin'),
+        Uri.parse('${ApiConstants.baseUrl}/signin'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
