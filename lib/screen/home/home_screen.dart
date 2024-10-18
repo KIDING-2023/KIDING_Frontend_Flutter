@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/friends/friends_request_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
@@ -24,12 +26,137 @@ class _HomeScreenState extends State<HomeScreen> {
   bool _spaceStar = false;
   String kikiStarImage = 'unselected_star.png';
   String spaceStarImage = 'unselected_star.png';
+  final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
 
   List<Widget> _pages = [
     HomeScreen(),
     MyPageScreen(),
     RankingScreen(),
   ];
+
+  // 보드게임 리스트
+  List<dynamic> _boardGames = [];
+  bool isLoading = true;
+  String errorMessage = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchBoardGames(); // initState에서 한 번만 호출
+  }
+
+  // 보드게임 데이터를 서버로부터 가져오는 함수
+  Future<void> _fetchBoardGames() async {
+    // 토큰 불러오기
+    String? token = await storage.read(key: 'accessToken');
+    if (token == null) {
+      print("토큰이 없습니다.");
+      setState(() {
+        errorMessage = "토큰이 없습니다.";
+        isLoading = false;
+      });
+      return;
+    }
+
+    // 정렬 옵션에 따라 URL 설정
+    String sortOption;
+    switch (_selectedSortIndex) {
+      case 1:
+        sortOption = 'popular';
+        break;
+      case 2:
+        sortOption = 'recent';
+        break;
+      default:
+        sortOption = 'main';
+        break;
+    }
+
+    var url = Uri.parse(
+        '${ApiConstants.baseUrl}/boardgames/$sortOption');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      print('보드게임 Response Status Code: ${response.statusCode}');
+      print('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data["isSuccess"]) {
+          print('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
+          if (data["message"] == "아직 보드게임에 참여하지 않았습니다.") {
+            setState(() {
+              _boardGames = [];
+              isLoading = false;
+            });
+          } else {
+            setState(() {
+              _boardGames = data['result']; // 서버로부터 받은 보드게임 데이터 저장
+              isLoading = false;
+            });
+          }
+        } else {
+          print("보드게임 가져오기 실패: ${data["message"]}");
+          setState(() {
+            errorMessage = data["message"];
+            isLoading = false;
+          });
+        }
+      } else {
+        print("서버 오류: 상태 코드 ${response.statusCode}");
+        setState(() {
+          errorMessage = "서버 오류: ${response.statusCode}";
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+      setState(() {
+        errorMessage = "네트워크 오류: $e";
+        isLoading = false;
+      });
+    }
+  }
+
+  // 즐겨찾기 상태를 서버에 업데이트하는 함수
+  Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
+    String? token = await storage.read(key: 'accessToken');
+    if (token == null) {
+      print("토큰이 없습니다.");
+      return;
+    }
+
+    var url = Uri.parse(
+        '${ApiConstants.baseUrl}/bookmark/$boardGameId');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.post(url, headers: headers);
+      print('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
+      print('응답 본문: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['isSuccess']) {
+          print("즐겨찾기 업데이트 성공: ${data['message']}");
+        } else {
+          print("즐겨찾기 업데이트 실패: ${data['message']}");
+        }
+      } else {
+        print("서버 오류: 상태 코드 ${response.statusCode}");
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -111,12 +238,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: screenSize.height * 0.6,
                           child: Column(
                             children: <Widget>[
-                              if (_selectedSortIndex == 0)
-                                _buildMainSortSection(),
-                              if (_selectedSortIndex == 1)
-                                _buildPopularSortSection(),
-                              if (_selectedSortIndex == 2)
-                                _buildRecentSortSection(),
+                              _buildBoardGamesSection()
+                              // if (_selectedSortIndex == 0)
+                              //   _buildMainSortSection(),
+                              // if (_selectedSortIndex == 1)
+                              //   _buildPopularSortSection(),
+                              // if (_selectedSortIndex == 2)
+                              //   _buildRecentSortSection(),
                             ],
                           ),
                         ),
@@ -229,7 +357,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          _selectedSortIndex = index;
+          _selectedSortIndex = index; // 선택된 정렬 옵션을 업데이트
+          _fetchBoardGames(); // 선택된 정렬 옵션에 맞는 데이터를 다시 가져옴
         });
       },
       child: Container(
@@ -261,8 +390,36 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildMainSortSection() {
+  Widget _buildBoardGamesSection() {
     Size screenSize = MediaQuery.of(context).size; // 화면 크기
+
+    // 로딩 중일 때 로딩 표시
+    if (isLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    // 보드게임 데이터가 없을 때
+    if (_boardGames.isEmpty) {
+      return Container(
+        width: screenSize.width * 0.8,
+        height: screenSize.height * 0.6,
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              child: Image.asset(
+                'assets/home/no_game.png',
+                width: screenSize.width * 0.8333,
+                height: screenSize.height * 0.3135375,
+              ),
+            )
+          ],
+        ),
+      );
+    }
+
+    // 보드게임 데이터를 정상적으로 가져왔을 때
     return Container(
       height: screenSize.height * 0.4,
       child: ShaderMask(
@@ -280,67 +437,35 @@ class _HomeScreenState extends State<HomeScreen> {
           ).createShader(bounds);
         },
         blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
-        child: ListView(
+        child: ListView.builder(
           padding: EdgeInsets.only(right: 30),
           scrollDirection: Axis.horizontal,
-          children: <Widget>[
-            _buildKikisdayCard(),
-            _buildSpaceCard(),
-            // 추가 카드를 이곳에 배치
-          ],
+          itemCount: _boardGames.length, // itemCount를 _boardGames.length로 설정
+          itemBuilder: (context, index) {
+            var game = _boardGames[index];
+            return _buildBoardGameCard(game);
+          },
         ),
       ),
     );
   }
 
-  Widget _buildPopularSortSection() {
-    Size screenSize = MediaQuery.of(context).size; // 화면 크기
-    return Container(
-      width: screenSize.width * 0.8,
-      height: screenSize.height * 0.6,
-      child: Stack(
-        children: [
-          Positioned(
-              left: 0,
-              right: 0,
-              child: Image.asset(
-                'assets/home/no_game.png',
-                width: screenSize.width * 0.8333,
-                height: screenSize.height * 0.3135375,
-              ))
-        ],
-      ),
-    );
-  }
+  Widget _buildBoardGameCard(dynamic game) {
+    Size screenSize = MediaQuery.of(context).size;
+    bool isFavorite = game['bookmarked'];
+    String gameName = game['name'];
+    Widget nextScreen = gameName == "키키의 하루"
+        ? KikisdayPlayScreen()
+        : SpacePlayScreen();
 
-  Widget _buildRecentSortSection() {
-    Size screenSize = MediaQuery.of(context).size; // 화면 크기
-    return Container(
-      width: screenSize.width * 0.8,
-      height: screenSize.height * 0.6,
-      child: Stack(
-        children: [
-          Positioned(
-              left: 0,
-              right: 0,
-              child: Image.asset(
-                'assets/home/no_game.png',
-                width: screenSize.width * 0.8333,
-                height: screenSize.height * 0.3135375,
-              ))
-        ],
-      ),
-    );
-  }
+    // gameImage 초기화
+    String gameImage = gameName == "키키의 하루" ? "kikisday" : "space";
 
-  Widget _buildKikisdayCard() {
-    Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return GestureDetector(
       onTap: () {
-        print('kikisday card tapped');
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
+          MaterialPageRoute(builder: (context) => nextScreen),
         );
       },
       child: Container(
@@ -348,25 +473,13 @@ class _HomeScreenState extends State<HomeScreen> {
         margin: EdgeInsets.only(left: 30),
         child: Stack(
           children: <Widget>[
-            Image.asset('assets/home/kikisday_card.png', fit: BoxFit.cover),
-            // 박스 이미지
+            Image.asset('assets/home/${gameImage}_card.png', fit: BoxFit.cover),
             Positioned(
-              // '플레이 00명' 텍스트 위치 조정
-              left: 20, // 이미지의 좌측으로부터의 거리
-              top: 13.18, // 이미지의 상단으로부터의 거리
+              left: 20,
+              top: 13.18,
               child: Row(
                 children: <Widget>[
-                  Text('플레이 ',
-                      style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 11.38,
-                          fontFamily: 'Nanum')),
-                  Text('00',
-                      style: TextStyle(
-                          color: Colors.orange,
-                          fontSize: 11.38,
-                          fontFamily: 'Nanum')),
-                  Text('명',
+                  Text('플레이 ${game['players']}명',
                       style: TextStyle(
                           color: Colors.orange,
                           fontSize: 11.38,
@@ -374,131 +487,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // 즐겨찾기 버튼
             Positioned(
-                right: 15,
-                top: 13.18,
-                child: GestureDetector(
-                    onTap: () {
-                      // if (!_kikiStar) {
-                      //   setState(() {
-                      //     _kikiStar = true;
-                      //     kikiStarImage = 'selected_star.png';
-                      //   });
-                      // } else {
-                      //   setState(() {
-                      //     _kikiStar = false;
-                      //     kikiStarImage = 'unselected_star.png';
-                      //   });
-                      // }
-                      _toggleFavorite(
-                          _userId, 1, _kikiStar); // 1은 Kikisday 게임의 ID
-                    },
-                    child: Image.asset('assets/home/$kikiStarImage',
-                        width: 19.79, height: 19.79)))
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSpaceCard() {
-    Size screenSize = MediaQuery.of(context).size; // 화면 크기
-    return GestureDetector(
-      onTap: () {
-        print('space card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-        );
-      },
-      child: Container(
-        width: screenSize.width * 0.64,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/home/space_card.png', fit: BoxFit.cover),
-            // 박스 이미지
-            Positioned(
-              // '플레이 00명' 텍스트 위치 조정
-              left: 20, // 이미지의 좌측으로부터의 거리
-              top: 13.18, // 이미지의 상단으로부터의 거리
-              child: Row(
-                children: <Widget>[
-                  Text('플레이 ',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11.38,
-                          fontFamily: 'Nanum')),
-                  Text('00',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11.38,
-                          fontFamily: 'Nanum')),
-                  Text('명',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 11.38,
-                          fontFamily: 'Nanum')),
-                ],
+              right: 15,
+              top: 13.18,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    // 로컬 즐겨찾기 상태 업데이트
+                    isFavorite = !isFavorite;
+                  });
+                  // 서버에 즐겨찾기 상태 업데이트 요청
+                  _updateFavoriteStatus(game['id'], isFavorite);
+                },
+                child: Image.asset('assets/home/${isFavorite ? 'selected_star.png' : 'unselected_star.png'}',
+                    width: 19.79, height: 19.79),
               ),
-            ),
-            // 즐겨찾기 버튼
-            Positioned(
-                right: 15,
-                top: 13.18,
-                child: GestureDetector(
-                    onTap: () {
-                      // if (!_spaceStar) {
-                      //   setState(() {
-                      //     _spaceStar = true;
-                      //     spaceStarImage = 'selected_star.png';
-                      //   });
-                      // } else {
-                      //   setState(() {
-                      //     _spaceStar = false;
-                      //     spaceStarImage = 'unselected_star.png';
-                      //   });
-                      // }
-                      _toggleFavorite(
-                          _userId, 2, _spaceStar); // 2는 Space 게임의 ID
-                    },
-                    child: Image.asset('assets/home/$spaceStarImage',
-                        width: 19.79, height: 19.79)))
+            )
           ],
         ),
       ),
     );
-  }
-
-  // 즐겨찾기 토글 함수
-  void _toggleFavorite(int userId, int boardgameId, bool isFavorite) async {
-    String url = 'http://3.37.76.76:8081/bookmark/$userId/$boardgameId';
-    try {
-      var response = await http.post(Uri.parse(url));
-      if (response.statusCode == 200) {
-        var jsonResponse = jsonDecode(response.body);
-        if (jsonResponse["isSuccess"]) {
-          setState(() {
-            if (boardgameId == 1) {
-              _kikiStar = !_kikiStar;
-              kikiStarImage =
-                  _kikiStar ? 'selected_star.png' : 'unselected_star.png';
-            } else if (boardgameId == 2) {
-              _spaceStar = !_spaceStar;
-              spaceStarImage =
-                  _spaceStar ? 'selected_star.png' : 'unselected_star.png';
-            }
-          });
-          print(jsonResponse["message"]);
-        } else {
-          print("즐겨찾기 실패: ${jsonResponse["message"]}");
-        }
-      } else {
-        print("서버 오류: 상태 코드 ${response.statusCode}");
-      }
-    } catch (e) {
-      print("네트워크 오류: $e");
-    }
   }
 }
