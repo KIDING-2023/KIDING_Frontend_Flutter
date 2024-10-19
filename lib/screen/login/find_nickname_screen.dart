@@ -59,7 +59,7 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
                           fillColor: Color(0xfff6f6f6),
-                          enabledBorder: OutlineInputBorder(
+                          border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(100)),
                           contentPadding: EdgeInsets.all(20)),
