@@ -45,7 +45,7 @@ class _BackScreenState extends State<BackScreen> {
                       )),
                   // 버튼 세로 배치
                   Padding(
-                    padding: const EdgeInsets.only(top: 5),
+                    padding: const EdgeInsets.only(top: 6),
                     child: Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
