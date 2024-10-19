@@ -74,7 +74,7 @@ class TutorialLayout extends StatelessWidget {
           Positioned(
               left: 0,
               right: 0,
-              bottom: 20,
+              bottom: screenHeight * 0.07,
               child: GestureDetector(
                 child: Image.asset(okBtnStr, width: screenWidth * 0.8946, height: screenHeight * 0.0559),
                 onTap: () {
