@@ -73,8 +73,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 // 닉네임 입력칸
                 children: [
                   Container(
-                    width: screenSize.width * 0.73,
-                    height: screenSize.height * 0.06,
+                    width: screenSize.width * 0.7259,
+                    height: screenSize.height * 0.0623,
                     child: TextField(
                       controller: _nicknameController,
                       decoration: InputDecoration(
@@ -82,7 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
                           fillColor: Color(0xfff6f6f6),
-                          enabledBorder: OutlineInputBorder(
+                          border: OutlineInputBorder(
                               borderSide: BorderSide.none,
                               borderRadius: BorderRadius.circular(100)),
                           contentPadding: EdgeInsets.all(20)),
