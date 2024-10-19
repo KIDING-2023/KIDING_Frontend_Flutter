@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/login/back_screen.dart';
 import 'package:kiding/screen/login/phone_screen.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +21,9 @@ class _SignupScreenState extends State<SignupScreen> {
   final _nicknameController = TextEditingController(); // 닉네임 입력 컨트롤러
   bool errorVisible = false; // 에러 메시지 가시성
   String errorMessage = ""; // 에러 메시지
+
+  // Flutter Secure Storage 인스턴스 생성
+  final storage = FlutterSecureStorage();
 
   // 금지어 목록
   final List<String> prohibitedWords = [
@@ -188,10 +195,8 @@ class _SignupScreenState extends State<SignupScreen> {
         errorMessage = "금지어가 포함되어 있습니다.";
       });
     } else {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => PhoneScreen(nickname: nickname)));
+      // 닉네임 중복 여부 체크 함수 호출
+      await _checkNicknameDuplication(nickname);
     }
   }
 
@@ -204,5 +209,59 @@ class _SignupScreenState extends State<SignupScreen> {
   // 특수문자 포함 여부 확인
   bool _containsSpecialCharacter(String s) {
     return RegExp(r'[^A-Za-z0-9가-힣]').hasMatch(s);
+  }
+
+  // 닉네임 중복 여부 체크
+  Future<void> _checkNicknameDuplication(String nickname) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}/signup/checkNickname?nickname=$nickname');
+    String? token = await storage.read(key: 'accessToken');
+
+    if (token == null) {
+      setState(() {
+        errorVisible = true;
+        errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
+      });
+      return;
+    }
+
+    final headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      final data = jsonDecode(response.body);
+
+      // 서버 응답을 로그로 출력
+      print('서버 응답 상태 코드: ${response.statusCode}');
+      print('서버 응답 본문: ${response.body}');
+
+      if (data['isSuccess']) {
+        if (data['result'] == "사용 가능한 닉네임입니다.") {
+          // 중복되지 않은 경우, 다음 화면으로 이동
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => PhoneScreen(nickname: nickname)));
+        } else {
+          // 중복된 경우, 에러 메시지 표시
+          setState(() {
+            errorVisible = true;
+            errorMessage = "이미 사용 중인 닉네임입니다.";
+          });
+        }
+      } else {
+        setState(() {
+          errorVisible = true;
+          errorMessage = "서버 오류가 발생했습니다.";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorVisible = true;
+        errorMessage = "네트워크 오류가 발생했습니다.";
+      });
+    }
   }
 }
