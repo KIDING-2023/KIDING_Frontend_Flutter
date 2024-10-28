@@ -4,7 +4,6 @@ import 'find_nickname_screen.dart';
 
 // 비밀번호 찾기 - 결과 화면
 class FindPasswordResultScreen extends StatefulWidget {
-
   const FindPasswordResultScreen({super.key});
 
   @override
@@ -37,15 +36,15 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
             right: 0,
             child: Image.asset(
               'assets/login/nickname_result_btn_bg.png',
-              width: screenSize.width * 0.72,
-              height: screenSize.height * 0.07,
+              width: screenSize.width * 0.7,
+              height: screenSize.height * 0.065,
             ),
           ),
           // 로그인하기, 닉네임 찾기 버튼 가로 배치
           Positioned(
-            top: screenSize.height * 0.516,
-            left: screenSize.width * 0.15,
-            right: screenSize.width * 0.15,
+            top: screenSize.height * 0.518,
+            left: screenSize.width * 0.16,
+            right: screenSize.width * 0.16,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

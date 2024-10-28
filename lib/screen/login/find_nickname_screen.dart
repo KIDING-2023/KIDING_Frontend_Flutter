@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/login/find_nickname_result_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
-import 'nickname_phone_screen.dart';
 
 // 닉네임 찾기 - 전화번호 입력 화면
 class FindNicknameScreen extends StatefulWidget {
@@ -124,48 +124,6 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NicknamePhoneScreen(
-                nickname: "닉네임",
-                phone: _phoneController.text.replaceFirst('0', '+82'))));
+            builder: (context) => FindNicknameResultScreen(nickname: '닉네임')));
   }
-
-// 닉네임 찾기 (파이어베이스)
-// void _findNickname() async {
-//   final DatabaseReference dbRef = FirebaseDatabase.instance.ref('users');
-//   final String phone = _phoneController.text;
-//
-//   DataSnapshot snapshot = await dbRef.child(phone).get();
-//
-//   if (snapshot.exists && snapshot.value != null) {
-//     try {
-//       // snapshot.value를 안전하게 Map으로 변환
-//       Map<dynamic, dynamic> userData =
-//           snapshot.value as Map<dynamic, dynamic>;
-//       String nickname = userData['nickname'] as String; // 닉네임 추출
-//       setState(() {
-//         errorVisible = false;
-//         errorMessage = '';
-//       });
-//       print('찾은 닉네임: $nickname');
-//       Navigator.push(
-//           context,
-//           MaterialPageRoute(
-//               builder: (context) => NicknamePhoneScreen(
-//                   nickname: nickname,
-//                   phone: _phoneController.text.replaceFirst('0', '+82'))));
-//     } catch (e) {
-//       // 타입 변환 실패 시
-//       print('Data type conversion error: $e');
-//       setState(() {
-//         errorVisible = true;
-//         errorMessage = '데이터 형식 오류';
-//       });
-//     }
-//   } else {
-//     setState(() {
-//       errorVisible = true;
-//       errorMessage = '없는 전화번호입니다.';
-//     });
-//   }
-// }
 }
