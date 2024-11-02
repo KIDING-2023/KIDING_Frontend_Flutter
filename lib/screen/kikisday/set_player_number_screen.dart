@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:kiding/model/game_provider.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
+import 'package:kiding/screen/kikisday/set_player_order_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -17,6 +21,9 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // gameProvider 추가
+    final gameProvider = Provider.of<GameProvider>(context);
+
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -121,6 +128,7 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
               child: IconButton(
                   onPressed: () {
                     setState(() {
+                      if (playerCount <= 4)
                       playerCount++;
                     });
                   },
@@ -143,10 +151,12 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
                 child: Image.asset('assets/kikisday/kikisday_ok_btn.png',
                     width: screenWidth * 0.8946, height: screenHeight * 0.0559),
                 onTap: () {
+                  gameProvider.setPlayers(playerCount);
+                  log("키키의 하루 플레이어 수 설정 완료: ${gameProvider.players.length}");
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => KikisdayTutorial1Screen()));
+                          builder: (context) => SetPlayerOrderScreen()));
                 },
               )),
         ],
