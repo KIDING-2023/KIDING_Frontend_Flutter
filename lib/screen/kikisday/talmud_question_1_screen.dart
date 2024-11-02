@@ -7,14 +7,15 @@ import 'package:provider/provider.dart';
 import '../../model/timer_model.dart';
 
 class KikisdayTalmudQuestion1Screen extends StatefulWidget {
-  const KikisdayTalmudQuestion1Screen({super.key, required int currentNumber});
+  const KikisdayTalmudQuestion1Screen({super.key});
 
   @override
-  State<KikisdayTalmudQuestion1Screen> createState() => _KikisdayTalmudQuestion1ScreenState();
+  State<KikisdayTalmudQuestion1Screen> createState() =>
+      _KikisdayTalmudQuestion1ScreenState();
 }
 
-class _KikisdayTalmudQuestion1ScreenState extends State<KikisdayTalmudQuestion1Screen> {
-
+class _KikisdayTalmudQuestion1ScreenState
+    extends State<KikisdayTalmudQuestion1Screen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -41,7 +42,8 @@ class _KikisdayTalmudQuestion1ScreenState extends State<KikisdayTalmudQuestion1S
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                      width: screenWidth * 0.0366, height: screenHeight * 0.025),
+                      width: screenWidth * 0.0366,
+                      height: screenHeight * 0.025),
                 ),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
@@ -76,9 +78,7 @@ class _KikisdayTalmudQuestion1ScreenState extends State<KikisdayTalmudQuestion1S
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => KikisdayTalmudQuestion2Screen(
-                          currentNumber: 1,
-                        )),
+                        builder: (context) => KikisdayTalmudQuestion2Screen()),
                   );
                 },
                 child: Image.asset('assets/kikisday/talmud_question_1_ch.png',

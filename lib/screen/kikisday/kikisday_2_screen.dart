@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/kikisday/kikisday_green_complete_screen.dart';
 import 'package:kiding/screen/layout/card_layout.dart';
+import 'package:provider/provider.dart';
+
+import '../../model/game_provider.dart';
 
 class Kikisday2Screen extends StatefulWidget {
   const Kikisday2Screen({super.key});
@@ -21,7 +26,10 @@ class _Kikisday2ScreenState extends State<Kikisday2Screen> {
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textStr: 'assets/kikisday/kikisday_2_text.png',
       cardStr: 'assets/kikisday/kikisday_green_card.png',
-      completeScreen: KikisdayGreenCompleteScreen(currentNumber: 2, chips: chips),
+      completeScreen: KikisdayGreenCompleteScreen(
+        currentNumber: 2,
+        chips: chips,
+      ),
       okBtnStr: 'assets/kikisday/kikisday_green_btn.png',
       timerColor: Color(0xFF868686),
       currentNumber: 2,

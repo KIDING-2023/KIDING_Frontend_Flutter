@@ -49,9 +49,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayTalmudStory1Screen(
-          currentNumber: 1,
-        ),
+        builder: (context) => KikisdayTalmudStory1Screen(),
       ),
     );
   }
@@ -93,7 +91,8 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
                       );
                     },
                     icon: Image.asset('assets/kikisday/kikisday_back_btn.png',
-                        width: screenWidth * 0.0366, height: screenHeight * 0.025)),
+                        width: screenWidth * 0.0366,
+                        height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(

@@ -6,7 +6,7 @@ import '../layout/exit_layout.dart';
 import '../layout/talmud_story_layout.dart';
 
 class KikisdayTalmudStory3Screen extends StatefulWidget {
-  const KikisdayTalmudStory3Screen({super.key, required int currentNumber});
+  const KikisdayTalmudStory3Screen({super.key});
 
   @override
   State<KikisdayTalmudStory3Screen> createState() =>
@@ -49,9 +49,7 @@ class _KikisdayTalmudStory3ScreenState
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayTalmudStory4Screen(
-          currentNumber: 1,
-        ),
+        builder: (context) => KikisdayTalmudStory4Screen(),
       ),
     );
   }

@@ -4,7 +4,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import '../../constants/api_constants.dart';
+import '../../model/game_provider.dart';
+import '../../utils/set_dice_screen.dart';
 import '../layout/complete_layout.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice3_screen.dart';
@@ -95,17 +98,20 @@ class _KikisdayOrangeComplete2ScreenState
   }
 
   void _navigateToRandomDiceScreen() {
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
+    gameProvider.updatePlayerChips(1);
+    log("플레이어${gameProvider.currentPlayer.playerNum}의 현재 칩 수: ${gameProvider.currentPlayer.chips}");
+    gameProvider.nextPlayerTurn(); // 다음 플레이어 턴으로 넘겨주기
+
+    // 다음 주사위 화면
+    var nextScreen = setDiceScreen(position: gameProvider.currentPlayer.position, chips: widget.chips + 1);
+
     // 서버에 키딩칩 개수 전송
     _sendChipsToServer();
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (context) => KikisdayRandomDice3Screen(
-          currentNumber: widget.currentNumber, chips: widget.chips + 1,
-        ),
-      ),
+      MaterialPageRoute(builder: (context) => nextScreen),
     );
-    log('currentNumber: ${widget.currentNumber}');
   }
 
   void _onBackButtonPressed() {

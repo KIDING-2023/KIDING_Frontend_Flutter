@@ -4,6 +4,8 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/layout/complete_layout.dart';
+import 'package:provider/provider.dart';
+import '../../model/game_provider.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice_screen.dart';
 
@@ -12,9 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class KikisdayTalmudCompleteScreen extends StatefulWidget {
-  final int currentNumber;
-
-  KikisdayTalmudCompleteScreen({Key? key, required this.currentNumber})
+  KikisdayTalmudCompleteScreen({Key? key})
       : super(key: key);
 
   @override
@@ -97,19 +97,24 @@ class _KikisdayTalmudCompleteScreenState
   }
 
   void _navigateToRandomDiceScreen() {
+    final gameProvider = Provider.of<GameProvider>(context, listen: false);
+
     chips += 3;
+    log("키딩칩 수 (총합) + 3");
+    gameProvider.updatePlayerChips(3);
+    log("키딩칩 수 (플레이어${gameProvider.currentPlayer.playerNum}): ${gameProvider.currentPlayer.chips}");
+    gameProvider.nextPlayerTurn(); // 다음 플레이어 턴으로
+
     // 서버에 키딩칩 개수 전송
     _sendChipsToServer();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => KikisdayRandomDiceScreen(
-          currentNumber: widget.currentNumber,
-          chips: chips
+          chips: chips,
         ),
       ),
     );
-    log('currentNumber: ${widget.currentNumber}, chips: ${chips}');
   }
 
   void _onBackButtonPressed() {

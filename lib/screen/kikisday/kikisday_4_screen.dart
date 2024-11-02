@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../model/game_provider.dart';
 import '../layout/card_layout.dart';
 import 'kikisday_green_complete_screen.dart';
 

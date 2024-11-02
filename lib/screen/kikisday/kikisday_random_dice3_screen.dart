@@ -1,8 +1,10 @@
 import 'dart:math';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+import '../../model/game_provider.dart';
 import '../../model/timer_model.dart';
 import '../layout/exit_layout.dart';
 
@@ -55,7 +57,7 @@ class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller.value.position == _controller.value.duration) {
       _controller.removeListener(_checkVideo); // 리스너 제거
-      _controller.dispose(); // 컨트롤러 해제
+      //_controller.dispose(); // 컨트롤러 해제
       Navigator.of(context).pushNamed(nextScreen, arguments: {
         'chips': widget.chips,
       });
@@ -87,8 +89,26 @@ class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final gameProvider = Provider.of<GameProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    // 현재 플레이어 순서에 따라 말풍선 텍스트 이미지 변경
+    String playerNum = "";
+    switch (gameProvider.currentPlayer.playerNum) {
+      case 1:
+        playerNum = "첫번째 순서";
+        break;
+      case 2:
+        playerNum = "두번째 순서";
+        break;
+      case 3:
+        playerNum = "세번째 순서";
+        break;
+      case 4:
+        playerNum = "네번째 순서";
+        break;
+    }
 
     return Scaffold(
       body: Stack(
@@ -106,29 +126,25 @@ class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
               onVerticalDragUpdate: (details) {
                 if (details.primaryDelta! < 0 && !_rolledDice) {
                   setState(() {
+                    developer.log(
+                        "플레이어${gameProvider.currentPlayer.playerNum}의 순서입니다.");
                     _rolledDice = true;
                     randomNumber = Random().nextInt(3) + 1;
-                    totalDice = widget.currentNumber + randomNumber;
-                    // 주사위값에 따른 다음 화면 설정
-                    nextScreen = '/kikisday${totalDice}';
+                    gameProvider.updatePlayerPosition(randomNumber);
+                    nextScreen =
+                        '/kikisday${gameProvider.currentPlayer.position}'; // 주사위값에 따른 다음 화면 설정
+                    developer.log(
+                        "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: ${randomNumber}");
+                    developer.log(
+                        "플레이어${gameProvider.currentPlayer.playerNum}가 이동할 위치: ${gameProvider.currentPlayer.position}");
                     _initializeAndPlayVideo();
                   });
                 }
               },
-              child: _rolledDice
-                  ? FutureBuilder(
-                      future: _initializeVideoPlayerFuture,
-                      builder: (context, snapshot) {
-                        if (_controller.value.isInitialized) {
-                          return AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
-                          );
-                        } else {
-                          return Center();
-                          //return Center(child: CircularProgressIndicator());
-                        }
-                      },
+              child: _rolledDice && _controller.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
                     )
                   : Stack(
                       children: <Widget>[
@@ -161,8 +177,24 @@ class _KikisdayRandomDice3ScreenState extends State<KikisdayRandomDice3Screen> {
             top: screenHeight * 0.1565,
             left: 0,
             right: 0,
-            child: Image.asset('assets/kikisday/kikisday_random_dice_text.png',
-                width: screenWidth * 0.9439, height: screenHeight * 0.14745),
+            child: Image.asset('assets/kikisday/kikisday_dice_text.png',
+                width: screenWidth * 0.9439, height: screenHeight * 0.212225),
+          ),
+          // 말풍선 안 텍스트 - 몇번째 플레이어인지
+          Positioned(
+            top: screenHeight * 0.225,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Text(
+                playerNum,
+                style: TextStyle(
+                  fontFamily: 'Nanum',
+                  fontSize: 15,
+                  color: Color(0xff4d4d4d),
+                ),
+              ),
+            ),
           ),
           // 뒤로 가기 버튼
           Positioned(

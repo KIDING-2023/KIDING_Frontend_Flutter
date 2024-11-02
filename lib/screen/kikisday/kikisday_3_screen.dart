@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../model/game_provider.dart';
 import '../layout/card_layout.dart';
 import 'kikisday_blue_complete_screen.dart';
 
@@ -21,7 +25,10 @@ class _Kikisday3ScreenState extends State<Kikisday3Screen> {
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textStr: 'assets/kikisday/kikisday_3_text.png',
       cardStr: 'assets/kikisday/kikisday_blue_card.png',
-      completeScreen: KikisdayBlueCompleteScreen(currentNumber: 3, chips: chips),
+      completeScreen: KikisdayBlueCompleteScreen(
+        currentNumber: 3,
+        chips: chips,
+      ),
       okBtnStr: 'assets/kikisday/kikisday_blue_btn.png',
       timerColor: Color(0xFF868686),
       currentNumber: 3,
