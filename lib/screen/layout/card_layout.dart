@@ -113,13 +113,13 @@ class CardLayout extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () {
-                  // 바코드 인식 안내 화면으로 이동
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CardQRTextScreen(
-                              currentNumber: currentNumber,
-                              completeScreen: completeScreen)));
+                  // // 바코드 인식 안내 화면으로 이동
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => CardQRTextScreen(
+                  //             currentNumber: currentNumber,
+                  //             completeScreen: completeScreen)));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
                     width: screenWidth * 0.3119, height: screenHeight * 0.04085),
