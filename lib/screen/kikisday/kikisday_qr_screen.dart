@@ -2,12 +2,10 @@ import 'dart:developer';
 import 'dart:io' as io;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
+import 'package:kiding/screen/kikisday/set_player_number_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:image_picker/image_picker.dart';
-
 import '../layout/exit_layout.dart';
 
 class KikisdayQrScreen extends StatefulWidget {
@@ -18,14 +16,10 @@ class KikisdayQrScreen extends StatefulWidget {
 }
 
 class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
-  // mlkit.Barcode? mlresult;
-
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
-
-  bool useCamera = true;
-  final picker = ImagePicker();
+  String errorMessage = ""; // 에러 메시지 상태
 
   @override
   void reassemble() {
@@ -52,16 +46,16 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
             left: 0,
             right: 0,
             child: RichText(
-              textAlign: TextAlign.center, // 텍스트 정렬
+              textAlign: TextAlign.center,
               text: TextSpan(
                 style: TextStyle(
                   fontSize: 25,
-                  color: Colors.white, // 기본 텍스트 색상
+                  color: Colors.white,
                 ),
                 children: <TextSpan>[
                   TextSpan(
                     text: '책 뒷면\n큐알코드',
-                    style: TextStyle(fontFamily: 'Nanum'), // 두께 굵게
+                    style: TextStyle(fontFamily: 'Nanum'),
                   ),
                   TextSpan(
                       text: '를 인식해주세요',
@@ -74,23 +68,13 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
             Positioned(
               bottom: screenHeight * 0.25,
               child: Text(
-                'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
+                errorMessage,
                 style: TextStyle(
                     fontSize: 15,
                     fontFamily: 'NanumRegular',
                     color: Colors.white),
               ),
             ),
-          Positioned(
-            bottom: screenHeight * 0.25,
-            child: Text(
-              result == null ? 'Scan a code' : '',
-              style: TextStyle(
-                  fontSize: 15,
-                  fontFamily: 'NanumRegular',
-                  color: Colors.white),
-            ),
-          ),
           Positioned(
             top: screenHeight * 0.0375,
             left: screenWidth * 0.0417,
@@ -121,8 +105,6 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = 250.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,
@@ -144,10 +126,12 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        if (result?.code == 'haru1-1') {
+          _navigateToNextScreen();
+        } else {
+          errorMessage = '잘못된 코드입니다.';
+        }
       });
-      if (result != null) {
-        _navigateToNextScreen();
-      }
     });
   }
 
@@ -179,14 +163,11 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   }
 
   void _navigateToNextScreen() {
-    setState(() {
-      controller?.pauseCamera();
-      controller?.dispose();
-    });
+    controller?.pauseCamera();
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayTutorial1Screen(),
+        builder: (context) => SetPlayerNumberScreen(),
       ),
     );
   }

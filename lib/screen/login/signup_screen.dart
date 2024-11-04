@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -214,18 +215,18 @@ class _SignupScreenState extends State<SignupScreen> {
   // 닉네임 중복 여부 체크
   Future<void> _checkNicknameDuplication(String nickname) async {
     final url = Uri.parse('${ApiConstants.baseUrl}/signup/checkNickname?nickname=$nickname');
-    String? token = await storage.read(key: 'accessToken');
+    // String? token = await storage.read(key: 'accessToken');
 
-    if (token == null) {
-      setState(() {
-        errorVisible = true;
-        errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
-      });
-      return;
-    }
+    // if (token == null) {
+    //   setState(() {
+    //     errorVisible = true;
+    //     errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
+    //   });
+    //   return;
+    // }
 
     final headers = {
-      'Authorization': 'Bearer $token',
+      //'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     };
 
@@ -234,8 +235,8 @@ class _SignupScreenState extends State<SignupScreen> {
       final data = jsonDecode(response.body);
 
       // 서버 응답을 로그로 출력
-      print('서버 응답 상태 코드: ${response.statusCode}');
-      print('서버 응답 본문: ${response.body}');
+      log('서버 응답 상태 코드: ${response.statusCode}');
+      log('서버 응답 본문: ${response.body}');
 
       if (data['isSuccess']) {
         if (data['result'] == "사용 가능한 닉네임입니다.") {
@@ -258,6 +259,7 @@ class _SignupScreenState extends State<SignupScreen> {
         });
       }
     } catch (e) {
+      print("Error: $e");
       setState(() {
         errorVisible = true;
         errorMessage = "네트워크 오류가 발생했습니다.";

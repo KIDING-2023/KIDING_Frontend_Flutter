@@ -1,3 +1,7 @@
 class ApiConstants {
-  static const String baseUrl = 'https://71a1-182-209-67-24.ngrok-free.app';
+  static const String baseUrl = 'http://3.37.76.76:8081';
 }
+
+// 로그인
+// 닉네임: test
+// 비밀번호: 1234

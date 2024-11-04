@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -221,7 +222,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
 
       if (signupResponse.statusCode == 200) {
         final signupData = jsonDecode(signupResponse.body);
-        print('Signup Response Data: $signupData');
+        log('Signup Response Data: $signupData');
 
         if (signupData['isSuccess']) {
           // 로그인 요청
@@ -233,27 +234,27 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
           final loginResponse = await http.post(loginUrl, headers: headers, body: loginBody);
           if (loginResponse.statusCode == 200) {
             final loginData = jsonDecode(loginResponse.body);
-            print('Login Response Data: $loginData');
+            log('Login Response Data: $loginData');
 
             final String token = loginData['accessToken']; // 토큰 받기
             return token; // 토큰 반환
 
           } else {
-            print('Login Server Error: ${loginResponse.statusCode}');
-            print('Login Response Body: ${loginResponse.body}');
+            log('Login Server Error: ${loginResponse.statusCode}');
+            log('Login Response Body: ${loginResponse.body}');
             return null;
           }
         } else {
-          print('Signup failed: ${signupData['message']}');
+          log('Signup failed: ${signupData['message']}');
           return null;
         }
       } else {
-        print('Signup Server Error: ${signupResponse.statusCode}');
-        print('Signup Response Body: ${signupResponse.body}');
+        log('Signup Server Error: ${signupResponse.statusCode}');
+        log('Signup Response Body: ${signupResponse.body}');
         return null;
       }
     } catch (e) {
-      print('Error: $e');
+      log('Error: $e');
       return null; // 네트워크 오류 시 null 반환
     }
   }

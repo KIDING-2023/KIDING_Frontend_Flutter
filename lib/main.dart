@@ -3,6 +3,8 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:kiding/model/game_provider.dart';
+import 'package:kiding/screen/home/home_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_10_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_11_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_12_screen.dart';
@@ -23,11 +25,15 @@ import 'package:kiding/screen/kikisday/kikisday_7_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_8_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_9_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
+import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_qr_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_tutorial2_screen.dart';
 import 'package:kiding/screen/kikisday/set_player_number_screen.dart';
+import 'package:kiding/screen/kikisday/talmud_question_2_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
+import 'package:kiding/screen/mypage/mypage_screen.dart';
+import 'package:kiding/screen/ranking/ranking_screen.dart';
 import 'package:kiding/screen/space/space_10_screen.dart';
 import 'package:kiding/screen/space/space_11_screen.dart';
 import 'package:kiding/screen/space/space_12_screen.dart';
@@ -60,17 +66,14 @@ void main() async {
     MultiProvider( // 여러 Provider를 사용할 경우 MultiProvider 사용
       providers: [
         ChangeNotifierProvider(create: (_) => TimerModel()), // TimerModel을 Provider로 추가
-        // 필요한 다른 Provider들도 여기에 추가할 수 있습니다.
+        ChangeNotifierProvider(create: (_) => GameProvider()), // 플레이어 인원수
       ],
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          HOME_ROUTE: (context) => StartScreen(),
+          HOME_ROUTE: (context) => MyPageScreen(),
           '/kikisday_qr': (context) => KikisdayQrScreen(),
           '/kikisday_set_player_num': (context) => SetPlayerNumberScreen(),
-          '/kikisday_tutorial1': (context) => KikisdayTutorial1Screen(),
-          '/kikisday_tutorial2': (context) => KikisdayTutorial2Screen(),
-          '/kikisday_tutorial_dice': (context) => KikisdayDiceScreen(),
           '/space_qr': (context) => SpaceQrScreen(),
           '/space_tutorial1': (context) => SpaceTutorial1Screen(),
           '/kikisday2': (context) => Kikisday2Screen(),

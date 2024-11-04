@@ -47,7 +47,7 @@ class PlayLayout extends StatelessWidget {
             ),
             // 플레이 버튼
             Positioned(
-              bottom: screenHeight * 0.065,
+              bottom: screenHeight * 0.03,
               left: 0,
               right: 0,
               child: GestureDetector(
@@ -60,7 +60,7 @@ class PlayLayout extends StatelessWidget {
                   Navigator.of(context).pushNamed(nextScreen);
                 },
                 child: Center(
-                  child: Image.asset(playBtn, width: screenWidth * 0.8333, height: screenHeight * 0.05625),
+                  child: Image.asset(playBtn, width: screenWidth * 0.75),
                 ),
               ),
             ),
