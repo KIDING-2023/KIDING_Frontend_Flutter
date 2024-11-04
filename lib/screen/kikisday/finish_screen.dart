@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/home/home_screen.dart';
+import 'package:kiding/screen/kikisday/set_player_number_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
@@ -101,14 +102,14 @@ class _FinishScreenState extends State<FinishScreen> {
               )),
           // 총 키딩칩 개수
           Positioned(
-              top: screenHeight * 0.7178,
+              top: screenHeight * 0.714,
               left: 0,
               right: 0,
               child: Center(
                 child: Text(
                   widget.chips.toString() + '개',
                   style: TextStyle(
-                      fontSize: 30,
+                      fontSize: screenHeight * 0.0375,
                       fontFamily: 'Nanum',
                       color: Color(0xffff815b)),
                 ),
@@ -128,7 +129,7 @@ class _FinishScreenState extends State<FinishScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    KikisdayTutorial1Screen()));
+                                    SetPlayerNumberScreen()));
                       },
                       icon: Image.asset(
                         'assets/kikisday/replay_btn.png',

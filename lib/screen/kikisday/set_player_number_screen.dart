@@ -94,7 +94,6 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
                   icon: Image.asset(
                     'assets/kikisday/num_minus.png',
                     width: screenWidth * 0.0581,
-                    height: screenHeight * 0.026,
                   ))),
           // 플레이어 숫자
           Positioned(
@@ -135,7 +134,6 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
                   icon: Image.asset(
                     'assets/kikisday/num_plus.png',
                     width: screenWidth * 0.0581,
-                    height: screenHeight * 0.026,
                   ))),
           Positioned(
               left: 0,

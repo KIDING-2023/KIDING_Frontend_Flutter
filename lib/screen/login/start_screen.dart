@@ -40,8 +40,7 @@ class _StartScreenState extends State<StartScreen> {
           children: [
             // '환영합니다! 키딩북' 텍스트
             Image.asset('assets/login/start_greeting_text.png',
-                width: screenSize.width * 0.69,
-                height: screenSize.height * 0.1),
+                width: screenSize.width * 0.6),
             // 닉네임 입력칸
             Column(
               children: [
@@ -58,7 +57,7 @@ class _StartScreenState extends State<StartScreen> {
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.all(20)),
+                        contentPadding: EdgeInsets.only(left: 20, right: 20)),
                     style: TextStyle(
                       fontFamily: 'nanum',
                       fontSize: 17,
@@ -72,8 +71,8 @@ class _StartScreenState extends State<StartScreen> {
                 ),
                 // 비밀번호 입력칸
                 Container(
-                  width: screenSize.width * 0.7259,
-                  height: screenSize.height * 0.0623,
+                  width: screenSize.width * 0.7261,
+                  height: screenSize.height * 0.0634,
                   child: TextField(
                     controller: _passwordController,
                     obscureText: true,
@@ -85,7 +84,7 @@ class _StartScreenState extends State<StartScreen> {
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.all(20)),
+                        contentPadding: EdgeInsets.only(left: 20, right: 20)),
                     style: TextStyle(
                       fontFamily: 'nanum',
                       fontSize: 17,
@@ -93,7 +92,7 @@ class _StartScreenState extends State<StartScreen> {
                     ),
                   ),
                 ),
-                // 비밀번호 입력칸과 시작하기 버튼 사이의 여백
+                // 비밀번호 입력칸과 에레메시지 사이의 여백
                 SizedBox(
                   height: screenSize.height * 0.01,
                 ),
@@ -128,13 +127,27 @@ class _StartScreenState extends State<StartScreen> {
                   height: screenSize.height * 0.01,
                 ),
                 // 시작하기 버튼
-                Container(
-                  width: screenSize.width * 0.7259,
-                  height: screenSize.height * 0.0623,
-                  child: IconButton(
-                    onPressed: _login,
-                    padding: EdgeInsets.zero,
-                    icon: Image.asset('assets/login/start_btn.png'),
+                GestureDetector(
+                  onTap: () {
+                    _login();
+                  },
+                  child: Container(
+                    width: screenSize.width * 0.7259,
+                    height: screenSize.height * 0.0623,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(29.72),
+                      color: Color(0xffFF6A2B),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '시작하기',
+                        style: TextStyle(
+                          fontFamily: 'Nanum',
+                          fontSize: 17,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 // 시작하기 버튼과 로그인 유지 버튼 사이의 여백
@@ -154,8 +167,7 @@ class _StartScreenState extends State<StartScreen> {
                             ? 'assets/login/keep_login_selected_btn.png' // 로그인 상태 유지 활성화 이미지
                             : 'assets/login/keep_login_btn.png',
                         // 로그인 상태 유지 비활성화 이미지
-                        width: 100,
-                        height: 22,
+                        width: screenSize.width * 0.22,
                       ),
                     ),
                     // 체크박스와 '로그인 유지' 텍스트 사이의 여백

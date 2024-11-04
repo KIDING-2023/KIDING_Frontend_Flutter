@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/screen/ranking/ranking_screen.dart';
 
 import '../friends/friends_request_screen.dart';
 import '../home/home_screen.dart';
@@ -19,10 +20,10 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  List<bool> _isFavoriteList = [false, false]; // 각 카드의 즐겨찾기 상태를 관리
+  List<bool> _isFavoriteList = [true, true]; // 각 카드의 즐겨찾기 상태를 관리
   List<dynamic> favoriteGames = []; // 서버로부터 받은 즐겨찾기 데이터를 저장
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
-  bool isLoading = true;
+  bool isLoading = false;
   String errorMessage = "";
 
   // 사용자 정보 변수
@@ -32,133 +33,137 @@ class _MyPageScreenState extends State<MyPageScreen> {
   int playersWith = 0;
   int kidingChip = 0;
 
-  // 애니메이션 위젯에서 사용할 사용자 데이터
-  late int chipsNum;
-  late int friendsNum;
-  late int rankingNum;
+  // // 애니메이션 위젯에서 사용할 사용자 데이터
+  // late int chipsNum;
+  // late int friendsNum;
+  // late int rankingNum;
+
+  int chipsNum = 0;
+  int friendsNum = 0;
+  int rankingNum = 0;
 
   bool isSearchExpanded = false; // 검색창 확장 상태
 
   @override
   void initState() {
     super.initState();
-    fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
-    fetchFavoriteGames();
+    //fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
+    //fetchFavoriteGames();
   }
 
-  // 서버에서 사용자 정보 가져오기
-  Future<void> fetchMyPageData() async {
-    String? token = await storage.read(key: 'accessToken'); // 토큰 불러오기
-    if (token == null) {
-      setState(() {
-        errorMessage = "토큰을 찾을 수 없습니다.";
-        isLoading = false;
-      });
-      return;
-    }
-
-    var url = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/mypage');
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
-
-    try {
-      final response = await http.get(url, headers: headers);
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        if (data['isSuccess']) {
-          // 응답이 성공일 경우 데이터 업데이트
-          setState(() {
-            nickname = data['result']['nickname'];
-            answers = data['result']['answers'];
-            score = data['result']['score'];
-            playersWith = data['result']['players_with'];
-            kidingChip = data['result']['kiding_chip'];
-            chipsNum = kidingChip; // 애니메이션 위젯에 데이터 적용
-            friendsNum = playersWith; // 친구 수 적용
-            rankingNum = score; // 랭킹 수 적용
-            isLoading = false; // 로딩 상태 해제
-          });
-        } else {
-          setState(() {
-            errorMessage = data['message'];
-            isLoading = false;
-          });
-        }
-      } else {
-        setState(() {
-          errorMessage = "서버 오류: ${response.statusCode}";
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      setState(() {
-        errorMessage = "네트워크 오류: $e";
-        isLoading = false;
-      });
-    }
-  }
-
-  // 즐겨찾기 보드게임 데이터를 서버로부터 가져오는 함수
-  Future<void> fetchFavoriteGames() async {
-    String? token = await storage.read(key: 'accessToken');
-    if (token == null) {
-      setState(() {
-        errorMessage = "토큰을 찾을 수 없습니다.";
-        isLoading = false;
-      });
-      return;
-    }
-
-    var url = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/bookmark');
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
-
-    try {
-      final response = await http.get(url, headers: headers);
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        if (data['isSuccess']) {
-          // 응답이 성공일 경우 데이터 업데이트
-          setState(() {
-            favoriteGames = data['result'];
-            // _isFavoriteList 값을 설정
-            _isFavoriteList[0] =
-                favoriteGames.any((game) => game['boardGameId'] == 1);
-            _isFavoriteList[1] =
-                favoriteGames.any((game) => game['boardGameId'] == 2);
-            isLoading = false;
-          });
-        } else {
-          setState(() {
-            errorMessage = data['message'];
-            isLoading = false;
-          });
-        }
-      } else {
-        setState(() {
-          errorMessage = "서버 오류: ${response.statusCode}";
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      setState(() {
-        errorMessage = "네트워크 오류: $e";
-        isLoading = false;
-      });
-    }
-  }
+  // // 서버에서 사용자 정보 가져오기
+  // Future<void> fetchMyPageData() async {
+  //   String? token = await storage.read(key: 'accessToken'); // 토큰 불러오기
+  //   if (token == null) {
+  //     setState(() {
+  //       errorMessage = "토큰을 찾을 수 없습니다.";
+  //       isLoading = false;
+  //     });
+  //     return;
+  //   }
+  //
+  //   var url = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/mypage');
+  //   var headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',
+  //   };
+  //
+  //   try {
+  //     final response = await http.get(url, headers: headers);
+  //     print('Response Status Code: ${response.statusCode}');
+  //     print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //
+  //       if (data['isSuccess']) {
+  //         // 응답이 성공일 경우 데이터 업데이트
+  //         setState(() {
+  //           nickname = data['result']['nickname'];
+  //           answers = data['result']['answers'];
+  //           score = data['result']['score'];
+  //           playersWith = data['result']['players_with'];
+  //           kidingChip = data['result']['kiding_chip'];
+  //           chipsNum = kidingChip; // 애니메이션 위젯에 데이터 적용
+  //           friendsNum = playersWith; // 친구 수 적용
+  //           rankingNum = score; // 랭킹 수 적용
+  //           isLoading = false; // 로딩 상태 해제
+  //         });
+  //       } else {
+  //         setState(() {
+  //           errorMessage = data['message'];
+  //           isLoading = false;
+  //         });
+  //       }
+  //     } else {
+  //       setState(() {
+  //         errorMessage = "서버 오류: ${response.statusCode}";
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       errorMessage = "네트워크 오류: $e";
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+  //
+  // // 즐겨찾기 보드게임 데이터를 서버로부터 가져오는 함수
+  // Future<void> fetchFavoriteGames() async {
+  //   String? token = await storage.read(key: 'accessToken');
+  //   if (token == null) {
+  //     setState(() {
+  //       errorMessage = "토큰을 찾을 수 없습니다.";
+  //       isLoading = false;
+  //     });
+  //     return;
+  //   }
+  //
+  //   var url = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/bookmark');
+  //   var headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',
+  //   };
+  //
+  //   try {
+  //     final response = await http.get(url, headers: headers);
+  //     print('Response Status Code: ${response.statusCode}');
+  //     print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //
+  //       if (data['isSuccess']) {
+  //         // 응답이 성공일 경우 데이터 업데이트
+  //         setState(() {
+  //           favoriteGames = data['result'];
+  //           // _isFavoriteList 값을 설정
+  //           _isFavoriteList[0] =
+  //               favoriteGames.any((game) => game['boardGameId'] == 1);
+  //           _isFavoriteList[1] =
+  //               favoriteGames.any((game) => game['boardGameId'] == 2);
+  //           isLoading = false;
+  //         });
+  //       } else {
+  //         setState(() {
+  //           errorMessage = data['message'];
+  //           isLoading = false;
+  //         });
+  //       }
+  //     } else {
+  //       setState(() {
+  //         errorMessage = "서버 오류: ${response.statusCode}";
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     setState(() {
+  //       errorMessage = "네트워크 오류: $e";
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
 
   // GlobalKey를 사용하여 각 애니메이션 아이템의 상태를 참조
   final GlobalKey<ChipsItemState> _chipsItemKey = GlobalKey<ChipsItemState>();
@@ -299,117 +304,112 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 children: [
                   Positioned(
                     top: 0,
-                    left: 0,
-                    child: SingleChildScrollView(
-                        child: SizedBox(
+                    child: SizedBox(
                       width: screenSize.width,
                       height: screenSize.height * 0.79,
-                      child: Stack(
-                        children: [
-                          // 오늘의 랭킹 박스
-                          Positioned(
-                              top: screenSize.height * 0.03,
-                              left: 0,
-                              right: 0,
-                              child: Image.asset(
-                                'assets/mypage/ranking_box_mypage.png',
-                                width: screenSize.width * 0.84,
-                                height: screenSize.height * 0.15,
-                              )),
-                          // 대답수 8번 (임시 - 백엔드와 연동 필요)
-                          Positioned(
-                              left: screenSize.width * 0.19,
-                              top: screenSize.height * 0.105,
-                              child: Text(
-                                '대답수 $answers번',
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontFamily: 'Nanum',
-                                    color: Color(0xffff8a5b).withOpacity(0.5)),
-                              )),
-                          // 4위 (임시 - 백엔드 연동 필요)
-                          Positioned(
-                              left: screenSize.width * 0.698,
-                              top: screenSize.height * 0.105,
-                              child: Text(
-                                '$score위',
-                                style: TextStyle(
-                                  fontFamily: 'Nanum',
-                                  fontSize: 25,
-                                  color: Color(0xffff8a5b),
-                                ),
-                              )),
-                          // 동점자: 12명 (임시 - 백엔드 연동 필요) -- 위젯 안 보이는 문제 해결 필요
-                          Positioned(
-                              top: screenSize.height * 0.153,
-                              left: 0,
-                              right: 0,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
                               child: Center(
-                                child: Text(
-                                  '동점자: $playersWith명',
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      fontFamily: 'Nanum',
-                                      color:
-                                          Color(0xffff8a5b).withOpacity(0.7)),
+                                child: Container(
+                                  width: 300.93,
+                                  height: 117.73,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                              'assets/mypage/ranking_box_mypage.png'),
+                                          fit: BoxFit.fill)),
+                                  child: Stack(
+                                    children: [
+                                      // 대답수
+                                      Positioned(
+                                        top: 56.11,
+                                        left: 37.29,
+                                        child: Text(
+                                          '대답수 $answers번',
+                                          style: TextStyle(
+                                              color: Color(0xfffad7a0),
+                                              fontSize: 25,
+                                              fontFamily: 'Nanum'),
+                                        ),
+                                      ),
+                                      // 순위
+                                      Positioned(
+                                          top: 56.11,
+                                          right: 37.29,
+                                          child: Text(
+                                            '$score위',
+                                            style: TextStyle(
+                                                color: Color(0xffff8a5b),
+                                                fontSize: 25,
+                                                fontFamily: 'Nanum'),
+                                          )),
+                                      // 동점자
+                                      Positioned(
+                                        top: 97,
+                                        left: 0,
+                                        right: 0,
+                                        child: Center(
+                                          child: Text(
+                                            '동점자: $playersWith명',
+                                            style: TextStyle(
+                                                color: Color(0xfffad7a0),
+                                                fontSize: 12,
+                                                fontFamily: 'Nanum'),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                              )),
-                          // 즐겨찾기 텍스트
-                          Positioned(
-                              left: screenSize.width * 0.082,
-                              top: screenSize.height * 0.209,
-                              child: Image.asset(
-                                'assets/mypage/favorites_text.png',
-                                width: screenSize.width * 0.158,
-                                height: screenSize.height * 0.021,
-                              )),
-                          // 즐겨찾기한 카드덱 리스트
-                          Positioned(
-                            top: screenSize.height * 0.236,
-                            child: Container(
-                              width: screenSize.width,
+                              ),
+                            ),
+                            // 즐겨찾기 텍스트
+                            Padding(
+                              padding: const EdgeInsets.only(left: 29.54, top: 20),
+                              child: Image.asset('assets/mypage/favorites_text.png',
+                                  width: 57, height: 17),
+                            ),
+                            // 즐겨찾기 카드 목록
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10),
                               child: Column(
                                 children: <Widget>[
                                   _buildFavorites(),
                                 ],
                               ),
                             ),
-                          ),
-                          // 나의 기록 텍스트
-                          Positioned(
-                              left: screenSize.width * 0.082,
-                              top: screenSize.height * 0.416,
-                              child: Image.asset(
-                                'assets/mypage/my_record_text.png',
-                                width: screenSize.width * 0.169,
-                                height: screenSize.height * 0.021,
-                              )),
-                          // 새로고침 버튼
-                          Positioned(
-                              left: screenSize.width * 0.835,
-                              top: screenSize.height * 0.4,
-                              child: IconButton(
-                                icon: Image.asset(
-                                  'assets/mypage/reset_btn.png',
-                                  width: screenSize.width * 0.043,
-                                  height: screenSize.height * 0.019,
-                                ),
-                                onPressed: _restartAnimations,
-                              )),
-                          // 나의 기록 박스
-                          Positioned(
-                              top: screenSize.height * 0.444,
-                              left: 0,
-                              right: 0,
-                              child: Center(
-                                child: Container(
+                            // 나의 기록 텍스트, 새로고침 버튼
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10, left: 29.54, right: 29.54),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // 나의 기록 텍스트
+                                  Image.asset('assets/mypage/my_record_text.png',
+                                      width: 61, height: 17),
+                                  // 새로고침 버튼
+                                  IconButton(
+                                      onPressed: _restartAnimations,
+                                      icon: Image.asset('assets/mypage/reset_btn.png',
+                                          width: 15.52, height: 15.52))
+                                ],
+                              ),
+                            ),
+                            // 나의 기록 박스
+                            Center(
+                              child: Container(
+                                  width: screenSize.width * 0.835,
+                                  height: screenSize.height * 0.576,
                                   decoration: BoxDecoration(
                                       image: DecorationImage(
                                           image: AssetImage(
                                               'assets/mypage/my_record_bg.png'),
                                           fit: BoxFit.fill)),
-                                  width: screenSize.width * 0.835,
-                                  height: screenSize.height * 0.576,
                                   child: Stack(
                                     children: [
                                       // 키딩칩 개수
@@ -427,12 +427,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       // 삼각형 모양
                                       TriangleItem(key: _triangleItemKey)
                                     ],
-                                  ),
-                                ),
-                              )),
-                        ],
+                                  )),
+                            ),
+                          ],
+                        ),
                       ),
-                    )),
+                    ),
                   ),
                   // 하단바 구분선
                   Positioned(
@@ -457,7 +457,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 width: screenSize.width * 0.1,
                                 height: screenSize.height * 0.04,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => RankingScreen()),
+                                );
+                              },
                             ),
                             IconButton(
                               icon: Image.asset(

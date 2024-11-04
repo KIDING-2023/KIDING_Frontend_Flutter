@@ -22,6 +22,7 @@ class _RankingScreenState extends State<RankingScreen> {
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       // 상단바
       appBar: AppBar(
         backgroundColor: Color(0xFFE9EEFC),

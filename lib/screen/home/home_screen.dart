@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -28,15 +30,20 @@ class _HomeScreenState extends State<HomeScreen> {
   String spaceStarImage = 'unselected_star.png';
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
 
-  List<Widget> _pages = [
-    HomeScreen(),
-    MyPageScreen(),
-    RankingScreen(),
-  ];
-
   // 보드게임 리스트
-  List<dynamic> _boardGames = [];
-  bool isLoading = true;
+  List<dynamic> _boardGames = [
+    {
+      "name": "키키의 하루",
+      "players": 2,
+      "bookmarked": true,
+    },
+    {
+      "name": "키키의 우주여행",
+      "players": 7,
+      "bookmarked": false
+    },
+  ];
+  bool isLoading = false;
   String errorMessage = "";
 
   bool isSearchExpanded = false; // 검색창 확장 상태
@@ -44,119 +51,119 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _fetchBoardGames(); // initState에서 한 번만 호출
+    //_fetchBoardGames(); // initState에서 한 번만 호출
   }
 
-  // 보드게임 데이터를 서버로부터 가져오는 함수
-  Future<void> _fetchBoardGames() async {
-    // 토큰 불러오기
-    String? token = await storage.read(key: 'accessToken');
-    if (token == null) {
-      print("토큰이 없습니다.");
-      setState(() {
-        errorMessage = "토큰이 없습니다.";
-        isLoading = false;
-      });
-      return;
-    }
-
-    // 정렬 옵션에 따라 URL 설정
-    String sortOption;
-    switch (_selectedSortIndex) {
-      case 1:
-        sortOption = 'popular';
-        break;
-      case 2:
-        sortOption = 'recent';
-        break;
-      default:
-        sortOption = 'main';
-        break;
-    }
-
-    var url = Uri.parse('${ApiConstants.baseUrl}/boardgames/$sortOption');
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
-
-    try {
-      final response = await http.get(url, headers: headers);
-      print('보드게임 Response Status Code: ${response.statusCode}');
-      print('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-
-        if (data["isSuccess"]) {
-          print('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
-          if (data["message"] == "아직 보드게임에 참여하지 않았습니다.") {
-            setState(() {
-              _boardGames = [];
-              isLoading = false;
-            });
-          } else {
-            setState(() {
-              _boardGames = data['result']; // 서버로부터 받은 보드게임 데이터 저장
-              isLoading = false;
-            });
-          }
-        } else {
-          print("보드게임 가져오기 실패: ${data["message"]}");
-          setState(() {
-            errorMessage = data["message"];
-            isLoading = false;
-          });
-        }
-      } else {
-        print("서버 오류: 상태 코드 ${response.statusCode}");
-        setState(() {
-          errorMessage = "서버 오류: ${response.statusCode}";
-          isLoading = false;
-        });
-      }
-    } catch (e) {
-      print("네트워크 오류: $e");
-      setState(() {
-        errorMessage = "네트워크 오류: $e";
-        isLoading = false;
-      });
-    }
-  }
-
-  // 즐겨찾기 상태를 서버에 업데이트하는 함수
-  Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
-    String? token = await storage.read(key: 'accessToken');
-    if (token == null) {
-      print("토큰이 없습니다.");
-      return;
-    }
-
-    var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
-    var headers = {
-      'Authorization': 'Bearer $token',
-      'Content-Type': 'application/json',
-    };
-
-    try {
-      final response = await http.post(url, headers: headers);
-      print('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
-      print('응답 본문: ${response.body}');
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        if (data['isSuccess']) {
-          print("즐겨찾기 업데이트 성공: ${data['message']}");
-        } else {
-          print("즐겨찾기 업데이트 실패: ${data['message']}");
-        }
-      } else {
-        print("서버 오류: 상태 코드 ${response.statusCode}");
-      }
-    } catch (e) {
-      print("네트워크 오류: $e");
-    }
-  }
+  // // 보드게임 데이터를 서버로부터 가져오는 함수
+  // Future<void> _fetchBoardGames() async {
+  //   // 토큰 불러오기
+  //   String? token = await storage.read(key: 'accessToken');
+  //   if (token == null) {
+  //     print("토큰이 없습니다.");
+  //     setState(() {
+  //       errorMessage = "토큰이 없습니다.";
+  //       isLoading = false;
+  //     });
+  //     return;
+  //   }
+  //
+  //   // 정렬 옵션에 따라 URL 설정
+  //   String sortOption;
+  //   switch (_selectedSortIndex) {
+  //     case 1:
+  //       sortOption = 'popular';
+  //       break;
+  //     case 2:
+  //       sortOption = 'recent';
+  //       break;
+  //     default:
+  //       sortOption = 'main';
+  //       break;
+  //   }
+  //
+  //   var url = Uri.parse('${ApiConstants.baseUrl}/boardgames/$sortOption');
+  //   var headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',
+  //   };
+  //
+  //   try {
+  //     final response = await http.get(url, headers: headers);
+  //     print('보드게임 Response Status Code: ${response.statusCode}');
+  //     print('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //
+  //       if (data["isSuccess"]) {
+  //         print('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
+  //         if (data["message"] == "아직 보드게임에 참여하지 않았습니다.") {
+  //           setState(() {
+  //             _boardGames = [];
+  //             isLoading = false;
+  //           });
+  //         } else {
+  //           setState(() {
+  //             _boardGames = data['result']; // 서버로부터 받은 보드게임 데이터 저장
+  //             isLoading = false;
+  //           });
+  //         }
+  //       } else {
+  //         print("보드게임 가져오기 실패: ${data["message"]}");
+  //         setState(() {
+  //           errorMessage = data["message"];
+  //           isLoading = false;
+  //         });
+  //       }
+  //     } else {
+  //       print("서버 오류: 상태 코드 ${response.statusCode}");
+  //       setState(() {
+  //         errorMessage = "서버 오류: ${response.statusCode}";
+  //         isLoading = false;
+  //       });
+  //     }
+  //   } catch (e) {
+  //     print("네트워크 오류: $e");
+  //     setState(() {
+  //       errorMessage = "네트워크 오류: $e";
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+  //
+  // // 즐겨찾기 상태를 서버에 업데이트하는 함수
+  // Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
+  //   String? token = await storage.read(key: 'accessToken');
+  //   if (token == null) {
+  //     print("토큰이 없습니다.");
+  //     return;
+  //   }
+  //
+  //   var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
+  //   var headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',
+  //   };
+  //
+  //   try {
+  //     final response = await http.post(url, headers: headers);
+  //     print('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
+  //     print('응답 본문: ${response.body}');
+  //
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+  //       if (data['isSuccess']) {
+  //         print("즐겨찾기 업데이트 성공: ${data['message']}");
+  //       } else {
+  //         print("즐겨찾기 업데이트 실패: ${data['message']}");
+  //       }
+  //     } else {
+  //       print("서버 오류: 상태 코드 ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     print("네트워크 오류: $e");
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: AnimatedContainer(
               duration: Duration(seconds: 1),
               curve: Curves.easeInOut,
-              width: isSearchExpanded ? screenSize.width * 0.8333 : 40,
+              width: isSearchExpanded ? screenSize.width * 0.8 : 40,
               height: screenSize.height * 0.0563,
               decoration: BoxDecoration(
                 color: isSearchExpanded ? Color(0xffff8a5b) : Colors.white,
@@ -246,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 // 추천 카드덱 리스트
                 Positioned(
-                  top: screenSize.height * 0.63,
+                  top: screenSize.height * 0.64,
                   child: Container(
                     width: screenSize.width,
                     child: Column(
@@ -281,7 +288,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )),
                             // 메인, 인기순, 최근순 버튼
                             Positioned(
-                              left: screenSize.width * 0.08,
+                              left: screenSize.width * 0.1,
                               top: screenSize.height * 0.15,
                               child: Row(
                                 children: <Widget>[
@@ -294,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             // 카드 리스트
                             Positioned(
                               left: 0,
-                              top: screenSize.height * 0.185,
+                              top: screenSize.height * 0.19,
                               child: Container(
                                 width: screenSize.width,
                                 height: screenSize.height * 0.6,
@@ -315,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Positioned(
                                 left: 0,
                                 right: 0,
-                                top: screenSize.height * 0.63,
+                                top: screenSize.height * 0.62,
                                 child: Image.asset(
                                   'assets/home/ranking_box.png',
                                   width: screenSize.width * 0.83,
@@ -335,8 +342,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )),
                             // 1위 사용자 이름 (백엔드 연결 필요)
                             Positioned(
-                              right: screenSize.width * 0.29,
-                              top: screenSize.height * 0.715,
+                              right: screenSize.width * 0.34,
+                              top: screenSize.height * 0.7,
                               child: Text(
                                 '사용자',
                                 style: TextStyle(
@@ -347,8 +354,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             // 플레이 횟수 (백엔드 연결 필요)
                             Positioned(
-                                left: screenSize.width * 0.73,
-                                top: screenSize.height * 0.715,
+                                left: screenSize.width * 0.68,
+                                top: screenSize.height * 0.7,
                                 child: Text(
                                   '00번',
                                   style: TextStyle(
@@ -500,11 +507,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildSortOption(String title, int index) {
+    Size screenSize = MediaQuery.of(context).size;
+
     return GestureDetector(
       onTap: () {
         setState(() {
           _selectedSortIndex = index; // 선택된 정렬 옵션을 업데이트
-          _fetchBoardGames(); // 선택된 정렬 옵션에 맞는 데이터를 다시 가져옴
+          //_fetchBoardGames(); // 선택된 정렬 옵션에 맞는 데이터를 다시 가져옴
         });
       },
       child: Container(
@@ -513,20 +522,19 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Image.asset(
               'assets/home/eclipse.png',
-              width: 6.35,
-              height: 6.35,
+              width: screenSize.width * 0.0176,
               color: _selectedSortIndex == index
                   ? Colors.orange
                   : Colors.transparent,
             ),
-            SizedBox(width: 5),
+            SizedBox(width: screenSize.width * 0.0139),
             Text(
               title,
               style: TextStyle(
                 color: _selectedSortIndex == index
                     ? Colors.black
                     : Color(0xFF75777E),
-                fontSize: 14.22,
+                fontSize: screenSize.height * 0.0178,
                 fontFamily: 'Nanum',
               ),
             ),
@@ -546,6 +554,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // 보드게임 데이터가 없을 때
     if (_boardGames.isEmpty) {
+      log("보드게임 없음");
       return Container(
         width: screenSize.width * 0.8,
         height: screenSize.height * 0.6,
@@ -614,7 +623,7 @@ class _HomeScreenState extends State<HomeScreen> {
         );
       },
       child: Container(
-        width: screenSize.width * 0.64,
+        width: screenSize.width * 0.51,
         margin: EdgeInsets.only(left: 30),
         child: Stack(
           children: <Widget>[
@@ -633,7 +642,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned(
-              right: 15,
+              right: screenSize.width * 0.03,
               top: 13.18,
               child: GestureDetector(
                 onTap: () {
@@ -642,7 +651,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     isFavorite = !isFavorite;
                   });
                   // 서버에 즐겨찾기 상태 업데이트 요청
-                  _updateFavoriteStatus(game['id'], isFavorite);
+                  //_updateFavoriteStatus(game['id'], isFavorite);
                 },
                 child: Image.asset(
                     'assets/home/${isFavorite ? 'selected_star.png' : 'unselected_star.png'}',

@@ -51,7 +51,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                       color: Colors.black),
                 )),
             Positioned(
-                top: screenHeight * 0.11,
+                top: screenHeight * 0.15,
                 left: 0,
                 right: 0,
                 child: SizedBox(
@@ -135,7 +135,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                 height: screenHeight * 0.0936,
               )),
           Positioned(
-              top: screenHeight * 0.0393,
+              top: screenHeight * 0.03,
               left: screenWidth * 0.277,
               child: Text(
                 name,
@@ -153,7 +153,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                     color: Color(0xFFb3b3b3)),
               )),
           Positioned(
-              top: screenHeight * 0.105,
+              top: screenHeight * 0.1,
               left: 0,
               right: 0,
               child: Row(
@@ -163,16 +163,14 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                     onPressed: () {},
                     icon: Image.asset(
                       'assets/friends/reject_btn.png',
-                      width: screenWidth * 0.3798,
-                      height: screenHeight * 0.0335,
+                      width: screenWidth * 0.35,
                     ),
                   ),
                   IconButton(
                     onPressed: () {},
                     icon: Image.asset(
                       'assets/friends/accept_btn.png',
-                      width: screenWidth * 0.3798,
-                      height: screenHeight * 0.0335,
+                      width: screenWidth * 0.35,
                     ),
                   ),
                 ],
