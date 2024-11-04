@@ -9,8 +9,8 @@ class TimerModel with ChangeNotifier {
   String get formattedTime => _formattedTime;
 
   void startTimer() {
+    if (_stopwatch.isRunning) return;
     _stopwatch.start();
-    _timer?.cancel(); // 이전 타이머가 있다면 취소
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       final minutes = _stopwatch.elapsed.inMinutes.remainder(60).toString();
       final seconds = _stopwatch.elapsed.inSeconds.remainder(60).toString().padLeft(2, '0');
@@ -20,11 +20,15 @@ class TimerModel with ChangeNotifier {
   }
 
   void stopTimer() {
-    _stopwatch.stop();
-    _timer?.cancel();
+    if (_stopwatch.isRunning) {
+      _stopwatch.stop();
+      _timer?.cancel();
+      notifyListeners();
+    }
   }
 
   void resetTimer() {
+    stopTimer();
     _stopwatch.reset();
     _formattedTime = '0:00';
     notifyListeners();

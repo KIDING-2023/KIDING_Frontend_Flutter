@@ -15,7 +15,7 @@ class KikisdayDiceScreen extends StatefulWidget {
 }
 
 class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   Future<void>? _initializeVideoPlayerFuture;
 
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
@@ -31,16 +31,16 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
     _controller = VideoPlayerController.asset('assets/kikisday/dice1_video.mp4')
       ..initialize().then((_) {
         setState(() {});
-        _controller.play();
-        _controller.addListener(_checkVideo);
+        _controller?.play();
+        _controller?.addListener(_checkVideo);
       });
   }
 
   void _checkVideo() {
     // 현재 재생 위치와 비디오 길이가 같은지 확인
-    if (_controller.value.position == _controller.value.duration) {
-      _controller.removeListener(_checkVideo); // 리스너 제거
-      _controller.dispose(); // 컨트롤러 해제 // 주사위 결과 (현재 칸) 업데이트
+    if (_controller?.value.position == _controller?.value.duration) {
+      _controller?.removeListener(_checkVideo); // 리스너 제거
+      _controller?.dispose(); // 컨트롤러 해제 // 주사위 결과 (현재 칸) 업데이트
       Navigator.pushReplacement(
         // 새 화면으로 전환
         context,
@@ -50,25 +50,26 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
   }
 
   void _pauseVideo() {
-    if (_controller.value.isPlaying) {
-      _controller.pause();
+    if (_controller != null && _controller!.value.isPlaying) {
+      _controller?.pause();
     }
   }
 
   void _resumeVideo() {
-    if (!_controller.value.isPlaying) {
-      _controller.play();
+    if (_controller != null && !_controller!.value.isPlaying) {
+      _controller?.play();
     }
   }
 
   void _stopVideo() {
-    _controller.removeListener(_checkVideo);
-    _controller.dispose();
+    _controller?.removeListener(_checkVideo);
+    _controller?.dispose();
+    _controller = null;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -106,10 +107,10 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
                   ? FutureBuilder(
                       future: _initializeVideoPlayerFuture,
                       builder: (context, snapshot) {
-                        if (_controller.value.isInitialized) {
+                        if (_controller!.value.isInitialized) {
                           return AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
+                            aspectRatio: _controller!.value.aspectRatio,
+                            child: VideoPlayer(_controller!),
                           );
                         } else {
                           return Center();

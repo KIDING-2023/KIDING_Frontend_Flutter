@@ -18,7 +18,7 @@ class SpaceRandomDice2Screen extends StatefulWidget {
 }
 
 class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   Future<void>? _initializeVideoPlayerFuture;
 
   // 주사위를 굴렸는지 여부를 나타내는 상태 변수
@@ -45,40 +45,42 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
         'assets/space/dice_${randomNumber}_mars.mp4')
       ..initialize().then((_) {
         setState(() {});
-        _controller.play();
-        _controller.addListener(_checkVideo);
+        _controller?.play();
+        _controller?.addListener(_checkVideo);
       });
   }
 
   void _checkVideo() {
     // 현재 재생 위치와 비디오 길이가 같은지 확인
-    if (_controller.value.position == _controller.value.duration) {
-      _controller.removeListener(_checkVideo); // 리스너 제거
-      _controller.dispose(); // 컨트롤러 해제
+    if (_controller?.value.position == _controller?.value.duration) {
+      _controller?.removeListener(_checkVideo); // 리스너 제거
+      _controller?.dispose(); // 컨트롤러 해제
       Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
     }
   }
 
-  void _pauseVideo() {
-    if (_controller.value.isPlaying) {
-      _controller.pause();
-    }
-  }
+  // void _pauseVideo() {
+  //   if (_controller.value.isPlaying) {
+  //     _controller.pause();
+  //   }
+  // }
 
   void _resumeVideo() {
-    if (!_controller.value.isPlaying) {
-      _controller.play();
-    }
+    _controller?.play();
+    // if (!_controller.value.isPlaying) {
+    //   _controller.play();
+    // }
   }
 
   void _stopVideo() {
-    _controller.removeListener(_checkVideo);
-    _controller.dispose();
+    _controller?.removeListener(_checkVideo);
+    _controller?.dispose();
+    _controller = null;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -116,10 +118,10 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
                   ? FutureBuilder(
                       future: _initializeVideoPlayerFuture,
                       builder: (context, snapshot) {
-                        if (_controller.value.isInitialized) {
+                        if (_controller!.value.isInitialized) {
                           return AspectRatio(
-                            aspectRatio: _controller.value.aspectRatio,
-                            child: VideoPlayer(_controller),
+                            aspectRatio: _controller!.value.aspectRatio,
+                            child: VideoPlayer(_controller!),
                           );
                         } else {
                           return Center();
@@ -139,8 +141,8 @@ class _SpaceRandomDice2ScreenState extends State<SpaceRandomDice2Screen> {
                           ),
                         ),
                         Positioned(
-                          top: screenHeight * 0.1,
-                          left: 0,
+                          top: screenHeight * 0.13,
+                          left: -10,
                           right: 0,
                           child: Center(
                             child: Image.asset('assets/space/dice.png'),
