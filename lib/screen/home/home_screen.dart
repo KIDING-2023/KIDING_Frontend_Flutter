@@ -184,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 10, top: 10),
+            padding: EdgeInsets.only(right: 15, top: 10),
             child: AnimatedContainer(
               duration: Duration(seconds: 1),
               curve: Curves.easeInOut,
@@ -383,7 +383,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               width: screenSize.width * 0.1,
                               height: screenSize.height * 0.04,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => RankingScreen()),
+                              );
+                            },
                           ),
                           IconButton(
                             icon: Image.asset(
