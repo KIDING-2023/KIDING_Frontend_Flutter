@@ -62,7 +62,9 @@ class SpaceCardLayout extends StatelessWidget {
                                 )),
                       );
                     },
-                    icon: Image.asset(backBtnStr, width: screenWidth * 0.0366, height: screenHeight * 0.025)),
+                    icon: Image.asset(backBtnStr,
+                        width: screenWidth * 0.0366,
+                        height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
@@ -82,14 +84,16 @@ class SpaceCardLayout extends StatelessWidget {
             top: screenHeight * 0.15,
             left: 0,
             right: 0,
-            child: Image.asset(textStr, width: screenWidth * 0.9359, height: screenHeight * 0.1475),
+            child: Image.asset(textStr,
+                width: screenWidth * 0.9359, height: screenHeight * 0.1475),
           ),
           // 카드 이미지
           Positioned(
             top: screenHeight * 0.3375,
             left: 0,
             right: 0,
-            child: Image.asset(cardStr, width: screenWidth * 0.4738, height: screenHeight * 0.299175),
+            child: Image.asset(cardStr,
+                width: screenWidth * 0.4738, height: screenHeight * 0.299175),
           ),
           // 버튼
           Positioned(
@@ -104,7 +108,9 @@ class SpaceCardLayout extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => completeScreen),
                   );
                 },
-                child: Image.asset(okBtnStr, width: screenWidth * 0.3333, height: screenHeight * 0.050725),
+                child: Image.asset(okBtnStr,
+                    width: screenWidth * 0.3333,
+                    height: screenHeight * 0.050725),
               )),
           // 카드덱 읽기 버튼
           Positioned(
@@ -120,10 +126,12 @@ class SpaceCardLayout extends StatelessWidget {
                           builder: (context) => CardQRTextScreen(
                                 currentNumber: currentNumber,
                                 completeScreen: completeScreen,
+                                color: timerColor,
                               )));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
-                    width: screenWidth * 0.3119, height: screenHeight * 0.04085),
+                    width: screenWidth * 0.3119,
+                    height: screenHeight * 0.04085),
               ))
         ],
       ),

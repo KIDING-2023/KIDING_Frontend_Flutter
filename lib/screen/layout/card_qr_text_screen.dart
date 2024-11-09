@@ -7,11 +7,12 @@ import 'package:kiding/screen/layout/card_qr_screen.dart';
 class CardQRTextScreen extends StatefulWidget {
   final int currentNumber;
   final Widget completeScreen;
+  final Color color;
 
   //final bool canread;
 
   const CardQRTextScreen(
-      {super.key, required this.currentNumber, required this.completeScreen});
+      {super.key, required this.currentNumber, required this.completeScreen, required this.color});
 
   @override
   State<CardQRTextScreen> createState() => _CardQRTextScreenState();
@@ -46,11 +47,12 @@ class _CardQRTextScreenState extends State<CardQRTextScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String game = widget.color == Color(0xFF868686) ? 'kikisday' : 'space';
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/space/card_qr_text_screen.png'),
+                image: AssetImage('assets/${game}/card_qr_text_screen.png'),
                 fit: BoxFit.cover)),
       ),
     );

@@ -71,7 +71,7 @@ void main() async {
       child: MaterialApp(
         initialRoute: '/',
         routes: {
-          HOME_ROUTE: (context) => MyPageScreen(),
+          HOME_ROUTE: (context) => StartScreen(),
           '/kikisday_qr': (context) => KikisdayQrScreen(),
           '/kikisday_set_player_num': (context) => SetPlayerNumberScreen(),
           '/space_qr': (context) => SpaceQrScreen(),
