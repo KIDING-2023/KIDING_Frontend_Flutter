@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:image_picker/image_picker.dart';
+import 'package:kiding/screen/layout/card_read_layout.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'exit_layout.dart';
@@ -13,9 +14,14 @@ import 'dart:io' as io;
 class CardQRScreen extends StatefulWidget {
   final int currentNumber;
   final Widget completeScreen;
+  final Color color;
+  final int chips;
 
   const CardQRScreen(
-      {super.key, required this.currentNumber, required this.completeScreen});
+      {super.key,
+      required this.currentNumber,
+      required this.completeScreen,
+      required this.color, required this.chips});
 
   @override
   State<CardQRScreen> createState() => _CardQRScreenState();
@@ -28,6 +34,8 @@ class _CardQRScreenState extends State<CardQRScreen> {
 
   bool useCamera = true;
   final picker = ImagePicker();
+
+  String codeResult = "";
 
   @override
   void reassemble() {
@@ -150,6 +158,7 @@ class _CardQRScreenState extends State<CardQRScreen> {
         result = scanData;
       });
       if (result != null) {
+        codeResult = result!.code!;
         _navigateToNextScreen();
       }
     });
@@ -189,7 +198,12 @@ class _CardQRScreenState extends State<CardQRScreen> {
     });
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => widget.completeScreen),
+      MaterialPageRoute(
+          builder: (context) => CardReadLayout(
+              currentNumber: widget.currentNumber,
+              codeResult: codeResult,
+              color: widget.color,
+          chips: widget.chips)),
     );
   }
 }

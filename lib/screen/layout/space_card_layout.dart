@@ -127,6 +127,7 @@ class SpaceCardLayout extends StatelessWidget {
                                 currentNumber: currentNumber,
                                 completeScreen: completeScreen,
                                 color: timerColor,
+                                chips: 1, // 임시
                               )));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',

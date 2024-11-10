@@ -35,7 +35,6 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                         width: screenWidth * 0.0366,
                         height: screenHeight * 0.025),
                     onPressed: () {
-                      // 타이머 종료
                       Navigator.pop(context);
                     },
                   )),

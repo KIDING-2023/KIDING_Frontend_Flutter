@@ -14,6 +14,7 @@ class CardLayout extends StatelessWidget {
   final String okBtnStr;
   final Color timerColor;
   final int currentNumber;
+  final int chips;
 
   const CardLayout(
       {super.key,
@@ -24,7 +25,8 @@ class CardLayout extends StatelessWidget {
       required this.completeScreen,
       required this.okBtnStr,
       required this.timerColor,
-      required this.currentNumber});
+      required this.currentNumber,
+      required this.chips});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +122,8 @@ class CardLayout extends StatelessWidget {
                           builder: (context) => CardQRTextScreen(
                               currentNumber: currentNumber,
                               completeScreen: completeScreen,
-                          color: timerColor)));
+                          color: timerColor,
+                          chips: chips)));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
                     width: screenWidth * 0.3119, height: screenHeight * 0.04085),

@@ -28,6 +28,7 @@ class _Kikisday8ScreenState extends State<Kikisday8Screen> {
       okBtnStr: 'assets/kikisday/kikisday_skyblue_btn.png',
       timerColor: Color(0xFF868686),
       currentNumber: 8,
+      chips: chips,
     );
   }
 }

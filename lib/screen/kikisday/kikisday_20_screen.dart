@@ -21,10 +21,14 @@ class _Kikisday20ScreenState extends State<Kikisday20Screen> {
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textStr: 'assets/kikisday/kikisday_20_text.png',
       cardStr: 'assets/kikisday/kikisday_pink_card.png',
-      completeScreen: KikisdayPinkCompleteScreen(currentNumber: 20, chips: chips,),
+      completeScreen: KikisdayPinkCompleteScreen(
+        currentNumber: 20,
+        chips: chips,
+      ),
       okBtnStr: 'assets/kikisday/kikisday_pink_btn.png',
       timerColor: Color(0xFF868686),
       currentNumber: 20,
+      chips: chips,
     );
   }
 }

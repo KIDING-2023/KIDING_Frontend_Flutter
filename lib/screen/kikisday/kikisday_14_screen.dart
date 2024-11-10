@@ -25,6 +25,7 @@ class _Kikisday14ScreenState extends State<Kikisday14Screen> {
       okBtnStr: 'assets/kikisday/kikisday_orange_btn.png',
       timerColor: Color(0xFF868686),
       currentNumber: 14,
+      chips: chips,
     );
   }
 }
