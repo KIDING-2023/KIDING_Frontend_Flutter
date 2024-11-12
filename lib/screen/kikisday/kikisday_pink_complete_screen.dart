@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/api_constants.dart';
-import '../../core/utils/set_dice_screen.dart';
+import '../../core/services/set_dice_screen.dart';
 import '../../model/game_provider.dart';
 import '../../model/timer_model.dart';
 import '../layout/complete_layout.dart';
