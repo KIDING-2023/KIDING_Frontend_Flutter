@@ -3,11 +3,10 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../constants/api_constants.dart';
+import '../../core/constants/api_constants.dart';
+import '../../core/utils/set_dice_screen.dart';
 import '../../model/game_provider.dart';
 import '../../model/timer_model.dart';
-import '../../utils/set_dice_screen.dart';
 import '../layout/complete_layout.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice4_screen.dart';
@@ -67,7 +66,7 @@ class _KikisdayPinkCompleteScreenState
 
   // 서버에 키딩칩 개수를 전송하는 함수
   Future<void> _sendChipsToServer() async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/boardgame'); // 서버 URL
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
 
     if (token == null) {

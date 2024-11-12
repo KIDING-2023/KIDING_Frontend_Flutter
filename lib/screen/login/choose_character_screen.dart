@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/constants/api_constants.dart';
+import '../../core/constants/api_constants.dart';
 import '../home/home_screen.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -208,7 +208,7 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
     }
 
     // 서버 URL에 선택한 캐릭터 값 포함
-    var url = Uri.parse('${ApiConstants.baseUrl}/character/$num');
+    var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.characterEndpoint}/$num');
     var headers = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token', // 토큰을 인증 헤더에 추가

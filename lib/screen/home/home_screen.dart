@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/friends/friends_request_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
 
+import '../../core/constants/api_constants.dart';
 import '../mypage/mypage_screen.dart';
 import '../space/space_play_screen.dart';
 
@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
     }
 
-    var url = Uri.parse('${ApiConstants.baseUrl}/boardgames/$sortOption');
+    var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgamesEndpoint}/$sortOption');
     var headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',

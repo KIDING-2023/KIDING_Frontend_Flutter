@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/layout/complete_layout.dart';
 import 'package:provider/provider.dart';
+import '../../core/constants/api_constants.dart';
 import '../../model/game_provider.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice_screen.dart';
@@ -61,7 +61,7 @@ class _KikisdayTalmudCompleteScreenState
 
   // 서버에 키딩칩 개수를 전송하는 함수
   Future<void> _sendChipsToServer() async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/boardgame'); // 서버 URL
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
 
     if (token == null) {

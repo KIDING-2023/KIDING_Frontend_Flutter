@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding/screen/login/password_screen.dart';
-import '../../constants/api_constants.dart';
+import '../../core/constants/api_constants.dart';
 import 'back_screen.dart';
 
 import 'package:http/http.dart' as http;
@@ -178,7 +178,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
     String phone = formatPhoneNumber(phoneNumber);
     log('phone: $phone');
     final url =
-        Uri.parse('${ApiConstants.baseUrl}/signup/checkPhone?phone=$phone');
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phone');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {

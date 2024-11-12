@@ -5,9 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/login/find_nickname_result_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
-
-import '../../constants/api_constants.dart';
 import 'package:http/http.dart' as http;
+
+import '../../core/constants/api_constants.dart';
 
 // 닉네임 찾기 - 전화번호 입력 화면
 class FindNicknameScreen extends StatefulWidget {
@@ -152,7 +152,7 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
   Future<void> _findNickname(String phoneNumber) async {
     String phone = formatPhoneNumber(phoneNumber);
     log('닉네임 찾기 시도');
-    final url = Uri.parse('${ApiConstants.baseUrl}/help/findNickname?phone=$phone');
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.findNicknameEndpoint}?phone=$phone');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {

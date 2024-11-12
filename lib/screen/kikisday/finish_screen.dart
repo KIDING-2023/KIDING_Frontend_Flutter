@@ -3,11 +3,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/home/home_screen.dart';
 import 'package:kiding/screen/kikisday/set_player_number_screen.dart';
 import 'package:provider/provider.dart';
 
+import '../../core/constants/api_constants.dart';
 import '../../model/timer_model.dart';
 import 'kikisday_tutorial1_screen.dart';
 
@@ -32,7 +32,7 @@ class _FinishScreenState extends State<FinishScreen> {
 
   // 게임 완료 요청 함수
   Future<void> _sendGameCompleteRequest() async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/boardgame/final'); // 서버 URL
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}/final'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
 
     if (token == null) {

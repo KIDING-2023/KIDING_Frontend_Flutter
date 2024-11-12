@@ -5,10 +5,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/constants/api_constants.dart';
 import 'package:kiding/screen/login/back_screen.dart';
 import 'package:kiding/screen/login/phone_screen.dart';
 import 'package:http/http.dart' as http;
+
+import '../../core/constants/api_constants.dart';
 
 // 회원가입 화면
 class SignupScreen extends StatefulWidget {
@@ -214,7 +215,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   // 닉네임 중복 여부 체크
   Future<void> _checkNicknameDuplication(String nickname) async {
-    final url = Uri.parse('${ApiConstants.baseUrl}/signup/checkNickname?nickname=$nickname');
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkNickname?nickname=$nickname');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {

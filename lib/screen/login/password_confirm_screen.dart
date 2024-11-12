@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:kiding/constants/api_constants.dart';
+import '../../core/constants/api_constants.dart';
 import 'back_screen.dart';
 import 'login_splash_screen.dart';
 
@@ -206,8 +206,8 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
 
   // 회원가입 및 로그인 후 토큰 반환
   Future<String?> signupAndLogin(String nickname, String password, String phoneNumber) async {
-    final signupUrl = Uri.parse('${ApiConstants.baseUrl}/signup');
-    final loginUrl = Uri.parse('${ApiConstants.baseUrl}/signin');
+    final signupUrl = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}');
+    final loginUrl = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signinEndpoint}');
     final headers = {'Content-Type': 'application/json'};
 
     final signupBody = jsonEncode({
