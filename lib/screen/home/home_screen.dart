@@ -32,16 +32,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // 보드게임 리스트
   List<dynamic> _boardGames = [
-    {
-      "name": "키키의 하루",
-      "players": 2,
-      "bookmarked": true,
-    },
-    {
-      "name": "키키의 우주여행",
-      "players": 7,
-      "bookmarked": false
-    },
+    // {
+    //   "name": "키키의 하루",
+    //   "players": 2,
+    //   "bookmarked": true,
+    // },
+    // {
+    //   "name": "키키의 우주여행",
+    //   "players": 7,
+    //   "bookmarked": false
+    // },
   ];
   bool isLoading = false;
   String errorMessage = "";
@@ -51,119 +51,119 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    //_fetchBoardGames(); // initState에서 한 번만 호출
+    _fetchBoardGames(); // initState에서 한 번만 호출
   }
 
-  // // 보드게임 데이터를 서버로부터 가져오는 함수
-  // Future<void> _fetchBoardGames() async {
-  //   // 토큰 불러오기
-  //   String? token = await storage.read(key: 'accessToken');
-  //   if (token == null) {
-  //     print("토큰이 없습니다.");
-  //     setState(() {
-  //       errorMessage = "토큰이 없습니다.";
-  //       isLoading = false;
-  //     });
-  //     return;
-  //   }
-  //
-  //   // 정렬 옵션에 따라 URL 설정
-  //   String sortOption;
-  //   switch (_selectedSortIndex) {
-  //     case 1:
-  //       sortOption = 'popular';
-  //       break;
-  //     case 2:
-  //       sortOption = 'recent';
-  //       break;
-  //     default:
-  //       sortOption = 'main';
-  //       break;
-  //   }
-  //
-  //   var url = Uri.parse('${ApiConstants.baseUrl}/boardgames/$sortOption');
-  //   var headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Content-Type': 'application/json',
-  //   };
-  //
-  //   try {
-  //     final response = await http.get(url, headers: headers);
-  //     print('보드게임 Response Status Code: ${response.statusCode}');
-  //     print('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //
-  //       if (data["isSuccess"]) {
-  //         print('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
-  //         if (data["message"] == "아직 보드게임에 참여하지 않았습니다.") {
-  //           setState(() {
-  //             _boardGames = [];
-  //             isLoading = false;
-  //           });
-  //         } else {
-  //           setState(() {
-  //             _boardGames = data['result']; // 서버로부터 받은 보드게임 데이터 저장
-  //             isLoading = false;
-  //           });
-  //         }
-  //       } else {
-  //         print("보드게임 가져오기 실패: ${data["message"]}");
-  //         setState(() {
-  //           errorMessage = data["message"];
-  //           isLoading = false;
-  //         });
-  //       }
-  //     } else {
-  //       print("서버 오류: 상태 코드 ${response.statusCode}");
-  //       setState(() {
-  //         errorMessage = "서버 오류: ${response.statusCode}";
-  //         isLoading = false;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     print("네트워크 오류: $e");
-  //     setState(() {
-  //       errorMessage = "네트워크 오류: $e";
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
-  //
-  // // 즐겨찾기 상태를 서버에 업데이트하는 함수
-  // Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
-  //   String? token = await storage.read(key: 'accessToken');
-  //   if (token == null) {
-  //     print("토큰이 없습니다.");
-  //     return;
-  //   }
-  //
-  //   var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
-  //   var headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Content-Type': 'application/json',
-  //   };
-  //
-  //   try {
-  //     final response = await http.post(url, headers: headers);
-  //     print('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
-  //     print('응답 본문: ${response.body}');
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //       if (data['isSuccess']) {
-  //         print("즐겨찾기 업데이트 성공: ${data['message']}");
-  //       } else {
-  //         print("즐겨찾기 업데이트 실패: ${data['message']}");
-  //       }
-  //     } else {
-  //       print("서버 오류: 상태 코드 ${response.statusCode}");
-  //     }
-  //   } catch (e) {
-  //     print("네트워크 오류: $e");
-  //   }
-  // }
+  // 보드게임 데이터를 서버로부터 가져오는 함수
+  Future<void> _fetchBoardGames() async {
+    // 토큰 불러오기
+    String? token = await storage.read(key: 'accessToken');
+    if (token == null) {
+      print("토큰이 없습니다.");
+      setState(() {
+        errorMessage = "토큰이 없습니다.";
+        isLoading = false;
+      });
+      return;
+    }
+
+    // 정렬 옵션에 따라 URL 설정
+    String sortOption;
+    switch (_selectedSortIndex) {
+      case 1:
+        sortOption = 'popular';
+        break;
+      case 2:
+        sortOption = 'recent';
+        break;
+      default:
+        sortOption = 'main';
+        break;
+    }
+
+    var url = Uri.parse('${ApiConstants.baseUrl}/boardgames/$sortOption');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      print('보드게임 Response Status Code: ${response.statusCode}');
+      print('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data["isSuccess"]) {
+          print('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
+          if (data["message"] == "아직 보드게임에 참여하지 않았습니다.") {
+            setState(() {
+              _boardGames = [];
+              isLoading = false;
+            });
+          } else {
+            setState(() {
+              _boardGames = data['result']; // 서버로부터 받은 보드게임 데이터 저장
+              isLoading = false;
+            });
+          }
+        } else {
+          print("보드게임 가져오기 실패: ${data["message"]}");
+          setState(() {
+            errorMessage = data["message"];
+            isLoading = false;
+          });
+        }
+      } else {
+        print("서버 오류: 상태 코드 ${response.statusCode}");
+        setState(() {
+          errorMessage = "서버 오류: ${response.statusCode}";
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+      setState(() {
+        errorMessage = "네트워크 오류: $e";
+        isLoading = false;
+      });
+    }
+  }
+
+  // 즐겨찾기 상태를 서버에 업데이트하는 함수
+  Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
+    String? token = await storage.read(key: 'accessToken');
+    if (token == null) {
+      print("토큰이 없습니다.");
+      return;
+    }
+
+    var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.post(url, headers: headers);
+      print('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
+      print('응답 본문: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['isSuccess']) {
+          print("즐겨찾기 업데이트 성공: ${data['message']}");
+        } else {
+          print("즐겨찾기 업데이트 실패: ${data['message']}");
+        }
+      } else {
+        print("서버 오류: 상태 코드 ${response.statusCode}");
+      }
+    } catch (e) {
+      print("네트워크 오류: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
