@@ -9,7 +9,7 @@ class TimerModel with ChangeNotifier {
   String get formattedTime => _formattedTime;
 
   void startTimer() {
-    if (_stopwatch.isRunning) return;
+    if (_stopwatch.isRunning || _timer != null) return; // 이미 타이머가 실행 중이면 아무 작업도 하지 않음
     _stopwatch.start();
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       final minutes = _stopwatch.elapsed.inMinutes.remainder(60).toString();
@@ -23,13 +23,14 @@ class TimerModel with ChangeNotifier {
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
       _timer?.cancel();
+      _timer = null; // 타이머 해제
       notifyListeners();
     }
   }
 
   void resetTimer() {
-    stopTimer();
     _stopwatch.reset();
+    stopTimer();
     _formattedTime = '0:00';
     notifyListeners();
   }
@@ -37,6 +38,7 @@ class TimerModel with ChangeNotifier {
   @override
   void dispose() {
     _timer?.cancel();
+    _timer = null; // 타이머 해제
     super.dispose();
   }
 }
