@@ -19,8 +19,8 @@ class FindNicknameScreen extends StatefulWidget {
 
 class _FindNicknameScreenState extends State<FindNicknameScreen> {
   final _phoneController = TextEditingController(); // 전화번호 입력 컨트롤러
-  bool errorVisible = false; // 에러 메시지 가시성
-  String errorMessage = ""; // 에러 메시지
+  bool errorVisible = true; // 에러 메시지 가시성
+  String errorMessage = "전화번호를 입력하세요."; // 에러 메시지
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(
-                          hintText: '전화번호를 입력하세요',
+                          hintText: 'ex.01012345678',
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
                           fillColor: Color(0xfff6f6f6),
@@ -127,32 +127,10 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
     ));
   }
 
-  // // 닉네임 찾기 로직 추가 필요
-  // void _findNickname() async {
-  //   Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => FindNicknameResultScreen(nickname: '닉네임')));
-  // }
-
-  String formatPhoneNumber(String phoneNumber) {
-    if (phoneNumber.length == 11) {
-      // "01111111111" -> "011-1111-1111"
-      return '${phoneNumber.substring(0, 3)}-${phoneNumber.substring(3, 7)}-${phoneNumber.substring(7)}';
-    } else if (phoneNumber.length == 10) {
-      // "0211111111" -> "02-1111-1111"
-      return '${phoneNumber.substring(0, 2)}-${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6)}';
-    } else {
-      // 형식에 맞지 않는 경우 그대로 반환
-      return phoneNumber;
-    }
-  }
-
   // 전화번호 인증 로직
   Future<void> _findNickname(String phoneNumber) async {
-    String phone = formatPhoneNumber(phoneNumber);
     log('닉네임 찾기 시도');
-    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.findNicknameEndpoint}?phone=$phone');
+    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.findNicknameEndpoint}?phone=$phoneNumber');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {

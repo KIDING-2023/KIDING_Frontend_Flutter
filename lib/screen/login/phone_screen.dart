@@ -160,25 +160,11 @@ class _PhoneScreenState extends State<PhoneScreen> {
     ));
   }
 
-  String formatPhoneNumber(String phoneNumber) {
-    if (phoneNumber.length == 11) {
-      // "01111111111" -> "011-1111-1111"
-      return '${phoneNumber.substring(0, 3)}-${phoneNumber.substring(3, 7)}-${phoneNumber.substring(7)}';
-    } else if (phoneNumber.length == 10) {
-      // "0211111111" -> "02-1111-1111"
-      return '${phoneNumber.substring(0, 2)}-${phoneNumber.substring(2, 6)}-${phoneNumber.substring(6)}';
-    } else {
-      // 형식에 맞지 않는 경우 그대로 반환
-      return phoneNumber;
-    }
-  }
-
   // 전화번호 중복 여부 체크
   Future<void> _checkPhoneDuplication(String phoneNumber) async {
-    String phone = formatPhoneNumber(phoneNumber);
-    log('phone: $phone');
+    log('phone: $phoneNumber');
     final url =
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phone');
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phoneNumber');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {
@@ -209,7 +195,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
             errorMessage = "사용 가능한 전화번호입니다.";
           });
           // 중복되지 않은 경우, 인증 코드 전송
-          _verifyPhone(phone);
+          _verifyPhone(phoneNumber);
         } else {
           // 중복된 경우, 에러 메시지 표시
           setState(() {
@@ -314,11 +300,10 @@ class _PhoneScreenState extends State<PhoneScreen> {
           errorVisible = true;
           errorMessage = "정상 인증 되었습니다.";
         });
-        String phone = formatPhoneNumber(_phoneController.text);
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PasswordScreen(nickname: widget.nickname, phoneNumber: phone)));
+                builder: (context) => PasswordScreen(nickname: widget.nickname, phoneNumber: _phoneController.text)));
       } else {
         setState(() {
           errorVisible = true;

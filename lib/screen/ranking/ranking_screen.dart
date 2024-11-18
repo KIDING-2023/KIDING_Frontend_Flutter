@@ -1,8 +1,12 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/mypage/mypage_screen.dart';
-
+import 'package:http/http.dart' as http;
+import '../../core/constants/api_constants.dart';
 import '../friends/friends_request_screen.dart';
 import '../home/home_screen.dart';
+import '../kikisday/kikisday_play_screen.dart';
+import '../mypage/mypage_screen.dart';
+import '../space/space_play_screen.dart';
 
 class RankingScreen extends StatefulWidget {
   const RankingScreen({super.key});
@@ -13,9 +17,37 @@ class RankingScreen extends StatefulWidget {
 
 class _RankingScreenState extends State<RankingScreen> {
   bool isSearchExpanded = false; // 검색창 확장 상태
+  List<Map<String, dynamic>> rankingData = []; // 랭킹 데이터를 저장할 리스트
 
-  String username = '이혜나';  // 사용자 이름
-  int chips = 18;  // 키딩칩 수
+  Future<void> _fetchRanking() async {
+    try {
+      var response = await http.get(
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.rankingEndpoint}/all'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> data = json.decode(response.body);
+        setState(() {
+          rankingData = List<Map<String, dynamic>>.from(data)
+              .take(6)
+              .toList(); // 상위 6명만 저장
+        });
+      } else {
+        throw Exception('Failed to load ranking data');
+      }
+    } catch (error) {
+      print("에러 발생: $error");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchRanking(); // 랭킹 데이터를 가져오기 위해 호출
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +55,9 @@ class _RankingScreenState extends State<RankingScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      // 상단바
       appBar: AppBar(
         backgroundColor: Color(0xFFE9EEFC),
         elevation: 0,
-        // AppBar의 그림자 제거
         leading: Padding(
           padding: const EdgeInsets.only(left: 10, top: 10),
           child: IconButton(
@@ -49,9 +79,9 @@ class _RankingScreenState extends State<RankingScreen> {
           child: Text(
             '랭킹',
             style: TextStyle(
-              color: Colors.black, // 텍스트 색상
-              fontSize: 18, // 텍스트 크기
-              fontFamily: 'Nanum', // 폰트
+              color: Colors.black,
+              fontSize: 18,
+              fontFamily: 'Nanum',
             ),
           ),
         ),
@@ -102,493 +132,327 @@ class _RankingScreenState extends State<RankingScreen> {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              width: screenSize.width,
-              height: screenSize.height * 0.79,
-              decoration: BoxDecoration(
-                color: Color(0xffE9EEFC),
-              ),
-              child: Stack(
-                children: [
-                  // 배경 선
-                  Positioned(
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Image.asset(
-                      'assets/ranking/bg_line.png',
-                      width: screenSize.width,
-                      height: screenSize.height * 0.79,
+      body: isSearchExpanded
+          ? Stack(
+              children: [
+                // 추천 게임 텍스트
+                Positioned(
+                  left: screenSize.width * 0.082,
+                  top: screenSize.height * 0.6,
+                  child: Text(
+                    '추천 게임',
+                    style: TextStyle(
+                      fontFamily: 'Nanum',
+                      fontSize: 14.22,
+                      color: Color(0xff868686),
                     ),
                   ),
-                  //1위
-                  Positioned(
-                    left: screenSize.width * 0.2028,
-                    top: screenSize.height * 0.1205,
-                    child: Container(
-                      width: screenSize.width * 0.3922,
-                      height: screenSize.height * 0.0908,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/ranking/big_container.png'),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Stack(
-                        children: [
-                          // 캐릭터
-                          Positioned(
-                            left: screenSize.width * 0.0119,
-                            top: screenSize.height * 0.0045,
-                            child: Image.asset(
-                              'assets/ranking/big_icon_1.png',
-                              width: screenSize.width * 0.1819,
-                              height: screenSize.height * 0.0818,
-                            ),
-                          ),
-                          // 이름
-                          Positioned(
-                            left: screenSize.width * 0.2028,
-                            top: screenSize.height * 0.0274,
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Nanum',
-                                color: Colors.black,
+                ),
+                // 추천 카드덱 리스트
+                Positioned(
+                  top: screenSize.height * 0.64,
+                  child: Container(
+                    width: screenSize.width,
+                    child: Column(
+                      children: <Widget>[
+                        _buildRecommends(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    width: screenSize.width,
+                    height: screenSize.height * 0.79,
+                    decoration: BoxDecoration(
+                      color: Color(0xffE9EEFC),
+                    ),
+                    child: rankingData.isEmpty
+                        ? Center(child: CircularProgressIndicator()) // 로딩 표시
+                        : Stack(
+                            children: [
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                child: Image.asset(
+                                  'assets/ranking/bg_line.png',
+                                  width: screenSize.width,
+                                  height: screenSize.height * 0.79,
+                                ),
                               ),
-                            ),
+                              ..._buildRankingWidgets(screenSize), // 순위별 위젯 생성
+                            ],
                           ),
-                          // 키딩칩 수
-                          Positioned(
-                            left: screenSize.width * 0.203,
-                            top: screenSize.height * 0.0549,
-                            child: Text(
-                              chips.toString() + '개',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontFamily: 'Nanum',
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
+                  ),
+                ),
+                Positioned(
+                  top: screenSize.height * 0.79,
+                  child: Container(
+                    width: screenSize.width,
+                    height: 0.1,
+                    color: Colors.black,
+                  ),
+                ),
+                Positioned(
+                  top: screenSize.height * 0.8,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/ranking/ranking_selected.png',
+                            width: screenSize.width * 0.1,
+                            height: screenSize.height * 0.04,
                           ),
-                        ],
-                      ),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/mypage/home_unselected.png',
+                            width: screenSize.width * 0.1,
+                            height: screenSize.height * 0.04,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeScreen()),
+                            );
+                          },
+                        ),
+                        IconButton(
+                          icon: Image.asset(
+                            'assets/home/mypage_unselected.png',
+                            width: screenSize.width * 0.1,
+                            height: screenSize.height * 0.04,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MyPageScreen()),
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  // 플러스 버튼
-                  Positioned(
-                    left: screenSize.width * 0.5272,
-                    top: screenSize.height * 0.11,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/ranking/plus_btn.png',
-                        width: screenSize.width * 0.0556,
-                        height: screenSize.height * 0.025,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  //2위
-                  Positioned(
-                    left: screenSize.width * 0.523,
-                    top: screenSize.height * 0.2116,
-                    child: Container(
-                      width: screenSize.width * 0.3922,
-                      height: screenSize.height * 0.0908,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/ranking/big_container.png'),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Stack(
-                        children: [
-                          // 캐릭터
-                          Positioned(
-                            left: screenSize.width * 0.0119,
-                            top: screenSize.height * 0.0045,
-                            child: Image.asset(
-                              'assets/ranking/big_icon_2.png',
-                              width: screenSize.width * 0.1819,
-                              height: screenSize.height * 0.0818,
-                            ),
-                          ),
-                          // 이름
-                          Positioned(
-                            left: screenSize.width * 0.2028,
-                            top: screenSize.height * 0.0274,
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Nanum',
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          // 키딩칩 수
-                          Positioned(
-                            left: screenSize.width * 0.203,
-                            top: screenSize.height * 0.0549,
-                            child: Text(
-                              chips.toString() + '개',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontFamily: 'Nanum',
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // 플러스 버튼
-                  Positioned(
-                    left: screenSize.width * 0.8439,
-                    top: screenSize.height * 0.2013,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/ranking/plus_btn.png',
-                        width: screenSize.width * 0.0556,
-                        height: screenSize.height * 0.025,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  //3위
-                  Positioned(
-                    left: screenSize.width * 0.0865,
-                    top: screenSize.height * 0.3088,
-                    child: Container(
-                      width: screenSize.width * 0.3922,
-                      height: screenSize.height * 0.0908,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/ranking/big_container.png'),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Stack(
-                        children: [
-                          // 캐릭터
-                          Positioned(
-                            left: screenSize.width * 0.0119,
-                            top: screenSize.height * 0.0045,
-                            child: Image.asset(
-                              'assets/ranking/big_icon_3.png',
-                              width: screenSize.width * 0.1819,
-                              height: screenSize.height * 0.0818,
-                            ),
-                          ),
-                          // 이름
-                          Positioned(
-                            left: screenSize.width * 0.2028,
-                            top: screenSize.height * 0.0274,
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'Nanum',
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          // 키딩칩 수
-                          Positioned(
-                            left: screenSize.width * 0.203,
-                            top: screenSize.height * 0.0549,
-                            child: Text(
-                              chips.toString() + '개',
-                              style: TextStyle(
-                                fontSize: 13,
-                                fontFamily: 'Nanum',
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // 플러스 버튼
-                  Positioned(
-                    left: screenSize.width * 0.4106,
-                    top: screenSize.height * 0.2988,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/ranking/plus_btn.png',
-                        width: screenSize.width * 0.0556,
-                        height: screenSize.height * 0.025,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  //4위
-                  Positioned(
-                    left: screenSize.width * 0.3888,
-                    top: screenSize.height * 0.4688,
-                    child: Container(
-                      width: screenSize.width * 0.3279,
-                      height: screenSize.height * 0.076,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/ranking/small_container.png'),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Stack(
-                        children: [
-                          // 캐릭터
-                          Positioned(
-                            left: screenSize.width * 0.0099,
-                            top: screenSize.height * 0.0038,
-                            child: Image.asset(
-                              'assets/ranking/small_icon_1.png',
-                              width: screenSize.width * 0.1521,
-                              height: screenSize.height * 0.0684,
-                            ),
-                          ),
-                          // 이름
-                          Positioned(
-                            left: screenSize.width * 0.1696,
-                            top: screenSize.height * 0.0223,
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                fontSize: 16.72,
-                                fontFamily: 'Nanum',
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          // 키딩칩 수
-                          Positioned(
-                            left: screenSize.width * 0.1697,
-                            top: screenSize.height * 0.0459,
-                            child: Text(
-                              chips.toString() + '개',
-                              style: TextStyle(
-                                fontSize: 10.87,
-                                fontFamily: 'Nanum',
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // 플러스 버튼
-                  Positioned(
-                    left: screenSize.width * 0.655,
-                    top: screenSize.height * 0.4588,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/ranking/plus_btn.png',
-                        width: screenSize.width * 0.0556,
-                        height: screenSize.height * 0.025,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  //5위
-                  Positioned(
-                    left: screenSize.width * 0.59,
-                    top: screenSize.height * 0.5814,
-                    child: Container(
-                      width: screenSize.width * 0.3279,
-                      height: screenSize.height * 0.076,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/ranking/small_container.png'),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Stack(
-                        children: [
-                          // 캐릭터
-                          Positioned(
-                            left: screenSize.width * 0.0099,
-                            top: screenSize.height * 0.0038,
-                            child: Image.asset(
-                              'assets/ranking/small_icon_2.png',
-                              width: screenSize.width * 0.1521,
-                              height: screenSize.height * 0.0684,
-                            ),
-                          ),
-                          // 이름
-                          Positioned(
-                            left: screenSize.width * 0.1696,
-                            top: screenSize.height * 0.0223,
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                fontSize: 16.72,
-                                fontFamily: 'Nanum',
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          // 키딩칩 수
-                          Positioned(
-                            left: screenSize.width * 0.1697,
-                            top: screenSize.height * 0.0459,
-                            child: Text(
-                              chips.toString() + '개',
-                              style: TextStyle(
-                                fontSize: 10.87,
-                                fontFamily: 'Nanum',
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // 플러스 버튼
-                  Positioned(
-                    left: screenSize.width * 0.855,
-                    top: screenSize.height * 0.5713,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/ranking/plus_btn.png',
-                        width: screenSize.width * 0.0556,
-                        height: screenSize.height * 0.025,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                  //6위
-                  Positioned(
-                    left: screenSize.width * 0.3349,
-                    top: screenSize.height * 0.6811,
-                    child: Container(
-                      width: screenSize.width * 0.3279,
-                      height: screenSize.height * 0.076,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                        image: AssetImage('assets/ranking/small_container.png'),
-                        fit: BoxFit.cover,
-                      )),
-                      child: Stack(
-                        children: [
-                          // 캐릭터
-                          Positioned(
-                            left: screenSize.width * 0.0099,
-                            top: screenSize.height * 0.0038,
-                            child: Image.asset(
-                              'assets/ranking/small_icon_3.png',
-                              width: screenSize.width * 0.1521,
-                              height: screenSize.height * 0.0684,
-                            ),
-                          ),
-                          // 이름
-                          Positioned(
-                            left: screenSize.width * 0.1696,
-                            top: screenSize.height * 0.0223,
-                            child: Text(
-                              username,
-                              style: TextStyle(
-                                fontSize: 16.72,
-                                fontFamily: 'Nanum',
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          // 키딩칩 수
-                          Positioned(
-                            left: screenSize.width * 0.1697,
-                            top: screenSize.height * 0.0459,
-                            child: Text(
-                              chips.toString() + '개',
-                              style: TextStyle(
-                                fontSize: 10.87,
-                                fontFamily: 'Nanum',
-                                color: Colors.black.withOpacity(0.7),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  // 플러스 버튼
-                  Positioned(
-                    left: screenSize.width * 0.5994,
-                    top: screenSize.height * 0.6713,
-                    child: IconButton(
-                      icon: Image.asset(
-                        'assets/ranking/plus_btn.png',
-                        width: screenSize.width * 0.0556,
-                        height: screenSize.height * 0.025,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
+                ),
+              ],
+            ),
+    );
+  }
+
+  List<Widget> _buildRankingWidgets(Size screenSize) {
+    List<Widget> widgets = [];
+    List<double> topOffsets = [0.1205, 0.2116, 0.3088, 0.4688, 0.5814, 0.6811];
+    List<String> containerImages = [
+      'assets/ranking/big_container.png',
+      'assets/ranking/big_container.png',
+      'assets/ranking/big_container.png',
+      'assets/ranking/small_container.png',
+      'assets/ranking/small_container.png',
+      'assets/ranking/small_container.png'
+    ];
+    List<String> iconImages = [
+      'assets/ranking/big_icon_1.png',
+      'assets/ranking/big_icon_2.png',
+      'assets/ranking/big_icon_3.png',
+      'assets/ranking/small_icon_1.png',
+      'assets/ranking/small_icon_2.png',
+      'assets/ranking/small_icon_3.png'
+    ];
+    List<double> leftPositions = [
+      0.2028, // for 1st place
+      0.523, // for 2nd place
+      0.0865, // for 3rd place
+      0.3888, // for 4th place
+      0.59, // for 5th place
+      0.3349 // for 6th place
+    ];
+    List<double> plusButtonLeftPositions = [
+      0.5272, // for 1st place
+      0.8439, // for 2nd place
+      0.4106, // for 3rd place
+      0.655, // for 4th place
+      0.855, // for 5th place
+      0.5994 // for 6th place
+    ];
+    List<double> plusButtonTopOffsets = [
+      0.11,
+      0.2013,
+      0.2988,
+      0.4588,
+      0.5713,
+      0.6713
+    ];
+
+    for (int i = 0; i < rankingData.length && i < 6; i++) {
+      final user = rankingData[i];
+      widgets.add(
+        Positioned(
+          left: screenSize.width * leftPositions[i],
+          top: screenSize.height * topOffsets[i],
+          child: Container(
+            width:
+                i < 3 ? screenSize.width * 0.3922 : screenSize.width * 0.3279,
+            height:
+                i < 3 ? screenSize.height * 0.0908 : screenSize.height * 0.076,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(containerImages[i]),
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          // 하단바 구분선
-          Positioned(
-              top: screenSize.height * 0.79,
-              child: Container(
-                width: screenSize.width,
-                height: 0.1,
-                color: Colors.black,
-              )),
-          // 하단바
-          Positioned(
-            top: screenSize.height * 0.8,
-            left: 0,
-            right: 0,
-            child: Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/ranking/ranking_selected.png',
-                      width: screenSize.width * 0.1,
-                      height: screenSize.height * 0.04,
-                    ),
-                    onPressed: () {},
+            child: Stack(
+              children: [
+                Positioned(
+                  left: screenSize.width * 0.0119,
+                  top: screenSize.height * 0.0045,
+                  child: Image.asset(
+                    iconImages[i],
+                    width: screenSize.width * (i < 3 ? 0.1819 : 0.1521),
+                    height: screenSize.height * (i < 3 ? 0.0818 : 0.0684),
                   ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/mypage/home_unselected.png',
-                      width: screenSize.width * 0.1,
-                      height: screenSize.height * 0.04,
+                ),
+                Positioned(
+                  left: screenSize.width * (i < 3 ? 0.2028 : 0.1696),
+                  top: screenSize.height * (i < 3 ? 0.0274 : 0.0223),
+                  child: Text(
+                    user["user"],
+                    style: TextStyle(
+                      fontSize: i < 3 ? 20 : 16.72,
+                      fontFamily: 'Nanum',
+                      color: Colors.black,
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()),
-                      );
-                    },
                   ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/mypage_unselected.png',
-                      width: screenSize.width * 0.1,
-                      height: screenSize.height * 0.04,
+                ),
+                Positioned(
+                  left: screenSize.width * (i < 3 ? 0.203 : 0.1697),
+                  top: screenSize.height * (i < 3 ? 0.0549 : 0.0459),
+                  child: Text(
+                    '${user["chips"]}개',
+                    style: TextStyle(
+                      fontSize: i < 3 ? 13 : 10.87,
+                      fontFamily: 'Nanum',
+                      color: Colors.black.withOpacity(0.7),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => MyPageScreen()),
-                      );
-                    },
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ],
+        ),
+      );
+
+      // 플러스 버튼 추가
+      widgets.add(
+        Positioned(
+          left: screenSize.width * plusButtonLeftPositions[i],
+          top: screenSize.height * plusButtonTopOffsets[i],
+          child: IconButton(
+            icon: Image.asset(
+              'assets/ranking/plus_btn.png',
+              width: screenSize.width * 0.0556,
+              height: screenSize.height * 0.025,
+            ),
+            onPressed: () {
+              // Implement your onPressed function here
+            },
+          ),
+        ),
+      );
+    }
+
+    return widgets;
+  }
+
+  // 추천게임
+  Widget _buildRecommends() {
+    return Container(
+      height: 120,
+      child: ShaderMask(
+        shaderCallback: (Rect bounds) {
+          return LinearGradient(
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+            colors: [
+              Colors.white.withOpacity(1.0), // 왼쪽의 불투명한 흰색
+              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
+              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
+              Colors.white.withOpacity(1.0), // 오른쪽의 불투명한 흰색
+            ],
+            stops: [0.0, 0.15, 0.85, 1.0],
+          ).createShader(bounds);
+        },
+        blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
+        child: ListView(
+            padding: EdgeInsets.only(right: 30),
+            scrollDirection: Axis.horizontal,
+            children: _buildRecommendCards()),
+      ),
+    );
+  }
+
+  // 추천 카드 목록을 생성
+  List<Widget> _buildRecommendCards() {
+    List<Widget> cards = [];
+    cards.add(_buildRecommendCard1());
+    cards.add(_buildRecommendCard2());
+    return cards;
+  }
+
+  Widget _buildRecommendCard1() {
+    return GestureDetector(
+      onTap: () {
+        print('kikisday card tapped');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
+        );
+      },
+      child: Container(
+        width: 230,
+        margin: EdgeInsets.only(left: 30),
+        child: Stack(
+          children: <Widget>[
+            Image.asset('assets/mypage/favorites_kikisday.png',
+                fit: BoxFit.cover),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // 임시 배치 (백엔드와 연결해야 함)
+  Widget _buildRecommendCard2() {
+    return GestureDetector(
+      onTap: () {
+        print('space card tapped');
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SpacePlayScreen()),
+        );
+      },
+      child: Container(
+        width: 230,
+        margin: EdgeInsets.only(left: 30),
+        child: Stack(
+          children: <Widget>[
+            Image.asset('assets/mypage/favorites_space.png', fit: BoxFit.cover),
+          ],
+        ),
       ),
     );
   }

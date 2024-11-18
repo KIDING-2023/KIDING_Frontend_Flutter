@@ -37,7 +37,7 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
             left: 0,
             right: 0,
             child: Text(
-              '닉네임: ${widget.nickname}입니다.',
+              '닉네임:\'${widget.nickname}\'입니다.',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontFamily: 'nanum', fontSize: 17, color: Colors.black),
