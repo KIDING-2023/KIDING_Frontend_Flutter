@@ -7,6 +7,7 @@ class ApiConstants {
   static const String boardgamesEndpoint = '/boardgames';
   static const String boardgameEndpoint = '/boardgame';
   static const String findNicknameEndpoint = '/help/findNickname';
+  static const String resetPasswordEndpoint = '/help/resetPassword';
   static const String rankingEndpoint = '/ranking';
   static const String phoneEndpoint = '/help/send';
 }

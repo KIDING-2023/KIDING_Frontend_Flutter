@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/login/password_reset_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
+import '../../core/constants/api_constants.dart';
 import 'find_password_result_screen.dart';
+
+import 'package:http/http.dart' as http;
 
 // 비밀번호 찾기 - 전화번호 인증 코드 입력 화면
 class PasswordPhoneScreen extends StatefulWidget {
@@ -23,7 +30,7 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
   @override
   void initState() {
     super.initState();
-    _sendCode(); // 화면 로드 시 인증번호 전송 함수 실행
+    _verifyPhone(widget.phone); // 화면 로드 시 인증번호 전송 함수 실행
   }
 
   @override
@@ -115,7 +122,11 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                   ),
                   // 비밀번호 찾기 버튼
                   IconButton(
-                    onPressed: _verifyCode,
+                    onPressed: () {
+                      if (codeSent) {
+                        _verifyCode(_codeController.text);
+                      }
+                    },
                     padding: EdgeInsets.zero,
                     icon: Image.asset('assets/login/find_password_btn.png',
                         width: screenSize.width * 0.73),
@@ -129,64 +140,81 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
     ));
   }
 
-  // 인증번호 전송
-  void _sendCode() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    await auth.verifyPhoneNumber(
-      timeout: const Duration(seconds: 180),
-      phoneNumber: widget.phone,
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        await auth.signInWithCredential(credential);
-        print("번호 인증 완료");
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          print("The provided phone number is not valid.");
-        }
-      },
-      codeSent: (String verificationId, int? resendToken) async {
-        setState(() {
-          codeSent = true;
-          errorVisible = true;
-          errorMessage = "인증번호가 전송되었습니다.";
-          _verificationId = verificationId;
-        });
-      },
-      codeAutoRetrievalTimeout: (timeout) {
-        print("handling code auto retrieval timeout");
-      },
-    );
-  }
+  // 전화번호 인증 로직
+  Future<void> _verifyPhone(String phoneNumber) async {
+    log('인증번호 전송 시도');
+    final url = Uri.parse('${ApiConstants.baseUrl}/help/send');
 
-  // 인증번호 확인
-  void _verifyCode() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({'phoneNumber': phoneNumber});
+
     try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: _verificationId, smsCode: _codeController.text);
-      await auth
-          .signInWithCredential(credential)
-          .then((UserCredential userCredential) {
-        // 인증 성공, 다음 화면으로 네비게이션
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => FindPasswordResultScreen()));
-      }).catchError((error) {
-        // 인증 실패, 에러 메시지 설정
+      final response = await http.post(url, headers: headers, body: body);
+      log('인증번호 전송 시도');
+      final data = jsonDecode(response.body);
+
+      // 서버 응답을 로그로 출력
+      log('서버 응답 상태 코드: ${response.statusCode}');
+      log('서버 응답 본문: ${response.body}');
+
+      if (data['isSuccess'] == true) {
         setState(() {
           errorVisible = true;
-          errorMessage = '인증번호가 일치하지 않습니다.';
+          errorMessage = "인증번호를 보냈습니다.";
+          codeSent = true; // 인증번호 입력 모드로 전환
         });
-      });
+      } else {
+        setState(() {
+          errorVisible = true;
+          errorMessage = "서버 오류가 발생했습니다.";
+        });
+      }
     } catch (e) {
-      // 다른 예외 처리, 예를 들어 네트워크 에러 등
       setState(() {
         errorVisible = true;
-        errorMessage = '인증 처리 중 문제가 발생했습니다: ${e.toString()}';
+        errorMessage = "네트워크 오류가 발생했습니다.";
       });
     }
   }
 
-// 전화번호를 통해 uid (or token) 받아오는 로직 추가 필요 -> 다음 화면으로 전달
+  // 인증번호 검증 로직
+  Future<void> _verifyCode(String code) async {
+    final url = Uri.parse('${ApiConstants.baseUrl}/help/send/verify');
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+    final body = jsonEncode({'code': code});
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+
+      // 서버 응답을 로그로 출력
+      log('서버 응답 상태 코드: ${response.statusCode}');
+      log('서버 응답 본문: ${response.body}');
+
+      if (response.statusCode == 200) {
+        setState(() {
+          errorVisible = true;
+          errorMessage = "정상 인증 되었습니다.";
+        });
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PasswordResetScreen(phone: widget.phone)));
+      } else {
+        setState(() {
+          errorVisible = true;
+          errorMessage = "서버 오류가 발생했습니다.";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorVisible = true;
+        errorMessage = "네트워크 오류가 발생했습니다.";
+      });
+    }
+  }
 }

@@ -22,12 +22,12 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
         children: [
           // '비밀번호가 재설정 되었습니다!' 텍스트
           Positioned(
-            top: screenSize.height * 0.125,
+            top: screenSize.height * 0.15,
             left: 0,
             right: 0,
             child: Image.asset('assets/login/password_result_text.png',
-                width: screenSize.width * 0.74,
-                height: screenSize.height * 0.11),
+                width: screenSize.width * 0.6,
+                height: screenSize.height * 0.15),
           ),
           // 로그인 & 닉네임 찾기 버튼 배경
           Positioned(

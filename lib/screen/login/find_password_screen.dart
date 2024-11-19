@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/login/password_phone_screen.dart';
 import 'package:kiding/screen/login/start_screen.dart';
+
+import '../../core/constants/api_constants.dart';
+
+import 'package:http/http.dart' as http;
 
 // 비밀번호 찾기 - 전화번호 입력 화면
 class FindPasswordScreen extends StatefulWidget {
@@ -13,8 +20,9 @@ class FindPasswordScreen extends StatefulWidget {
 
 class _FindPasswordScreenState extends State<FindPasswordScreen> {
   final _phoneController = TextEditingController(); // 전화번호 입력 컨트롤러
-  bool errorVisible = false; // 에러 메시지 가시성
-  String errorMessage = ""; // 에러 메시지
+  bool errorVisible = true; // 에러 메시지 가시성
+  bool isValid = false; // 존재하는 유저인지
+  String errorMessage = "전화번호를 입력하세요"; // 에러 메시지
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +63,7 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(
-                          hintText: '전화번호를 입력하세요',
+                          hintText: 'ex) 01012345678',
                           hintStyle: TextStyle(color: Color(0xFFAAAAAA)),
                           filled: true,
                           fillColor: Color(0xfff6f6f6),
@@ -105,7 +113,9 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                   ),
                   // 비밀번호 찾기 버튼
                   IconButton(
-                    onPressed: _findPassword,
+                    onPressed: () {
+                      _checkPhoneDuplication(_phoneController.text);
+                    },
                     padding: EdgeInsets.zero,
                     icon: Image.asset('assets/login/find_password_btn.png',
                         width: screenSize.width * 0.73),
@@ -119,11 +129,58 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
     ));
   }
 
+  // 전화번호 중복 여부 체크
+  Future<void> _checkPhoneDuplication(String phoneNumber) async {
+    log('phone: $phoneNumber');
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phoneNumber');
+
+    final headers = {
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      final data = jsonDecode(response.body);
+
+      // 서버 응답을 로그로 출력
+      log('서버 응답 상태 코드: ${response.statusCode}');
+      log('서버 응답 본문: ${response.body}');
+
+      if (data['isSuccess']) {
+        if (data['result'] == "사용 가능한 전화번호입니다.") {
+          setState(() {
+            errorVisible = true;
+            errorMessage = "가입되지 않은 전화번호입니다.";
+            isValid = false;
+          });
+        } else {
+          // 데이터베이스에 존재하는 전화번호일 경우
+          setState(() {
+            errorVisible = false;
+            isValid = true;
+          });
+          _findPassword();
+        }
+      } else {
+        setState(() {
+          errorVisible = true;
+          errorMessage = "서버 오류가 발생했습니다.";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorVisible = true;
+        errorMessage = "네트워크 오류가 발생했습니다.";
+      });
+    }
+  }
+
   void _findPassword() async {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => PasswordPhoneScreen(
-                phone: _phoneController.text.replaceFirst('0', '+82'))));
+            builder: (context) =>
+                PasswordPhoneScreen(phone: _phoneController.text)));
   }
 }

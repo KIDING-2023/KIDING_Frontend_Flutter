@@ -4,7 +4,9 @@ import 'package:kiding/screen/login/password_reset_confirm_screen.dart';
 import 'back_screen.dart';
 
 class PasswordResetScreen extends StatefulWidget {
-  const PasswordResetScreen({super.key});
+  final String phone;
+
+  const PasswordResetScreen({super.key, required this.phone});
 
   @override
   State<PasswordResetScreen> createState() => _PasswordResetScreenState();
@@ -135,7 +137,7 @@ class _PasswordResetScreenState extends State<PasswordResetScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => PasswordResetConfirmScreen(password: pw,)),
+            builder: (context) => PasswordResetConfirmScreen(password: pw, phone: widget.phone)),
       );
     }
   }
