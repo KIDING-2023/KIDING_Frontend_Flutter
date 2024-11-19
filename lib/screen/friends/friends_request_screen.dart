@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
+import 'package:kiding/screen/home/home_screen.dart';
+import 'package:kiding/screen/ranking/ranking_screen.dart';
 import '../mypage/mypage_screen.dart';
 
 class FriendsRequestScreen extends StatefulWidget {
@@ -74,57 +77,20 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
             ),
           ),
           // 하단바
-          Positioned(
-            top: screenHeight * 0.91,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: screenHeight * 0.09,
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/ranking_unselected.png',
-                      width: screenWidth * 0.1,
-                      height: screenHeight * 0.04,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/home_selected.png',
-                      width: screenWidth * 0.1,
-                      height: screenHeight * 0.04,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Image.asset(
-                      'assets/home/mypage_unselected.png',
-                      width: screenWidth * 0.1,
-                      height: screenHeight * 0.04,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const MyPageScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
+          BottomAppBarWidget(
+            screenHeight: screenHeight,
+            screenWidth: screenWidth,
+            screen: "home",
+            topPosition: screenHeight * 0.91,
+            hasAppBar: false,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildFriendRequestCard(String name, String rank, double screenWidth, double screenHeight) {
+  Widget _buildFriendRequestCard(
+      String name, String rank, double screenWidth, double screenHeight) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 30),
       width: screenWidth * 0.8332,

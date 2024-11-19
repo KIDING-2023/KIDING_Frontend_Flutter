@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
 import '../../core/constants/api_constants.dart';
 import '../friends/friends_request_screen.dart';
 import '../home/home_screen.dart';
@@ -201,54 +202,14 @@ class _RankingScreenState extends State<RankingScreen> {
                     color: Colors.black,
                   ),
                 ),
-                Positioned(
-                  top: screenSize.height * 0.8,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        IconButton(
-                          icon: Image.asset(
-                            'assets/ranking/ranking_selected.png',
-                            width: screenSize.width * 0.1,
-                            height: screenSize.height * 0.04,
-                          ),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                          icon: Image.asset(
-                            'assets/mypage/home_unselected.png',
-                            width: screenSize.width * 0.1,
-                            height: screenSize.height * 0.04,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
-                            );
-                          },
-                        ),
-                        IconButton(
-                          icon: Image.asset(
-                            'assets/home/mypage_unselected.png',
-                            width: screenSize.width * 0.1,
-                            height: screenSize.height * 0.04,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => MyPageScreen()),
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                // 하단 바
+                BottomAppBarWidget(
+                  screenHeight: screenSize.height,
+                  screenWidth: screenSize.width,
+                  screen: "ranking",
+                  topPosition: screenSize.height * 0.8,
+                  hasAppBar: true,
+                )
               ],
             ),
     );

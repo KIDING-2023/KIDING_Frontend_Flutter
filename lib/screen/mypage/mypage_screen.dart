@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
 
 import '../friends/friends_request_screen.dart';
@@ -187,311 +188,274 @@ class _MyPageScreenState extends State<MyPageScreen> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
+      // 상단바
+      appBar: AppBar(
         backgroundColor: Colors.white,
-        // 상단바
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          // 배경색을 흰색으로 설정
-          elevation: 0,
-          // AppBar의 그림자 제거
-          leading: Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10),
-            child: IconButton(
-              icon: Image.asset(
-                'assets/home/notice.png',
-                width: 17.08,
-                height: 20,
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FriendsRequestScreen()),
-                );
-              },
+        // 배경색을 흰색으로 설정
+        elevation: 0,
+        // AppBar의 그림자 제거
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 10, top: 10),
+          child: IconButton(
+            icon: Image.asset(
+              'assets/home/notice.png',
+              width: 17.08,
+              height: 20,
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+              );
+            },
+          ),
+        ),
+        title: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: Text(
+            '마이페이지',
+            style: TextStyle(
+              color: Colors.black, // 텍스트 색상
+              fontSize: 18, // 텍스트 크기
+              fontFamily: 'Nanum', // 폰트
             ),
           ),
-          title: Padding(
-            padding: const EdgeInsets.only(top: 10),
-            child: Text(
-              '마이페이지',
-              style: TextStyle(
-                color: Colors.black, // 텍스트 색상
-                fontSize: 18, // 텍스트 크기
-                fontFamily: 'Nanum', // 폰트
+        ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10, top: 10),
+            child: AnimatedContainer(
+              duration: Duration(seconds: 1),
+              curve: Curves.easeInOut,
+              width: isSearchExpanded ? screenSize.width * 0.8333 : 40,
+              height: screenSize.height * 0.0563,
+              decoration: BoxDecoration(
+                color: isSearchExpanded ? Color(0xffff8a5b) : Colors.white,
+                borderRadius: BorderRadius.circular(27.36),
               ),
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 10, top: 10),
-              child: AnimatedContainer(
-                duration: Duration(seconds: 1),
-                curve: Curves.easeInOut,
-                width: isSearchExpanded ? screenSize.width * 0.8333 : 40,
-                height: screenSize.height * 0.0563,
-                decoration: BoxDecoration(
-                  color: isSearchExpanded ? Color(0xffff8a5b) : Colors.white,
-                  borderRadius: BorderRadius.circular(27.36),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    if (isSearchExpanded)
-                      Flexible(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            contentPadding:
-                                EdgeInsets.symmetric(horizontal: 15),
-                          ),
-                        ),
-                      ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (isSearchExpanded)
                     Flexible(
-                      child: IconButton(
-                        icon: Image.asset(
-                          isSearchExpanded
-                              ? 'assets/home/search_icon_selected.png'
-                              : 'assets/home/search.png',
-                          width: 20.95,
-                          height: 20,
+                      child: TextField(
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
                         ),
-                        onPressed: () {
-                          setState(() {
-                            isSearchExpanded = !isSearchExpanded;
-                          });
-                        },
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-        // 바디
-        body: isSearchExpanded
-            ? Stack(
-                children: [
-                  // 추천 게임 텍스트
-                  Positioned(
-                    left: screenSize.width * 0.082,
-                    top: screenSize.height * 0.6,
-                    child: Text(
-                      '추천 게임',
-                      style: TextStyle(
-                        fontFamily: 'Nanum',
-                        fontSize: 14.22,
-                        color: Color(0xff868686),
+                  Flexible(
+                    child: IconButton(
+                      icon: Image.asset(
+                        isSearchExpanded
+                            ? 'assets/home/search_icon_selected.png'
+                            : 'assets/home/search.png',
+                        width: 20.95,
+                        height: 20,
                       ),
+                      onPressed: () {
+                        setState(() {
+                          isSearchExpanded = !isSearchExpanded;
+                        });
+                      },
                     ),
                   ),
-                  // 추천 카드덱 리스트
-                  Positioned(
-                    top: screenSize.height * 0.63,
-                    child: Container(
-                      width: screenSize.width,
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      // 바디
+      body: isSearchExpanded
+          ? Stack(
+              children: [
+                // 추천 게임 텍스트
+                Positioned(
+                  left: screenSize.width * 0.082,
+                  top: screenSize.height * 0.6,
+                  child: Text(
+                    '추천 게임',
+                    style: TextStyle(
+                      fontFamily: 'Nanum',
+                      fontSize: 14.22,
+                      color: Color(0xff868686),
+                    ),
+                  ),
+                ),
+                // 추천 카드덱 리스트
+                Positioned(
+                  top: screenSize.height * 0.63,
+                  child: Container(
+                    width: screenSize.width,
+                    child: Column(
+                      children: <Widget>[
+                        _buildRecommends(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  child: SizedBox(
+                    width: screenSize.width,
+                    height: screenSize.height * 0.79,
+                    child: SingleChildScrollView(
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          _buildRecommends(),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 15),
+                            child: Center(
+                              child: Container(
+                                width: 300.93,
+                                height: 117.73,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/mypage/ranking_box_mypage.png'),
+                                        fit: BoxFit.fill)),
+                                child: Stack(
+                                  children: [
+                                    // 대답수
+                                    Positioned(
+                                      top: 56.11,
+                                      left: 37.29,
+                                      child: Text(
+                                        '대답수 $answers번',
+                                        style: TextStyle(
+                                            color: Color(0xfffad7a0),
+                                            fontSize: 25,
+                                            fontFamily: 'Nanum'),
+                                      ),
+                                    ),
+                                    // 순위
+                                    Positioned(
+                                        top: 56.11,
+                                        right: 37.29,
+                                        child: Text(
+                                          '$score위',
+                                          style: TextStyle(
+                                              color: Color(0xffff8a5b),
+                                              fontSize: 25,
+                                              fontFamily: 'Nanum'),
+                                        )),
+                                    // 동점자
+                                    Positioned(
+                                      top: 97,
+                                      left: 0,
+                                      right: 0,
+                                      child: Center(
+                                        child: Text(
+                                          '동점자: $playersWith명',
+                                          style: TextStyle(
+                                              color: Color(0xfffad7a0),
+                                              fontSize: 12,
+                                              fontFamily: 'Nanum'),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          // 즐겨찾기 텍스트
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 29.54, top: 20),
+                            child: Image.asset(
+                                'assets/mypage/favorites_text.png',
+                                width: 57,
+                                height: 17),
+                          ),
+                          // 즐겨찾기 카드 목록
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Column(
+                              children: <Widget>[
+                                _buildFavorites(),
+                              ],
+                            ),
+                          ),
+                          // 나의 기록 텍스트, 새로고침 버튼
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 29.54, right: 29.54),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // 나의 기록 텍스트
+                                Image.asset('assets/mypage/my_record_text.png',
+                                    width: 61, height: 17),
+                                // 새로고침 버튼
+                                IconButton(
+                                    onPressed: _restartAnimations,
+                                    icon: Image.asset(
+                                        'assets/mypage/reset_btn.png',
+                                        width: 15.52,
+                                        height: 15.52))
+                              ],
+                            ),
+                          ),
+                          // 나의 기록 박스
+                          Center(
+                            child: Container(
+                                width: screenSize.width * 0.835,
+                                height: screenSize.height * 0.576,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                        image: AssetImage(
+                                            'assets/mypage/my_record_bg.png'),
+                                        fit: BoxFit.fill)),
+                                child: Stack(
+                                  children: [
+                                    // 키딩칩 개수
+                                    ChipsItem(
+                                        key: _chipsItemKey, chipsNum: chipsNum),
+                                    // 친구 수
+                                    FriendsItem(
+                                        key: _friendsItemKey,
+                                        friendsNum: friendsNum),
+                                    // 1위 경험 횟수
+                                    RankingItem(
+                                        key: _rankingItemKey,
+                                        rankingNum: rankingNum),
+                                    // 삼각형 모양
+                                    TriangleItem(key: _triangleItemKey)
+                                  ],
+                                )),
+                          ),
                         ],
                       ),
                     ),
                   ),
-                ],
-              )
-            : Stack(
-                children: [
-                  Positioned(
-                    top: 0,
-                    child: SizedBox(
+                ),
+                // 하단바 구분선
+                Positioned(
+                    top: screenSize.height * 0.79,
+                    child: Container(
                       width: screenSize.width,
-                      height: screenSize.height * 0.79,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(top: 15),
-                              child: Center(
-                                child: Container(
-                                  width: 300.93,
-                                  height: 117.73,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/mypage/ranking_box_mypage.png'),
-                                          fit: BoxFit.fill)),
-                                  child: Stack(
-                                    children: [
-                                      // 대답수
-                                      Positioned(
-                                        top: 56.11,
-                                        left: 37.29,
-                                        child: Text(
-                                          '대답수 $answers번',
-                                          style: TextStyle(
-                                              color: Color(0xfffad7a0),
-                                              fontSize: 25,
-                                              fontFamily: 'Nanum'),
-                                        ),
-                                      ),
-                                      // 순위
-                                      Positioned(
-                                          top: 56.11,
-                                          right: 37.29,
-                                          child: Text(
-                                            '$score위',
-                                            style: TextStyle(
-                                                color: Color(0xffff8a5b),
-                                                fontSize: 25,
-                                                fontFamily: 'Nanum'),
-                                          )),
-                                      // 동점자
-                                      Positioned(
-                                        top: 97,
-                                        left: 0,
-                                        right: 0,
-                                        child: Center(
-                                          child: Text(
-                                            '동점자: $playersWith명',
-                                            style: TextStyle(
-                                                color: Color(0xfffad7a0),
-                                                fontSize: 12,
-                                                fontFamily: 'Nanum'),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // 즐겨찾기 텍스트
-                            Padding(
-                              padding: const EdgeInsets.only(left: 29.54, top: 20),
-                              child: Image.asset('assets/mypage/favorites_text.png',
-                                  width: 57, height: 17),
-                            ),
-                            // 즐겨찾기 카드 목록
-                            Padding(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Column(
-                                children: <Widget>[
-                                  _buildFavorites(),
-                                ],
-                              ),
-                            ),
-                            // 나의 기록 텍스트, 새로고침 버튼
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  top: 10, left: 29.54, right: 29.54),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // 나의 기록 텍스트
-                                  Image.asset('assets/mypage/my_record_text.png',
-                                      width: 61, height: 17),
-                                  // 새로고침 버튼
-                                  IconButton(
-                                      onPressed: _restartAnimations,
-                                      icon: Image.asset('assets/mypage/reset_btn.png',
-                                          width: 15.52, height: 15.52))
-                                ],
-                              ),
-                            ),
-                            // 나의 기록 박스
-                            Center(
-                              child: Container(
-                                  width: screenSize.width * 0.835,
-                                  height: screenSize.height * 0.576,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/mypage/my_record_bg.png'),
-                                          fit: BoxFit.fill)),
-                                  child: Stack(
-                                    children: [
-                                      // 키딩칩 개수
-                                      ChipsItem(
-                                          key: _chipsItemKey,
-                                          chipsNum: chipsNum),
-                                      // 친구 수
-                                      FriendsItem(
-                                          key: _friendsItemKey,
-                                          friendsNum: friendsNum),
-                                      // 1위 경험 횟수
-                                      RankingItem(
-                                          key: _rankingItemKey,
-                                          rankingNum: rankingNum),
-                                      // 삼각형 모양
-                                      TriangleItem(key: _triangleItemKey)
-                                    ],
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  // 하단바 구분선
-                  Positioned(
-                      top: screenSize.height * 0.79,
-                      child: Container(
-                        width: screenSize.width,
-                        height: 0.1,
-                        color: Colors.black,
-                      )),
-                  // 하단바
-                  Positioned(
-                      top: screenSize.height * 0.8,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Image.asset(
-                                'assets/mypage/ranking_unselected.png',
-                                width: screenSize.width * 0.1,
-                                height: screenSize.height * 0.04,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => RankingScreen()),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Image.asset(
-                                'assets/mypage/home_unselected.png',
-                                width: screenSize.width * 0.1,
-                                height: screenSize.height * 0.04,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreen()),
-                                );
-                              },
-                            ),
-                            IconButton(
-                              icon: Image.asset(
-                                'assets/mypage/mypage_selected.png',
-                                width: screenSize.width * 0.1,
-                                height: screenSize.height * 0.04,
-                              ),
-                              onPressed: () {},
-                            ),
-                          ],
-                        ),
-                      ))
-                ],
-              ));
+                      height: 0.1,
+                      color: Colors.black,
+                    )),
+                // 하단바
+                BottomAppBarWidget(
+                  screenHeight: screenSize.height,
+                  screenWidth: screenSize.width,
+                  screen: "mypage",
+                  topPosition: screenSize.height * 0.8,
+                  hasAppBar: true,
+                ),
+              ],
+            ),
+    );
   }
 
   Widget _buildRecommends() {

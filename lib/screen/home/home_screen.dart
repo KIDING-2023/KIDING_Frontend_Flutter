@@ -8,6 +8,7 @@ import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
 
 import '../../core/constants/api_constants.dart';
+import '../../core/widgets/bottom_app_bar_widget.dart';
 import '../mypage/mypage_screen.dart';
 import '../space/space_play_screen.dart';
 
@@ -37,11 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
       "players": 2,
       "bookmarked": true,
     },
-    {
-      "name": "키키의 우주여행",
-      "players": 7,
-      "bookmarked": false
-    },
+    {"name": "키키의 우주여행", "players": 7, "bookmarked": false},
   ];
   bool isLoading = false;
   String errorMessage = "";
@@ -81,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
         break;
     }
 
-    var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgamesEndpoint}/$sortOption');
+    var url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.boardgamesEndpoint}/$sortOption');
     var headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -237,193 +235,154 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: isSearchExpanded
           ? Stack(
-        children: [
-          // 추천 게임 텍스트
-          Positioned(
-            left: screenSize.width * 0.082,
-            top: screenSize.height * 0.6,
-            child: Text(
-              '추천 게임',
-              style: TextStyle(
-                fontFamily: 'Nanum',
-                fontSize: 14.22,
-                color: Color(0xff868686),
-              ),
-            ),
-          ),
-          // 추천 카드덱 리스트
-          Positioned(
-            top: screenSize.height * 0.64,
-            child: Container(
-              width: screenSize.width,
-              child: Column(
-                children: <Widget>[
-                  _buildRecommends(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      )
+              children: [
+                // 추천 게임 텍스트
+                Positioned(
+                  left: screenSize.width * 0.082,
+                  top: screenSize.height * 0.6,
+                  child: Text(
+                    '추천 게임',
+                    style: TextStyle(
+                      fontFamily: 'Nanum',
+                      fontSize: 14.22,
+                      color: Color(0xff868686),
+                    ),
+                  ),
+                ),
+                // 추천 카드덱 리스트
+                Positioned(
+                  top: screenSize.height * 0.64,
+                  child: Container(
+                    width: screenSize.width,
+                    child: Column(
+                      children: <Widget>[
+                        _buildRecommends(),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            )
           : Stack(
-        children: [
-          // 바디
-          Positioned(
-              top: 0,
-              left: 0,
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  width: screenSize.width,
-                  height: screenSize.height * 0.79,
-                  child: Stack(
-                    children: [
-                      // let's play 텍스트
-                      Positioned(
-                          left: screenSize.width * 0.08,
-                          top: screenSize.height * 0.04,
-                          child: Image.asset(
-                            'assets/home/home_title.png',
-                            width: screenSize.width * 0.53,
-                            height: screenSize.height * 0.07,
-                          )),
-                      // 메인, 인기순, 최근순 버튼
-                      Positioned(
-                        left: screenSize.width * 0.1,
-                        top: screenSize.height * 0.15,
-                        child: Row(
-                          children: <Widget>[
-                            _buildSortOption('메인', 0),
-                            _buildSortOption('인기순', 1),
-                            _buildSortOption('최근순', 2),
+              children: [
+                // 바디
+                Positioned(
+                    top: 0,
+                    left: 0,
+                    child: SingleChildScrollView(
+                      child: SizedBox(
+                        width: screenSize.width,
+                        height: screenSize.height * 0.79,
+                        child: Stack(
+                          children: [
+                            // let's play 텍스트
+                            Positioned(
+                                left: screenSize.width * 0.08,
+                                top: screenSize.height * 0.04,
+                                child: Image.asset(
+                                  'assets/home/home_title.png',
+                                  width: screenSize.width * 0.53,
+                                  height: screenSize.height * 0.07,
+                                )),
+                            // 메인, 인기순, 최근순 버튼
+                            Positioned(
+                              left: screenSize.width * 0.1,
+                              top: screenSize.height * 0.15,
+                              child: Row(
+                                children: <Widget>[
+                                  _buildSortOption('메인', 0),
+                                  _buildSortOption('인기순', 1),
+                                  _buildSortOption('최근순', 2),
+                                ],
+                              ),
+                            ),
+                            // 카드 리스트
+                            Positioned(
+                              left: 0,
+                              top: screenSize.height * 0.19,
+                              child: Container(
+                                width: screenSize.width,
+                                height: screenSize.height * 0.6,
+                                child: Column(
+                                  children: <Widget>[
+                                    _buildBoardGamesSection()
+                                    // if (_selectedSortIndex == 0)
+                                    //   _buildMainSortSection(),
+                                    // if (_selectedSortIndex == 1)
+                                    //   _buildPopularSortSection(),
+                                    // if (_selectedSortIndex == 2)
+                                    //   _buildRecentSortSection(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            // 랭킹 박스
+                            Positioned(
+                                left: 0,
+                                right: 0,
+                                top: screenSize.height * 0.62,
+                                child: Image.asset(
+                                  'assets/home/ranking_box.png',
+                                  width: screenSize.width * 0.83,
+                                  height: screenSize.height * 0.14,
+                                )),
+                            // 플러스 버튼
+                            Positioned(
+                                left: screenSize.width * 0.81,
+                                top: screenSize.height * 0.64,
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: Image.asset(
+                                    'assets/home/plus.png',
+                                    width: screenSize.width * 0.06,
+                                    height: screenSize.height * 0.02,
+                                  ),
+                                )),
+                            // 1위 사용자 이름 (백엔드 연결 필요)
+                            Positioned(
+                              right: screenSize.width * 0.34,
+                              top: screenSize.height * 0.7,
+                              child: Text(
+                                '사용자',
+                                style: TextStyle(
+                                    fontSize: 18.96,
+                                    color: Colors.black,
+                                    fontFamily: 'Nanum'),
+                              ),
+                            ),
+                            // 플레이 횟수 (백엔드 연결 필요)
+                            Positioned(
+                                left: screenSize.width * 0.68,
+                                top: screenSize.height * 0.7,
+                                child: Text(
+                                  '00번',
+                                  style: TextStyle(
+                                      fontSize: 18.96,
+                                      color: Color(0xff75777e),
+                                      fontFamily: 'Nanum'),
+                                )),
                           ],
                         ),
                       ),
-                      // 카드 리스트
-                      Positioned(
-                        left: 0,
-                        top: screenSize.height * 0.19,
-                        child: Container(
-                          width: screenSize.width,
-                          height: screenSize.height * 0.6,
-                          child: Column(
-                            children: <Widget>[
-                              _buildBoardGamesSection()
-                              // if (_selectedSortIndex == 0)
-                              //   _buildMainSortSection(),
-                              // if (_selectedSortIndex == 1)
-                              //   _buildPopularSortSection(),
-                              // if (_selectedSortIndex == 2)
-                              //   _buildRecentSortSection(),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // 랭킹 박스
-                      Positioned(
-                          left: 0,
-                          right: 0,
-                          top: screenSize.height * 0.62,
-                          child: Image.asset(
-                            'assets/home/ranking_box.png',
-                            width: screenSize.width * 0.83,
-                            height: screenSize.height * 0.14,
-                          )),
-                      // 플러스 버튼
-                      Positioned(
-                          left: screenSize.width * 0.81,
-                          top: screenSize.height * 0.64,
-                          child: IconButton(
-                            onPressed: () {},
-                            icon: Image.asset(
-                              'assets/home/plus.png',
-                              width: screenSize.width * 0.06,
-                              height: screenSize.height * 0.02,
-                            ),
-                          )),
-                      // 1위 사용자 이름 (백엔드 연결 필요)
-                      Positioned(
-                        right: screenSize.width * 0.34,
-                        top: screenSize.height * 0.7,
-                        child: Text(
-                          '사용자',
-                          style: TextStyle(
-                              fontSize: 18.96,
-                              color: Colors.black,
-                              fontFamily: 'Nanum'),
-                        ),
-                      ),
-                      // 플레이 횟수 (백엔드 연결 필요)
-                      Positioned(
-                          left: screenSize.width * 0.68,
-                          top: screenSize.height * 0.7,
-                          child: Text(
-                            '00번',
-                            style: TextStyle(
-                                fontSize: 18.96,
-                                color: Color(0xff75777e),
-                                fontFamily: 'Nanum'),
-                          )),
-                    ],
-                  ),
+                    )),
+                // 하단바 구분선
+                Positioned(
+                    top: screenSize.height * 0.79,
+                    child: Container(
+                      width: screenSize.width,
+                      height: 0.1,
+                      color: Colors.black,
+                    )),
+                // 하단바
+                BottomAppBarWidget(
+                  screenHeight: screenSize.height,
+                  screenWidth: screenSize.width,
+                  screen: "home",
+                  topPosition: screenSize.height * 0.8,
+                  hasAppBar: true,
                 ),
-              )),
-          // 하단바 구분선
-          Positioned(
-              top: screenSize.height * 0.79,
-              child: Container(
-                width: screenSize.width,
-                height: 0.1,
-                color: Colors.black,
-              )),
-          // 하단바
-          Positioned(
-              top: screenSize.height * 0.8,
-              left: 0,
-              right: 0,
-              child: Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/home/ranking_unselected.png',
-                        width: screenSize.width * 0.1,
-                        height: screenSize.height * 0.04,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => RankingScreen()),
-                        );
-                      },
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/home/home_selected.png',
-                        width: screenSize.width * 0.1,
-                        height: screenSize.height * 0.04,
-                      ),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                      icon: Image.asset(
-                        'assets/home/mypage_unselected.png',
-                        width: screenSize.width * 0.1,
-                        height: screenSize.height * 0.04,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => MyPageScreen()),
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ))
-        ],
-      ),
+              ],
+            ),
     );
   }
 
@@ -610,7 +569,7 @@ class _HomeScreenState extends State<HomeScreen> {
     bool isFavorite = game['bookmarked'];
     String gameName = game['name'];
     Widget nextScreen =
-    gameName == "키키의 하루" ? KikisdayPlayScreen() : SpacePlayScreen();
+        gameName == "키키의 하루" ? KikisdayPlayScreen() : SpacePlayScreen();
 
     // gameImage 초기화
     String gameImage = gameName == "키키의 하루" ? "kikisday" : "space";
