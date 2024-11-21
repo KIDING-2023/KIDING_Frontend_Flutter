@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
 import '../../core/constants/api_constants.dart';
 import '../../core/widgets/app_bar_widget.dart';
+import '../../core/widgets/search_widget.dart';
 import '../friends/friends_request_screen.dart';
 import '../home/home_screen.dart';
 import '../kikisday/kikisday_play_screen.dart';
@@ -74,34 +75,8 @@ class _RankingScreenState extends State<RankingScreen> {
         backgroundColor: Color(0xffE9EEFC),
       ),
       body: isSearchExpanded
-          ? Stack(
-              children: [
-                // 추천 게임 텍스트
-                Positioned(
-                  left: screenSize.width * 0.082,
-                  top: screenSize.height * 0.6,
-                  child: Text(
-                    '추천 게임',
-                    style: TextStyle(
-                      fontFamily: 'Nanum',
-                      fontSize: 14.22,
-                      color: Color(0xff868686),
-                    ),
-                  ),
-                ),
-                // 추천 카드덱 리스트
-                Positioned(
-                  top: screenSize.height * 0.64,
-                  child: Container(
-                    width: screenSize.width,
-                    child: Column(
-                      children: <Widget>[
-                        _buildRecommends(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          ? SearchWidget(
+              screenSize: screenSize,
             )
           : Stack(
               children: [

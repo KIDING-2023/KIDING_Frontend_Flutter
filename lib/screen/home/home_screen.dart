@@ -11,6 +11,7 @@ import 'package:kiding/screen/ranking/ranking_screen.dart';
 
 import '../../core/constants/api_constants.dart';
 import '../../core/widgets/bottom_app_bar_widget.dart';
+import '../../core/widgets/search_widget.dart';
 import '../mypage/mypage_screen.dart';
 import '../space/space_play_screen.dart';
 
@@ -187,34 +188,8 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
       ),
       body: isSearchExpanded
-          ? Stack(
-              children: [
-                // 추천 게임 텍스트
-                Positioned(
-                  left: screenSize.width * 0.082,
-                  top: screenSize.height * 0.6,
-                  child: Text(
-                    '추천 게임',
-                    style: TextStyle(
-                      fontFamily: 'Nanum',
-                      fontSize: 14.22,
-                      color: Color(0xff868686),
-                    ),
-                  ),
-                ),
-                // 추천 카드덱 리스트
-                Positioned(
-                  top: screenSize.height * 0.64,
-                  child: Container(
-                    width: screenSize.width,
-                    child: Column(
-                      children: <Widget>[
-                        RecommendGamesWidget(),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+          ? SearchWidget(
+              screenSize: screenSize,
             )
           : Stack(
               children: [
