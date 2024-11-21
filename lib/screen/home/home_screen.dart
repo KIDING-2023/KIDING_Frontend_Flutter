@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/core/widgets/recommend_games_widget.dart';
 import 'package:kiding/screen/friends/friends_request_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
@@ -256,7 +257,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: screenSize.width,
                     child: Column(
                       children: <Widget>[
-                        _buildRecommends(),
+                        RecommendGamesWidget(),
                       ],
                     ),
                   ),
@@ -383,85 +384,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-    );
-  }
-
-  // 추천게임
-  Widget _buildRecommends() {
-    return Container(
-      height: 120,
-      child: ShaderMask(
-        shaderCallback: (Rect bounds) {
-          return LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Colors.white.withOpacity(1.0), // 왼쪽의 불투명한 흰색
-              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
-              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
-              Colors.white.withOpacity(1.0), // 오른쪽의 불투명한 흰색
-            ],
-            stops: [0.0, 0.15, 0.85, 1.0],
-          ).createShader(bounds);
-        },
-        blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
-        child: ListView(
-            padding: EdgeInsets.only(right: 30),
-            scrollDirection: Axis.horizontal,
-            children: _buildRecommendCards()),
-      ),
-    );
-  }
-
-  // 추천 카드 목록을 생성
-  List<Widget> _buildRecommendCards() {
-    List<Widget> cards = [];
-    cards.add(_buildRecommendCard1());
-    cards.add(_buildRecommendCard2());
-    return cards;
-  }
-
-  Widget _buildRecommendCard1() {
-    return GestureDetector(
-      onTap: () {
-        print('kikisday card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
-        );
-      },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_kikisday.png',
-                fit: BoxFit.cover),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // 임시 배치 (백엔드와 연결해야 함)
-  Widget _buildRecommendCard2() {
-    return GestureDetector(
-      onTap: () {
-        print('space card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-        );
-      },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_space.png', fit: BoxFit.cover),
-          ],
-        ),
-      ),
     );
   }
 

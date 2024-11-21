@@ -12,11 +12,7 @@ class FriendsRequestScreen extends StatefulWidget {
 }
 
 class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
-  final List<Map<String, String>> friendRequests = [
-    {'name': 'OOO 친구', 'rank': '랭킹 1위'},
-    {'name': 'OOO 친구', 'rank': '랭킹 3위'},
-    {'name': 'OOO 친구', 'rank': '랭킹 5위'},
-  ];
+  final List<Map<String, String>> friendRequests = [];
 
   @override
   Widget build(BuildContext context) {
