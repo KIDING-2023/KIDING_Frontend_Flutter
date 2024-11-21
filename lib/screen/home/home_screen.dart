@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/core/widgets/app_bar_widget.dart';
 import 'package:kiding/core/widgets/recommend_games_widget.dart';
 import 'package:kiding/screen/friends/friends_request_screen.dart';
 import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
@@ -169,70 +170,21 @@ class _HomeScreenState extends State<HomeScreen> {
     Size screenSize = MediaQuery.of(context).size; // 화면 크기
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white, // 배경색을 흰색으로 설정
-        elevation: 0, // AppBar의 그림자 제거
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 10),
-          child: IconButton(
-            icon: Image.asset(
-              'assets/home/notice.png',
-              width: 17.08,
-              height: 20,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
-              );
-            },
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 15, top: 10),
-            child: AnimatedContainer(
-              duration: Duration(seconds: 1),
-              curve: Curves.easeInOut,
-              width: isSearchExpanded ? screenSize.width * 0.8 : 40,
-              height: screenSize.height * 0.0563,
-              decoration: BoxDecoration(
-                color: isSearchExpanded ? Color(0xffff8a5b) : Colors.white,
-                borderRadius: BorderRadius.circular(27.36),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (isSearchExpanded)
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                        ),
-                      ),
-                    ),
-                  Flexible(
-                    child: IconButton(
-                      icon: Image.asset(
-                        isSearchExpanded
-                            ? 'assets/home/search_icon_selected.png'
-                            : 'assets/home/search.png',
-                        width: 20.95,
-                        height: 20,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isSearchExpanded = !isSearchExpanded;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      appBar: AppBarWidget(
+        isSearchExpanded: isSearchExpanded,
+        onSearchTap: () {
+          setState(() {
+            isSearchExpanded = !isSearchExpanded;
+          });
+        },
+        onNotificationTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+          );
+        },
+        title: '',
+        backgroundColor: Colors.white,
       ),
       body: isSearchExpanded
           ? Stack(

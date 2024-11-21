@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
 
+import '../../core/widgets/app_bar_widget.dart';
 import '../friends/friends_request_screen.dart';
 import '../home/home_screen.dart';
 import '../kikisday/kikisday_play_screen.dart';
@@ -190,83 +191,21 @@ class _MyPageScreenState extends State<MyPageScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       // 상단바
-      appBar: AppBar(
+      appBar: AppBarWidget(
+        isSearchExpanded: isSearchExpanded,
+        onSearchTap: () {
+          setState(() {
+            isSearchExpanded = !isSearchExpanded;
+          });
+        },
+        onNotificationTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+          );
+        },
+        title: '마이페이지',
         backgroundColor: Colors.white,
-        // 배경색을 흰색으로 설정
-        elevation: 0,
-        // AppBar의 그림자 제거
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 10),
-          child: IconButton(
-            icon: Image.asset(
-              'assets/home/notice.png',
-              width: 17.08,
-              height: 20,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
-              );
-            },
-          ),
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Text(
-            '마이페이지',
-            style: TextStyle(
-              color: Colors.black, // 텍스트 색상
-              fontSize: 18, // 텍스트 크기
-              fontFamily: 'Nanum', // 폰트
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10, top: 10),
-            child: AnimatedContainer(
-              duration: Duration(seconds: 1),
-              curve: Curves.easeInOut,
-              width: isSearchExpanded ? screenSize.width * 0.8333 : 40,
-              height: screenSize.height * 0.0563,
-              decoration: BoxDecoration(
-                color: isSearchExpanded ? Color(0xffff8a5b) : Colors.white,
-                borderRadius: BorderRadius.circular(27.36),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (isSearchExpanded)
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                        ),
-                      ),
-                    ),
-                  Flexible(
-                    child: IconButton(
-                      icon: Image.asset(
-                        isSearchExpanded
-                            ? 'assets/home/search_icon_selected.png'
-                            : 'assets/home/search.png',
-                        width: 20.95,
-                        height: 20,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isSearchExpanded = !isSearchExpanded;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
       // 바디
       body: isSearchExpanded

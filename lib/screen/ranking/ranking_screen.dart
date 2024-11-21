@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
 import '../../core/constants/api_constants.dart';
+import '../../core/widgets/app_bar_widget.dart';
 import '../friends/friends_request_screen.dart';
 import '../home/home_screen.dart';
 import '../kikisday/kikisday_play_screen.dart';
@@ -56,82 +57,21 @@ class _RankingScreenState extends State<RankingScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Color(0xFFE9EEFC),
-        elevation: 0,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 10, top: 10),
-          child: IconButton(
-            icon: Image.asset(
-              'assets/home/notice.png',
-              width: 17.08,
-              height: 20,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
-              );
-            },
-          ),
-        ),
-        title: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Text(
-            '랭킹',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-              fontFamily: 'Nanum',
-            ),
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10, top: 10),
-            child: AnimatedContainer(
-              duration: Duration(seconds: 1),
-              curve: Curves.easeInOut,
-              width: isSearchExpanded ? screenSize.width * 0.8333 : 40,
-              height: screenSize.height * 0.0563,
-              decoration: BoxDecoration(
-                color:
-                    isSearchExpanded ? Color(0xffff8a5b) : Colors.transparent,
-                borderRadius: BorderRadius.circular(27.36),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (isSearchExpanded)
-                    Flexible(
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                        ),
-                      ),
-                    ),
-                  Flexible(
-                    child: IconButton(
-                      icon: Image.asset(
-                        isSearchExpanded
-                            ? 'assets/home/search_icon_selected.png'
-                            : 'assets/home/search.png',
-                        width: 20.95,
-                        height: 20,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isSearchExpanded = !isSearchExpanded;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+      appBar: AppBarWidget(
+        isSearchExpanded: isSearchExpanded,
+        onSearchTap: () {
+          setState(() {
+            isSearchExpanded = !isSearchExpanded;
+          });
+        },
+        onNotificationTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+          );
+        },
+        title: '랭킹',
+        backgroundColor: Color(0xffE9EEFC),
       ),
       body: isSearchExpanded
           ? Stack(
