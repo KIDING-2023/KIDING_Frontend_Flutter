@@ -6,7 +6,7 @@ import 'package:kiding/screen/kikisday/kikisday_random_dice2_screen.dart';
 import 'package:kiding/screen/layout/complete_layout.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/api_constants.dart';
-import '../../core/services/set_dice_screen.dart';
+import '../../core/utils/set_dice_screen.dart';
 import '../../model/game_provider.dart';
 import '../layout/exit_layout.dart';
 import 'kikisday_random_dice_screen.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/finish_screen.dart';
 
 import '../../screen/kikisday/kikisday_10_screen.dart';
 import '../../screen/kikisday/kikisday_11_screen.dart';
@@ -25,6 +26,7 @@ import '../../screen/kikisday/set_player_number_screen.dart';
 final Map<String, WidgetBuilder> kikisdayRoutes = {
   '/kikisday_qr': (context) => KikisdayQrScreen(),
   '/kikisday_set_player_num': (context) => SetPlayerNumberScreen(),
+  '/kikisday_finish': (context) => FinishScreen(),
   '/kikisday2': (context) => Kikisday2Screen(),
   '/kikisday3': (context) => Kikisday3Screen(),
   '/kikisday4': (context) => Kikisday4Screen(),

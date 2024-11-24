@@ -57,16 +57,15 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
   void _checkVideo() {
     if (_controller?.value.position == _controller?.value.duration) {
       _controller?.removeListener(_checkVideo);
-      _stopVideo();
 
       // nextScreen이 FinishScreen일 경우 타이머를 종료
       if (nextScreen is FinishScreen) {
         Provider.of<TimerModel>(context, listen: false).stopTimer();
       }
 
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => nextScreen),
-      );
+      Navigator.of(context).pushNamed(nextScreen, arguments: {
+        'chips': widget.chips,
+      });
     }
   }
 
@@ -142,7 +141,7 @@ class _KikisdayRandomDice4ScreenState extends State<KikisdayRandomDice4Screen> {
                     totalDice = gameProvider.currentPlayer.position + randomNumber;
                     gameProvider.updatePlayerPosition(randomNumber);
                     if (totalDice >= 20) {
-                      nextScreen = FinishScreen(chips: widget.chips);
+                      nextScreen = '/kikisday_finish';
                     } else {
                       nextScreen = '/kikisday${totalDice}';
                     }
