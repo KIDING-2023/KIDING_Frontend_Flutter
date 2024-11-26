@@ -5,7 +5,7 @@ import 'package:kiding/screen/layout/card_qr_text_screen.dart';
 import 'package:kiding/screen/space/space_mars_complete_screen.dart';
 import 'package:kiding/screen/space/space_saturn_complete_screen.dart';
 
-import '../layout/card_layout.dart';
+import '../../core/widgets/card_layout.dart';
 import '../layout/space_card_layout.dart';
 
 class Space11Screen extends StatefulWidget {

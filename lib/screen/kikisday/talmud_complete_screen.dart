@@ -14,8 +14,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class KikisdayTalmudCompleteScreen extends StatefulWidget {
-  KikisdayTalmudCompleteScreen({Key? key})
-      : super(key: key);
+  KikisdayTalmudCompleteScreen({Key? key}) : super(key: key);
 
   @override
   State<KikisdayTalmudCompleteScreen> createState() =>
@@ -61,7 +60,8 @@ class _KikisdayTalmudCompleteScreenState
 
   // 서버에 키딩칩 개수를 전송하는 함수
   Future<void> _sendChipsToServer() async {
-    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
 
     if (token == null) {
@@ -75,7 +75,7 @@ class _KikisdayTalmudCompleteScreenState
     };
     final body = jsonEncode({
       'boardGameId': 1, // 고정된 보드게임 ID
-      'count': 3,   // 전송할 키딩칩 개수
+      'count': 3, // 전송할 키딩칩 개수
     });
 
     try {
@@ -110,10 +110,8 @@ class _KikisdayTalmudCompleteScreenState
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayRandomDiceScreen(
-          chips: chips,
-        ),
-      ),
+          builder: (context) => KikisdayRandomDiceScreen(),
+          settings: RouteSettings(arguments: {'chips': chips, 'position': 1})),
     );
   }
 
@@ -134,7 +132,7 @@ class _KikisdayTalmudCompleteScreenState
   @override
   Widget build(BuildContext context) {
     return CompleteLayout(
-      bgStr: 'assets/kikisday/kikisday_dice_bg.png',
+      bgStr: 'assets/kikisday/kikisday_1_dice_bg.png',
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       completeStr: 'assets/kikisday/talmud_complete.png',
       timerColor: Color(0xFF868686),

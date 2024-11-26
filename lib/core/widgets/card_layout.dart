@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/kikisday/kikisday_complete_screen.dart';
 import 'package:kiding/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'card_qr_text_screen.dart';
+import '../../screen/layout/card_qr_text_screen.dart';
 
 class CardLayout extends StatelessWidget {
   final String bgStr;
   final String backBtnStr;
   final String textStr;
   final String cardStr;
-  final Widget completeScreen;
   final String okBtnStr;
   final Color timerColor;
   final int currentNumber;
@@ -22,7 +22,6 @@ class CardLayout extends StatelessWidget {
       required this.backBtnStr,
       required this.textStr,
       required this.cardStr,
-      required this.completeScreen,
       required this.okBtnStr,
       required this.timerColor,
       required this.currentNumber,
@@ -63,7 +62,9 @@ class CardLayout extends StatelessWidget {
                               )),
                     );
                   },
-                  icon: Image.asset(backBtnStr, width: screenWidth * 0.0366, height: screenHeight * 0.025),
+                  icon: Image.asset(backBtnStr,
+                      width: screenWidth * 0.0366,
+                      height: screenHeight * 0.025),
                 ),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
@@ -84,14 +85,16 @@ class CardLayout extends StatelessWidget {
             top: screenHeight * 0.15,
             left: 0,
             right: 0,
-            child: Image.asset(textStr, width: screenWidth * 0.9359, height: screenHeight * 0.1475),
+            child: Image.asset(textStr,
+                width: screenWidth * 0.9359, height: screenHeight * 0.1475),
           ),
           // 카드 이미지
           Positioned(
             top: screenHeight * 0.3375,
             left: 0,
             right: 0,
-            child: Image.asset(cardStr, width: screenWidth * 0.4738, height: screenHeight * 0.2992),
+            child: Image.asset(cardStr,
+                width: screenWidth * 0.4738, height: screenHeight * 0.2992),
           ),
           // 버튼
           Positioned(
@@ -103,10 +106,19 @@ class CardLayout extends StatelessWidget {
                   // complete 화면으로 전환합니다.
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => completeScreen),
+                    MaterialPageRoute(
+                      builder: (context) => KikisdayCompleteScreen(),
+                      settings: RouteSettings(
+                        arguments: {
+                          'currentNumber': currentNumber,
+                          'chips': chips,
+                        },
+                      ),
+                    ),
                   );
                 },
-                child: Image.asset(okBtnStr, width: screenWidth * 0.3333, height: screenHeight * 0.0507),
+                child: Image.asset(okBtnStr,
+                    width: screenWidth * 0.3333, height: screenHeight * 0.0507),
               )),
           // 카드덱 읽기 버튼
           Positioned(
@@ -121,12 +133,12 @@ class CardLayout extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => CardQRTextScreen(
                               currentNumber: currentNumber,
-                              completeScreen: completeScreen,
-                          color: timerColor,
-                          chips: chips)));
+                              color: timerColor,
+                              chips: chips)));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',
-                    width: screenWidth * 0.3119, height: screenHeight * 0.04085),
+                    width: screenWidth * 0.3119,
+                    height: screenHeight * 0.04085),
               ))
         ],
       ),

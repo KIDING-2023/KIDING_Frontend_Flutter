@@ -5,13 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:kiding/model/game_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
+import '../../core/utils/set_kikisday_card_color.dart';
 import '../../model/timer_model.dart';
 import '../layout/exit_layout.dart';
 
 class KikisdayRandomDiceScreen extends StatefulWidget {
-  final int chips;
-
-  KikisdayRandomDiceScreen({super.key, required this.chips});
+  KikisdayRandomDiceScreen({super.key});
 
   @override
   State<KikisdayRandomDiceScreen> createState() =>
@@ -28,6 +27,9 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   // 랜덤 주사위값
   late int randomNumber;
 
+  // 주사위 굴린 후 넘겨줄 주사위값
+  late int totalDice;
+
   // 다음 화면
   late var nextScreen;
 
@@ -37,8 +39,23 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   }
 
   void _initializeAndPlayVideo() {
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int position = arguments['position'];
+    
+    int setVideo(position) {
+      if (position <= 4) {
+        return 1;
+      } else if (position >= 5 && position <= 9) {
+        return 2;
+      } else if (position >= 10 && position <= 14) {
+        return 3;
+      } else {
+        return 4;
+      }
+    }
+    
     _controller = VideoPlayerController.asset(
-        'assets/kikisday/dice${randomNumber}_video.mp4')
+        'assets/kikisday/kikisday_${setVideo(position)}_dice_${randomNumber}.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller?.play();
@@ -47,16 +64,49 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   }
 
   void _checkVideo() {
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int chips = arguments['chips'];
+    
+    int setBg(int nextScreen) {
+      if (nextScreen <= 5) {
+        return 1;
+      } else if (nextScreen >= 6 && nextScreen <= 10) {
+        return 2;
+      } else if (nextScreen >= 11 && nextScreen <= 15) {
+        return 3;
+      } else {
+        return 4;
+      }
+    }
+    
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller?.value.position == _controller?.value.duration) {
       _controller?.removeListener(_checkVideo); // 리스너 제거
-      //_controller.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(
-        nextScreen,
-        arguments: {
-          'chips': widget.chips,
-        },
-      );
+
+      // nextScreen이 FinishScreen일 경우 타이머를 종료
+      if (nextScreen == 20) {
+        Provider.of<TimerModel>(context, listen: false).stopTimer();
+        Navigator.pushNamed(context,
+            '/kikisday_finish',
+            arguments: {
+              'chips': chips,
+            }
+        );
+      } else {
+        Navigator.pushNamed(context,
+            '/kikisdayScreen',
+            arguments: {
+              'bgStr': 'assets/kikisday/kikisday_${setBg(nextScreen)}_bg.png',
+              'backBtnStr': 'assets/kikisday/kikisday_back_btn.png',
+              'textStr': 'assets/kikisday/kikisday_${nextScreen}_text.png',
+              'cardStr': 'assets/kikisday/kikisday_${SetKikisdayCardColor.setCardColor(nextScreen)}_card.png',
+              'okBtnStr': 'assets/kikisday/kikisday_${SetKikisdayCardColor.setCardColor(nextScreen)}_btn.png',
+              'timerColor': const Color(0xFF868686),
+              'currentNumber': nextScreen,
+              'chips': chips,
+            }
+        );
+      }
     }
   }
 
@@ -84,6 +134,21 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int position = arguments['position'];
+
+    int setBg(position) {
+      if (position <= 4) {
+        return 1;
+      } else if (position >= 5 && position <= 9) {
+        return 2;
+      } else if (position >= 10 && position <= 14) {
+        return 3;
+      } else {
+        return 4;
+      }
+    }
+    
     final gameProvider = Provider.of<GameProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -111,7 +176,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_dice_bg.png',
+              'assets/kikisday/kikisday_${setBg(position)}_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -129,9 +194,13 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                     } else {
                       randomNumber = Random().nextInt(3) + 1;
                     }
+                    totalDice = gameProvider.currentPlayer.position + randomNumber;
                     gameProvider.updatePlayerPosition(randomNumber);
-                    nextScreen =
-                        '/kikisday${gameProvider.currentPlayer.position}'; // 주사위값에 따른 다음 화면 설정
+                    if (totalDice >= 20) {
+                      nextScreen = 20;
+                    } else {
+                      nextScreen = totalDice;
+                    }
                     developer.log(
                         "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: ${randomNumber}");
                     developer.log(

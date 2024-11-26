@@ -2,34 +2,32 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:kiding/core/utils/set_kikisday_card_color.dart';
+import 'package:kiding/screen/kikisday/kikisday_random_dice_screen.dart';
+import 'package:kiding/screen/layout/complete_layout.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/api_constants.dart';
 import '../../model/game_provider.dart';
-import '../layout/complete_layout.dart';
 import '../layout/exit_layout.dart';
-import 'kikisday_random_dice3_screen.dart';
 
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-class KikisdayYellowCompleteScreen extends StatefulWidget {
-  final int currentNumber;
-  final int chips;
-
-  KikisdayYellowCompleteScreen({Key? key, required this.currentNumber, required this.chips})
-      : super(key: key);
+class KikisdayCompleteScreen extends StatefulWidget {
+  KikisdayCompleteScreen({Key? key}) : super(key: key);
 
   @override
-  State<KikisdayYellowCompleteScreen> createState() =>
-      _KikisdayYellowCompleteScreenState();
+  State<KikisdayCompleteScreen> createState() => _KikisdayCompleteScreenState();
 }
 
-class _KikisdayYellowCompleteScreenState
-    extends State<KikisdayYellowCompleteScreen> {
+class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
   int remainingTime = 3;
+
+  // 다음 화면
+  late var nextScreen;
 
   @override
   void initState() {
@@ -61,7 +59,8 @@ class _KikisdayYellowCompleteScreenState
 
   // 서버에 키딩칩 개수를 전송하는 함수
   Future<void> _sendChipsToServer() async {
-    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
 
     if (token == null) {
@@ -75,7 +74,7 @@ class _KikisdayYellowCompleteScreenState
     };
     final body = jsonEncode({
       'boardGameId': 1, // 고정된 보드게임 ID
-      'count': 1,   // 전송할 키딩칩 개수
+      'count': 1, // 전송할 키딩칩 개수
     });
 
     try {
@@ -97,42 +96,73 @@ class _KikisdayYellowCompleteScreenState
   }
 
   void _navigateToRandomDiceScreen() {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int chips = arguments['chips'];
+
     final gameProvider = Provider.of<GameProvider>(context, listen: false);
     gameProvider.updatePlayerChips(1);
     log("플레이어${gameProvider.currentPlayer.playerNum}의 현재 칩 수: ${gameProvider.currentPlayer.chips}");
     gameProvider.nextPlayerTurn(); // 다음 플레이어 턴으로 넘겨주기
 
+    // // 다음 주사위 화면
+    // nextScreen = setDiceScreen(
+    //     position: gameProvider.currentPlayer.position, chips: chips + 1);
+
+    // 서버에 키딩칩 개수 전송
     _sendChipsToServer();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayRandomDice3Screen(
-          currentNumber: widget.currentNumber, chips: widget.chips + 1,
+        builder: (context) => KikisdayRandomDiceScreen(),
+        settings: RouteSettings(
+          arguments: {
+            'position': gameProvider.currentPlayer.position,
+            'chips': chips + 1,
+          },
         ),
       ),
     );
   }
 
   void _onBackButtonPressed() {
-    _timer?.cancel(); // 타이머 취소
+    _pauseTimer(); // 타이머 일시정지
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => ExitLayout(
-                onKeepPressed: _resumeTimer,
-                onExitPressed: () {},
-                isFromDiceOrCamera: false,
-                isFromCard: false,
-              )),
+        builder: (context) => ExitLayout(
+          onKeepPressed: _resumeTimer,
+          onExitPressed: () {},
+          isFromDiceOrCamera: false,
+          isFromCard: false,
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int currentNumber = arguments['currentNumber'];
+
+    String setBg(currentNumber) {
+      if (currentNumber <= 5) {
+        return 'assets/kikisday/kikisday_1_dice_bg.png';
+      } else if (currentNumber > 6 && currentNumber <= 10) {
+        return 'assets/kikisday/kikisday_2_dice_bg.png';
+      } else if (currentNumber > 11 && currentNumber <= 15) {
+        return 'assets/kikisday/kikisday_3_dice_bg.png';
+      } else {
+        return 'assets/kikisday/kikisday_4_dice_bg.png';
+      }
+    }
+
     return CompleteLayout(
-      bgStr: 'assets/kikisday/kikisday_3_dice_bg.png',
+      bgStr: setBg(currentNumber),
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-      completeStr: 'assets/kikisday/yellow_complete.png',
+      completeStr:
+          'assets/kikisday/${SetKikisdayCardColor.setCardColor(currentNumber)}_complete.png',
       timerColor: Color(0xFF868686),
       onBackButtonPressed: _onBackButtonPressed,
     );

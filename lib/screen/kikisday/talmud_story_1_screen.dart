@@ -72,7 +72,7 @@ class _KikisdayTalmudStory1ScreenState
   @override
   Widget build(BuildContext context) {
     return TalmudStoryLayout(
-      bgStr: 'assets/kikisday/kikisday_dice_bg.png',
+      bgStr: 'assets/kikisday/kikisday_1_dice_bg.png',
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       storyWid: Image.asset(
         'assets/kikisday/talmud_story_1.png',

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_song_screen.dart';
+import 'package:kiding/screen/kikisday/kikisday_talmud_card_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
@@ -28,7 +28,7 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
   }
 
   void _initializeAndPlayVideo() {
-    _controller = VideoPlayerController.asset('assets/kikisday/dice1_video.mp4')
+    _controller = VideoPlayerController.asset('assets/kikisday/kikisday_1_dice_1.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller?.play();
@@ -85,7 +85,7 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_dice_bg.png',
+              'assets/kikisday/kikisday_1_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),

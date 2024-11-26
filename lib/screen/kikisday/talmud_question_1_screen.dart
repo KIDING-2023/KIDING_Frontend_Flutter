@@ -27,7 +27,7 @@ class _KikisdayTalmudQuestion1ScreenState
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_dice_bg.png',
+              'assets/kikisday/kikisday_1_dice_bg.png',
               fit: BoxFit.cover,
             ),
           ),

@@ -65,7 +65,7 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/kikisday/kikisday_bg.png',
+              'assets/kikisday/kikisday_1_bg.png',
               fit: BoxFit.cover,
             ),
           ),

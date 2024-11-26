@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:kiding/screen/layout/card_qr_text_screen.dart';
 import 'package:kiding/screen/space/space_venus_complete_screen.dart';
 
-import '../layout/card_layout.dart';
+import '../../core/widgets/card_layout.dart';
 import '../layout/space_card_layout.dart';
 
 class Space5Screen extends StatefulWidget {

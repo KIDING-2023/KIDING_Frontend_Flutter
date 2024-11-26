@@ -125,7 +125,6 @@ class SpaceCardLayout extends StatelessWidget {
                       MaterialPageRoute(
                           builder: (context) => CardQRTextScreen(
                                 currentNumber: currentNumber,
-                                completeScreen: completeScreen,
                                 color: timerColor,
                                 chips: 1, // 임시
                               )));

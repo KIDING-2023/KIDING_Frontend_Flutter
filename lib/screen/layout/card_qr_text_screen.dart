@@ -6,14 +6,13 @@ import 'package:kiding/screen/layout/card_qr_screen.dart';
 
 class CardQRTextScreen extends StatefulWidget {
   final int currentNumber;
-  final Widget completeScreen;
   final Color color;
   final int chips;
 
   //final bool canread;
 
   const CardQRTextScreen(
-      {super.key, required this.currentNumber, required this.completeScreen, required this.color, required this.chips});
+      {super.key, required this.currentNumber, required this.color, required this.chips});
 
   @override
   State<CardQRTextScreen> createState() => _CardQRTextScreenState();
@@ -41,7 +40,6 @@ class _CardQRTextScreenState extends State<CardQRTextScreen> {
       MaterialPageRoute(
           builder: (context) => CardQRScreen(
               currentNumber: widget.currentNumber,
-              completeScreen: widget.completeScreen,
           color: widget.color,
           chips: widget.chips)),
     );

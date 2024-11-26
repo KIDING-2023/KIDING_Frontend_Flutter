@@ -5,7 +5,7 @@ class KikisdayPlayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PlayLayout(
-        bg: 'assets/kikisday/kikiplay_bg.png',
+        bg: 'assets/kikisday/kikisday_bg.png',
         backIcon: 'assets/kikisday/back_icon.png',
         nextScreen: '/kikisday_set_player_num',
         playBtn: 'assets/kikisday/kikiplay_btn.png');

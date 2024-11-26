@@ -13,14 +13,12 @@ import 'dart:io' as io;
 
 class CardQRScreen extends StatefulWidget {
   final int currentNumber;
-  final Widget completeScreen;
   final Color color;
   final int chips;
 
   const CardQRScreen(
       {super.key,
       required this.currentNumber,
-      required this.completeScreen,
       required this.color, required this.chips});
 
   @override
