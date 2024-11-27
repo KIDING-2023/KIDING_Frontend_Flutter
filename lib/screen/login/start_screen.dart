@@ -274,10 +274,15 @@ class _StartScreenState extends State<StartScreen> {
       // 로그인 성공 여부를 토큰의 유무로 판단
       if (responseData['accessToken'] != null &&
           responseData['refreshToken'] != null) {
-        // 로그인 상태 유지 옵션이 선택된 경우 토큰 저장
+        // 로그인 상태 유지 옵션이 선택된 경우 구현 필요
         if (_isStayLoggedIn) {
           await _storage.write(key: 'isLoggedIn', value: 'true');
           await _storage.write(key: 'nickname', value: nickname);
+          await _storage.write(
+              key: 'accessToken', value: responseData['accessToken']);
+          await _storage.write(
+              key: 'refreshToken', value: responseData['refreshToken']);
+        } else {
           await _storage.write(
               key: 'accessToken', value: responseData['accessToken']);
           await _storage.write(

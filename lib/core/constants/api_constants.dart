@@ -10,4 +10,5 @@ class ApiConstants {
   static const String resetPasswordEndpoint = '/help/resetPassword';
   static const String rankingEndpoint = '/ranking';
   static const String phoneEndpoint = '/help/send';
+  static const String myPageEndpoint = '/user/myPage';
 }

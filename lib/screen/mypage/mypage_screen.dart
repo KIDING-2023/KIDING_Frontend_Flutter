@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding/screen/ranking/ranking_screen.dart';
 
+import '../../core/constants/api_constants.dart';
 import '../../core/widgets/app_bar_widget.dart';
 import '../../core/widgets/search_widget.dart';
 import '../friends/friends_request_screen.dart';
@@ -26,91 +27,79 @@ class _MyPageScreenState extends State<MyPageScreen> {
   List<bool> _isFavoriteList = [true, true]; // 각 카드의 즐겨찾기 상태를 관리
   List<dynamic> favoriteGames = []; // 서버로부터 받은 즐겨찾기 데이터를 저장
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
-  bool isLoading = false;
+  bool isLoading = true;
   String errorMessage = "";
 
-  // 사용자 정보 변수
-  String nickname = "";
-  int answers = 0;
-  int score = 0;
-  int playersWith = 0;
-  int kidingChip = 0;
-
-  // // 애니메이션 위젯에서 사용할 사용자 데이터
-  // late int chipsNum;
-  // late int friendsNum;
-  // late int rankingNum;
-
-  int chipsNum = 0;
-  int friendsNum = 0;
-  int rankingNum = 0;
-
   bool isSearchExpanded = false; // 검색창 확장 상태
+
+  late int answers;
+  late int score;
+  late int players_with;
+  late int kiding_chip;
 
   @override
   void initState() {
     super.initState();
-    //fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
+    fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
     //fetchFavoriteGames();
   }
 
-  // // 서버에서 사용자 정보 가져오기
-  // Future<void> fetchMyPageData() async {
-  //   String? token = await storage.read(key: 'accessToken'); // 토큰 불러오기
-  //   if (token == null) {
-  //     setState(() {
-  //       errorMessage = "토큰을 찾을 수 없습니다.";
-  //       isLoading = false;
-  //     });
-  //     return;
-  //   }
-  //
-  //   var url = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/mypage');
-  //   var headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Content-Type': 'application/json',
-  //   };
-  //
-  //   try {
-  //     final response = await http.get(url, headers: headers);
-  //     print('Response Status Code: ${response.statusCode}');
-  //     print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //
-  //       if (data['isSuccess']) {
-  //         // 응답이 성공일 경우 데이터 업데이트
-  //         setState(() {
-  //           nickname = data['result']['nickname'];
-  //           answers = data['result']['answers'];
-  //           score = data['result']['score'];
-  //           playersWith = data['result']['players_with'];
-  //           kidingChip = data['result']['kiding_chip'];
-  //           chipsNum = kidingChip; // 애니메이션 위젯에 데이터 적용
-  //           friendsNum = playersWith; // 친구 수 적용
-  //           rankingNum = score; // 랭킹 수 적용
-  //           isLoading = false; // 로딩 상태 해제
-  //         });
-  //       } else {
-  //         setState(() {
-  //           errorMessage = data['message'];
-  //           isLoading = false;
-  //         });
-  //       }
-  //     } else {
-  //       setState(() {
-  //         errorMessage = "서버 오류: ${response.statusCode}";
-  //         isLoading = false;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       errorMessage = "네트워크 오류: $e";
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
+  // 서버에서 사용자 정보 가져오기
+  Future<void> fetchMyPageData() async {
+    final allTokens = await storage.readAll();
+    print("저장된 모든 값: $allTokens");
+
+    String? token = await storage.read(key: 'accessToken'); // 토큰 불러오기
+
+    if (token == null) {
+      setState(() {
+        errorMessage = "토큰을 찾을 수 없습니다.";
+        isLoading = false;
+      });
+      return;
+    }
+
+    print("AccessToken: $token");
+
+    var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.myPageEndpoint}');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data['isSuccess']) {
+          // 응답이 성공일 경우 데이터 업데이트
+          setState(() {
+            answers = data['result']['answers'];  // 대답 수
+            score = data['result']['score'];  // 순위
+            players_with = data['result']['players_with'];  // 함께한 친구 수
+            kiding_chip = data['result']['kiding_chip'];  // 키딩칩 수
+            isLoading = false; // 로딩 상태 해제
+          });
+        } else {
+          setState(() {
+            errorMessage = data['message'];
+          });
+        }
+      } else {
+        setState(() {
+          errorMessage = "서버 오류: ${response.statusCode}";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = "네트워크 오류: $e";
+      });
+    }
+  }
   //
   // // 즐겨찾기 보드게임 데이터를 서버로부터 가져오는 함수
   // Future<void> fetchFavoriteGames() async {
@@ -267,7 +256,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       right: 0,
                                       child: Center(
                                         child: Text(
-                                          '동점자: $playersWith명',
+                                          '동점자: -1명',
                                           style: TextStyle(
                                               color: Color(0xfffad7a0),
                                               fontSize: 12,
@@ -332,15 +321,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   children: [
                                     // 키딩칩 개수
                                     ChipsItem(
-                                        key: _chipsItemKey, chipsNum: chipsNum),
+                                        key: _chipsItemKey, chipsNum: kiding_chip),
                                     // 친구 수
                                     FriendsItem(
                                         key: _friendsItemKey,
-                                        friendsNum: friendsNum),
+                                        friendsNum: players_with),
                                     // 1위 경험 횟수
                                     RankingItem(
                                         key: _rankingItemKey,
-                                        rankingNum: rankingNum),
+                                        rankingNum: -1),
                                     // 삼각형 모양
                                     TriangleItem(key: _triangleItemKey)
                                   ],
