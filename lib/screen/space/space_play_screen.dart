@@ -14,7 +14,7 @@ class _SpacePlayScreenState extends State<SpacePlayScreen> {
     return PlayLayout(
         bg: 'assets/space/space_bg.png',
         backIcon: 'assets/space/back_icon_white.png',
-        nextScreen: '/space_tutorial1',
+        nextScreen: '/space_set_player_num',
         playBtn: 'assets/kikisday/kikiplay_btn.png');
   }
 }

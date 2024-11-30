@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/complete_layout.dart';
+import 'package:kiding/core/widgets/complete_layout.dart';
 import 'package:provider/provider.dart';
 import '../../core/constants/api_constants.dart';
 import '../../model/game_provider.dart';

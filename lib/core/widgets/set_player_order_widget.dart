@@ -1,40 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../model/timer_model.dart';
-import 'exit_layout.dart';
+import '../../screen/layout/exit_layout.dart';
 
-class TutorialLayout extends StatelessWidget {
-  final String bgStr;
-  final String backBtnStr;
-  final Color timerColorStr;
-  final Widget textWid;
-  final Widget characterWid;
-  final String okBtnStr;
+class SetPlayerOrderWidget extends StatelessWidget {
+  final String bg;
+  final String backBtn;
+  final Color textColor;
+  final String chImg;
   final Widget nextScreen;
 
-  const TutorialLayout(
+  const SetPlayerOrderWidget(
       {super.key,
-      required this.bgStr,
-      required this.backBtnStr,
-      required this.textWid,
-      required this.characterWid,
-      required this.okBtnStr,
-      required this.nextScreen,
-      required this.timerColorStr});
+      required this.bg,
+      required this.backBtn,
+      required this.textColor,
+      required this.chImg,
+      required this.nextScreen});
 
   @override
   Widget build(BuildContext context) {
+    ;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       body: Stack(
         children: [
           Container(
             decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(bgStr), fit: BoxFit.cover)),
+                image:
+                    DecorationImage(image: AssetImage(bg), fit: BoxFit.cover)),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 45.0, left: 15.0, right: 30.0),
@@ -54,7 +49,7 @@ class TutorialLayout extends StatelessWidget {
                                 )),
                       );
                     },
-                    icon: Image.asset(backBtnStr,
+                    icon: Image.asset(backBtn,
                         width: screenWidth * 0.0366,
                         height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
@@ -64,7 +59,7 @@ class TutorialLayout extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Nanum',
                       fontSize: 15,
-                      color: timerColorStr,
+                      color: textColor,
                     ),
                   ),
                 ),
@@ -72,26 +67,29 @@ class TutorialLayout extends StatelessWidget {
             ),
           ),
           Positioned(
-              left: 0, right: 0, top: screenHeight * 0.125, child: textWid),
-          Positioned(
-              left: 0, right: 0, top: screenHeight * 0.4, child: characterWid),
+              left: 0,
+              right: 0,
+              top: screenHeight * 0.125,
+              child: Image.asset('assets/kikisday/set_player_order_text.png',
+                  width: screenWidth * 0.9439, height: screenHeight * 0.2462)),
+          // 캐릭터
           Positioned(
               left: 0,
               right: 0,
-              bottom: screenHeight * 0.07,
+              top: screenHeight * 0.4116375,
+              child: Image.asset(chImg,
+                  width: screenWidth, height: screenHeight * 0.4354875)),
+          // 확인 버튼
+          Positioned(
+              left: 0,
+              right: 0,
+              bottom: screenHeight * 0.05,
               child: GestureDetector(
-                child: Image.asset(okBtnStr,
+                child: Image.asset('assets/kikisday/kikisday_ok_btn.png',
                     width: screenWidth * 0.8946, height: screenHeight * 0.0559),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => nextScreen,
-                        settings: RouteSettings(arguments: {
-                          'position': 0,
-                          'chips': 0,
-                        }),
-                      ));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => nextScreen));
                 },
               )),
         ],

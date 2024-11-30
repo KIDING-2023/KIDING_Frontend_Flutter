@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:kiding/screen/layout/card_qr_text_screen.dart';
+import 'package:kiding/screen/space/space_complete_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'exit_layout.dart';
+import '../../screen/layout/exit_layout.dart';
 
 class SpaceCardLayout extends StatelessWidget {
   final String bgStr;
   final String backBtnStr;
   final String textStr;
   final String cardStr;
-  final Widget completeScreen;
   final String okBtnStr;
   final Color timerColor;
   final int currentNumber;
+  final int chips;
 
   const SpaceCardLayout(
       {super.key,
@@ -21,10 +22,10 @@ class SpaceCardLayout extends StatelessWidget {
       required this.backBtnStr,
       required this.textStr,
       required this.cardStr,
-      required this.completeScreen,
       required this.okBtnStr,
       required this.timerColor,
-      required this.currentNumber});
+      required this.currentNumber,
+      required this.chips});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,12 @@ class SpaceCardLayout extends StatelessWidget {
                   // complete 화면으로 전환합니다.
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => completeScreen),
+                    MaterialPageRoute(
+                        builder: (context) => SpaceCompleteScreen(),
+                        settings: RouteSettings(arguments: {
+                          'currentNumber': currentNumber,
+                          'chips': chips,
+                        })),
                   );
                 },
                 child: Image.asset(okBtnStr,
@@ -126,7 +132,7 @@ class SpaceCardLayout extends StatelessWidget {
                           builder: (context) => CardQRTextScreen(
                                 currentNumber: currentNumber,
                                 color: timerColor,
-                                chips: 1, // 임시
+                                chips: chips,
                               )));
                 },
                 child: Image.asset('assets/space/read_card_btn.png',

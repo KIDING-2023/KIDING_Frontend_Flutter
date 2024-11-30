@@ -84,7 +84,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
       _controller?.removeListener(_checkVideo); // 리스너 제거
 
       // nextScreen이 FinishScreen일 경우 타이머를 종료
-      if (nextScreen == 20) {
+      if (nextScreen == 21) {
         Provider.of<TimerModel>(context, listen: false).stopTimer();
         Navigator.pushNamed(context,
             '/kikisday_finish',
@@ -107,12 +107,6 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
             }
         );
       }
-    }
-  }
-
-  void _pauseVideo() {
-    if (_controller!.value.isPlaying) {
-      _controller?.pause();
     }
   }
 
@@ -196,8 +190,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                     }
                     totalDice = gameProvider.currentPlayer.position + randomNumber;
                     gameProvider.updatePlayerPosition(randomNumber);
-                    if (totalDice >= 20) {
-                      nextScreen = 20;
+                    if (totalDice >= 21) {
+                      nextScreen = 21;
                     } else {
                       nextScreen = totalDice;
                     }

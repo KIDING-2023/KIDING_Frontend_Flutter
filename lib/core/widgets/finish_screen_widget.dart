@@ -6,6 +6,7 @@ class FinishScreenBody extends StatelessWidget {
   final double screenHeight;
   final Function onReplay;
   final Function onHome;
+  final String bg;
 
   const FinishScreenBody({
     Key? key,
@@ -14,6 +15,7 @@ class FinishScreenBody extends StatelessWidget {
     required this.screenHeight,
     required this.onReplay,
     required this.onHome,
+    required this.bg,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class FinishScreenBody extends StatelessWidget {
         // 배경 이미지
         Positioned.fill(
           child: Image.asset(
-            'assets/kikisday/finish_bg.png',
+            bg,
             fit: BoxFit.cover,
           ),
         ),

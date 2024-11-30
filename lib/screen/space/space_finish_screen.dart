@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:kiding/screen/space/space_set_player_number_screen.dart';
 import '../../core/services/game_complete_service.dart';
 import '../../core/widgets/finish_screen_widget.dart';
 import '../home/home_screen.dart';
-import 'set_player_number_screen.dart';
 
-class FinishScreen extends StatefulWidget {
-  const FinishScreen({super.key});
+class SpaceFinishScreen extends StatefulWidget {
+  const SpaceFinishScreen({super.key});
 
   @override
-  State<FinishScreen> createState() => _FinishScreenState();
+  State<SpaceFinishScreen> createState() => _SpaceFinishScreenState();
 }
 
-class _FinishScreenState extends State<FinishScreen> {
+class _SpaceFinishScreenState extends State<SpaceFinishScreen> {
   final GameService _gameService = GameService();
 
   @override
@@ -25,7 +25,7 @@ class _FinishScreenState extends State<FinishScreen> {
     final arguments = ModalRoute.of(context)!.settings.arguments as Map;
     int chips = arguments['chips'];
 
-    final message = await _gameService.sendGameCompleteRequest(1, chips);
+    final message = await _gameService.sendGameCompleteRequest(2, chips);
     print(message); // 요청 결과 출력
   }
 
@@ -46,7 +46,8 @@ class _FinishScreenState extends State<FinishScreen> {
         onReplay: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SetPlayerNumberScreen()),
+            MaterialPageRoute(
+                builder: (context) => SpaceSetPlayerNumberScreen()),
           );
         },
         onHome: () {
@@ -55,7 +56,7 @@ class _FinishScreenState extends State<FinishScreen> {
             MaterialPageRoute(builder: (context) => HomeScreen()),
           );
         },
-        bg: 'assets/kikisday/kikisday_finish_bg.png',
+        bg: 'assets/space/space_finish_bg.png',
       ),
     );
   }

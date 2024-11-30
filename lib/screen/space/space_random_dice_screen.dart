@@ -1,18 +1,16 @@
 import 'dart:math';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../model/game_provider.dart';
 import '../../model/timer_model.dart';
 import '../layout/exit_layout.dart';
 
 class SpaceRandomDiceScreen extends StatefulWidget {
-  final int currentNumber;
-
-  // final bool canread;
-
-  const SpaceRandomDiceScreen({super.key, required this.currentNumber});
+  const SpaceRandomDiceScreen({super.key});
 
   @override
   State<SpaceRandomDiceScreen> createState() => _SpaceRandomDiceScreenState();
@@ -41,9 +39,25 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
   }
 
   void _initializeAndPlayVideo() {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int position = arguments['position'];
+
+    String setVideo(position) {
+      if (position <= 3) {
+        return "earth";
+      } else if (position >= 4 && position <= 6) {
+        return "venus";
+      } else if (position >= 7 && position <= 9) {
+        return "mars";
+      } else {
+        return "saturn";
+      }
+    }
+
     _controller = VideoPlayerController.asset(
         // 우주여행 주사위로 변경해야 함
-        'assets/space/dice_${randomNumber}_venus.mp4')
+        'assets/space/dice_${randomNumber}_${setVideo(position)}.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller?.play();
@@ -52,19 +66,48 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
   }
 
   void _checkVideo() {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int chips = arguments['chips'];
+
+    String setBg(int nextScreen) {
+      if (nextScreen <= 3) {
+        return "earth";
+      } else if (nextScreen >= 4 && nextScreen <= 6) {
+        return "venus";
+      } else if (nextScreen >= 7 && nextScreen <= 9) {
+        return "mars";
+      } else {
+        return "saturn";
+      }
+    }
+
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller?.value.position == _controller?.value.duration) {
       _controller?.removeListener(_checkVideo); // 리스너 제거
-      _controller?.dispose(); // 컨트롤러 해제
-      Navigator.of(context).pushNamed(nextScreen); // 다음 화면으로 전환
+
+      // nextScreen이 FinishScreen일 경우 타이머를 종료
+      if (nextScreen == 13) {
+        Provider.of<TimerModel>(context, listen: false).stopTimer();
+        Navigator.pushNamed(context, '/space_finish', arguments: {
+          'chips': chips,
+        });
+      } else {
+        Navigator.pushNamed(context, '/space_screen', arguments: {
+          'bgStr': 'assets/space/${setBg(nextScreen)}_card_bg.png',
+          'backBtnStr': 'assets/space/back_icon_white.png',
+          'textStr': 'assets/space/${nextScreen}_text.png',
+          'cardStr':
+              'assets/space/${setBg(nextScreen)}_card.png',
+          'okBtnStr':
+              'assets/space/${setBg(nextScreen)}_card_btn.png',
+          'timerColor': const Color(0xFFE7E7E7),
+          'currentNumber': nextScreen,
+          'chips': chips,
+        });
+      }
     }
   }
-
-  // void _pauseVideo() {
-  //   if (_controller?.value.isPlaying) {
-  //     _controller.pause();
-  //   }
-  // }
 
   void _resumeVideo() {
     _controller?.play();
@@ -84,8 +127,42 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final int position = arguments['position'];
+
+    String setBg(position) {
+      if (position <= 3) {
+        return "earth";
+      } else if (position >= 4 && position <= 6) {
+        return "venus";
+      } else if (position >= 7 && position <= 9) {
+        return "mars";
+      } else {
+        return "saturn";
+      }
+    }
+
+    final gameProvider = Provider.of<GameProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+
+    // 현재 플레이어 순서에 따라 말풍선 텍스트 이미지 변경
+    String playerNum = "";
+    switch (gameProvider.currentPlayer.playerNum) {
+      case 1:
+        playerNum = "첫번째 순서";
+        break;
+      case 2:
+        playerNum = "두번째 순서";
+        break;
+      case 3:
+        playerNum = "세번째 순서";
+        break;
+      case 4:
+        playerNum = "네번째 순서";
+        break;
+    }
 
     return Scaffold(
       body: Stack(
@@ -93,7 +170,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
           // 배경 이미지
           Positioned.fill(
             child: Image.asset(
-              'assets/space/venus_blur_bg.png',
+              'assets/space/${setBg(position)}_blur_bg.png',
               fit: BoxFit.cover,
             ),
           ),
@@ -103,29 +180,30 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
               onVerticalDragUpdate: (details) {
                 if (details.primaryDelta! < 0 && !_rolledDice) {
                   setState(() {
+                    developer.log(
+                        "플레이어${gameProvider.currentPlayer.playerNum}의 순서입니다.");
                     _rolledDice = true;
                     randomNumber = Random().nextInt(3) + 1;
-                    totalDice = widget.currentNumber + randomNumber;
-                    // 주사위값에 따른 다음 화면 설정
-                    nextScreen = '/space${totalDice}';
+                    totalDice =
+                        gameProvider.currentPlayer.position + randomNumber;
+                    gameProvider.updatePlayerPosition(randomNumber);
+                    if (totalDice >= 13) {
+                      nextScreen = 13;
+                    } else {
+                      nextScreen = totalDice;
+                    }
+                    developer.log(
+                        "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: ${randomNumber}");
+                    developer.log(
+                        "플레이어${gameProvider.currentPlayer.playerNum}가 이동할 위치: ${gameProvider.currentPlayer.position}");
                     _initializeAndPlayVideo();
                   });
                 }
               },
-              child: _rolledDice
-                  ? FutureBuilder(
-                      future: _initializeVideoPlayerFuture,
-                      builder: (context, snapshot) {
-                        if (_controller!.value.isInitialized) {
-                          return AspectRatio(
-                            aspectRatio: _controller!.value.aspectRatio,
-                            child: VideoPlayer(_controller!),
-                          );
-                        } else {
-                          return Center();
-                          // return Center(child: CircularProgressIndicator());
-                        }
-                      },
+              child: _rolledDice && _controller!.value.isInitialized
+                  ? AspectRatio(
+                      aspectRatio: _controller!.value.aspectRatio,
+                      child: VideoPlayer(_controller!),
                     )
                   : Stack(
                       children: <Widget>[
@@ -135,7 +213,8 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
                           right: 0,
                           child: Center(
                             child: Image.asset('assets/space/dice_swipe.png',
-                                width: screenWidth * 0.2441, height: screenHeight * 0.1749),
+                                width: screenWidth * 0.2441,
+                                height: screenHeight * 0.1749),
                           ),
                         ),
                         Positioned(
@@ -155,8 +234,27 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
             top: screenHeight * 0.156525,
             left: 0,
             right: 0,
-            child: Image.asset('assets/space/random_dice_text.png',
-                width: screenWidth * 0.94386111, height: screenHeight * 0.212225),
+            child: Image.asset(
+              'assets/kikisday/kikisday_dice_text.png',
+              width: screenWidth * 0.9439,
+              height: screenHeight * 0.212225,
+            ),
+          ),
+          // 말풍선 안 텍스트 - 몇번째 플레이어인지
+          Positioned(
+            top: screenHeight * 0.225,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Text(
+                playerNum,
+                style: TextStyle(
+                  fontFamily: 'Nanum',
+                  fontSize: 15,
+                  color: Color(0xff4d4d4d),
+                ),
+              ),
+            ),
           ),
           // 뒤로 가기 버튼
           Positioned(

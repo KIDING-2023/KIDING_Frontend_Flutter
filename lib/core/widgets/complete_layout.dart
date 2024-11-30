@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/timer_model.dart';
-import 'exit_layout.dart';
+import '../../screen/layout/exit_layout.dart';
 
 class CompleteLayout extends StatelessWidget {
   final String bgStr;

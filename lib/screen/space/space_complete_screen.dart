@@ -1,27 +1,26 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/core/utils/set_kikisday_card_color.dart';
-import 'package:kiding/screen/kikisday/kikisday_random_dice_screen.dart';
-import 'package:kiding/core/widgets/complete_layout.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding/screen/space/space_random_dice_screen.dart';
 import 'package:provider/provider.dart';
+
 import '../../core/constants/api_constants.dart';
 import '../../model/game_provider.dart';
+import '../../core/widgets/complete_layout.dart';
 import '../layout/exit_layout.dart';
-
-import 'dart:convert';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-class KikisdayCompleteScreen extends StatefulWidget {
-  KikisdayCompleteScreen({Key? key}) : super(key: key);
+class SpaceCompleteScreen extends StatefulWidget {
+  const SpaceCompleteScreen({super.key});
 
   @override
-  State<KikisdayCompleteScreen> createState() => _KikisdayCompleteScreenState();
+  State<SpaceCompleteScreen> createState() => _SpaceCompleteScreenState();
 }
 
-class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
+class _SpaceCompleteScreenState extends State<SpaceCompleteScreen> {
   late Timer _timer;
   final int duration = 3; // 3초 후 화면 전환
   int remainingTime = 3;
@@ -73,7 +72,7 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
       'Content-Type': 'application/json',
     };
     final body = jsonEncode({
-      'boardGameId': 1, // 고정된 보드게임 ID
+      'boardGameId': 2, // 고정된 보드게임 ID
       'count': 1, // 전송할 키딩칩 개수
     });
 
@@ -105,16 +104,12 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
     log("플레이어${gameProvider.currentPlayer.playerNum}의 현재 칩 수: ${gameProvider.currentPlayer.chips}");
     gameProvider.nextPlayerTurn(); // 다음 플레이어 턴으로 넘겨주기
 
-    // // 다음 주사위 화면
-    // nextScreen = setDiceScreen(
-    //     position: gameProvider.currentPlayer.position, chips: chips + 1);
-
     // 서버에 키딩칩 개수 전송
     _sendChipsToServer();
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => KikisdayRandomDiceScreen(),
+        builder: (context) => SpaceRandomDiceScreen(),
         settings: RouteSettings(
           arguments: {
             'position': gameProvider.currentPlayer.position,
@@ -126,17 +121,16 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
   }
 
   void _onBackButtonPressed() {
-    _pauseTimer(); // 타이머 일시정지
+    _timer?.cancel(); // 타이머 취소
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ExitLayout(
-          onKeepPressed: _resumeTimer,
-          onExitPressed: () {},
-          isFromDiceOrCamera: false,
-          isFromCard: false,
-        ),
-      ),
+          builder: (context) => ExitLayout(
+                onKeepPressed: _resumeTimer,
+                onExitPressed: () {},
+                isFromDiceOrCamera: false,
+                isFromCard: false,
+              )),
     );
   }
 
@@ -147,23 +141,22 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
     final int currentNumber = arguments['currentNumber'];
 
     String setBg(currentNumber) {
-      if (currentNumber <= 5) {
-        return 'assets/kikisday/kikisday_1_dice_bg.png';
-      } else if (currentNumber > 6 && currentNumber <= 10) {
-        return 'assets/kikisday/kikisday_2_dice_bg.png';
-      } else if (currentNumber > 11 && currentNumber <= 15) {
-        return 'assets/kikisday/kikisday_3_dice_bg.png';
+      if (currentNumber <= 3) {
+        return 'earth';
+      } else if (currentNumber >= 4 && currentNumber <= 6) {
+        return 'venus';
+      } else if (currentNumber >= 7 && currentNumber <= 9) {
+        return 'mars';
       } else {
-        return 'assets/kikisday/kikisday_4_dice_bg.png';
+        return 'saturn';
       }
     }
 
     return CompleteLayout(
-      bgStr: setBg(currentNumber),
-      backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
-      completeStr:
-          'assets/kikisday/${SetKikisdayCardColor.setCardColor(currentNumber)}_complete.png',
-      timerColor: Color(0xFF868686),
+      bgStr: 'assets/space/${setBg(currentNumber)}_dice_bg.png',
+      backBtnStr: 'assets/space/back_icon_white.png',
+      completeStr: 'assets/space/${setBg(currentNumber)}_complete_text.png',
+      timerColor: Color(0xFFE7E7E7),
       onBackButtonPressed: _onBackButtonPressed,
     );
   }

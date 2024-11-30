@@ -46,9 +46,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   // 서버에서 사용자 정보 가져오기
   Future<void> fetchMyPageData() async {
-    final allTokens = await storage.readAll();
-    print("저장된 모든 값: $allTokens");
-
     String? token = await storage.read(key: 'accessToken'); // 토큰 불러오기
 
     if (token == null) {
