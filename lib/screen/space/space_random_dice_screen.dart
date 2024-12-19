@@ -1,13 +1,13 @@
 import 'dart:math';
-import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../model/game_provider.dart';
-import '../../model/timer_model.dart';
-import '../layout/exit_layout.dart';
+import 'dart:developer' as developer;
 
 class SpaceRandomDiceScreen extends StatefulWidget {
   const SpaceRandomDiceScreen({super.key});
@@ -97,10 +97,8 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
           'bgStr': 'assets/space/${setBg(nextScreen)}_card_bg.png',
           'backBtnStr': 'assets/space/back_icon_white.png',
           'textStr': 'assets/space/${nextScreen}_text.png',
-          'cardStr':
-              'assets/space/${setBg(nextScreen)}_card.png',
-          'okBtnStr':
-              'assets/space/${setBg(nextScreen)}_card_btn.png',
+          'cardStr': 'assets/space/${setBg(nextScreen)}_card.png',
+          'okBtnStr': 'assets/space/${setBg(nextScreen)}_card_btn.png',
           'timerColor': const Color(0xFFE7E7E7),
           'currentNumber': nextScreen,
           'chips': chips,
@@ -193,7 +191,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
                       nextScreen = totalDice;
                     }
                     developer.log(
-                        "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: ${randomNumber}");
+                        "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: $randomNumber");
                     developer.log(
                         "플레이어${gameProvider.currentPlayer.playerNum}가 이동할 위치: ${gameProvider.currentPlayer.position}");
                     _initializeAndPlayVideo();

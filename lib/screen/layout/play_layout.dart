@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
 
 class PlayLayout extends StatelessWidget {
   final String bg;
@@ -37,10 +36,13 @@ class PlayLayout extends StatelessWidget {
               child: Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: IconButton(
-                    icon: Image.asset(backIcon, width: screenWidth * 0.0366, height: screenHeight * 0.025),
+                    icon: Image.asset(backIcon,
+                        width: screenWidth * 0.0366,
+                        height: screenHeight * 0.025),
                     onPressed: () {
-                      final timerModel = Provider.of<TimerModel>(context, listen: false);
-                      timerModel.resetTimer();  // 타이머 종료
+                      final timerModel =
+                          Provider.of<TimerModel>(context, listen: false);
+                      timerModel.resetTimer(); // 타이머 종료
                       Navigator.pop(context);
                     },
                   )),

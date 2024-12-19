@@ -7,7 +7,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback onSearchTap; // 검색 버튼 클릭 콜백
   final VoidCallback onNotificationTap; // 알림 버튼 클릭 콜백
 
-  AppBarWidget({
+  const AppBarWidget({
+    super.key,
     required this.title,
     required this.backgroundColor,
     required this.isSearchExpanded,
@@ -70,7 +71,9 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                 Flexible(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isSearchExpanded ? Colors.transparent : backgroundColor,
+                      color: isSearchExpanded
+                          ? Colors.transparent
+                          : backgroundColor,
                     ),
                     child: IconButton(
                       icon: Image.asset(

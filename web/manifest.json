@@ -1,6 +1,6 @@
 {
-    "name": "kiding",
-    "short_name": "kiding",
+    "name": "kiding_frontend",
+    "short_name": "kiding_frontend",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

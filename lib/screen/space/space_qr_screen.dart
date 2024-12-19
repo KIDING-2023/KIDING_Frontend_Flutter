@@ -1,14 +1,13 @@
 import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:image_picker/image_picker.dart';
-import 'package:kiding/screen/space/space_tutorial1_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
+import 'package:kiding_frontend/screen/space/space_tutorial1_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'dart:io' as io;
 
-import '../layout/exit_layout.dart';
+import 'dart:io' as io;
 
 class SpaceQrScreen extends StatefulWidget {
   const SpaceQrScreen({super.key});

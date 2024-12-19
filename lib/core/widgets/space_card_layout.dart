@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/card_qr_text_screen.dart';
-import 'package:kiding/screen/space/space_complete_screen.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/layout/card_qr_text_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
+import 'package:kiding_frontend/screen/space/space_complete_screen.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
-import '../../screen/layout/exit_layout.dart';
 
 class SpaceCardLayout extends StatelessWidget {
   final String bgStr;
@@ -142,6 +141,5 @@ class SpaceCardLayout extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

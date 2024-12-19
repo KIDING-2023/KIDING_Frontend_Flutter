@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/talmud_story_1_screen.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/kikisday/talmud_story_1_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
-import '../layout/exit_layout.dart';
 
 class KikisdaySongScreen extends StatefulWidget {
   const KikisdaySongScreen({super.key});
@@ -30,8 +29,8 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
   }
 
   void _pauseTimer() {
-    if (_timer != null && _timer!.isActive) {
-      _timer?.cancel();
+    if (_timer.isActive) {
+      _timer.cancel();
     }
   }
 

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_complete_screen.dart';
-import 'package:kiding/screen/layout/exit_layout.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_complete_screen.dart';
+import 'package:kiding_frontend/screen/layout/card_qr_text_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
-import '../../screen/layout/card_qr_text_screen.dart';
 
 class CardLayout extends StatelessWidget {
   final String bgStr;
@@ -143,6 +142,5 @@ class CardLayout extends StatelessWidget {
         ],
       ),
     );
-    ;
   }
 }

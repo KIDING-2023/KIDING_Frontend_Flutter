@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
-import 'package:kiding/screen/space/space_play_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 class RecommendGamesWidget extends StatelessWidget {
   const RecommendGamesWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 120,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {

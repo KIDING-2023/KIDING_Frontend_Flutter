@@ -1,12 +1,10 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/game_provider.dart';
-import '../../model/timer_model.dart';
-import '../../screen/kikisday/set_player_order_screen.dart';
-import '../../screen/layout/exit_layout.dart';
 
 class SetPlayerNumWidget extends StatefulWidget {
   final String bg;

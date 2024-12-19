@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../core/services/game_complete_service.dart';
-import '../../core/widgets/finish_screen_widget.dart';
-import '../home/home_screen.dart';
-import 'set_player_number_screen.dart';
+import 'package:kiding_frontend/core/services/game_complete_service.dart';
+import 'package:kiding_frontend/core/widgets/finish_screen_widget.dart';
+import 'package:kiding_frontend/screen/home/home_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
 
 class FinishScreen extends StatefulWidget {
   const FinishScreen({super.key});

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/core/widgets/set_player_order_widget.dart';
-import 'package:kiding/screen/space/space_tutorial1_screen.dart';
+import 'package:kiding_frontend/core/widgets/set_player_order_widget.dart';
+import 'package:kiding_frontend/screen/space/space_tutorial1_screen.dart';
 
 class SpaceSetPlayerOrderScreen extends StatelessWidget {
   const SpaceSetPlayerOrderScreen({super.key});

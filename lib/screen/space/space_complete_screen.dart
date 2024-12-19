@@ -4,13 +4,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/screen/space/space_random_dice_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/core/widgets/complete_layout.dart';
+import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
+import 'package:kiding_frontend/screen/space/space_random_dice_screen.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/constants/api_constants.dart';
-import '../../model/game_provider.dart';
-import '../../core/widgets/complete_layout.dart';
-import '../layout/exit_layout.dart';
 import 'package:http/http.dart' as http;
 
 class SpaceCompleteScreen extends StatefulWidget {
@@ -39,8 +39,8 @@ class _SpaceCompleteScreenState extends State<SpaceCompleteScreen> {
   }
 
   void _pauseTimer() {
-    if (_timer != null && _timer!.isActive) {
-      _timer?.cancel();
+    if (_timer.isActive) {
+      _timer.cancel();
     }
   }
 
@@ -61,11 +61,6 @@ class _SpaceCompleteScreenState extends State<SpaceCompleteScreen> {
     final url = Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
-
-    if (token == null) {
-      print("토큰이 없습니다.");
-      return;
-    }
 
     final headers = {
       'Authorization': 'Bearer $token', // 토큰을 Authorization 헤더에 포함
@@ -121,7 +116,7 @@ class _SpaceCompleteScreenState extends State<SpaceCompleteScreen> {
   }
 
   void _onBackButtonPressed() {
-    _timer?.cancel(); // 타이머 취소
+    _timer.cancel(); // 타이머 취소
     Navigator.push(
       context,
       MaterialPageRoute(

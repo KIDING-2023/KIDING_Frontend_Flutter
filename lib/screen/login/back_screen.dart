@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/start_screen.dart';
-
 // 회원가입 과정에서 뒤로 가기 버튼 클릭 시 표시할 화면
+import 'package:flutter/material.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
+
 class BackScreen extends StatefulWidget {
   const BackScreen({super.key});
 
@@ -39,10 +39,10 @@ class _BackScreenState extends State<BackScreen> {
                   // 버튼 배경 이미지
                   Center(
                       child: Image.asset(
-                        'assets/login/back_btn_bg.png',
-                        width: screenSize.width * 0.72,
-                        height: screenSize.height * 0.15,
-                      )),
+                    'assets/login/back_btn_bg.png',
+                    width: screenSize.width * 0.72,
+                    height: screenSize.height * 0.15,
+                  )),
                   // 버튼 세로 배치
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
@@ -65,7 +65,8 @@ class _BackScreenState extends State<BackScreen> {
                           // 계속 버튼
                           IconButton(
                             onPressed: () => Navigator.pop(context),
-                            icon: Image.asset('assets/login/keep_signup_btn.png',
+                            icon: Image.asset(
+                                'assets/login/keep_signup_btn.png',
                                 width: screenSize.width * 0.66,
                                 height: screenSize.height * 0.05),
                           )

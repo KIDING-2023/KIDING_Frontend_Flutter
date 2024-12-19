@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/tutorial_layout.dart';
-import 'package:kiding/screen/space/space_tutorial2_screen.dart';
+import 'package:kiding_frontend/screen/layout/tutorial_layout.dart';
+import 'package:kiding_frontend/screen/space/space_tutorial2_screen.dart';
 
 class SpaceTutorial1Screen extends StatefulWidget {
   //final bool canread;

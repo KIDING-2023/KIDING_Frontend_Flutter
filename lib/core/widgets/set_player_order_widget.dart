@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
-import '../../model/timer_model.dart';
-import '../../screen/layout/exit_layout.dart';
 
 class SetPlayerOrderWidget extends StatelessWidget {
   final String bg;
@@ -20,7 +20,6 @@ class SetPlayerOrderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(

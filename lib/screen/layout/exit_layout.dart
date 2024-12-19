@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/home/home_screen.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/home/home_screen.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
 
 class ExitLayout extends StatefulWidget {
   final VoidCallback onKeepPressed;
@@ -14,7 +13,8 @@ class ExitLayout extends StatefulWidget {
       {super.key,
       required this.onKeepPressed,
       required this.onExitPressed,
-      required this.isFromDiceOrCamera, required this.isFromCard});
+      required this.isFromDiceOrCamera,
+      required this.isFromCard});
 
   @override
   State<ExitLayout> createState() => _ExitLayoutState();

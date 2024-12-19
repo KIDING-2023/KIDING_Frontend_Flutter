@@ -1,16 +1,15 @@
+// 회원가입 전화번호 인증 화면
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/screen/login/password_screen.dart';
-import '../../core/constants/api_constants.dart';
-import 'back_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/screen/login/back_screen.dart';
+import 'package:kiding_frontend/screen/login/password_screen.dart';
 
 import 'package:http/http.dart' as http;
 
-// 회원가입 전화번호 인증 화면
 class PhoneScreen extends StatefulWidget {
   final String nickname;
 
@@ -63,7 +62,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
               Column(
                 // 전화번호 입력칸 || 인증번호 입력칸
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenSize.width * 0.7259,
                     height: screenSize.height * 0.0623,
                     child: TextField(
@@ -163,8 +162,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
   // 전화번호 중복 여부 체크
   Future<void> _checkPhoneDuplication(String phoneNumber) async {
     log('phone: $phoneNumber');
-    final url =
-        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phoneNumber');
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phoneNumber');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {
@@ -303,7 +302,9 @@ class _PhoneScreenState extends State<PhoneScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PasswordScreen(nickname: widget.nickname, phoneNumber: _phoneController.text)));
+                builder: (context) => PasswordScreen(
+                    nickname: widget.nickname,
+                    phoneNumber: _phoneController.text)));
       } else {
         setState(() {
           errorVisible = true;

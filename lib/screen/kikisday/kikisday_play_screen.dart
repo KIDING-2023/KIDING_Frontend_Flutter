@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/play_layout.dart';
+import 'package:kiding_frontend/screen/layout/play_layout.dart';
 
 class KikisdayPlayScreen extends StatelessWidget {
+  const KikisdayPlayScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PlayLayout(

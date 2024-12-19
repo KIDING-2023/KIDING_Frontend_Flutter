@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/play_layout.dart';
+import 'package:kiding_frontend/screen/layout/play_layout.dart';
 
 class SpacePlayScreen extends StatefulWidget {
   const SpacePlayScreen({super.key});

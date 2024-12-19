@@ -1,21 +1,21 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/core/utils/set_kikisday_card_color.dart';
-import 'package:kiding/screen/kikisday/kikisday_random_dice_screen.dart';
-import 'package:kiding/core/widgets/complete_layout.dart';
-import 'package:provider/provider.dart';
-import '../../core/constants/api_constants.dart';
-import '../../model/game_provider.dart';
-import '../layout/exit_layout.dart';
-
-import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+
 import 'package:http/http.dart' as http;
+import 'package:kiding_frontend/core/utils/set_kikisday_card_color.dart';
+import 'package:kiding_frontend/core/widgets/complete_layout.dart';
+import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_random_dice_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
+import 'package:provider/provider.dart';
 
 class KikisdayCompleteScreen extends StatefulWidget {
-  KikisdayCompleteScreen({Key? key}) : super(key: key);
+  const KikisdayCompleteScreen({super.key});
 
   @override
   State<KikisdayCompleteScreen> createState() => _KikisdayCompleteScreenState();
@@ -40,8 +40,8 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
   }
 
   void _pauseTimer() {
-    if (_timer != null && _timer!.isActive) {
-      _timer?.cancel();
+    if (_timer.isActive) {
+      _timer.cancel();
     }
   }
 
@@ -62,11 +62,6 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
     final url = Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.boardgameEndpoint}'); // 서버 URL
     String? token = await storage.read(key: 'accessToken');
-
-    if (token == null) {
-      print("토큰이 없습니다.");
-      return;
-    }
 
     final headers = {
       'Authorization': 'Bearer $token', // 토큰을 Authorization 헤더에 포함

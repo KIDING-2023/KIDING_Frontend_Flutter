@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/space/space_random_dice_screen.dart';
-
-import '../layout/tutorial_layout.dart';
+import 'package:kiding_frontend/screen/layout/tutorial_layout.dart';
+import 'package:kiding_frontend/screen/space/space_random_dice_screen.dart';
 
 class SpaceTutorial2Screen extends StatefulWidget {
   //final bool canread;

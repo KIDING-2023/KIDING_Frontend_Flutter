@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
-import '../../screen/layout/exit_layout.dart';
 
 class CompleteLayout extends StatelessWidget {
   final String bgStr;
@@ -44,7 +42,9 @@ class CompleteLayout extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: onBackButtonPressed,
-                    icon: Image.asset(backBtnStr, width: screenWidth * 0.0366, height: screenHeight * 0.025)),
+                    icon: Image.asset(backBtnStr,
+                        width: screenWidth * 0.0366,
+                        height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(
@@ -64,7 +64,8 @@ class CompleteLayout extends StatelessWidget {
             top: screenHeight * 0.1596,
             left: 0,
             right: 0,
-            child: Image.asset(completeStr, width: screenWidth * 0.9359, height: screenHeight * 0.4627),
+            child: Image.asset(completeStr,
+                width: screenWidth * 0.9359, height: screenHeight * 0.4627),
           ),
         ],
       ),

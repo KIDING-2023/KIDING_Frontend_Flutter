@@ -1,15 +1,14 @@
 import 'dart:developer';
-import 'dart:io' as io;
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_tutorial1_screen.dart';
-import 'package:kiding/screen/kikisday/set_player_number_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import '../layout/exit_layout.dart';
+
+import 'dart:io' as io;
 
 class KikisdayQrScreen extends StatefulWidget {
-  const KikisdayQrScreen({Key? key}) : super(key: key);
+  const KikisdayQrScreen({super.key});
 
   @override
   State<KikisdayQrScreen> createState() => _KikisdayQrScreenState();

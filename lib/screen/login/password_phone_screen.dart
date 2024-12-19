@@ -1,16 +1,14 @@
+// 비밀번호 찾기 - 전화번호 인증 코드 입력 화면
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/password_reset_screen.dart';
-import 'package:kiding/screen/login/start_screen.dart';
-import '../../core/constants/api_constants.dart';
-import 'find_password_result_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/screen/login/password_reset_screen.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
 
 import 'package:http/http.dart' as http;
 
-// 비밀번호 찾기 - 전화번호 인증 코드 입력 화면
 class PasswordPhoneScreen extends StatefulWidget {
   final String phone; // 전화번호 받아오기
 
@@ -66,7 +64,7 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
               Column(
                 // 인증번호 입력 칸
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
                     child: TextField(
@@ -203,7 +201,8 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PasswordResetScreen(phone: widget.phone)));
+                builder: (context) =>
+                    PasswordResetScreen(phone: widget.phone)));
       } else {
         setState(() {
           errorVisible = true;

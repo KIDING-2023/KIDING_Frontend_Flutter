@@ -1,11 +1,12 @@
+// '회원가입이 완료되었습니다.' 화면
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'choose_character_screen.dart';
+import 'package:kiding_frontend/screen/login/choose_character_screen.dart';
 
-// '회원가입이 완료되었습니다.' 화면
 class LoginSplashScreen extends StatefulWidget {
-  final String nickname;  // 닉네임 받아오기
+  final String nickname; // 닉네임 받아오기
 
   const LoginSplashScreen({required this.nickname, super.key});
 
@@ -21,14 +22,14 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
   @override
   void initState() {
     super.initState();
-    _loadToken();  // 토큰 불러오기
+    _loadToken(); // 토큰 불러오기
   }
 
   // 토큰을 불러오는 메서드
   Future<void> _loadToken() async {
     token = await storage.read(key: 'accessToken'); // 저장된 토큰 불러오기
     if (token != null) {
-      print("Token: $token");  // 토큰이 정상적으로 불러와졌는지 확인
+      print("Token: $token"); // 토큰이 정상적으로 불러와졌는지 확인
     } else {
       print("토큰을 찾을 수 없습니다.");
     }
@@ -60,8 +61,7 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
                 style: TextStyle(
                     fontFamily: 'nanum',
                     fontSize: 20,
-                    color: Color(0xFF838383)
-                ),
+                    color: Color(0xFF838383)),
               ),
             ],
           ),

@@ -2,12 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:google_ml_kit/google_ml_kit.dart' as mlkit;
 import 'package:image_picker/image_picker.dart';
-import 'package:kiding/screen/layout/card_read_layout.dart';
+import 'package:kiding_frontend/screen/layout/card_read_layout.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-
-import 'exit_layout.dart';
 
 import 'dart:io' as io;
 
@@ -19,7 +17,8 @@ class CardQRScreen extends StatefulWidget {
   const CardQRScreen(
       {super.key,
       required this.currentNumber,
-      required this.color, required this.chips});
+      required this.color,
+      required this.chips});
 
   @override
   State<CardQRScreen> createState() => _CardQRScreenState();
@@ -201,7 +200,7 @@ class _CardQRScreenState extends State<CardQRScreen> {
               currentNumber: widget.currentNumber,
               codeResult: codeResult,
               color: widget.color,
-          chips: widget.chips)),
+              chips: widget.chips)),
     );
   }
 }

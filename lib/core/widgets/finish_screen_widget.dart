@@ -9,14 +9,14 @@ class FinishScreenBody extends StatelessWidget {
   final String bg;
 
   const FinishScreenBody({
-    Key? key,
+    super.key,
     required this.chips,
     required this.screenWidth,
     required this.screenHeight,
     required this.onReplay,
     required this.onHome,
     required this.bg,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

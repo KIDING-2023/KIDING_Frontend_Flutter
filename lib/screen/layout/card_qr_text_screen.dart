@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/layout/card_qr_screen.dart';
+import 'package:kiding_frontend/screen/layout/card_qr_screen.dart';
 
 class CardQRTextScreen extends StatefulWidget {
   final int currentNumber;
@@ -12,7 +12,10 @@ class CardQRTextScreen extends StatefulWidget {
   //final bool canread;
 
   const CardQRTextScreen(
-      {super.key, required this.currentNumber, required this.color, required this.chips});
+      {super.key,
+      required this.currentNumber,
+      required this.color,
+      required this.chips});
 
   @override
   State<CardQRTextScreen> createState() => _CardQRTextScreenState();
@@ -40,8 +43,8 @@ class _CardQRTextScreenState extends State<CardQRTextScreen> {
       MaterialPageRoute(
           builder: (context) => CardQRScreen(
               currentNumber: widget.currentNumber,
-          color: widget.color,
-          chips: widget.chips)),
+              color: widget.color,
+              chips: widget.chips)),
     );
     log('currentNumber: ${widget.currentNumber}');
   }
@@ -53,7 +56,7 @@ class _CardQRTextScreenState extends State<CardQRTextScreen> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: AssetImage('assets/${game}/card_qr_text_screen.png'),
+                image: AssetImage('assets/$game/card_qr_text_screen.png'),
                 fit: BoxFit.cover)),
       ),
     );

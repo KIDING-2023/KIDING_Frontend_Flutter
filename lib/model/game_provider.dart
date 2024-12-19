@@ -9,16 +9,16 @@ class Player {
 
   // JSON 직렬화 및 비직렬화 기능 추가
   Map<String, dynamic> toJson() => {
-    'playerNum': playerNum,
-    'position': position,
-    'chips': chips,
-  };
+        'playerNum': playerNum,
+        'position': position,
+        'chips': chips,
+      };
 
   factory Player.fromJson(Map<String, dynamic> json) => Player(
-    playerNum: json['playerNum'],
-    position: json['position'],
-    chips: json['chips'],
-  );
+        playerNum: json['playerNum'],
+        position: json['position'],
+        chips: json['chips'],
+      );
 }
 
 class GameProvider extends ChangeNotifier {

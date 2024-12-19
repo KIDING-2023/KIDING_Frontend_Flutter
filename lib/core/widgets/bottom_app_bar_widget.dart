@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../screen/home/home_screen.dart';
-import '../../screen/mypage/mypage_screen.dart';
-import '../../screen/ranking/ranking_screen.dart';
+import 'package:kiding_frontend/screen/home/home_screen.dart';
+import 'package:kiding_frontend/screen/mypage/mypage_screen.dart';
+import 'package:kiding_frontend/screen/ranking/ranking_screen.dart';
 
 class BottomAppBarWidget extends StatelessWidget {
   final double topPosition;
@@ -16,7 +15,8 @@ class BottomAppBarWidget extends StatelessWidget {
     required this.screenHeight,
     required this.screenWidth,
     required this.screen,
-    required this.topPosition, required this.hasAppBar,
+    required this.topPosition,
+    required this.hasAppBar,
   });
 
   @override
@@ -33,7 +33,7 @@ class BottomAppBarWidget extends StatelessWidget {
           children: [
             IconButton(
               icon: Image.asset(
-                'assets/${screen}/ranking_icon.png',
+                'assets/$screen/ranking_icon.png',
                 width: screenWidth * 0.1,
                 height: screenHeight * 0.04,
               ),
@@ -48,7 +48,7 @@ class BottomAppBarWidget extends StatelessWidget {
             ),
             IconButton(
               icon: Image.asset(
-                'assets/${screen}/home_icon.png',
+                'assets/$screen/home_icon.png',
                 width: screenWidth * 0.1,
                 height: screenHeight * 0.04,
               ),
@@ -63,7 +63,7 @@ class BottomAppBarWidget extends StatelessWidget {
             ),
             IconButton(
               icon: Image.asset(
-                'assets/${screen}/mypage_icon.png',
+                'assets/$screen/mypage_icon.png',
                 width: screenWidth * 0.1,
                 height: screenHeight * 0.04,
               ),

@@ -1,16 +1,16 @@
+// 시작 화면 (로그인 화면)
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/screen/home/home_screen.dart';
-import 'package:kiding/screen/login/signup_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
 
-import '../../core/constants/api_constants.dart';
-import 'find_nickname_screen.dart';
-import 'find_password_screen.dart';
-
-import 'dart:convert'; // JSON 인코딩, 디코딩을 위한 패키지
 import 'package:http/http.dart' as http;
+import 'package:kiding_frontend/screen/home/home_screen.dart';
+import 'package:kiding_frontend/screen/login/find_nickname_screen.dart';
+import 'package:kiding_frontend/screen/login/find_password_screen.dart';
+import 'package:kiding_frontend/screen/login/signup_screen.dart';
 
-// 시작 화면 (로그인 화면)
 class StartScreen extends StatefulWidget {
   const StartScreen({super.key});
 
@@ -44,7 +44,7 @@ class _StartScreenState extends State<StartScreen> {
             // 닉네임 입력칸
             Column(
               children: [
-                Container(
+                SizedBox(
                   width: screenSize.width * 0.7259,
                   height: screenSize.height * 0.0623,
                   child: TextField(
@@ -70,7 +70,7 @@ class _StartScreenState extends State<StartScreen> {
                   height: screenSize.height * 0.01,
                 ),
                 // 비밀번호 입력칸
-                Container(
+                SizedBox(
                   width: screenSize.width * 0.7261,
                   height: screenSize.height * 0.0634,
                   child: TextField(
@@ -187,7 +187,7 @@ class _StartScreenState extends State<StartScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // 회원가입 버튼
-                Container(
+                SizedBox(
                   width: screenSize.width * 0.19,
                   height: screenSize.height * 0.02,
                   child: IconButton(
@@ -207,7 +207,7 @@ class _StartScreenState extends State<StartScreen> {
                   width: screenSize.width * 0.01,
                 ),
                 // 닉네임 찾기 버튼
-                Container(
+                SizedBox(
                   width: screenSize.width * 0.16,
                   height: screenSize.height * 0.02,
                   child: IconButton(
@@ -227,7 +227,7 @@ class _StartScreenState extends State<StartScreen> {
                   width: screenSize.width * 0.01,
                 ),
                 // 비밀번호 찾기 버튼
-                Container(
+                SizedBox(
                   width: screenSize.width * 0.2,
                   height: screenSize.height * 0.02,
                   child: IconButton(
@@ -329,7 +329,7 @@ class _StartScreenState extends State<StartScreen> {
   // 로그인 유지 여부 확인
   Future<void> checkLoginStatus() async {
     String? isLoggedIn = await _storage.read(key: 'isLoggedIn');
-    if (isLoggedIn != null && isLoggedIn == 'true') {
+    if (isLoggedIn == 'true') {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
     }

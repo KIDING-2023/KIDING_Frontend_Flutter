@@ -1,15 +1,14 @@
+// 닉네임 찾기 - 전화번호 입력 화면
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/find_nickname_result_screen.dart';
-import 'package:kiding/screen/login/start_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/screen/login/find_nickname_result_screen.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
+
 import 'package:http/http.dart' as http;
 
-import '../../core/constants/api_constants.dart';
-
-// 닉네임 찾기 - 전화번호 입력 화면
 class FindNicknameScreen extends StatefulWidget {
   const FindNicknameScreen({super.key});
 
@@ -55,7 +54,7 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
               Column(
                 // 전화번호 입력칸
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
                     child: TextField(
@@ -130,7 +129,8 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
   // 전화번호 인증 로직
   Future<void> _findNickname(String phoneNumber) async {
     log('닉네임 찾기 시도');
-    final url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.findNicknameEndpoint}?phone=$phoneNumber');
+    final url = Uri.parse(
+        '${ApiConstants.baseUrl}${ApiConstants.findNicknameEndpoint}?phone=$phoneNumber');
     // String? token = await storage.read(key: 'accessToken');
 
     // if (token == null) {
@@ -169,7 +169,8 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => FindNicknameResultScreen(nickname: data['result'])));
+                    builder: (context) =>
+                        FindNicknameResultScreen(nickname: data['result'])));
           });
         }
       } else {

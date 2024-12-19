@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/finish_screen.dart';
-import 'package:kiding/screen/kikisday/kikisday_card_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/finish_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_card_screen.dart';
 import '../../screen/kikisday/kikisday_qr_screen.dart';
 import '../../screen/kikisday/set_player_number_screen.dart';
 

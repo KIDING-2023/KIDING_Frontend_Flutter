@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/talmud_story_2_screen.dart';
-import 'package:kiding/screen/layout/talmud_story_layout.dart';
-
-import '../layout/exit_layout.dart';
+import 'package:kiding_frontend/screen/kikisday/talmud_story_2_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
+import 'package:kiding_frontend/screen/layout/talmud_story_layout.dart';
 
 class KikisdayTalmudStory1Screen extends StatefulWidget {
   const KikisdayTalmudStory1Screen({super.key});
@@ -31,8 +30,8 @@ class _KikisdayTalmudStory1ScreenState
   }
 
   void _pauseTimer() {
-    if (_timer != null && _timer!.isActive) {
-      _timer?.cancel();
+    if (_timer.isActive) {
+      _timer.cancel();
     }
   }
 
@@ -56,7 +55,7 @@ class _KikisdayTalmudStory1ScreenState
   }
 
   void _onBackButtonPressed() {
-    _timer?.cancel(); // 타이머 취소
+    _timer.cancel(); // 타이머 취소
     Navigator.push(
       context,
       MaterialPageRoute(

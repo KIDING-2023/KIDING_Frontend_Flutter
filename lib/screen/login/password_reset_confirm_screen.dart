@@ -2,12 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/find_password_result_screen.dart';
-
-import '../../core/constants/api_constants.dart';
-import 'back_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:kiding_frontend/screen/login/back_screen.dart';
+import 'package:kiding_frontend/screen/login/find_password_result_screen.dart';
 
 class PasswordResetConfirmScreen extends StatefulWidget {
   final String password;
@@ -61,7 +60,7 @@ class _PasswordResetConfirmScreenState
               Column(
                 // 비밀번호 입력 칸
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
                     child: TextField(
@@ -136,10 +135,10 @@ class _PasswordResetConfirmScreenState
 
   // 비밀번호 일치 여부 확인 및 서버로 회원가입 요청
   void _passwordConfirm() async {
-    String pw_test = _pwController.text;
+    String pwTest = _pwController.text;
     String pw = widget.password;
 
-    if (pw_test != pw) {
+    if (pwTest != pw) {
       setState(() {
         _isErrorVisible = true;
         errorMessage = "비밀번호가 일치하지 않습니다.";
@@ -152,7 +151,7 @@ class _PasswordResetConfirmScreenState
 
   Future<void> _resetPassword(String pw) async {
     final url = Uri.parse(
-        '${ApiConstants.baseUrl}${ApiConstants.resetPasswordEndpoint}?phoneNumber=${widget.phone}&newPassword=${pw}');
+        '${ApiConstants.baseUrl}${ApiConstants.resetPasswordEndpoint}?phoneNumber=${widget.phone}&newPassword=$pw');
     final headers = {'Content-Type': 'application/json'};
 
     try {
@@ -167,8 +166,7 @@ class _PasswordResetConfirmScreenState
           // 결과 화면으로 이동
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => FindPasswordResultScreen()),
+            MaterialPageRoute(builder: (context) => FindPasswordResultScreen()),
           );
         } else {
           log('Reset Password failed: ${data['message']}');

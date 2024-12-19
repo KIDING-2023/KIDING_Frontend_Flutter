@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/core/widgets/space_card_layout.dart';
-import '../../core/widgets/card_layout.dart';
+import 'package:kiding_frontend/core/widgets/space_card_layout.dart';
 
 class SpaceCardScreen extends StatelessWidget {
   const SpaceCardScreen({super.key});
@@ -8,7 +7,8 @@ class SpaceCardScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // 전달된 인자를 받습니다.
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     // 인자에서 필요한 값 추출
     final String bgStr = arguments['bgStr'];

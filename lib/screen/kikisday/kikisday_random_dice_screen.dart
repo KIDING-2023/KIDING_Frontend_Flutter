@@ -1,16 +1,17 @@
 import 'dart:math';
-import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
-import 'package:kiding/model/game_provider.dart';
+import 'package:kiding_frontend/core/utils/set_kikisday_card_color.dart';
+import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import '../../core/utils/set_kikisday_card_color.dart';
-import '../../model/timer_model.dart';
-import '../layout/exit_layout.dart';
+
+import 'dart:developer' as developer;
 
 class KikisdayRandomDiceScreen extends StatefulWidget {
-  KikisdayRandomDiceScreen({super.key});
+  const KikisdayRandomDiceScreen({super.key});
 
   @override
   State<KikisdayRandomDiceScreen> createState() =>
@@ -39,9 +40,10 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   }
 
   void _initializeAndPlayVideo() {
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final int position = arguments['position'];
-    
+
     int setVideo(position) {
       if (position <= 4) {
         return 1;
@@ -53,9 +55,9 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
         return 4;
       }
     }
-    
+
     _controller = VideoPlayerController.asset(
-        'assets/kikisday/kikisday_${setVideo(position)}_dice_${randomNumber}.mp4')
+        'assets/kikisday/kikisday_${setVideo(position)}_dice_$randomNumber.mp4')
       ..initialize().then((_) {
         setState(() {});
         _controller?.play();
@@ -64,9 +66,10 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
   }
 
   void _checkVideo() {
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final int chips = arguments['chips'];
-    
+
     int setBg(int nextScreen) {
       if (nextScreen <= 5) {
         return 1;
@@ -78,7 +81,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
         return 4;
       }
     }
-    
+
     // 현재 재생 위치와 비디오 길이가 같은지 확인
     if (_controller?.value.position == _controller?.value.duration) {
       _controller?.removeListener(_checkVideo); // 리스너 제거
@@ -86,26 +89,22 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
       // nextScreen이 FinishScreen일 경우 타이머를 종료
       if (nextScreen == 21) {
         Provider.of<TimerModel>(context, listen: false).stopTimer();
-        Navigator.pushNamed(context,
-            '/kikisday_finish',
-            arguments: {
-              'chips': chips,
-            }
-        );
+        Navigator.pushNamed(context, '/kikisday_finish', arguments: {
+          'chips': chips,
+        });
       } else {
-        Navigator.pushNamed(context,
-            '/kikisdayScreen',
-            arguments: {
-              'bgStr': 'assets/kikisday/kikisday_${setBg(nextScreen)}_bg.png',
-              'backBtnStr': 'assets/kikisday/kikisday_back_btn.png',
-              'textStr': 'assets/kikisday/kikisday_${nextScreen}_text.png',
-              'cardStr': 'assets/kikisday/kikisday_${SetKikisdayCardColor.setCardColor(nextScreen)}_card.png',
-              'okBtnStr': 'assets/kikisday/kikisday_${SetKikisdayCardColor.setCardColor(nextScreen)}_btn.png',
-              'timerColor': const Color(0xFF868686),
-              'currentNumber': nextScreen,
-              'chips': chips,
-            }
-        );
+        Navigator.pushNamed(context, '/kikisdayScreen', arguments: {
+          'bgStr': 'assets/kikisday/kikisday_${setBg(nextScreen)}_bg.png',
+          'backBtnStr': 'assets/kikisday/kikisday_back_btn.png',
+          'textStr': 'assets/kikisday/kikisday_${nextScreen}_text.png',
+          'cardStr':
+              'assets/kikisday/kikisday_${SetKikisdayCardColor.setCardColor(nextScreen)}_card.png',
+          'okBtnStr':
+              'assets/kikisday/kikisday_${SetKikisdayCardColor.setCardColor(nextScreen)}_btn.png',
+          'timerColor': const Color(0xFF868686),
+          'currentNumber': nextScreen,
+          'chips': chips,
+        });
       }
     }
   }
@@ -128,7 +127,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final arguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final int position = arguments['position'];
 
     int setBg(position) {
@@ -142,7 +142,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
         return 4;
       }
     }
-    
+
     final gameProvider = Provider.of<GameProvider>(context);
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -188,7 +188,8 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                     } else {
                       randomNumber = Random().nextInt(3) + 1;
                     }
-                    totalDice = gameProvider.currentPlayer.position + randomNumber;
+                    totalDice =
+                        gameProvider.currentPlayer.position + randomNumber;
                     gameProvider.updatePlayerPosition(randomNumber);
                     if (totalDice >= 21) {
                       nextScreen = 21;
@@ -196,7 +197,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                       nextScreen = totalDice;
                     }
                     developer.log(
-                        "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: ${randomNumber}");
+                        "플레이어${gameProvider.currentPlayer.playerNum}의 주사위 결과: $randomNumber");
                     developer.log(
                         "플레이어${gameProvider.currentPlayer.playerNum}가 이동할 위치: ${gameProvider.currentPlayer.position}");
                     _initializeAndPlayVideo();

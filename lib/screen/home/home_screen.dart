@@ -1,35 +1,32 @@
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/core/widgets/app_bar_widget.dart';
-import 'package:kiding/core/widgets/recommend_games_widget.dart';
-import 'package:kiding/screen/friends/friends_request_screen.dart';
-import 'package:kiding/screen/kikisday/kikisday_play_screen.dart';
-import 'package:kiding/screen/ranking/ranking_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
 
-import '../../core/constants/api_constants.dart';
-import '../../core/widgets/bottom_app_bar_widget.dart';
-import '../../core/widgets/search_widget.dart';
-import '../mypage/mypage_screen.dart';
-import '../space/space_play_screen.dart';
-
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
+import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
+import 'package:kiding_frontend/core/widgets/search_widget.dart';
+import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var _index = 0; // 기본으로 홈이 선택된 상태
+  final _index = 0; // 기본으로 홈이 선택된 상태
   // Initialize selected index to 'Main'
-  int _userId = 1; // 임시 사용자 ID (서버 연동 시 필요)
+  final int _userId = 1; // 임시 사용자 ID (서버 연동 시 필요)
   int _selectedSortIndex = 0;
-  bool _kikiStar = false;
-  bool _spaceStar = false;
+  final bool _kikiStar = false;
+  final bool _spaceStar = false;
   String kikiStarImage = 'unselected_star.png';
   String spaceStarImage = 'unselected_star.png';
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
@@ -58,14 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _fetchBoardGames() async {
     // 토큰 불러오기
     String? token = await storage.read(key: 'accessToken');
-    if (token == null) {
-      print("토큰이 없습니다.");
-      setState(() {
-        errorMessage = "토큰이 없습니다.";
-        isLoading = false;
-      });
-      return;
-    }
 
     // 정렬 옵션에 따라 URL 설정
     String sortOption;
@@ -135,10 +124,6 @@ class _HomeScreenState extends State<HomeScreen> {
   // 즐겨찾기 상태를 서버에 업데이트하는 함수
   Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
     String? token = await storage.read(key: 'accessToken');
-    if (token == null) {
-      print("토큰이 없습니다.");
-      return;
-    }
 
     var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
     var headers = {
@@ -228,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Positioned(
                               left: 0,
                               top: screenSize.height * 0.19,
-                              child: Container(
+                              child: SizedBox(
                                 width: screenSize.width,
                                 height: screenSize.height * 0.6,
                                 child: Column(
@@ -363,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // 보드게임 데이터가 없을 때
     if (_boardGames.isEmpty) {
       log("보드게임 없음");
-      return Container(
+      return SizedBox(
         width: screenSize.width * 0.8,
         height: screenSize.height * 0.6,
         child: Stack(
@@ -383,7 +368,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     // 보드게임 데이터를 정상적으로 가져왔을 때
-    return Container(
+    return SizedBox(
       height: screenSize.height * 0.4,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {

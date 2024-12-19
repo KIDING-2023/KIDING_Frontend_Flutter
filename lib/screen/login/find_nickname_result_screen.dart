@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/find_password_screen.dart';
-import 'package:kiding/screen/login/start_screen.dart';
-
 // 닉네임 찾기 결과 화면
+import 'package:flutter/material.dart';
+import 'package:kiding_frontend/screen/login/find_password_screen.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
+
 class FindNicknameResultScreen extends StatefulWidget {
   final String nickname; // 닉네임 받아오기
 

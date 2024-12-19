@@ -1,10 +1,7 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/talmud_question_2_screen.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/kikisday/talmud_question_2_screen.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
 
 class KikisdayTalmudQuestion1Screen extends StatefulWidget {
   const KikisdayTalmudQuestion1Screen({super.key});

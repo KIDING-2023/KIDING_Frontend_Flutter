@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'recommend_games_widget.dart';
+import 'package:kiding_frontend/core/widgets/recommend_games_widget.dart';
 
 class SearchWidget extends StatelessWidget {
   final Size screenSize;
 
-  SearchWidget({required this.screenSize});
+  const SearchWidget({super.key, required this.screenSize});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class SearchWidget extends StatelessWidget {
         // 추천 카드덱 리스트
         Positioned(
           top: screenSize.height * 0.64,
-          child: Container(
+          child: SizedBox(
             width: screenSize.width,
             child: Column(
               children: <Widget>[

@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:kiding/screen/login/password_confirm_screen.dart';
-import 'back_screen.dart';
-
 // 회원가입 비밀번호 설정 화면
+import 'package:flutter/material.dart';
+import 'package:kiding_frontend/screen/login/back_screen.dart';
+import 'package:kiding_frontend/screen/login/password_confirm_screen.dart';
+
 class PasswordScreen extends StatefulWidget {
   final String nickname; // 닉네임 받아오기
   final String phoneNumber; // 전화번호 받아오기
@@ -53,7 +52,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               Column(
                 // 비밀번호 입력칸
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
                     child: TextField(

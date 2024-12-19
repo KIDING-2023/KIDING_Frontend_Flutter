@@ -1,15 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_talmud_card_screen.dart';
+import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_talmud_card_screen.dart';
+import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../model/game_provider.dart';
-import '../../model/timer_model.dart';
-import '../layout/exit_layout.dart';
-
 class KikisdayDiceScreen extends StatefulWidget {
+  const KikisdayDiceScreen({super.key});
+
   @override
   _KikisdayDiceScreenState createState() => _KikisdayDiceScreenState();
 }
@@ -28,12 +29,13 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
   }
 
   void _initializeAndPlayVideo() {
-    _controller = VideoPlayerController.asset('assets/kikisday/kikisday_1_dice_1.mp4')
-      ..initialize().then((_) {
-        setState(() {});
-        _controller?.play();
-        _controller?.addListener(_checkVideo);
-      });
+    _controller =
+        VideoPlayerController.asset('assets/kikisday/kikisday_1_dice_1.mp4')
+          ..initialize().then((_) {
+            setState(() {});
+            _controller?.play();
+            _controller?.addListener(_checkVideo);
+          });
   }
 
   void _checkVideo() {

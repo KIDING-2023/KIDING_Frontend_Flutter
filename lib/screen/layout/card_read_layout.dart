@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -73,7 +72,7 @@ class _CardReadLayoutState extends State<CardReadLayout> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/${game}/${widget.codeResult}.png'),
+            image: AssetImage('assets/$game/${widget.codeResult}.png'),
             fit: BoxFit.cover,
           ),
         ),

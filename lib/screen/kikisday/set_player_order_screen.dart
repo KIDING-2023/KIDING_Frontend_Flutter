@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/core/widgets/set_player_order_widget.dart';
-import 'kikisday_tutorial1_screen.dart';
+import 'package:kiding_frontend/core/widgets/set_player_order_widget.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_tutorial1_screen.dart';
 
 class SetPlayerOrderScreen extends StatelessWidget {
   const SetPlayerOrderScreen({super.key});

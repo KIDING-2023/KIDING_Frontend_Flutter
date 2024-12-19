@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/start_screen.dart';
-import 'find_nickname_screen.dart';
-
 // 비밀번호 찾기 - 결과 화면
+import 'package:flutter/material.dart';
+import 'package:kiding_frontend/screen/login/find_nickname_screen.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
+
 class FindPasswordResultScreen extends StatefulWidget {
   const FindPasswordResultScreen({super.key});
 

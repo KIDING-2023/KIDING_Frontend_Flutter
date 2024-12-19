@@ -1,15 +1,15 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
+import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
+import 'package:kiding_frontend/core/widgets/search_widget.dart';
+import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/space/space_play_screen.dart';
+
 import 'package:http/http.dart' as http;
-import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
-import '../../core/constants/api_constants.dart';
-import '../../core/widgets/app_bar_widget.dart';
-import '../../core/widgets/search_widget.dart';
-import '../friends/friends_request_screen.dart';
-import '../home/home_screen.dart';
-import '../kikisday/kikisday_play_screen.dart';
-import '../mypage/mypage_screen.dart';
-import '../space/space_play_screen.dart';
 
 class RankingScreen extends StatefulWidget {
   const RankingScreen({super.key});
@@ -256,7 +256,7 @@ class _RankingScreenState extends State<RankingScreen> {
 
   // 추천게임
   Widget _buildRecommends() {
-    return Container(
+    return SizedBox(
       height: 120,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {

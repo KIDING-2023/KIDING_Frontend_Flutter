@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
-import 'package:kiding/screen/home/home_screen.dart';
-import 'package:kiding/screen/ranking/ranking_screen.dart';
-import '../mypage/mypage_screen.dart';
+import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 
 class FriendsRequestScreen extends StatefulWidget {
   const FriendsRequestScreen({super.key});

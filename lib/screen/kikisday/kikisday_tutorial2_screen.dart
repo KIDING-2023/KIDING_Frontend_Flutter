@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/kikisday/kikisday_dice_screen.dart';
-import 'package:kiding/screen/layout/tutorial_layout.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_dice_screen.dart';
+import 'package:kiding_frontend/screen/layout/tutorial_layout.dart';
 
 class KikisdayTutorial2Screen extends StatefulWidget {
+  const KikisdayTutorial2Screen({super.key});
+
   @override
   _KikisdayTutorial2ScreenState createState() =>
       _KikisdayTutorial2ScreenState();

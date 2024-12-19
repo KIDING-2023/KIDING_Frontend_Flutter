@@ -3,16 +3,13 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:kiding/core/widgets/bottom_app_bar_widget.dart';
-import 'package:kiding/screen/ranking/ranking_screen.dart';
-
-import '../../core/constants/api_constants.dart';
-import '../../core/widgets/app_bar_widget.dart';
-import '../../core/widgets/search_widget.dart';
-import '../friends/friends_request_screen.dart';
-import '../home/home_screen.dart';
-import '../kikisday/kikisday_play_screen.dart';
-import '../space/space_play_screen.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
+import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
+import 'package:kiding_frontend/core/widgets/search_widget.dart';
+import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -24,7 +21,7 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  List<bool> _isFavoriteList = [true, true]; // 각 카드의 즐겨찾기 상태를 관리
+  final List<bool> _isFavoriteList = [true, true]; // 각 카드의 즐겨찾기 상태를 관리
   List<dynamic> favoriteGames = []; // 서버로부터 받은 즐겨찾기 데이터를 저장
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
   bool isLoading = true;
@@ -46,19 +43,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   // 서버에서 사용자 정보 가져오기
   Future<void> fetchMyPageData() async {
-    String? token = await storage.read(key: 'accessToken'); // 토큰 불러오기
-
-    if (token == null) {
-      setState(() {
-        errorMessage = "토큰을 찾을 수 없습니다.";
-        isLoading = false;
-      });
-      return;
-    }
+    String? token = await storage.read(key: 'accessToken');
 
     print("AccessToken: $token");
 
-    var url = Uri.parse('${ApiConstants.baseUrl}${ApiConstants.myPageEndpoint}');
+    var url =
+        Uri.parse('${ApiConstants.baseUrl}${ApiConstants.myPageEndpoint}');
     var headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -75,10 +65,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
         if (data['isSuccess']) {
           // 응답이 성공일 경우 데이터 업데이트
           setState(() {
-            answers = data['result']['answers'];  // 대답 수
-            score = data['result']['score'];  // 순위
-            players_with = data['result']['players_with'];  // 함께한 친구 수
-            kiding_chip = data['result']['kiding_chip'];  // 키딩칩 수
+            answers = data['result']['answers']; // 대답 수
+            score = data['result']['score']; // 순위
+            players_with = data['result']['players_with']; // 함께한 친구 수
+            kiding_chip = data['result']['kiding_chip']; // 키딩칩 수
             isLoading = false; // 로딩 상태 해제
           });
         } else {
@@ -318,15 +308,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   children: [
                                     // 키딩칩 개수
                                     ChipsItem(
-                                        key: _chipsItemKey, chipsNum: kiding_chip),
+                                        key: _chipsItemKey,
+                                        chipsNum: kiding_chip),
                                     // 친구 수
                                     FriendsItem(
                                         key: _friendsItemKey,
                                         friendsNum: players_with),
                                     // 1위 경험 횟수
                                     RankingItem(
-                                        key: _rankingItemKey,
-                                        rankingNum: -1),
+                                        key: _rankingItemKey, rankingNum: -1),
                                     // 삼각형 모양
                                     TriangleItem(key: _triangleItemKey)
                                   ],
@@ -359,7 +349,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 
   Widget _buildRecommends() {
-    return Container(
+    return SizedBox(
       height: 120,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {
@@ -385,7 +375,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 
   Widget _buildFavorites() {
-    return Container(
+    return SizedBox(
       height: 120,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {

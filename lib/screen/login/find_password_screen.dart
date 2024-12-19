@@ -1,16 +1,14 @@
+// 비밀번호 찾기 - 전화번호 입력 화면
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:kiding/screen/login/password_phone_screen.dart';
-import 'package:kiding/screen/login/start_screen.dart';
-
-import '../../core/constants/api_constants.dart';
+import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/screen/login/password_phone_screen.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
 
 import 'package:http/http.dart' as http;
 
-// 비밀번호 찾기 - 전화번호 입력 화면
 class FindPasswordScreen extends StatefulWidget {
   const FindPasswordScreen({super.key});
 
@@ -57,7 +55,7 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
               Column(
                 // 전화번호 입력칸
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenSize.width * 0.73,
                     height: screenSize.height * 0.06,
                     child: TextField(

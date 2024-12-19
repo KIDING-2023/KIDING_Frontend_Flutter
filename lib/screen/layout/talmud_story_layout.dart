@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:provider/provider.dart';
-
-import '../../model/timer_model.dart';
-import 'exit_layout.dart';
 
 class TalmudStoryLayout extends StatelessWidget {
   final String bgStr;
@@ -44,7 +42,9 @@ class TalmudStoryLayout extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: onBackButtonPressed,
-                    icon: Image.asset(backBtnStr, width: screenWidth * 0.0366, height: screenHeight * 0.025)),
+                    icon: Image.asset(backBtnStr,
+                        width: screenWidth * 0.0366,
+                        height: screenHeight * 0.025)),
                 Consumer<TimerModel>(
                   // TimerModel의 현재 시간을 소비합니다.
                   builder: (context, timer, child) => Text(

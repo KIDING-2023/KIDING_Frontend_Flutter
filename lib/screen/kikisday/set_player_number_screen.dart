@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kiding/core/widgets/set_player_num_widget.dart';
-import 'package:kiding/screen/kikisday/set_player_order_screen.dart';
+import 'package:kiding_frontend/core/widgets/set_player_num_widget.dart';
+import 'package:kiding_frontend/screen/kikisday/set_player_order_screen.dart';
 
 class SetPlayerNumberScreen extends StatefulWidget {
   const SetPlayerNumberScreen({super.key});
