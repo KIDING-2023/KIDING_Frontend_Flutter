@@ -14,7 +14,7 @@ class _SetPlayerNumberScreenState extends State<SetPlayerNumberScreen> {
   Widget build(BuildContext context) {
     return SetPlayerNumWidget(
       bg: "assets/kikisday/kikisday_tutorial1_bg.png",
-      bacnBtn: "assets/kikiday/back_icon.png",
+      bacnBtn: "assets/kikisday/back_icon.png",
       textColor: Color(0xFF868686),
       chImg: "assets/kikisday/kikisday_tutorial1_ch.png",
       gameName: "키키의 하루",

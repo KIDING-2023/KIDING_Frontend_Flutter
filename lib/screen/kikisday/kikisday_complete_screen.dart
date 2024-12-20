@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:kiding_frontend/core/utils/set_kikisday_card_color.dart';
 import 'package:kiding_frontend/core/widgets/complete_layout.dart';
 import 'package:kiding_frontend/model/game_provider.dart';
+import 'package:kiding_frontend/screen/kikisday/finish_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_random_dice_screen.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:provider/provider.dart';
@@ -100,24 +101,50 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
     log("플레이어${gameProvider.currentPlayer.playerNum}의 현재 칩 수: ${gameProvider.currentPlayer.chips}");
     gameProvider.nextPlayerTurn(); // 다음 플레이어 턴으로 넘겨주기
 
-    // // 다음 주사위 화면
-    // nextScreen = setDiceScreen(
-    //     position: gameProvider.currentPlayer.position, chips: chips + 1);
-
     // 서버에 키딩칩 개수 전송
     _sendChipsToServer();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => KikisdayRandomDiceScreen(),
-        settings: RouteSettings(
-          arguments: {
-            'position': gameProvider.currentPlayer.position,
-            'chips': chips + 1,
-          },
+
+    if (arguments['currentNumber'] == 20) {
+      // currentNumber가 20일 경우 FinishScreen으로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FinishScreen(),
+          settings: RouteSettings(
+            arguments: {
+              'chips': chips, // chips를 FinishScreen으로 전달
+            },
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      // currentNumber가 20이 아닌 경우 RandomDiceScreen으로 이동
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => KikisdayRandomDiceScreen(),
+          settings: RouteSettings(
+            arguments: {
+              'position': gameProvider.currentPlayer.position,
+              'chips': chips + 1,
+            },
+          ),
+        ),
+      );
+    }
+
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => KikisdayRandomDiceScreen(),
+    //     settings: RouteSettings(
+    //       arguments: {
+    //         'position': gameProvider.currentPlayer.position,
+    //         'chips': chips + 1,
+    //       },
+    //     ),
+    //   ),
+    // );
   }
 
   void _onBackButtonPressed() {

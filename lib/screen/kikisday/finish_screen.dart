@@ -13,27 +13,42 @@ class FinishScreen extends StatefulWidget {
 
 class _FinishScreenState extends State<FinishScreen> {
   final GameService _gameService = GameService();
+  late int chips; // chips 변수를 상태로 관리
 
   @override
-  void initState() {
-    super.initState();
-    _sendGameCompleteRequest(); // 화면이 로드될 때 서버 요청
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // 전달된 인자를 안전하게 가져오기
+    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    chips = arguments['chips'];
+    _sendGameCompleteRequest(); // 안전한 시점에 서버 요청
   }
 
-  Future<void> _sendGameCompleteRequest() async {
-    // 전달된 인자를 받기
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
-    int chips = arguments['chips'];
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _sendGameCompleteRequest(); // 화면이 로드될 때 서버 요청
+  // }
 
+  Future<void> _sendGameCompleteRequest() async {
     final message = await _gameService.sendGameCompleteRequest(1, chips);
     print(message); // 요청 결과 출력
   }
 
+  // Future<void> _sendGameCompleteRequest() async {
+  //   // 전달된 인자를 받기
+  //   final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+  //   int chips = arguments['chips'];
+
+  //   final message = await _gameService.sendGameCompleteRequest(1, chips);
+  //   print(message); // 요청 결과 출력
+  // }
+
   @override
   Widget build(BuildContext context) {
-    // 전달된 인자를 받기
-    final arguments = ModalRoute.of(context)!.settings.arguments as Map;
-    int chips = arguments['chips'];
+    // // 전달된 인자를 받기
+    // final arguments = ModalRoute.of(context)!.settings.arguments as Map;
+    // int chips = arguments['chips'];
 
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;

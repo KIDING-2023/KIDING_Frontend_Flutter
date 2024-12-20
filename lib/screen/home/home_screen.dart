@@ -11,6 +11,7 @@ import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/search_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,25 +22,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final _index = 0; // 기본으로 홈이 선택된 상태
-  // Initialize selected index to 'Main'
-  final int _userId = 1; // 임시 사용자 ID (서버 연동 시 필요)
   int _selectedSortIndex = 0;
-  final bool _kikiStar = false;
-  final bool _spaceStar = false;
   String kikiStarImage = 'unselected_star.png';
   String spaceStarImage = 'unselected_star.png';
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
 
   // 보드게임 리스트
-  List<dynamic> _boardGames = [
-    {
-      "name": "키키의 하루",
-      "players": 2,
-      "bookmarked": true,
-    },
-    {"name": "키키의 우주여행", "players": 7, "bookmarked": false},
-  ];
+  List<dynamic> _boardGames = [];
   bool isLoading = false;
   String errorMessage = "";
 
@@ -79,14 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       final response = await http.get(url, headers: headers);
-      print('보드게임 Response Status Code: ${response.statusCode}');
-      print('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
+      log('보드게임 Response Status Code: ${response.statusCode}');
+      log('보드게임 Response Body: ${response.body}'); // 서버 응답 본문 출력
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
 
         if (data["isSuccess"]) {
-          print('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
+          log('보드게임 데이터: ${data['result']}'); // 서버 응답 데이터 출력
           if (data["message"] == "아직 보드게임에 참여하지 않았습니다.") {
             setState(() {
               _boardGames = [];
@@ -99,21 +88,21 @@ class _HomeScreenState extends State<HomeScreen> {
             });
           }
         } else {
-          print("보드게임 가져오기 실패: ${data["message"]}");
+          log("보드게임 가져오기 실패: ${data["message"]}");
           setState(() {
             errorMessage = data["message"];
             isLoading = false;
           });
         }
       } else {
-        print("서버 오류: 상태 코드 ${response.statusCode}");
+        log("서버 오류: 상태 코드 ${response.statusCode}");
         setState(() {
           errorMessage = "서버 오류: ${response.statusCode}";
           isLoading = false;
         });
       }
     } catch (e) {
-      print("네트워크 오류: $e");
+      log("네트워크 오류: $e");
       setState(() {
         errorMessage = "네트워크 오류: $e";
         isLoading = false;
@@ -133,21 +122,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
     try {
       final response = await http.post(url, headers: headers);
-      print('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
-      print('응답 본문: ${response.body}');
+      log('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
+      log('응답 본문: ${response.body}');
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['isSuccess']) {
-          print("즐겨찾기 업데이트 성공: ${data['message']}");
+          log("즐겨찾기 업데이트 성공: ${data['message']}");
         } else {
-          print("즐겨찾기 업데이트 실패: ${data['message']}");
+          log("즐겨찾기 업데이트 실패: ${data['message']}");
         }
       } else {
-        print("서버 오류: 상태 코드 ${response.statusCode}");
+        log("서버 오류: 상태 코드 ${response.statusCode}");
       }
     } catch (e) {
-      print("네트워크 오류: $e");
+      log("네트워크 오류: $e");
     }
   }
 
@@ -217,15 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 width: screenSize.width,
                                 height: screenSize.height * 0.6,
                                 child: Column(
-                                  children: <Widget>[
-                                    _buildBoardGamesSection()
-                                    // if (_selectedSortIndex == 0)
-                                    //   _buildMainSortSection(),
-                                    // if (_selectedSortIndex == 1)
-                                    //   _buildPopularSortSection(),
-                                    // if (_selectedSortIndex == 2)
-                                    //   _buildRecentSortSection(),
-                                  ],
+                                  children: <Widget>[_buildBoardGamesSection()],
                                 ),
                               ),
                             ),
@@ -306,7 +287,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () {
         setState(() {
           _selectedSortIndex = index; // 선택된 정렬 옵션을 업데이트
-          //_fetchBoardGames(); // 선택된 정렬 옵션에 맞는 데이터를 다시 가져옴
+          _fetchBoardGames(); // 선택된 정렬 옵션에 맞는 데이터를 다시 가져옴
         });
       },
       child: Container(
@@ -400,7 +381,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildBoardGameCard(dynamic game) {
     Size screenSize = MediaQuery.of(context).size;
-    bool isFavorite = game['bookmarked'];
     String gameName = game['name'];
     Widget nextScreen =
         gameName == "키키의 하루" ? KikisdayPlayScreen() : SpacePlayScreen();
@@ -441,13 +421,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 onTap: () {
                   setState(() {
                     // 로컬 즐겨찾기 상태 업데이트
-                    isFavorite = !isFavorite;
+                    game['bookmarked'] = !game['bookmarked'];
                   });
                   // 서버에 즐겨찾기 상태 업데이트 요청
-                  //_updateFavoriteStatus(game['id'], isFavorite);
+                  _updateFavoriteStatus(game['id'], game['bookmarked']);
+                  log("즐겨찾기 상태: ${game['bookmarked']}");
                 },
                 child: Image.asset(
-                    'assets/home/${isFavorite ? 'selected_star.png' : 'unselected_star.png'}',
+                    'assets/home/${game['bookmarked'] ? 'selected_star.png' : 'unselected_star.png'}',
                     width: 19.79,
                     height: 19.79),
               ),

@@ -88,7 +88,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
 
       // nextScreen이 FinishScreen일 경우 타이머를 종료
       if (nextScreen == 21) {
-        Provider.of<TimerModel>(context, listen: false).stopTimer();
+        Provider.of<TimerModel>(context, listen: false).resetTimer();
         Navigator.pushNamed(context, '/kikisday_finish', arguments: {
           'chips': chips,
         });
