@@ -7,6 +7,7 @@ import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/search_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
@@ -244,7 +245,14 @@ class _RankingScreenState extends State<RankingScreen> {
               height: screenSize.height * 0.025,
             ),
             onPressed: () {
-              // Implement your onPressed function here
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => RankingFriendsScreen(
+                    name: user["user"],
+                  ),
+                ),
+              );
             },
           ),
         ),
