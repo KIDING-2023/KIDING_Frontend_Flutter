@@ -1,5 +1,6 @@
 // 닉네임 찾기 결과 화면
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/screen/login/back_screen.dart';
 import 'package:kiding_frontend/screen/login/find_password_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
 
@@ -18,83 +19,131 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size; // 기기 화면 크기
     return Scaffold(
-        body: Container(
-      color: Colors.white,
-      child: Stack(
-        children: [
-          // '닉네임을 찾았습니다!' 텍스트
-          Positioned(
-            top: screenSize.height * 0.13,
-            left: 0,
-            right: 0,
-            child: Image.asset('assets/login/nickname_result_text.png',
-                width: screenSize.width * 0.74,
-                height: screenSize.height * 0.11),
-          ),
-          // 닉네임 찾기 결과, 로그인하기 & 비밀번호 찾기 버튼
-          Positioned(
-            top: screenSize.height * 0.46,
-            left: 0,
-            right: 0,
-            child: Text(
-              '닉네임:\'${widget.nickname}\'입니다.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontFamily: 'nanum', fontSize: 17, color: Colors.black),
-            ),
-          ),
-          // 로그인 & 비밀번호 찾기 버튼 배경
-          Positioned(
-            top: screenSize.height * 0.51,
-            left: 0,
-            right: 0,
-            child: Image.asset(
-              'assets/login/nickname_result_btn_bg.png',
-              width: screenSize.width * 0.7,
-              height: screenSize.height * 0.065,
-            ),
-          ),
-          // 로그인하기, 비밀번호 찾기 버튼 가로 배치
-          Positioned(
-            top: screenSize.height * 0.518,
-            left: screenSize.width * 0.16,
-            right: screenSize.width * 0.16,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // 로그인 버튼
-                IconButton(
-                  onPressed: _toLoginScreen,
-                  padding: EdgeInsets.zero,
-                  icon: Image.asset('assets/login/nickname_login_btn.png',
-                      width: screenSize.width * 0.34,
-                      height: screenSize.height * 0.05),
+        backgroundColor: Colors.white,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // 뒤로 가기 버튼
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+              child: IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BackScreen(),
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
                 ),
-                // 비밀번호 찾기 버튼
-                IconButton(
-                  onPressed: _toFindPasswordScreen,
-                  padding: EdgeInsets.zero,
-                  icon: Image.asset('assets/login/nickname_password_btn.png',
-                      width: screenSize.width * 0.34,
-                      height: screenSize.height * 0.05),
-                )
-              ],
+              ),
             ),
-          ),
-        ],
-      ),
-    ));
-  }
-
-  // 로그인 버튼 클릭 시 로그인 화면으로 이동
-  void _toLoginScreen() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => StartScreen()));
-  }
-
-  // 비밀번호 찾기 버튼 클릭 시 비밀번호 찾기 화면으로 이동
-  void _toFindPasswordScreen() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FindPasswordScreen()));
+            // '닉네임을 찾았습니다!' 텍스트
+            Center(
+              child: Image.asset('assets/login/nickname_result_text.png',
+                  width: screenSize.width * 0.74,
+                  height: screenSize.height * 0.11),
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            // 닉네임 찾기 결과, 로그인하기 & 비밀번호 찾기 버튼
+            Center(
+              child: Column(
+                children: [
+                  Text(
+                    '닉네임: \'${widget.nickname}\' 입니다.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'nanum', fontSize: 17, color: Colors.black),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  // 로그인 & 비밀번호 찾기 버튼 배경
+                  Container(
+                    width: 259.96,
+                    height: 52.47,
+                    decoration: ShapeDecoration(
+                      color: Color(0xFFEDEDED),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(31.29),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => StartScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 121.11,
+                            height: 43.63,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFFFF6A2A),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(31.29),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '로그인하기',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontFamily: 'Nanum',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FindPasswordScreen(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 121.11,
+                            height: 43.63,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFFFF6A2A),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(31.29),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                '비밀번호 찾기',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 17,
+                                  fontFamily: 'Nanum',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 }

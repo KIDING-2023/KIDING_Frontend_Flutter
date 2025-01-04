@@ -56,8 +56,8 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                 // 전화번호 입력칸
                 children: [
                   SizedBox(
-                    width: screenSize.width * 0.73,
-                    height: screenSize.height * 0.06,
+                    width: 261.32,
+                    height: 49.82,
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(

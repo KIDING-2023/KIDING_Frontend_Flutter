@@ -40,38 +40,38 @@ class _BackScreenState extends State<BackScreen> {
                   Center(
                       child: Image.asset(
                     'assets/login/back_btn_bg.png',
-                    width: screenSize.width * 0.72,
-                    height: screenSize.height * 0.15,
+                    width: 259.96,
+                    height: 120.99,
                   )),
                   // 버튼 세로 배치
-                  Padding(
-                    padding: const EdgeInsets.only(top: 6),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // 중단 버튼
-                          IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => StartScreen()));
-                            },
-                            icon: Image.asset('assets/login/to_start_btn.png',
-                                width: screenSize.width * 0.66,
-                                height: screenSize.height * 0.05),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // 중단 버튼
+                        IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => StartScreen()));
+                          },
+                          icon: Image.asset(
+                            'assets/login/to_start_btn.png',
+                            width: 236.33,
+                            height: 43.63,
                           ),
-                          // 계속 버튼
-                          IconButton(
-                            onPressed: () => Navigator.pop(context),
-                            icon: Image.asset(
-                                'assets/login/keep_signup_btn.png',
-                                width: screenSize.width * 0.66,
-                                height: screenSize.height * 0.05),
-                          )
-                        ],
-                      ),
+                        ),
+                        // 계속 버튼
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: Image.asset(
+                            'assets/login/keep_signup_btn.png',
+                            width: 236.33,
+                            height: 43.63,
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 ],

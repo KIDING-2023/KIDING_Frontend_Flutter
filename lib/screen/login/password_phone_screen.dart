@@ -65,8 +65,8 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                 // 인증번호 입력 칸
                 children: [
                   SizedBox(
-                    width: screenSize.width * 0.73,
-                    height: screenSize.height * 0.06,
+                    width: 261.32,
+                    height: 49.82,
                     child: TextField(
                       controller: _codeController,
                       decoration: InputDecoration(

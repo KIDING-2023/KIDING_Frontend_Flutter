@@ -80,8 +80,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 // 닉네임 입력칸
                 children: [
                   SizedBox(
-                    width: screenSize.width * 0.7259,
-                    height: screenSize.height * 0.0623,
+                    width: 261.38,
+                    height: 50.68,
                     child: TextField(
                       controller: _nicknameController,
                       decoration: InputDecoration(

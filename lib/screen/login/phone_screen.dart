@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/screen/login/already_exist_screen.dart';
 import 'package:kiding_frontend/screen/login/back_screen.dart';
 import 'package:kiding_frontend/screen/login/password_screen.dart';
 
@@ -63,8 +64,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
                 // 전화번호 입력칸 || 인증번호 입력칸
                 children: [
                   SizedBox(
-                    width: screenSize.width * 0.7259,
-                    height: screenSize.height * 0.0623,
+                    width: 261.38,
+                    height: 50.68,
                     child: TextField(
                       controller: codeSent ? _codeController : _phoneController,
                       decoration: InputDecoration(
@@ -164,18 +165,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
     log('phone: $phoneNumber');
     final url = Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkPhone?phone=$phoneNumber');
-    // String? token = await storage.read(key: 'accessToken');
-
-    // if (token == null) {
-    //   setState(() {
-    //     errorVisible = true;
-    //     errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
-    //   });
-    //   return;
-    // }
 
     final headers = {
-      //'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     };
 
@@ -195,11 +186,16 @@ class _PhoneScreenState extends State<PhoneScreen> {
           });
           // 중복되지 않은 경우, 인증 코드 전송
           _verifyPhone(phoneNumber);
+        } else if (data['result'] == "이미 사용 중인 전화번호입니다.") {
+          // 중복된 경우, AlreadyExistScreen으로 전환
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AlreadyExistScreen()),
+          );
         } else {
-          // 중복된 경우, 에러 메시지 표시
           setState(() {
             errorVisible = true;
-            errorMessage = "이미 사용 중인 전화번호입니다.";
+            errorMessage = "서버에서 알 수 없는 응답이 반환되었습니다.";
           });
         }
       } else {
