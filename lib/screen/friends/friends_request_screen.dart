@@ -9,7 +9,12 @@ class FriendsRequestScreen extends StatefulWidget {
 }
 
 class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
-  final List<Map<String, String>> friendRequests = [];
+  final List<Map<String, String>> friendRequests = [
+    {
+      "name": "키딩",
+      "rank": '1',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -18,56 +23,53 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFe7e7e7),
-      body: Stack(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // 뒤로 가기 버튼
-          Positioned(
-            top: screenHeight * 0.0375,
-            left: screenWidth * 0.0417,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15),
-              child: IconButton(
-                icon: Image.asset(
-                  'assets/kikisday/kikisday_back_btn.png',
-                  width: screenWidth * 0.0366,
-                  height: screenHeight * 0.025,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: IconButton(
+                  icon: Image.asset(
+                    'assets/kikisday/kikisday_back_btn.png',
+                    width: screenWidth * 0.0366,
+                    height: screenHeight * 0.025,
+                  ),
+                  onPressed: () => Navigator.pop(context),
                 ),
-                onPressed: () => Navigator.pop(context),
               ),
-            ),
-          ),
-          // 친구 요청 타이틀
-          Positioned(
-            top: screenHeight * 0.13,
-            left: screenWidth * 0.0831,
-            child: const Text(
-              '친구요청',
-              style: TextStyle(
-                fontSize: 15.79,
-                fontFamily: 'Nanum',
-                color: Colors.black,
+              // 친구 요청 타이틀
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: const Text(
+                  '친구요청',
+                  style: TextStyle(
+                    fontSize: 15.79,
+                    fontFamily: 'Nanum',
+                    color: Colors.black,
+                  ),
+                ),
               ),
-            ),
-          ),
-          // 친구 요청 목록
-          Positioned(
-            top: screenHeight * 0.15,
-            left: 0,
-            right: 0,
-            child: SizedBox(
-              height: screenHeight * 0.65,
-              child: ListView.builder(
-                itemCount: friendRequests.length,
-                itemBuilder: (context, index) {
-                  return _buildFriendRequestCard(
-                    friendRequests[index]['name']!,
-                    friendRequests[index]['rank']!,
-                    screenWidth,
-                    screenHeight,
-                  );
-                },
+              // 친구 요청 목록
+              SizedBox(
+                height: screenHeight * 0.65,
+                child: ListView.builder(
+                  itemCount: friendRequests.length,
+                  itemBuilder: (context, index) {
+                    return _buildFriendRequestCard(
+                      friendRequests[index]['name']!,
+                      friendRequests[index]['rank']!,
+                      screenWidth,
+                      screenHeight,
+                    );
+                  },
+                ),
               ),
-            ),
+            ],
           ),
           // 하단바
           BottomAppBarWidget(
@@ -84,76 +86,111 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
 
   Widget _buildFriendRequestCard(
       String name, String rank, double screenWidth, double screenHeight) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 7.5, horizontal: 30),
-      width: screenWidth * 0.8332,
-      height: screenHeight * 0.1602,
-      decoration: BoxDecoration(
-        image: const DecorationImage(
-          image: AssetImage('assets/friends/request_box.png'),
-          fit: BoxFit.cover,
+    return Center(
+      child: Container(
+        width: 299.95,
+        height: 128.18,
+        padding: EdgeInsets.all(10),
+        decoration: ShapeDecoration(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24.20),
+          ),
         ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: screenHeight * 0.0137,
-            left: screenWidth * 0.0309,
-            child: Image.asset(
-              'assets/friends/icon.png',
-              width: screenWidth * 0.20794,
-              height: screenHeight * 0.0936,
-            ),
-          ),
-          Positioned(
-            top: screenHeight * 0.03,
-            left: screenWidth * 0.277,
-            child: Text(
-              name,
-              style: const TextStyle(
-                fontFamily: 'Nanum',
-                fontSize: 17,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Positioned(
-            top: screenHeight * 0.063,
-            left: screenWidth * 0.277,
-            child: Text(
-              rank,
-              style: const TextStyle(
-                fontFamily: 'Nanum',
-                fontSize: 12,
-                color: Color(0xFFb3b3b3),
-              ),
-            ),
-          ),
-          Positioned(
-            top: screenHeight * 0.1,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(
-                    'assets/friends/reject_btn.png',
-                    width: screenWidth * 0.35,
-                  ),
+                Image.asset(
+                  'assets/friends/icon.png',
+                  width: 74.86,
+                  height: 74.86,
                 ),
-                IconButton(
-                  onPressed: () {},
-                  icon: Image.asset(
-                    'assets/friends/accept_btn.png',
-                    width: screenWidth * 0.35,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        child: Text(
+                          '$name 친구',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 17,
+                            fontFamily: 'Nanum',
+                            fontWeight: FontWeight.w800,
+                            height: 0.99,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '랭킹 $rank위',
+                        style: TextStyle(
+                          color: Color(0xFFB3B3B3),
+                          fontSize: 12,
+                          fontFamily: 'Nanum',
+                          fontWeight: FontWeight.w800,
+                          height: 1.40,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: 136.71,
+                  height: 26.76,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFF838383),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13.38),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '거절하기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFamily: 'Nanum',
+                        fontWeight: FontWeight.w800,
+                        height: 1.40,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 136.71,
+                  height: 26.76,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFFFF8A5B),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(13.38),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '수락하기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFamily: 'Nanum',
+                        fontWeight: FontWeight.w800,
+                        height: 1.40,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
