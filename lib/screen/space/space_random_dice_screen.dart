@@ -88,7 +88,7 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
 
       // nextScreen이 FinishScreen일 경우 타이머를 종료
       if (nextScreen == 13) {
-        Provider.of<TimerModel>(context, listen: false).stopTimer();
+        Provider.of<TimerModel>(context, listen: false).resetTimer();
         Navigator.pushNamed(context, '/space_finish', arguments: {
           'chips': chips,
         });
@@ -227,31 +227,47 @@ class _SpaceRandomDiceScreenState extends State<SpaceRandomDiceScreen> {
                     ),
             ),
           ),
-          // 주사위 텍스트 이미지
+          // 주사위 텍스트
           Positioned(
             top: screenHeight * 0.156525,
             left: 0,
             right: 0,
-            child: Image.asset(
-              'assets/kikisday/kikisday_dice_text.png',
-              width: screenWidth * 0.9439,
-              height: screenHeight * 0.212225,
-            ),
-          ),
-          // 말풍선 안 텍스트 - 몇번째 플레이어인지
-          Positioned(
-            top: screenHeight * 0.225,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Text(
-                playerNum,
-                style: TextStyle(
-                  fontFamily: 'Nanum',
-                  fontSize: 15,
-                  color: Color(0xff4d4d4d),
+            child: Column(
+              children: [
+                Image.asset(
+                  'assets/space/speaker_icon.png',
+                  width: 39.72,
+                  height: 47.68,
                 ),
-              ),
+                Container(
+                  width: 100.88,
+                  height: 30.98,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.49),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      playerNum,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFF4D4D4D),
+                        fontSize: 15,
+                        fontFamily: 'Nanum',
+                        fontWeight: FontWeight.w800,
+                        height: 1.53,
+                      ),
+                    ),
+                  ),
+                ),
+                Image.asset(
+                  'assets/space/dice_text_white.png',
+                  width: 270,
+                  height: 80,
+                ),
+              ],
             ),
           ),
           // 뒤로 가기 버튼

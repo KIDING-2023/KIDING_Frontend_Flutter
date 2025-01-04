@@ -87,11 +87,16 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
               top: screenHeight * 0.125,
               child: Image.asset('assets/kikisday/set_player_number_text.png',
                   width: screenWidth * 0.9439, height: screenHeight * 0.326)),
-          // 마이너스 버튼
+
+          // 플레이어 숫자
           Positioned(
-              top: screenHeight * 0.345,
-              left: screenWidth * 0.29,
-              child: IconButton(
+            top: screenHeight * 0.34,
+            left: 0,
+            right: 0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
                   onPressed: () {
                     setState(() {
                       if (playerCount > 1) {
@@ -102,38 +107,28 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
                   icon: Image.asset(
                     'assets/kikisday/num_minus.png',
                     width: screenWidth * 0.0581,
-                  ))),
-          // 플레이어 숫자
-          Positioned(
-            top: screenHeight * 0.345,
-            left: 0,
-            right: 0,
-            child: Container(
-              margin: EdgeInsets.only(
-                  left: screenWidth * 0.4, right: screenWidth * 0.4),
-              width: screenWidth * 0.19825,
-              height: screenHeight * 0.052225,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                image: AssetImage('assets/kikisday/num_bg.png'),
-                fit: BoxFit.cover,
-              )),
-              child: Text(
-                '$playerCount',
-                style: TextStyle(
-                  fontFamily: 'Nanum',
-                  fontSize: 20,
-                  color: Colors.black,
+                  ),
                 ),
-              ),
-            ),
-          ),
-          // 플러스 버튼
-          Positioned(
-              top: screenHeight * 0.345,
-              right: screenWidth * 0.29,
-              child: IconButton(
+                Container(
+                  width: 71.37,
+                  height: 41.78,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                    image: AssetImage('assets/kikisday/num_bg.png'),
+                    fit: BoxFit.cover,
+                  )),
+                  child: Center(
+                    child: Text(
+                      '$playerCount',
+                      style: TextStyle(
+                        fontFamily: 'Nanum',
+                        fontSize: 20,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                IconButton(
                   onPressed: () {
                     setState(() {
                       if (playerCount <= 3) playerCount++;
@@ -142,7 +137,12 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
                   icon: Image.asset(
                     'assets/kikisday/num_plus.png',
                     width: screenWidth * 0.0581,
-                  ))),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
           Positioned(
               left: 0,
               right: 0,
