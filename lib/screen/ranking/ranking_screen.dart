@@ -181,79 +181,78 @@ class _RankingScreenState extends State<RankingScreen> {
         Positioned(
           left: screenSize.width * leftPositions[i],
           top: screenSize.height * topOffsets[i],
-          child: Container(
-            width:
-                i < 3 ? screenSize.width * 0.3922 : screenSize.width * 0.3279,
-            height:
-                i < 3 ? screenSize.height * 0.0908 : screenSize.height * 0.076,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(containerImages[i]),
-                fit: BoxFit.cover,
-              ),
-            ),
+          child: SizedBox(
+            width: i < 3 ? 142 : 119,
+            height: i < 3 ? 73 : 61,
             child: Stack(
               children: [
                 Positioned(
-                  left: screenSize.width * 0.0119,
-                  top: screenSize.height * 0.0045,
-                  child: Image.asset(
-                    iconImages[i],
-                    width: screenSize.width * (i < 3 ? 0.1819 : 0.1521),
-                    height: screenSize.height * (i < 3 ? 0.0818 : 0.0684),
-                  ),
-                ),
-                Positioned(
-                  left: screenSize.width * (i < 3 ? 0.2028 : 0.1696),
-                  top: screenSize.height * (i < 3 ? 0.0274 : 0.0223),
-                  child: Text(
-                    user["user"],
-                    style: TextStyle(
-                      fontSize: i < 3 ? 20 : 16.72,
-                      fontFamily: 'Nanum',
-                      color: Colors.black,
+                  left: 0,
+                  child: Container(
+                    width: i < 3 ? 141.2 : 118.06,
+                    height: i < 3 ? 72.67 : 60.76,
+                    decoration: ShapeDecoration(
+                      color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(36.33),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          iconImages[i],
+                          width: screenSize.width * (i < 3 ? 0.1819 : 0.1521),
+                          height: screenSize.height * (i < 3 ? 0.0818 : 0.0684),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user["user"],
+                              style: TextStyle(
+                                fontSize: i < 3 ? 18 : 15,
+                                fontFamily: 'Nanum',
+                                color: Colors.black,
+                              ),
+                            ),
+                            Text(
+                              '${user["chips"]}개',
+                              style: TextStyle(
+                                fontSize: i < 3 ? 12 : 10,
+                                fontFamily: 'Nanum',
+                                color: Colors.black.withOpacity(0.7),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
                 ),
                 Positioned(
-                  left: screenSize.width * (i < 3 ? 0.203 : 0.1697),
-                  top: screenSize.height * (i < 3 ? 0.0549 : 0.0459),
-                  child: Text(
-                    '${user["chips"]}개',
-                    style: TextStyle(
-                      fontSize: i < 3 ? 13 : 10.87,
-                      fontFamily: 'Nanum',
-                      color: Colors.black.withOpacity(0.7),
+                  top: -10,
+                  right: -15,
+                  child: IconButton(
+                    icon: Image.asset(
+                      'assets/ranking/plus_btn.png',
+                      width: 20,
+                      height: 20,
                     ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RankingFriendsScreen(
+                            name: user["user"],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-      );
-
-      // 플러스 버튼 추가
-      widgets.add(
-        Positioned(
-          left: screenSize.width * plusButtonLeftPositions[i],
-          top: screenSize.height * plusButtonTopOffsets[i],
-          child: IconButton(
-            icon: Image.asset(
-              'assets/ranking/plus_btn.png',
-              width: screenSize.width * 0.0556,
-              height: screenSize.height * 0.025,
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => RankingFriendsScreen(
-                    name: user["user"],
-                  ),
-                ),
-              );
-            },
           ),
         ),
       );

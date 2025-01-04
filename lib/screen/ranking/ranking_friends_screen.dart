@@ -21,8 +21,8 @@ class _RankingFriendsScreenState extends State<RankingFriendsScreen> {
       backgroundColor: Color.fromARGB(255, 86, 93, 108),
       body: Center(
         child: Container(
-          width: ScreenWidth * 0.8332,
-          height: ScreenHeight * 0.2253,
+          width: 300,
+          height: 180,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(25),
@@ -48,24 +48,58 @@ class _RankingFriendsScreenState extends State<RankingFriendsScreen> {
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  IconButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       Navigator.pop(context);
                     },
-                    icon: Image.asset(
-                      'assets/ranking/friends_cancel_btn.png',
-                      width: ScreenWidth * 0.37,
-                      height: ScreenHeight * 0.033,
+                    child: Container(
+                      width: 136.71,
+                      height: 26.76,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFF838383),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.38),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '취소',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: 'Nanum',
+                            fontWeight: FontWeight.w800,
+                            height: 1.40,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: Image.asset(
-                      'assets/ranking/friends_send_btn.png',
-                      width: ScreenWidth * 0.37,
-                      height: ScreenHeight * 0.033,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: 136.71,
+                      height: 26.76,
+                      decoration: ShapeDecoration(
+                        color: Color(0xFFFF8A5B),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.38),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          '보내기',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontFamily: 'Nanum',
+                            fontWeight: FontWeight.w800,
+                            height: 1.40,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
