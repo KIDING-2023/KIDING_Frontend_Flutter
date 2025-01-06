@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="kiding_frontend"
+        android:label="키딩북"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

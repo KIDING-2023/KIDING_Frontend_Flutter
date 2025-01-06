@@ -34,10 +34,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool isSearchExpanded = false; // 검색창 확장 상태
 
+  // 오늘의 랭킹 (1워 사용자 정보)
+  String nickname = '사용자';
+  int answers = 0;
+
   @override
   void initState() {
     super.initState();
     _fetchBoardGames(); // initState에서 한 번만 호출
+    _loadTodaysRanking();
   }
 
   // 보드게임 데이터를 서버로부터 가져오는 함수
@@ -114,7 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _updateFavoriteStatus(int boardGameId, bool isFavorite) async {
     String? token = await storage.read(key: 'accessToken');
 
-    var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
+    var url = isFavorite
+        ? Uri.parse('${ApiConstants.baseUrl}/bookmark/delete/$boardGameId')
+        : Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
     var headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -131,6 +138,35 @@ class _HomeScreenState extends State<HomeScreen> {
           log("즐겨찾기 업데이트 성공: ${data['message']}");
         } else {
           log("즐겨찾기 업데이트 실패: ${data['message']}");
+        }
+      } else {
+        log("서버 오류: 상태 코드 ${response.statusCode}");
+      }
+    } catch (e) {
+      log("네트워크 오류: $e");
+    }
+  }
+
+  // 오늘의 랭킹 정보를 불러오는 함수
+  Future<void> _loadTodaysRanking() async {
+    var url = Uri.parse('${ApiConstants.baseUrl}/ranking/today');
+    var headers = {
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      log('오늘의 랭킹 응답 코드: ${response.statusCode}');
+      log('응답 본문: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['isSuccess']) {
+          log("오늘의 랭킹 불러오기 성공: ${data['message']}");
+          nickname = data['result']['nickname'];
+          answers = data['result']['answers'];
+        } else {
+          log("오늘의 랭킹 불러오기 실패: ${data['message']}");
         }
       } else {
         log("서버 오류: 상태 코드 ${response.statusCode}");
@@ -212,49 +248,121 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             // 랭킹 박스
                             Positioned(
-                                left: 0,
-                                right: 0,
-                                top: screenSize.height * 0.62,
-                                child: Image.asset(
-                                  'assets/home/ranking_box.png',
-                                  width: screenSize.width * 0.83,
-                                  height: screenSize.height * 0.14,
-                                )),
-                            // 플러스 버튼
-                            Positioned(
-                                left: screenSize.width * 0.81,
-                                top: screenSize.height * 0.64,
-                                child: IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset(
-                                    'assets/home/plus.png',
-                                    width: screenSize.width * 0.06,
-                                    height: screenSize.height * 0.02,
+                              left: 0,
+                              right: 0,
+                              top: screenSize.height * 0.62,
+                              child: Center(
+                                child: Container(
+                                  width: 300.17,
+                                  height: 111,
+                                  padding: EdgeInsets.all(10),
+                                  decoration: ShapeDecoration(
+                                    color: Color(0xFFE8EEFB),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(18.96),
+                                    ),
                                   ),
-                                )),
-                            // 1위 사용자 이름 (백엔드 연결 필요)
-                            Positioned(
-                              right: screenSize.width * 0.34,
-                              top: screenSize.height * 0.7,
-                              child: Text(
-                                '사용자',
-                                style: TextStyle(
-                                    fontSize: 18.96,
-                                    color: Colors.black,
-                                    fontFamily: 'Nanum'),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            SizedBox(
+                                              width: 30,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/home/award.png',
+                                                  width: 21.81,
+                                                ),
+                                                Text(
+                                                  '오늘의 랭킹',
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18.96,
+                                                    fontFamily: 'Nanum',
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            // 더보기 버튼
+                                            GestureDetector(
+                                              onTap: () {},
+                                              child: Icon(
+                                                Icons.add,
+                                                size: 30,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        width: 280.38,
+                                        height: 40.40,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        decoration: ShapeDecoration(
+                                          color: Colors.white,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(19.46),
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '1위',
+                                              style: TextStyle(
+                                                color: Color(0xFFFF8A5B),
+                                                fontSize: 18.96,
+                                                fontFamily: 'Nanum',
+                                                fontWeight: FontWeight.w800,
+                                              ),
+                                            ),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  nickname,
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 18.96,
+                                                    fontFamily: 'Nanum',
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 8,
+                                                ),
+                                                Text(
+                                                  '$answers번',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF75777E),
+                                                    fontSize: 18.96,
+                                                    fontFamily: 'Nanum',
+                                                    fontWeight: FontWeight.w800,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               ),
                             ),
-                            // 플레이 횟수 (백엔드 연결 필요)
-                            Positioned(
-                                left: screenSize.width * 0.68,
-                                top: screenSize.height * 0.7,
-                                child: Text(
-                                  '00번',
-                                  style: TextStyle(
-                                      fontSize: 18.96,
-                                      color: Color(0xff75777e),
-                                      fontFamily: 'Nanum'),
-                                )),
                           ],
                         ),
                       ),
