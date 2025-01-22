@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
-import 'package:kiding_frontend/core/widgets/search_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
@@ -60,12 +59,6 @@ class _RankingScreenState extends State<RankingScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
-        isSearchExpanded: isSearchExpanded,
-        onSearchTap: () {
-          setState(() {
-            isSearchExpanded = !isSearchExpanded;
-          });
-        },
         onNotificationTap: () {
           Navigator.push(
             context,
@@ -75,59 +68,55 @@ class _RankingScreenState extends State<RankingScreen> {
         title: '랭킹',
         backgroundColor: Color(0xffE9EEFC),
       ),
-      body: isSearchExpanded
-          ? SearchWidget(
-              screenSize: screenSize,
-            )
-          : Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    width: screenSize.width,
-                    height: screenSize.height * 0.79,
-                    decoration: BoxDecoration(
-                      color: Color(0xffE9EEFC),
-                    ),
-                    child: rankingData.isEmpty
-                        ? Center(child: CircularProgressIndicator()) // 로딩 표시
-                        : Stack(
-                            children: [
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                child: Image.asset(
-                                  'assets/ranking/bg_line.png',
-                                  width: screenSize.width,
-                                  height: screenSize.height * 0.79,
-                                ),
-                              ),
-                              ..._buildRankingWidgets(screenSize), // 순위별 위젯 생성
-                            ],
+      body: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              width: screenSize.width,
+              height: screenSize.height * 0.79,
+              decoration: BoxDecoration(
+                color: Color(0xffE9EEFC),
+              ),
+              child: rankingData.isEmpty
+                  ? Center(child: CircularProgressIndicator()) // 로딩 표시
+                  : Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          child: Image.asset(
+                            'assets/ranking/bg_line.png',
+                            width: screenSize.width,
+                            height: screenSize.height * 0.79,
                           ),
-                  ),
-                ),
-                Positioned(
-                  top: screenSize.height * 0.79,
-                  child: Container(
-                    width: screenSize.width,
-                    height: 0.1,
-                    color: Colors.black,
-                  ),
-                ),
-                // 하단 바
-                BottomAppBarWidget(
-                  screenHeight: screenSize.height,
-                  screenWidth: screenSize.width,
-                  screen: "ranking",
-                  topPosition: screenSize.height * 0.8,
-                  hasAppBar: true,
-                )
-              ],
+                        ),
+                        ..._buildRankingWidgets(screenSize), // 순위별 위젯 생성
+                      ],
+                    ),
             ),
+          ),
+          Positioned(
+            top: screenSize.height * 0.79,
+            child: Container(
+              width: screenSize.width,
+              height: 0.1,
+              color: Colors.black,
+            ),
+          ),
+          // 하단 바
+          BottomAppBarWidget(
+            screenHeight: screenSize.height,
+            screenWidth: screenSize.width,
+            screen: "ranking",
+            topPosition: screenSize.height * 0.8,
+            hasAppBar: true,
+          )
+        ],
+      ),
     );
   }
 

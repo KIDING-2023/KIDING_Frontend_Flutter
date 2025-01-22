@@ -51,6 +51,7 @@ flutter:
     - assets/exit/
     - assets/friends/
     - assets/ranking/
+    - assets/search/
 
   fonts:
     - family: Nanum

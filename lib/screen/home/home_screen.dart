@@ -8,7 +8,6 @@ import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
-import 'package:kiding_frontend/core/widgets/search_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
@@ -32,8 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<dynamic> _boardGames = [];
   bool isLoading = false;
   String errorMessage = "";
-
-  bool isSearchExpanded = false; // 검색창 확장 상태
 
   // 오늘의 랭킹 (1워 사용자 정보)
   String nickname = '사용자';
@@ -183,12 +180,6 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBarWidget(
-        isSearchExpanded: isSearchExpanded,
-        onSearchTap: () {
-          setState(() {
-            isSearchExpanded = !isSearchExpanded;
-          });
-        },
         onNotificationTap: () {
           Navigator.push(
             context,
@@ -198,202 +189,195 @@ class _HomeScreenState extends State<HomeScreen> {
         title: '',
         backgroundColor: Colors.white,
       ),
-      body: isSearchExpanded
-          ? SearchWidget(
-              screenSize: screenSize,
-            )
-          : Stack(
-              children: [
-                // 바디
-                Positioned(
-                    top: 0,
-                    left: 0,
-                    child: SingleChildScrollView(
-                      child: SizedBox(
-                        width: screenSize.width,
-                        height: screenSize.height * 0.79,
-                        child: Stack(
-                          children: [
-                            // let's play 텍스트
-                            Positioned(
-                                left: screenSize.width * 0.08,
-                                top: screenSize.height * 0.04,
-                                child: Image.asset(
-                                  'assets/home/home_title.png',
-                                  width: screenSize.width * 0.53,
-                                  height: screenSize.height * 0.07,
-                                )),
-                            // 메인, 인기순, 최근순 버튼
-                            Positioned(
-                              left: screenSize.width * 0.1,
-                              top: screenSize.height * 0.15,
-                              child: Row(
-                                children: <Widget>[
-                                  _buildSortOption('메인', 0),
-                                  _buildSortOption('인기순', 1),
-                                  _buildSortOption('최근순', 2),
-                                ],
+      body: Stack(
+        children: [
+          // 바디
+          Positioned(
+              top: 0,
+              left: 0,
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: screenSize.width,
+                  height: screenSize.height * 0.79,
+                  child: Stack(
+                    children: [
+                      // let's play 텍스트
+                      Positioned(
+                          left: screenSize.width * 0.08,
+                          top: screenSize.height * 0.04,
+                          child: Image.asset(
+                            'assets/home/home_title.png',
+                            width: screenSize.width * 0.53,
+                            height: screenSize.height * 0.07,
+                          )),
+                      // 메인, 인기순, 최근순 버튼
+                      Positioned(
+                        left: screenSize.width * 0.1,
+                        top: screenSize.height * 0.15,
+                        child: Row(
+                          children: <Widget>[
+                            _buildSortOption('메인', 0),
+                            _buildSortOption('인기순', 1),
+                            _buildSortOption('최근순', 2),
+                          ],
+                        ),
+                      ),
+                      // 카드 리스트
+                      Positioned(
+                        left: 0,
+                        top: screenSize.height * 0.19,
+                        child: SizedBox(
+                          width: screenSize.width,
+                          height: screenSize.height * 0.6,
+                          child: Column(
+                            children: <Widget>[_buildBoardGamesSection()],
+                          ),
+                        ),
+                      ),
+                      // 랭킹 박스
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        top: screenSize.height * 0.62,
+                        child: Center(
+                          child: Container(
+                            width: 300.17,
+                            height: 111,
+                            padding: EdgeInsets.all(10),
+                            decoration: ShapeDecoration(
+                              color: Color(0xFFE8EEFB),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18.96),
                               ),
                             ),
-                            // 카드 리스트
-                            Positioned(
-                              left: 0,
-                              top: screenSize.height * 0.19,
-                              child: SizedBox(
-                                width: screenSize.width,
-                                height: screenSize.height * 0.6,
-                                child: Column(
-                                  children: <Widget>[_buildBoardGamesSection()],
-                                ),
-                              ),
-                            ),
-                            // 랭킹 박스
-                            Positioned(
-                              left: 0,
-                              right: 0,
-                              top: screenSize.height * 0.62,
-                              child: Center(
-                                child: Container(
-                                  width: 300.17,
-                                  height: 111,
-                                  padding: EdgeInsets.all(10),
-                                  decoration: ShapeDecoration(
-                                    color: Color(0xFFE8EEFB),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(18.96),
-                                    ),
-                                  ),
-                                  child: Column(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 5),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            SizedBox(
-                                              width: 30,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  'assets/home/award.png',
-                                                  width: 21.81,
-                                                ),
-                                                Text(
-                                                  '오늘의 랭킹',
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18.96,
-                                                    fontFamily: 'Nanum',
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            // 더보기 버튼
-                                            GestureDetector(
-                                              onTap: () {
-                                                // 랭킹 화면으로 이동
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          RankingScreen()),
-                                                );
-                                              },
-                                              child: Icon(
-                                                Icons.add,
-                                                size: 30,
-                                                color: Colors.white,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
+                                      SizedBox(
+                                        width: 30,
                                       ),
-                                      Container(
-                                        width: 280.38,
-                                        height: 40.40,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        decoration: ShapeDecoration(
-                                          color: Colors.white,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(19.46),
+                                      Row(
+                                        children: [
+                                          Image.asset(
+                                            'assets/home/award.png',
+                                            width: 21.81,
                                           ),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              '1위',
-                                              style: TextStyle(
-                                                color: Color(0xFFFF8A5B),
-                                                fontSize: 18.96,
-                                                fontFamily: 'Nanum',
-                                                fontWeight: FontWeight.w800,
-                                              ),
+                                          Text(
+                                            '오늘의 랭킹',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.96,
+                                              fontFamily: 'Nanum',
+                                              fontWeight: FontWeight.w800,
                                             ),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  nickname,
-                                                  style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18.96,
-                                                    fontFamily: 'Nanum',
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 8,
-                                                ),
-                                                Text(
-                                                  '$answers번',
-                                                  style: TextStyle(
-                                                    color: Color(0xFF75777E),
-                                                    fontSize: 18.96,
-                                                    fontFamily: 'Nanum',
-                                                    fontWeight: FontWeight.w800,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
+                                          ),
+                                        ],
+                                      ),
+                                      // 더보기 버튼
+                                      GestureDetector(
+                                        onTap: () {
+                                          // 랭킹 화면으로 이동
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RankingScreen()),
+                                          );
+                                        },
+                                        child: Icon(
+                                          Icons.add,
+                                          size: 30,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ),
+                                Container(
+                                  width: 280.38,
+                                  height: 40.40,
+                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(19.46),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        '1위',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF8A5B),
+                                          fontSize: 18.96,
+                                          fontFamily: 'Nanum',
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            nickname,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 18.96,
+                                              fontFamily: 'Nanum',
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            '$answers번',
+                                            style: TextStyle(
+                                              color: Color(0xFF75777E),
+                                              fontSize: 18.96,
+                                              fontFamily: 'Nanum',
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    )),
-                // 하단바 구분선
-                Positioned(
-                    top: screenSize.height * 0.78,
-                    child: Container(
-                      width: screenSize.width,
-                      height: 0.1,
-                      color: Colors.black,
-                    )),
-                // 하단바
-                BottomAppBarWidget(
-                  screenHeight: screenSize.height,
-                  screenWidth: screenSize.width,
-                  screen: "home",
-                  topPosition: screenSize.height * 0.79,
-                  hasAppBar: true,
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              )),
+          // 하단바 구분선
+          Positioned(
+              top: screenSize.height * 0.78,
+              child: Container(
+                width: screenSize.width,
+                height: 0.1,
+                color: Colors.black,
+              )),
+          // 하단바
+          BottomAppBarWidget(
+            screenHeight: screenSize.height,
+            screenWidth: screenSize.width,
+            screen: "home",
+            topPosition: screenSize.height * 0.79,
+            hasAppBar: true,
+          ),
+        ],
+      ),
     );
   }
 

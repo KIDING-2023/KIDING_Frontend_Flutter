@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:kiding_frontend/screen/search_screen.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
   final String title; // AppBar의 제목
   final Color backgroundColor; // AppBar의 배경색
-  final bool isSearchExpanded; // 검색창 확장 상태
-  final VoidCallback onSearchTap; // 검색 버튼 클릭 콜백
   final VoidCallback onNotificationTap; // 알림 버튼 클릭 콜백
 
   const AppBarWidget({
     super.key,
     required this.title,
     required this.backgroundColor,
-    required this.isSearchExpanded,
-    required this.onSearchTap,
     required this.onNotificationTap,
   });
 
@@ -38,7 +35,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: Text(
-        isSearchExpanded ? '' : title, // 전달받은 제목 사용
+        title, // 전달받은 제목 사용
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
@@ -51,43 +48,37 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
           child: AnimatedContainer(
             duration: Duration(seconds: 1),
             curve: Curves.easeInOut,
-            width: isSearchExpanded ? screenSize.width * 0.8 : 40,
+            width: 40,
             height: screenSize.height * 0.0563,
             decoration: BoxDecoration(
-              color: isSearchExpanded ? Color(0xffff8a5b) : Colors.white,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(27.36),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (isSearchExpanded)
-                  Flexible(
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                      ),
-                    ),
-                  ),
                 Flexible(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: isSearchExpanded
-                          ? Colors.transparent
-                          : backgroundColor,
+                      color: backgroundColor,
                     ),
                     child: Container(
-                      color:
-                          isSearchExpanded ? Colors.transparent : Colors.white,
+                      color: Colors.white,
                       child: IconButton(
                         icon: Image.asset(
-                          isSearchExpanded
-                              ? 'assets/home/search_icon_selected.png'
-                              : 'assets/home/search.png',
+                          'assets/home/search.png',
                           width: 20.95,
                           height: 20,
                         ),
-                        onPressed: onSearchTap,
+                        onPressed: () {
+                          // 검색 화면으로 이동
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SearchScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ),
