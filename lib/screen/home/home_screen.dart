@@ -10,7 +10,6 @@ import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
-import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
@@ -85,8 +84,11 @@ class _HomeScreenState extends State<HomeScreen> {
               isLoading = false;
             });
           } else {
+            // 중복 제거
+            final uniqueGames = _removeDuplicatesByName(data['result']);
+
             setState(() {
-              _boardGames = data['result']; // 서버로부터 받은 보드게임 데이터 저장
+              _boardGames = uniqueGames; // 중복 제거된 데이터 저장
               isLoading = false;
             });
           }
@@ -111,6 +113,20 @@ class _HomeScreenState extends State<HomeScreen> {
         isLoading = false;
       });
     }
+  }
+
+  // 중복 제거 함수
+  List<dynamic> _removeDuplicatesByName(List<dynamic> games) {
+    final seenNames = <String>{}; // 중복 확인용 Set
+    return games.where((game) {
+      final name = game['name'];
+      if (seenNames.contains(name)) {
+        return false; // 중복된 경우 제외
+      } else {
+        seenNames.add(name);
+        return true; // 새로운 항목만 포함
+      }
+    }).toList();
   }
 
   // 즐겨찾기 상태를 서버에 업데이트하는 함수
@@ -485,6 +501,15 @@ class _HomeScreenState extends State<HomeScreen> {
     String gameName = game['name'];
     Widget nextScreen =
         gameName == "키키의 하루" ? KikisdayPlayScreen() : SpacePlayScreen();
+
+    // Assign a default ID if the game ID is not present
+    if (game['id'] == null) {
+      if (gameName == "키키의 하루") {
+        game['id'] = 1;
+      } else if (gameName == "우주 여행") {
+        game['id'] = 2;
+      }
+    }
 
     // gameImage 초기화
     String gameImage = gameName == "키키의 하루" ? "kikisday" : "space";
