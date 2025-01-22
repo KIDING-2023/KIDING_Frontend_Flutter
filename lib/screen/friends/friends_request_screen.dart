@@ -31,8 +31,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                padding: const EdgeInsets.only(left: 10, top: 50),
                 child: IconButton(
                   icon: Image.asset(
                     'assets/kikisday/kikisday_back_btn.png',
@@ -44,7 +43,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
               ),
               // 친구 요청 타이틀
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
+                padding: const EdgeInsets.only(left: 30, top: 10),
                 child: const Text(
                   '친구요청',
                   style: TextStyle(

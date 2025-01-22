@@ -100,7 +100,7 @@ class _RankingScreenState extends State<RankingScreen> {
             ),
           ),
           Positioned(
-            top: screenSize.height * 0.79,
+            top: screenSize.height * 0.78,
             child: Container(
               width: screenSize.width,
               height: 0.1,
@@ -112,7 +112,7 @@ class _RankingScreenState extends State<RankingScreen> {
             screenHeight: screenSize.height,
             screenWidth: screenSize.width,
             screen: "ranking",
-            topPosition: screenSize.height * 0.8,
+            topPosition: screenSize.height * 0.78,
             hasAppBar: true,
           )
         ],
