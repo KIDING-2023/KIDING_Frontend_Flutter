@@ -21,6 +21,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
     final screenSize = MediaQuery.of(context).size;
 
     return AppBar(
+      forceMaterialTransparency: true,
       backgroundColor: backgroundColor,
       // 전달받은 배경색 사용
       elevation: 0,
@@ -37,7 +38,7 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       title: Text(
-        title, // 전달받은 제목 사용
+        isSearchExpanded ? '' : title, // 전달받은 제목 사용
         style: TextStyle(
           color: Colors.black,
           fontSize: 18,
@@ -75,15 +76,19 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                           ? Colors.transparent
                           : backgroundColor,
                     ),
-                    child: IconButton(
-                      icon: Image.asset(
-                        isSearchExpanded
-                            ? 'assets/home/search_icon_selected.png'
-                            : 'assets/home/search.png',
-                        width: 20.95,
-                        height: 20,
+                    child: Container(
+                      color:
+                          isSearchExpanded ? Colors.transparent : Colors.white,
+                      child: IconButton(
+                        icon: Image.asset(
+                          isSearchExpanded
+                              ? 'assets/home/search_icon_selected.png'
+                              : 'assets/home/search.png',
+                          width: 20.95,
+                          height: 20,
+                        ),
+                        onPressed: onSearchTap,
                       ),
-                      onPressed: onSearchTap,
                     ),
                   ),
                 ),

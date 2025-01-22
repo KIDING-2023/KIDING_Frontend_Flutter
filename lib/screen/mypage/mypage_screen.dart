@@ -243,7 +243,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       right: 0,
                                       child: Center(
                                         child: Text(
-                                          '동점자: -1명',
+                                          '동점자: $players_with명',
                                           style: TextStyle(
                                               color: Color(0xfffad7a0),
                                               fontSize: 12,

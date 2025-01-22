@@ -12,6 +12,7 @@ import 'package:kiding_frontend/core/widgets/search_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
+import 'package:kiding_frontend/screen/ranking/ranking_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -120,8 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
     String? token = await storage.read(key: 'accessToken');
 
     var url = isFavorite
-        ? Uri.parse('${ApiConstants.baseUrl}/bookmark/delete/$boardGameId')
-        : Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId');
+        ? Uri.parse('${ApiConstants.baseUrl}/bookmark/$boardGameId')
+        : Uri.parse('${ApiConstants.baseUrl}/bookmark/delete/$boardGameId');
     var headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
@@ -295,7 +296,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                             // 더보기 버튼
                                             GestureDetector(
-                                              onTap: () {},
+                                              onTap: () {
+                                                // 랭킹 화면으로 이동
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          RankingScreen()),
+                                                );
+                                              },
                                               child: Icon(
                                                 Icons.add,
                                                 size: 30,
@@ -369,7 +378,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
                 // 하단바 구분선
                 Positioned(
-                    top: screenSize.height * 0.79,
+                    top: screenSize.height * 0.78,
                     child: Container(
                       width: screenSize.width,
                       height: 0.1,
@@ -380,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   screenHeight: screenSize.height,
                   screenWidth: screenSize.width,
                   screen: "home",
-                  topPosition: screenSize.height * 0.8,
+                  topPosition: screenSize.height * 0.79,
                   hasAppBar: true,
                 ),
               ],
