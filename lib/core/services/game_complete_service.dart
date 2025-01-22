@@ -18,7 +18,6 @@ class GameService {
     };
     final body = jsonEncode({
       'boardGameId': boardGameId,
-      'count': chips,
     });
 
     try {

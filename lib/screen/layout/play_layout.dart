@@ -49,7 +49,7 @@ class PlayLayout extends StatelessWidget {
             ),
             // 플레이 버튼
             Positioned(
-              bottom: screenHeight * 0.03,
+              bottom: screenHeight * 0.08,
               left: 0,
               right: 0,
               child: GestureDetector(
