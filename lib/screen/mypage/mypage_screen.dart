@@ -21,7 +21,7 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  final List<bool> _isFavoriteList = [true, true]; // 각 카드의 즐겨찾기 상태를 관리
+  final List<bool> _isFavoriteList = [false, false]; // 각 카드의 즐겨찾기 상태를 관리
   List<dynamic> favoriteGames = []; // 서버로부터 받은 즐겨찾기 데이터를 저장
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
   bool isLoading = true;
@@ -38,7 +38,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   void initState() {
     super.initState();
     fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
-    //fetchFavoriteGames();
+    fetchFavoriteGames(); // 즐겨찾기한 보드게임 데이터 가져오기
   }
 
   // 서버에서 사용자 정보 가져오기
@@ -87,62 +87,69 @@ class _MyPageScreenState extends State<MyPageScreen> {
       });
     }
   }
-  //
-  // // 즐겨찾기 보드게임 데이터를 서버로부터 가져오는 함수
-  // Future<void> fetchFavoriteGames() async {
-  //   String? token = await storage.read(key: 'accessToken');
-  //   if (token == null) {
-  //     setState(() {
-  //       errorMessage = "토큰을 찾을 수 없습니다.";
-  //       isLoading = false;
-  //     });
-  //     return;
-  //   }
-  //
-  //   var url = Uri.parse('https://6a4c-182-209-67-24.ngrok-free.app/bookmark');
-  //   var headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Content-Type': 'application/json',
-  //   };
-  //
-  //   try {
-  //     final response = await http.get(url, headers: headers);
-  //     print('Response Status Code: ${response.statusCode}');
-  //     print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
-  //
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-  //
-  //       if (data['isSuccess']) {
-  //         // 응답이 성공일 경우 데이터 업데이트
-  //         setState(() {
-  //           favoriteGames = data['result'];
-  //           // _isFavoriteList 값을 설정
-  //           _isFavoriteList[0] =
-  //               favoriteGames.any((game) => game['boardGameId'] == 1);
-  //           _isFavoriteList[1] =
-  //               favoriteGames.any((game) => game['boardGameId'] == 2);
-  //           isLoading = false;
-  //         });
-  //       } else {
-  //         setState(() {
-  //           errorMessage = data['message'];
-  //           isLoading = false;
-  //         });
-  //       }
-  //     } else {
-  //       setState(() {
-  //         errorMessage = "서버 오류: ${response.statusCode}";
-  //         isLoading = false;
-  //       });
-  //     }
-  //   } catch (e) {
-  //     setState(() {
-  //       errorMessage = "네트워크 오류: $e";
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
+
+  // 즐겨찾기 보드게임 데이터를 서버로부터 가져오는 함수
+  Future<void> fetchFavoriteGames() async {
+    String? token = await storage.read(key: 'accessToken');
+    if (token == null) {
+      setState(() {
+        errorMessage = "토큰을 찾을 수 없습니다.";
+        isLoading = false;
+      });
+      return;
+    }
+
+    var url = Uri.parse('${ApiConstants.baseUrl}/bookmark');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.get(url, headers: headers);
+      print('Response Status Code: ${response.statusCode}');
+      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        if (data['isSuccess']) {
+          // 응답이 성공일 경우 데이터 업데이트
+          if (data['message'] == '북마크한 게임이 없습니다.') {
+            setState(() {
+              _isFavoriteList[0] = false;
+              _isFavoriteList[1] = false;
+            });
+          } else {
+            setState(() {
+              favoriteGames = data['result'];
+              // _isFavoriteList 값을 설정
+              _isFavoriteList[0] =
+                  favoriteGames.any((game) => game['name'] == "키키의 하루");
+              _isFavoriteList[1] =
+                  favoriteGames.any((game) => game['name'] == "우주 여행");
+              isLoading = false;
+            });
+          }
+        } else {
+          setState(() {
+            errorMessage = data['message'];
+            isLoading = false;
+          });
+        }
+      } else {
+        setState(() {
+          errorMessage = "서버 오류: ${response.statusCode}";
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = "네트워크 오류: $e";
+        isLoading = false;
+      });
+    }
+  }
 
   // GlobalKey를 사용하여 각 애니메이션 아이템의 상태를 참조
   final GlobalKey<ChipsItemState> _chipsItemKey = GlobalKey<ChipsItemState>();
@@ -329,7 +336,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 ),
                 // 하단바 구분선
                 Positioned(
-                    top: screenSize.height * 0.79,
+                    top: screenSize.height * 0.78,
                     child: Container(
                       width: screenSize.width,
                       height: 0.1,
@@ -340,7 +347,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   screenHeight: screenSize.height,
                   screenWidth: screenSize.width,
                   screen: "mypage",
-                  topPosition: screenSize.height * 0.8,
+                  topPosition: screenSize.height * 0.78,
                   hasAppBar: true,
                 ),
               ],
