@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'dart:math';
+import 'dart:developer' as developers;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
+import 'package:kiding_frontend/core/services/friends_list_service.dart';
 import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/login/start_screen.dart';
+import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
@@ -26,16 +30,26 @@ class _MyPageScreenState extends State<MyPageScreen> {
   bool isLoading = true;
   String errorMessage = "";
 
-  late int answers;
-  late int score;
-  late int players_with;
-  late int kiding_chip;
+  late int answers = -1;
+  late int score = -1; // 1위 경험
+  late int players_with = -1;
+  late int kiding_chip = -1;
+  late int sameScoreUsersCount = -1; // 동점자 수
+  late int rank = -1; // 순위
+
+  final friendsListService = FriendsListService();
+  List<Map<String, dynamic>> friendsList = [];
 
   @override
   void initState() {
     super.initState();
     fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
     fetchFavoriteGames(); // 즐겨찾기한 보드게임 데이터 가져오기
+    fetchFriendsList(); // 서버에서 친구 목록 가져오기
+  }
+
+  Future<void> fetchFriendsList() async {
+    friendsList = await friendsListService.fetchFriendsList();
   }
 
   // 서버에서 사용자 정보 가져오기
@@ -63,9 +77,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
           // 응답이 성공일 경우 데이터 업데이트
           setState(() {
             answers = data['result']['answers']; // 대답 수
-            score = data['result']['score']; // 순위
+            score = data['result']['score']; // 1위 경험
+            rank = data['result']['rank']; // 순위
             players_with = data['result']['players_with']; // 함께한 친구 수
             kiding_chip = data['result']['kiding_chip']; // 키딩칩 수
+            sameScoreUsersCount =
+                data['result']['sameKidingChipNicknames'].length; // 동점자 수
             isLoading = false; // 로딩 상태 해제
           });
         } else {
@@ -148,6 +165,50 @@ class _MyPageScreenState extends State<MyPageScreen> {
     }
   }
 
+  // 즐겨찾기 상태를 서버에 업데이트하는 함수
+  Future<void> _bookmarkDelete(int boardGameId) async {
+    String? token = await storage.read(key: 'accessToken');
+
+    var url = Uri.parse('${ApiConstants.baseUrl}/bookmark/delete/$boardGameId');
+    var headers = {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      final response = await http.post(url, headers: headers);
+      developers.log('즐겨찾기 업데이트 응답 코드: ${response.statusCode}');
+      developers.log('응답 본문: ${response.body}');
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        if (data['isSuccess']) {
+          developers.log("즐겨찾기 업데이트 성공: ${data['message']}");
+        } else {
+          developers.log("즐겨찾기 업데이트 실패: ${data['message']}");
+        }
+      } else {
+        developers.log("서버 오류: 상태 코드 ${response.statusCode}");
+      }
+    } catch (e) {
+      developers.log("네트워크 오류: $e");
+    }
+  }
+
+  Future<void> _clearStoredTokens() async {
+    await storage.delete(key: 'accessToken');
+    await storage.delete(key: 'refreshToken');
+    await storage.delete(key: 'isLoggedIn');
+    print("저장된 토큰 삭제 완료");
+  }
+
+  Future<void> logout() async {
+    await _clearStoredTokens();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => StartScreen()));
+    print("로그아웃 완료");
+  }
+
   // GlobalKey를 사용하여 각 애니메이션 아이템의 상태를 참조
   final GlobalKey<ChipsItemState> _chipsItemKey = GlobalKey<ChipsItemState>();
   final GlobalKey<FriendsItemState> _friendsItemKey =
@@ -197,55 +258,88 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     Padding(
                       padding: const EdgeInsets.only(top: 15),
                       child: Center(
+                        // 오늘의 랭킹 박스
                         child: Container(
-                          width: 300.93,
+                          width: MediaQuery.of(context).size.width - 60,
                           height: 117.73,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/mypage/ranking_box_mypage.png'),
-                                  fit: BoxFit.fill)),
-                          child: Stack(
-                            children: [
-                              // 대답수
-                              Positioned(
-                                top: 56.11,
-                                left: 37.29,
-                                child: Text(
-                                  '대답수 $answers번',
+                          decoration: ShapeDecoration(
+                            color: Color(0xFFFF8A5B),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 11.83,
+                              left: 15.15,
+                              right: 15.15,
+                              bottom: 7.83,
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  '오늘의 랭킹',
                                   style: TextStyle(
-                                      color: Color(0xfffad7a0),
-                                      fontSize: 25,
-                                      fontFamily: 'Nanum'),
-                                ),
-                              ),
-                              // 순위
-                              Positioned(
-                                  top: 56.11,
-                                  right: 37.29,
-                                  child: Text(
-                                    '$score위',
-                                    style: TextStyle(
-                                        color: Color(0xffff8a5b),
-                                        fontSize: 25,
-                                        fontFamily: 'Nanum'),
-                                  )),
-                              // 동점자
-                              Positioned(
-                                top: 97,
-                                left: 0,
-                                right: 0,
-                                child: Center(
-                                  child: Text(
-                                    '동점자: $players_with명',
-                                    style: TextStyle(
-                                        color: Color(0xfffad7a0),
-                                        fontSize: 12,
-                                        fontFamily: 'Nanum'),
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontFamily: 'Nanum',
+                                    fontWeight: FontWeight.w800,
                                   ),
                                 ),
-                              )
-                            ],
+                                Container(
+                                  width: MediaQuery.of(context).size.width -
+                                      (60 + 15.15 * 2),
+                                  height: 43.46,
+                                  decoration: ShapeDecoration(
+                                    color: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(21.73),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 22.14),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '대답수 $answers번',
+                                          style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 253, 184, 157),
+                                            fontSize: 25,
+                                            fontFamily: 'Nanum',
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                        Text(
+                                          '$rank위',
+                                          style: TextStyle(
+                                            color: Color(0xFFFF8A5B),
+                                            fontSize: 25,
+                                            fontFamily: 'Nanum',
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  '동점자:$sameScoreUsersCount명',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontFamily: 'Nanum',
+                                    fontWeight: FontWeight.w800,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -259,9 +353,105 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     // 즐겨찾기 카드 목록
                     Padding(
                       padding: const EdgeInsets.only(top: 10),
+                      child: !_isFavoriteList[0] && !_isFavoriteList[1]
+                          ? Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 29.54, bottom: 20),
+                              child: Text(
+                                '즐겨찾기한 게임이 없습니다.',
+                                style: TextStyle(
+                                  color: Color.fromARGB(255, 187, 187, 187),
+                                  fontSize: 14.22,
+                                  fontFamily: 'Nanum',
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
+                            )
+                          : Column(
+                              children: <Widget>[
+                                _buildFavorites(),
+                              ],
+                            ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 30),
                       child: Column(
-                        children: <Widget>[
-                          _buildFavorites(),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            'assets/mypage/friends_list_text.png',
+                            width: 57,
+                            height: 17,
+                          ),
+                          friendsList.isEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    '친구가 아직 없습니다.',
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 187, 187, 187),
+                                      fontSize: 14.22,
+                                      fontFamily: 'Nanum',
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: SizedBox(
+                                    height: 100,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: friendsList.length,
+                                      itemBuilder: (context, index) {
+                                        final user = friendsList[index];
+                                        return Padding(
+                                          padding:
+                                              const EdgeInsets.only(right: 10),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      RankingFriendsScreen(
+                                                    name: user['nickname'],
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Column(
+                                              children: [
+                                                CircleAvatar(
+                                                  backgroundImage: user[
+                                                              'profile'] !=
+                                                          null
+                                                      ? NetworkImage(
+                                                          user['profile'])
+                                                      : AssetImage(
+                                                              'assets/ranking/small_icon_1.png')
+                                                          as ImageProvider,
+                                                  radius: 35,
+                                                ),
+                                                SizedBox(height: 5),
+                                                Text(
+                                                  user['nickname'],
+                                                  style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontFamily: 'Nanum',
+                                                    fontWeight: FontWeight.w800,
+                                                    height: 1.12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
                         ],
                       ),
                     ),
@@ -303,17 +493,37 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                   key: _friendsItemKey,
                                   friendsNum: players_with),
                               // 1위 경험 횟수
-                              RankingItem(key: _rankingItemKey, rankingNum: -1),
+                              RankingItem(
+                                  key: _rankingItemKey, rankingNum: score),
                               // 삼각형 모양
                               TriangleItem(key: _triangleItemKey)
                             ],
                           )),
+                    ),
+                    Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 25),
+                        child: GestureDetector(
+                          onTap: () => logout(),
+                          child: Text(
+                            '로그아웃하기',
+                            style: TextStyle(
+                              color: Color(0xFF595959),
+                              fontSize: 15,
+                              fontFamily: 'Nanum',
+                              fontWeight: FontWeight.w800,
+                              decoration: TextDecoration.underline,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
           ),
+
           // 하단바 구분선
           Positioned(
               top: screenSize.height * 0.78,
@@ -480,6 +690,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 top: 13.18,
                 child: GestureDetector(
                     onTap: () {
+                      _bookmarkDelete(1);
                       _toggleFavorite(0);
                     },
                     child: Image.asset('assets/home/selected_star.png',
@@ -512,6 +723,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 top: 13.18,
                 child: GestureDetector(
                     onTap: () {
+                      _bookmarkDelete(2);
                       _toggleFavorite(1);
                     },
                     child: Image.asset('assets/home/selected_star.png',
@@ -554,6 +766,7 @@ class ChipsItemState extends State<ChipsItem>
   @override
   void initState() {
     super.initState();
+
     _chipsController = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,

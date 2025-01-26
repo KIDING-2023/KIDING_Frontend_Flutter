@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
@@ -21,6 +22,8 @@ class RankingScreen extends StatefulWidget {
 class _RankingScreenState extends State<RankingScreen> {
   bool isSearchExpanded = false; // 검색창 확장 상태
   List<Map<String, dynamic>> rankingData = []; // 랭킹 데이터를 저장할 리스트
+  final storage = FlutterSecureStorage();
+  String? userNickname; // 저장된 닉네임
 
   Future<void> _fetchRanking() async {
     try {
@@ -46,10 +49,19 @@ class _RankingScreenState extends State<RankingScreen> {
     }
   }
 
+  // 닉네임 로드 함수
+  Future<void> _loadNickname() async {
+    String? nickname = await storage.read(key: 'nickname');
+    setState(() {
+      userNickname = nickname;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     _fetchRanking(); // 랭킹 데이터를 가져오기 위해 호출
+    _loadNickname(); // 닉네임 불러오기
   }
 
   @override
@@ -222,23 +234,25 @@ class _RankingScreenState extends State<RankingScreen> {
                 Positioned(
                   top: -10,
                   right: -15,
-                  child: IconButton(
-                    icon: Image.asset(
-                      'assets/ranking/plus_btn.png',
-                      width: 20,
-                      height: 20,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RankingFriendsScreen(
-                            name: user["user"],
+                  child: userNickname != null && userNickname == user["user"]
+                      ? SizedBox.shrink()
+                      : IconButton(
+                          icon: Image.asset(
+                            'assets/ranking/plus_btn.png',
+                            width: 20,
+                            height: 20,
                           ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => RankingFriendsScreen(
+                                  name: user["user"],
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
                 ),
               ],
             ),

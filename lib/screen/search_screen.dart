@@ -6,6 +6,9 @@ import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/widgets/recommend_games_widget.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
+import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
+import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -216,95 +219,100 @@ class _SearchScreenState extends State<SearchScreen> {
                   children: [
                     Image.asset(
                       'assets/search/search_user_text.png',
-                      width: 100,
+                      width: 92,
                     ),
                     SizedBox(
                       width: 30,
                     ),
                     Image.asset(
                       'assets/search/search_game_text.png',
-                      width: 129,
+                      width: 116,
                     ),
                   ],
                 ),
               ),
-            ],
-          ),
-          // 최근 검색어
-          Column(
-            children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width - 60,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      '최근 검색어',
-                      style: TextStyle(
-                        color: Color(0xFF858585),
-                        fontSize: 14.22,
-                        fontFamily: 'Nanum',
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () async {
-                        await clearRecentSearchWords(); // 저장된 검색 기록 삭제
-                        updateRecentSearchWords(); // UI 업데이트
-                      },
-                      child: Text(
-                        '전체삭제',
-                        style: TextStyle(
-                          color: Color(0xFF858585),
-                          fontSize: 14.22,
-                          fontFamily: 'Nanum',
-                          fontWeight: FontWeight.w800,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                height: 35,
               ),
-              // 최근 검색어 리스트
-              Padding(
-                padding: const EdgeInsets.only(top: 10, left: 30),
-                child: SizedBox(
-                  height: 30,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: List.generate(
-                      recentSearchWords.length,
-                      (index) => GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            // 검색창에 값 설정
-                            searchController.text = recentSearchWords[index];
-                            searchWord = recentSearchWords[index];
-                            hasSearched = true;
-                          });
-                          fetchSearchData(); // 검색 함수 호출
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: Container(
-                            height: 29.26,
-                            padding: const EdgeInsets.symmetric(horizontal: 10),
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                    width: 1.02, color: Color(0xFFFF8A5B)),
-                                borderRadius: BorderRadius.circular(27.99),
-                              ),
+              // 최근 검색어
+              Column(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width - 60,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '최근 검색어',
+                          style: TextStyle(
+                            color: Color(0xFF858585),
+                            fontSize: 14.22,
+                            fontFamily: 'Nanum',
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            await clearRecentSearchWords(); // 저장된 검색 기록 삭제
+                            updateRecentSearchWords(); // UI 업데이트
+                          },
+                          child: Text(
+                            '전체삭제',
+                            style: TextStyle(
+                              color: Color(0xFF858585),
+                              fontSize: 12.22,
+                              fontFamily: 'Nanum',
+                              fontWeight: FontWeight.w800,
                             ),
-                            child: Center(
-                              child: Text(
-                                recentSearchWords[index],
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xFFFF8A5B),
-                                  fontSize: 14.55,
-                                  fontFamily: 'Nanum',
-                                  fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // 최근 검색어 리스트
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10, left: 30),
+                    child: SizedBox(
+                      height: 30,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: List.generate(
+                          recentSearchWords.length,
+                          (index) => GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                // 검색창에 값 설정
+                                searchController.text =
+                                    recentSearchWords[index];
+                                searchWord = recentSearchWords[index];
+                                hasSearched = true;
+                              });
+                              fetchSearchData(); // 검색 함수 호출
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Container(
+                                height: 29.26,
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                decoration: ShapeDecoration(
+                                  shape: RoundedRectangleBorder(
+                                    side: BorderSide(
+                                        width: 1.02, color: Color(0xFFFF8A5B)),
+                                    borderRadius: BorderRadius.circular(27.99),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    recentSearchWords[index],
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Color(0xFFFF8A5B),
+                                      fontSize: 14.55,
+                                      fontFamily: 'Nanum',
+                                      fontWeight: FontWeight.w800,
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
@@ -313,10 +321,11 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ],
           ),
+
           if (hasSearched) ...[
             // 친구
             Padding(
@@ -370,33 +379,46 @@ class _SearchScreenState extends State<SearchScreen> {
                                 final user = userList[index];
                                 return Padding(
                                   padding: const EdgeInsets.only(right: 10),
-                                  child: Column(
-                                    children: [
-                                      // 친구 이미지
-                                      user['image'] == null
-                                          ? CircleAvatar(
-                                              backgroundImage: AssetImage(
-                                                  'assets/ranking/small_icon_1.png'),
-                                              radius: 35, // 원형 이미지 크기
-                                            )
-                                          : CircleAvatar(
-                                              backgroundImage:
-                                                  NetworkImage(user['image']),
-                                              radius: 35, // 원형 이미지 크기
-                                            ),
-                                      SizedBox(height: 5),
-                                      // 친구 이름
-                                      Text(
-                                        user['name'],
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontFamily: 'Nanum',
-                                          fontWeight: FontWeight.w800,
-                                          height: 1.12,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              RankingFriendsScreen(
+                                            name: user['name'],
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      );
+                                    },
+                                    child: Column(
+                                      children: [
+                                        // 친구 이미지
+                                        user['image'] == null
+                                            ? CircleAvatar(
+                                                backgroundImage: AssetImage(
+                                                    'assets/ranking/small_icon_1.png'),
+                                                radius: 35, // 원형 이미지 크기
+                                              )
+                                            : CircleAvatar(
+                                                backgroundImage:
+                                                    NetworkImage(user['image']),
+                                                radius: 35, // 원형 이미지 크기
+                                              ),
+                                        SizedBox(height: 5),
+                                        // 친구 이름
+                                        Text(
+                                          user['name'],
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                            fontFamily: 'Nanum',
+                                            fontWeight: FontWeight.w800,
+                                            height: 1.12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
@@ -462,27 +484,49 @@ class _SearchScreenState extends State<SearchScreen> {
                                   children: [
                                     gameList.any(
                                             (game) => game['name'] == '키키의 하루')
-                                        ? SizedBox(
-                                            width: 230,
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Image.asset(
-                                                    'assets/mypage/favorites_kikisday.png',
-                                                    fit: BoxFit.cover),
-                                              ],
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      KikisdayPlayScreen(),
+                                                ),
+                                              );
+                                            },
+                                            child: SizedBox(
+                                              width: 230,
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Image.asset(
+                                                      'assets/mypage/favorites_kikisday.png',
+                                                      fit: BoxFit.cover),
+                                                ],
+                                              ),
                                             ),
                                           )
                                         : SizedBox(),
                                     gameList.any((game) =>
                                             game['name'] == '키키의 우주여행')
-                                        ? SizedBox(
-                                            width: 230,
-                                            child: Stack(
-                                              children: <Widget>[
-                                                Image.asset(
-                                                    'assets/mypage/favorites_space.png',
-                                                    fit: BoxFit.cover),
-                                              ],
+                                        ? GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SpacePlayScreen(),
+                                                ),
+                                              );
+                                            },
+                                            child: SizedBox(
+                                              width: 230,
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Image.asset(
+                                                      'assets/mypage/favorites_space.png',
+                                                      fit: BoxFit.cover),
+                                                ],
+                                              ),
                                             ),
                                           )
                                         : SizedBox(),

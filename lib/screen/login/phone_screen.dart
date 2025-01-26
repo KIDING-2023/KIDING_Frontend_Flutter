@@ -234,7 +234,6 @@ class _PhoneScreenState extends State<PhoneScreen> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
-      log('인증번호 전송 시도');
       final data = jsonDecode(response.body);
 
       // 서버 응답을 로그로 출력

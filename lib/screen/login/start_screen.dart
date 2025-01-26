@@ -278,11 +278,14 @@ class _StartScreenState extends State<StartScreen> {
         if (_isStayLoggedIn) {
           await _storage.write(key: 'isLoggedIn', value: 'true');
           await _storage.write(key: 'nickname', value: nickname);
+          await _storage.write(key: 'password', value: password);
           await _storage.write(
               key: 'accessToken', value: responseData['accessToken']);
           await _storage.write(
               key: 'refreshToken', value: responseData['refreshToken']);
         } else {
+          await _storage.write(key: 'nickname', value: nickname);
+          await _storage.write(key: 'password', value: password);
           await _storage.write(
               key: 'accessToken', value: responseData['accessToken']);
           await _storage.write(
@@ -328,11 +331,58 @@ class _StartScreenState extends State<StartScreen> {
 
   // 로그인 유지 여부 확인
   Future<void> checkLoginStatus() async {
-    String? isLoggedIn = await _storage.read(key: 'isLoggedIn');
-    if (isLoggedIn == 'true') {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+    String? accessToken = await _storage.read(key: 'accessToken');
+    String? nickname = await _storage.read(key: 'nickname');
+    String? password = await _storage.read(key: 'password'); // 저장된 비밀번호 필요
+
+    if (accessToken != null && nickname != null && password != null) {
+      try {
+        // 로그인 API를 사용해 토큰 유효성 확인
+        var response = await http.post(
+          Uri.parse('${ApiConstants.baseUrl}${ApiConstants.signinEndpoint}'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'nickname': nickname,
+            'password': password,
+          }),
+        );
+
+        if (response.statusCode == 200) {
+          var responseData = json.decode(response.body);
+
+          if (responseData['accessToken'] != null) {
+            // 유효한 토큰이 반환되면 홈 화면으로 이동
+            await _storage.write(
+                key: 'accessToken', value: responseData['accessToken']);
+            print("토큰 유효: 홈 화면으로 이동합니다.");
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          } else {
+            // 토큰이 반환되지 않으면 로그인 화면으로 이동
+            print("토큰이 유효하지 않음: 다시 로그인 필요");
+            _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
+          }
+        } else {
+          print("로그인 API 실패: ${response.statusCode}");
+          _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
+        }
+      } catch (e) {
+        print("네트워크 오류 발생: $e");
+        _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
+      }
+    } else {
+      print("저장된 토큰 또는 사용자 정보가 없습니다. 로그인 화면으로 이동합니다.");
+      _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
     }
+  }
+
+  Future<void> _clearStoredTokens() async {
+    await _storage.delete(key: 'accessToken');
+    await _storage.delete(key: 'refreshToken');
+    await _storage.delete(key: 'isLoggedIn');
+    print("저장된 토큰 삭제 완료");
   }
 
   @override
