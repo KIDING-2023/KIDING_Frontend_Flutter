@@ -7,6 +7,7 @@ import 'package:kiding_frontend/core/constants/api_constants.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:kiding_frontend/screen/home/home_screen.dart';
+import 'package:kiding_frontend/screen/login/terms_screen.dart';
 
 class ChooseCharacterScreen extends StatefulWidget {
   final String nickname; // 닉네임 받아오기
@@ -223,7 +224,7 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
           print("캐릭터 설정 성공: ${jsonResponse["message"]}");
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => HomeScreen()),
+            MaterialPageRoute(builder: (context) => TermsScreen()),
           );
         } else {
           print("캐릭터 설정 실패: ${jsonResponse["message"]}");

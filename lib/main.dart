@@ -12,6 +12,7 @@ import 'package:kiding_frontend/screen/login/find_password_screen.dart';
 import 'package:kiding_frontend/screen/login/password_screen.dart';
 import 'package:kiding_frontend/screen/login/phone_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
+import 'package:kiding_frontend/screen/login/terms_screen.dart';
 import 'package:provider/provider.dart';
 
 const HOME_ROUTE = '/';
