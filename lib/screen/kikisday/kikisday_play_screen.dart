@@ -14,7 +14,7 @@ class _KikisdayPlayScreenState extends State<KikisdayPlayScreen> {
     return PlayLayout(
         bg: 'assets/kikisday/kikisday_bg.png',
         backIcon: 'assets/kikisday/back_icon.png',
-        nextScreen: '/kikisday_set_player_num',
+        nextScreen: '/kikisday_qr',
         playBtn: 'assets/kikisday/kikiplay_btn.png');
   }
 }

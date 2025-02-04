@@ -4,7 +4,6 @@ import 'package:kiding_frontend/screen/mypage/mypage_screen.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_screen.dart';
 
 class BottomAppBarWidget extends StatelessWidget {
-  final double topPosition;
   final double screenHeight;
   final double screenWidth;
   final String screen;
@@ -15,19 +14,23 @@ class BottomAppBarWidget extends StatelessWidget {
     required this.screenHeight,
     required this.screenWidth,
     required this.screen,
-    required this.topPosition,
     required this.hasAppBar,
   });
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: topPosition,
+      bottom: 10,
       left: 0,
       right: 0,
       child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white, // 배경색 설정
+          border: const Border(
+            top: BorderSide(color: Colors.grey, width: 0.5), // 상단 테두리만 추가
+          ),
+        ),
         height: hasAppBar ? screenHeight * 0.06 : screenHeight * 0.09,
-        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -41,7 +44,7 @@ class BottomAppBarWidget extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => RankingScreen(),
+                    builder: (context) => const RankingScreen(),
                   ),
                 );
               },
@@ -56,7 +59,7 @@ class BottomAppBarWidget extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => const HomeScreen(),
                   ),
                 );
               },

@@ -127,9 +127,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           // 검색창 부분
           Column(
@@ -329,7 +327,7 @@ class _SearchScreenState extends State<SearchScreen> {
           if (hasSearched) ...[
             // 친구
             Padding(
-              padding: const EdgeInsets.only(left: 30),
+              padding: const EdgeInsets.only(left: 30, top: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -433,7 +431,7 @@ class _SearchScreenState extends State<SearchScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30),
+                  padding: const EdgeInsets.only(left: 30, top: 30),
                   child: Text(
                     '게임',
                     style: TextStyle(
@@ -542,7 +540,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
           // 추천 게임 부분
           Padding(
-            padding: const EdgeInsets.only(bottom: 100),
+            padding: const EdgeInsets.only(top: 30),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

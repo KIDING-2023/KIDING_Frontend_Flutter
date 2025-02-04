@@ -8,6 +8,7 @@ import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
+import 'package:kiding_frontend/screen/search_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
@@ -69,65 +70,80 @@ class _RankingScreenState extends State<RankingScreen> {
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBarWidget(
-        onNotificationTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
-          );
-        },
-        title: '랭킹',
-        backgroundColor: Color(0xffE9EEFC),
-      ),
-      body: Stack(
-        children: [
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              width: screenSize.width,
-              height: screenSize.height * 0.79,
-              decoration: BoxDecoration(
-                color: Color(0xffE9EEFC),
-              ),
-              child: rankingData.isEmpty
-                  ? Center(child: CircularProgressIndicator()) // 로딩 표시
-                  : Stack(
-                      children: [
-                        Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          child: Image.asset(
-                            'assets/ranking/bg_line.png',
-                            width: screenSize.width,
-                            height: screenSize.height * 0.79,
-                          ),
-                        ),
-                        ..._buildRankingWidgets(screenSize), // 순위별 위젯 생성
-                      ],
-                    ),
+      // appBar: AppBarWidget(
+      //   onNotificationTap: () {
+      //     Navigator.push(
+      //       context,
+      //       MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+      //     );
+      //   },
+      //   title: '랭킹',
+      //   backgroundColor: Colors.white,
+      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
+            );
+          },
+          child: Icon(Icons.notifications_none),
+        ),
+        title: Text(
+          '랭킹',
+          style: TextStyle(
+            color: Color(0xFF4D4D4D),
+            fontSize: 20,
+            fontFamily: 'Nanum',
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: GestureDetector(
+              onTap: () {
+                // 검색 화면으로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SearchScreen(),
+                  ),
+                );
+              },
+              child: Icon(Icons.search),
             ),
           ),
-          Positioned(
-            top: screenSize.height * 0.78,
-            child: Container(
-              width: screenSize.width,
-              height: 0.1,
-              color: Colors.black,
-            ),
-          ),
-          // 하단 바
-          BottomAppBarWidget(
-            screenHeight: screenSize.height,
-            screenWidth: screenSize.width,
-            screen: "ranking",
-            topPosition: screenSize.height * 0.78,
-            hasAppBar: true,
-          )
         ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: BottomAppBarWidget(
+          screenHeight: screenSize.height,
+          screenWidth: screenSize.width,
+          screen: "ranking",
+          hasAppBar: true,
+        ),
+      ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          color: Color(0xffE9EEFC),
+          image: DecorationImage(
+            image: AssetImage('assets/ranking/bg_line.png'), // 배경 이미지 경로
+            fit: BoxFit.cover, // 이미지 크기 조정
+          ),
+        ),
+        child: rankingData.isEmpty
+            ? Center(child: CircularProgressIndicator()) // 로딩 표시
+            : Stack(
+                children: [
+                  ..._buildRankingWidgets(screenSize), // 순위별 위젯 생성
+                ],
+              ),
       ),
     );
   }

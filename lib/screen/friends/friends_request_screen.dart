@@ -189,7 +189,6 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
             screenHeight: screenHeight,
             screenWidth: screenWidth,
             screen: "home",
-            topPosition: screenHeight * 0.91,
             hasAppBar: false,
           ),
         ],

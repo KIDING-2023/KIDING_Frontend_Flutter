@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
+import 'package:kiding_frontend/screen/space/space_set_player_number_screen.dart';
 import 'package:kiding_frontend/screen/space/space_tutorial1_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -183,7 +184,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => SpaceTutorial1Screen(),
+        builder: (context) => SpaceSetPlayerNumberScreen(),
       ),
     );
   }

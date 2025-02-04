@@ -284,6 +284,7 @@ class _StartScreenState extends State<StartScreen> {
           await _storage.write(
               key: 'refreshToken', value: responseData['refreshToken']);
         } else {
+          await _storage.write(key: 'isLoggedIn', value: 'false');
           await _storage.write(key: 'nickname', value: nickname);
           await _storage.write(key: 'password', value: password);
           await _storage.write(
@@ -331,6 +332,7 @@ class _StartScreenState extends State<StartScreen> {
 
   // 로그인 유지 여부 확인
   Future<void> checkLoginStatus() async {
+    String? isLoggedIn = await _storage.read(key: 'isLoggedIn');
     String? accessToken = await _storage.read(key: 'accessToken');
     String? nickname = await _storage.read(key: 'nickname');
     String? password = await _storage.read(key: 'password'); // 저장된 비밀번호 필요
@@ -352,7 +354,7 @@ class _StartScreenState extends State<StartScreen> {
         if (response.statusCode == 200) {
           var responseData = json.decode(response.body);
 
-          if (responseData['accessToken'] != null) {
+          if (isLoggedIn == "true" && responseData['accessToken'] != null) {
             // 유효한 토큰이 반환되면 홈 화면으로 이동
             await _storage.write(
                 key: 'accessToken', value: responseData['accessToken']);

@@ -376,20 +376,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               )),
-          // 하단바 구분선
-          Positioned(
-              top: screenSize.height * 0.78,
-              child: Container(
-                width: screenSize.width,
-                height: 0.1,
-                color: Colors.black,
-              )),
+
           // 하단바
           BottomAppBarWidget(
             screenHeight: screenSize.height,
             screenWidth: screenSize.width,
             screen: "home",
-            topPosition: screenSize.height * 0.79,
             hasAppBar: true,
           ),
         ],
