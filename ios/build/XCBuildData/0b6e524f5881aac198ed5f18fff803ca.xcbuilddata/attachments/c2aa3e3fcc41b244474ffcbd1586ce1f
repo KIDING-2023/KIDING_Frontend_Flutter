@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Release-iphoneos/flutter_secure_storage/flutter_secure_storage.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/flutter_secure_storage.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Release-iphoneos/flutter_secure_storage/flutter_secure_storage.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "flutter_secure_storage-Swift.h",
+      'external-contents': "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/flutter_secure_storage.build/unextended-interface-header.h",
+    }]
+    }]
+}

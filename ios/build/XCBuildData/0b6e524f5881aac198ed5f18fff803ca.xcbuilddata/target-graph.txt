@@ -1,0 +1,37 @@
+Target dependency graph (15 targets)
+Target 'Pods-RunnerTests' in project 'Pods'
+➜ Explicit dependency on target 'Pods-Runner' in project 'Pods'
+Target 'Pods-Runner' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'MTBBarcodeScanner' in project 'Pods'
+➜ Explicit dependency on target 'flutter_secure_storage' in project 'Pods'
+➜ Explicit dependency on target 'image_picker_ios' in project 'Pods'
+➜ Explicit dependency on target 'path_provider_foundation' in project 'Pods'
+➜ Explicit dependency on target 'permission_handler_apple' in project 'Pods'
+➜ Explicit dependency on target 'qr_code_scanner' in project 'Pods'
+➜ Explicit dependency on target 'video_player_avfoundation' in project 'Pods'
+Target 'video_player_avfoundation' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'video_player_avfoundation-video_player_avfoundation_privacy' in project 'Pods'
+Target 'video_player_avfoundation-video_player_avfoundation_privacy' in project 'Pods' (no dependencies)
+Target 'qr_code_scanner' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'MTBBarcodeScanner' in project 'Pods'
+Target 'permission_handler_apple' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'permission_handler_apple-permission_handler_apple_privacy' in project 'Pods'
+Target 'permission_handler_apple-permission_handler_apple_privacy' in project 'Pods' (no dependencies)
+Target 'path_provider_foundation' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'path_provider_foundation-path_provider_foundation_privacy' in project 'Pods'
+Target 'path_provider_foundation-path_provider_foundation_privacy' in project 'Pods' (no dependencies)
+Target 'image_picker_ios' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'image_picker_ios-image_picker_ios_privacy' in project 'Pods'
+Target 'image_picker_ios-image_picker_ios_privacy' in project 'Pods' (no dependencies)
+Target 'flutter_secure_storage' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'flutter_secure_storage-flutter_secure_storage' in project 'Pods'
+Target 'flutter_secure_storage-flutter_secure_storage' in project 'Pods' (no dependencies)
+Target 'MTBBarcodeScanner' in project 'Pods' (no dependencies)
+Target 'Flutter' in project 'Pods' (no dependencies)

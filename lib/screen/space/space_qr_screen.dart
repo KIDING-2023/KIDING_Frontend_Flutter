@@ -21,6 +21,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  String errorMessage = ""; // 에러 메시지 상태
 
   bool useCamera = true;
   final picker = ImagePicker();
@@ -82,7 +83,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
           Positioned(
             bottom: screenHeight * 0.25,
             child: Text(
-              result == null ? 'Scan a code' : '',
+              errorMessage,
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'NanumRegular',
@@ -142,10 +143,12 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        if (result?.code == 'kiding-book-code') {
+          _navigateToNextScreen();
+        } else {
+          errorMessage = '잘못된 코드입니다.';
+        }
       });
-      if (result != null) {
-        _navigateToNextScreen();
-      }
     });
   }
 

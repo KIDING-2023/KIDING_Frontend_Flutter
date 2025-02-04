@@ -1,0 +1,20 @@
+{
+  "" : {
+    "const-values" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/path_provider_foundation-master.swiftconstvalues",
+    "dependencies" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/path_provider_foundation-master.d",
+    "diagnostics" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/path_provider_foundation-master.dia",
+    "emit-module-dependencies" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/path_provider_foundation-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/path_provider_foundation-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/path_provider_foundation-master.swiftdeps"
+  },
+  "/Users/jeonsiwon/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/darwin/path_provider_foundation/Sources/path_provider_foundation/PathProviderPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/PathProviderPlugin.o",
+    "llvm-bc" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/PathProviderPlugin.bc",
+    "object" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/PathProviderPlugin.o"
+  },
+  "/Users/jeonsiwon/.pub-cache/hosted/pub.dev/path_provider_foundation-2.4.1/darwin/path_provider_foundation/Sources/path_provider_foundation/messages.g.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/messages.g.o",
+    "llvm-bc" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/messages.g.bc",
+    "object" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/path_provider_foundation.build/Objects-normal/arm64/messages.g.o"
+  }
+}

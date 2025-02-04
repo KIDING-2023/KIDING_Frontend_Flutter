@@ -125,7 +125,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
-        if (result?.code != null) {
+        if (result?.code == 'kiding-book-code') {
           _navigateToNextScreen();
         } else {
           errorMessage = '잘못된 코드입니다.';

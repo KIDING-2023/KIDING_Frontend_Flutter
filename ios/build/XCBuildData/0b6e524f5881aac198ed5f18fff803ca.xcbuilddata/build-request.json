@@ -1,0 +1,88 @@
+{
+  "buildCommand" : {
+    "command" : "prepareForIndexing",
+    "enableIndexBuildArena" : false,
+    "targets" : null
+  },
+  "configuredTargets" : [
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e989da425bb6d6d5d8dbb95e4afffb82217"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98b66589e559e86b96e7ab7c12d34548fe"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98312b4bc59bbbe2c06c205bf4da6737f5"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98483832d3c820398e9d40e1a6904b03fe"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e987cb9c58d33d05677fb576674bac57313"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98a0220561f537715e864e45aed9ae8b8b"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e981f000f066404b97b12e9c4ca84d38d0f"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98082dc85da1fc941e5234c7cc1f11b27d"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e9830037b09fee48cfce1f8562d753688c8"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e987ea64ee8d53085bf9edd1a57aaf8cbb5"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98ef10255b706f98e1e88fae00855b0968"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e9802f35ab680609a626ebd2ddd692a3822"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98e7cbafb63ff4e03edd5285aa56a57295"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e988a0a5b40b007f81bee1472e4d0fb23da"
+    },
+    {
+      "guid" : "bfdfe7dc352907fc980b868725387e98e4af9c7b061f7f7eb180b825e303ea04"
+    }
+  ],
+  "containerPath" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/Pods/Pods.xcodeproj",
+  "continueBuildingAfterErrors" : true,
+  "dependencyScope" : "workspace",
+  "enableIndexBuildArena" : false,
+  "hideShellScriptEnvironment" : false,
+  "parameters" : {
+    "action" : "build",
+    "arenaInfo" : {
+      "buildIntermediatesPath" : "",
+      "buildProductsPath" : "",
+      "derivedDataPath" : "/Users/jeonsiwon/Library/Developer/Xcode/DerivedData",
+      "indexDataStoreFolderPath" : "/Users/jeonsiwon/Library/Developer/Xcode/DerivedData/Pods-hbqvciyzcksunkdrqdvdhylqqyrx/Index.noindex/DataStore",
+      "indexEnableDataStore" : true,
+      "indexPCHPath" : "/Users/jeonsiwon/Library/Developer/Xcode/DerivedData/Pods-hbqvciyzcksunkdrqdvdhylqqyrx/Index.noindex/PrecompiledHeaders",
+      "pchPath" : ""
+    },
+    "configurationName" : "Release",
+    "overrides" : {
+      "synthesized" : {
+        "table" : {
+          "ENABLE_PREVIEWS" : "NO",
+          "ENABLE_XOJIT_PREVIEWS" : "NO",
+          "ONLY_ACTIVE_ARCH" : "YES"
+        }
+      }
+    }
+  },
+  "qos" : "default",
+  "schemeCommand" : "launch",
+  "showNonLoggedProgress" : true,
+  "useDryRun" : true,
+  "useImplicitDependencies" : false,
+  "useLegacyBuildLocations" : false,
+  "useParallelTargets" : false
+}

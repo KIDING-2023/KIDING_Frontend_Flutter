@@ -1,0 +1,25 @@
+{
+  "" : {
+    "const-values" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/qr_code_scanner-master.swiftconstvalues",
+    "dependencies" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/qr_code_scanner-master.d",
+    "diagnostics" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/qr_code_scanner-master.dia",
+    "emit-module-dependencies" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/qr_code_scanner-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/qr_code_scanner-master-emit-module.dia",
+    "swift-dependencies" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/qr_code_scanner-master.swiftdeps"
+  },
+  "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/local_plugins/qr_code_scanner/qr_code_scanner-1.0.1/ios/Classes/QRView.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/QRView.o",
+    "llvm-bc" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/QRView.bc",
+    "object" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/QRView.o"
+  },
+  "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/local_plugins/qr_code_scanner/qr_code_scanner-1.0.1/ios/Classes/QRViewFactory.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/QRViewFactory.o",
+    "llvm-bc" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/QRViewFactory.bc",
+    "object" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/QRViewFactory.o"
+  },
+  "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/local_plugins/qr_code_scanner/qr_code_scanner-1.0.1/ios/Classes/SwiftFlutterQrPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/SwiftFlutterQrPlugin.o",
+    "llvm-bc" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/SwiftFlutterQrPlugin.bc",
+    "object" : "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/ios/build/Pods.build/Release-iphoneos/qr_code_scanner.build/Objects-normal/arm64/SwiftFlutterQrPlugin.o"
+  }
+}
