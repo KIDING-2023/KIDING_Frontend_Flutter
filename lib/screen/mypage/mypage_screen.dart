@@ -10,6 +10,7 @@ import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
+import 'package:kiding_frontend/screen/mypage/delete_account_confirm.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
@@ -589,7 +590,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     width: 30,
                   ),
                   GestureDetector(
-                    onTap: () {}, // 탈퇴 로직 추가
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DeleteAccountConfirm()),
+                      );
+                    }, // 탈퇴 로직 추가
                     child: Text(
                       '탈퇴하기',
                       style: TextStyle(
