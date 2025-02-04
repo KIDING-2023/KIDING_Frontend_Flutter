@@ -38,15 +38,55 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   List<dynamic> friendsList = [];
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
+  //   fetchFavoriteGames(); // 즐겨찾기한 보드게임 데이터 가져오기
+  //   fetchFriendsList(); // 서버에서 친구 목록 가져오기
+  // }
+
+  // // 서버에서 친구 목록 가져오기
+  // Future<void> fetchFriendsList() async {
+  //   String? token = await storage.read(key: 'accessToken');
+
+  //   var url = Uri.parse('${ApiConstants.baseUrl}/friends/list');
+  //   var headers = {
+  //     'Authorization': 'Bearer $token',
+  //     'Content-Type': 'application/json',
+  //   };
+
+  //   try {
+  //     final response = await http.get(url, headers: headers);
+
+  //     if (response.statusCode == 200) {
+  //       final data = jsonDecode(response.body);
+
+  //       if (data['isSuccess']) {
+  //         // 서버로부터 받은 친구 목록 데이터 반환
+  //         friendsList = data["result"];
+  //         print(friendsList);
+  //       } else {
+  //         print("서버 응답 오류: ${data['message']}");
+  //       }
+  //     } else {
+  //       print("HTTP 오류: ${response.statusCode}");
+  //     }
+  //   } catch (e) {
+  //     print("네트워크 오류: $e");
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
+    friendsList = []; // 초기값을 빈 리스트로 설정
     fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
     fetchFavoriteGames(); // 즐겨찾기한 보드게임 데이터 가져오기
     fetchFriendsList(); // 서버에서 친구 목록 가져오기
   }
 
-  // 서버에서 친구 목록 가져오기
+// 친구 목록 가져오는 함수 수정
   Future<void> fetchFriendsList() async {
     String? token = await storage.read(key: 'accessToken');
 
@@ -63,9 +103,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
         final data = jsonDecode(response.body);
 
         if (data['isSuccess']) {
-          // 서버로부터 받은 친구 목록 데이터 반환
-          friendsList = data["result"];
-          print(friendsList);
+          setState(() {
+            friendsList = data["result"]; // 상태 업데이트
+          });
+          print(friendsList); // 디버깅 출력
         } else {
           print("서버 응답 오류: ${data['message']}");
         }
