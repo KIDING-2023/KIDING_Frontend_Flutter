@@ -39,45 +39,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   List<dynamic> friendsList = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchMyPageData(); // 서버에서 마이페이지 데이터 가져오기
-  //   fetchFavoriteGames(); // 즐겨찾기한 보드게임 데이터 가져오기
-  //   fetchFriendsList(); // 서버에서 친구 목록 가져오기
-  // }
-
-  // // 서버에서 친구 목록 가져오기
-  // Future<void> fetchFriendsList() async {
-  //   String? token = await storage.read(key: 'accessToken');
-
-  //   var url = Uri.parse('${ApiConstants.baseUrl}/friends/list');
-  //   var headers = {
-  //     'Authorization': 'Bearer $token',
-  //     'Content-Type': 'application/json',
-  //   };
-
-  //   try {
-  //     final response = await http.get(url, headers: headers);
-
-  //     if (response.statusCode == 200) {
-  //       final data = jsonDecode(response.body);
-
-  //       if (data['isSuccess']) {
-  //         // 서버로부터 받은 친구 목록 데이터 반환
-  //         friendsList = data["result"];
-  //         print(friendsList);
-  //       } else {
-  //         print("서버 응답 오류: ${data['message']}");
-  //       }
-  //     } else {
-  //       print("HTTP 오류: ${response.statusCode}");
-  //     }
-  //   } catch (e) {
-  //     print("네트워크 오류: $e");
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
@@ -548,14 +509,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         fit: BoxFit.fill)),
                 child: Stack(
                   children: [
-                    // 키딩칩 개수
                     ChipsItem(key: _chipsItemKey, chipsNum: kiding_chip),
-                    // 친구 수
                     FriendsItem(key: _friendsItemKey, friendsNum: players_with),
-                    // 1위 경험 횟수
                     RankingItem(key: _rankingItemKey, rankingNum: score),
-                    // 삼각형 모양
-                    TriangleItem(key: _triangleItemKey)
+                    TriangleItem(key: _triangleItemKey),
                   ],
                 )),
           ),
@@ -620,32 +577,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
     );
   }
 
-  Widget _buildRecommends() {
-    return SizedBox(
-      height: 120,
-      child: ShaderMask(
-        shaderCallback: (Rect bounds) {
-          return LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Colors.white.withOpacity(1.0), // 왼쪽의 불투명한 흰색
-              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
-              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
-              Colors.white.withOpacity(1.0), // 오른쪽의 불투명한 흰색
-            ],
-            stops: [0.0, 0.15, 0.85, 1.0],
-          ).createShader(bounds);
-        },
-        blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
-        child: ListView(
-            padding: EdgeInsets.only(right: 30),
-            scrollDirection: Axis.horizontal,
-            children: _buildRecommendCards()),
-      ),
-    );
-  }
-
   Widget _buildFavorites() {
     return SizedBox(
       height: 120,
@@ -673,14 +604,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
   }
 
   // 즐겨찾기 카드 목록을 생성
-  List<Widget> _buildRecommendCards() {
-    List<Widget> cards = [];
-    cards.add(_buildRecommendCard1());
-    cards.add(_buildRecommendCard2());
-    return cards;
-  }
-
-  // 즐겨찾기 카드 목록을 생성
   List<Widget> _buildFavoriteCards() {
     List<Widget> cards = [];
     if (_isFavoriteList[0]) {
@@ -699,50 +622,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
     });
   }
 
-  Widget _buildRecommendCard1() {
-    return GestureDetector(
-      onTap: () {
-        print('kikisday card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
-        );
-      },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_kikisday.png',
-                fit: BoxFit.cover),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRecommendCard2() {
-    return GestureDetector(
-      onTap: () {
-        print('space card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-        );
-      },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_space.png', fit: BoxFit.cover),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // 임시 배치 (백엔드와 연결해야 함)
   Widget _buildFavoriteCard1() {
     return GestureDetector(
       onTap: () {
@@ -752,31 +631,36 @@ class _MyPageScreenState extends State<MyPageScreen> {
           MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
         );
       },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_kikisday.png',
-                fit: BoxFit.cover),
-            // 즐겨찾기 버튼
-            Positioned(
-                left: 15,
-                top: 13.18,
-                child: GestureDetector(
-                    onTap: () {
-                      _bookmarkDelete(1);
-                      _toggleFavorite(0);
-                    },
-                    child: Image.asset('assets/home/selected_star.png',
-                        width: 19.79, height: 19.79)))
-          ],
-        ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: 230,
+            margin: EdgeInsets.only(left: 30),
+            child: Image.asset(
+              'assets/mypage/favorites_kikisday.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            left: 45,
+            top: 13.18,
+            child: GestureDetector(
+              onTap: () {
+                _bookmarkDelete(1);
+                _toggleFavorite(0);
+              },
+              child: Image.asset(
+                'assets/home/selected_star.png',
+                width: 19.79,
+                height: 19.79,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  // 임시 배치 (백엔드와 연결해야 함)
   Widget _buildFavoriteCard2() {
     return GestureDetector(
       onTap: () {
@@ -786,25 +670,32 @@ class _MyPageScreenState extends State<MyPageScreen> {
           MaterialPageRoute(builder: (context) => SpacePlayScreen()),
         );
       },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_space.png', fit: BoxFit.cover),
-            // 즐겨찾기 버튼
-            Positioned(
-                left: 15,
-                top: 13.18,
-                child: GestureDetector(
-                    onTap: () {
-                      _bookmarkDelete(2);
-                      _toggleFavorite(1);
-                    },
-                    child: Image.asset('assets/home/selected_star.png',
-                        width: 19.79, height: 19.79)))
-          ],
-        ),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            width: 230,
+            margin: EdgeInsets.only(left: 30),
+            child: Image.asset(
+              'assets/mypage/favorites_space.png',
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned(
+            left: 45,
+            top: 13.18,
+            child: GestureDetector(
+              onTap: () {
+                _bookmarkDelete(2);
+                _toggleFavorite(1);
+              },
+              child: Image.asset(
+                'assets/home/selected_star.png',
+                width: 19.79,
+                height: 19.79,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -892,37 +783,33 @@ class ChipsItemState extends State<ChipsItem>
       restartAnimation(screenHeight);
     }
 
-    return Stack(
-      children: [
-        Positioned(
-          top: _chipsTopPosition,
-          left: 0.06 * screenWidth, // 화면 너비의 6%로 위치 설정
-          child: Transform.rotate(
-            angle: pi / 7,
-            child: Container(
-              width: 0.5 * screenWidth, // 화면 너비의 50%로 크기 설정
-              height: 0.5 * screenWidth, // 화면 너비의 50%로 크기 설정
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/mypage/chips_bg.png'),
-                      fit: BoxFit.fill)),
-              child: Padding(
-                padding: EdgeInsets.only(top: 0.3 * 0.5 * screenWidth),
-                // 이미지 높이의 30%로 패딩 설정
-                child: Center(
-                  child: Text(
-                    '${widget.chipsNum}개',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 0.08 * screenWidth,
-                        fontFamily: 'Nanum'), // 화면 너비의 8%로 폰트 크기 설정
-                  ),
-                ),
+    return Positioned(
+      top: _chipsTopPosition,
+      left: 0.06 * screenWidth,
+      child: Transform.rotate(
+        angle: pi / 7,
+        child: Container(
+          width: 0.5 * screenWidth, // 화면 너비의 50%로 크기 설정
+          height: 0.5 * screenWidth, // 화면 너비의 50%로 크기 설정
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/chips_bg.png'),
+                  fit: BoxFit.fill)),
+          child: Padding(
+            padding: EdgeInsets.only(top: 0.3 * 0.5 * screenWidth),
+            // 이미지 높이의 30%로 패딩 설정
+            child: Center(
+              child: Text(
+                '${widget.chipsNum}개',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 0.08 * screenWidth,
+                    fontFamily: 'Nanum'), // 화면 너비의 8%로 폰트 크기 설정
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -998,37 +885,33 @@ class FriendsItemState extends State<FriendsItem>
       restartAnimation(screenHeight);
     }
 
-    return Stack(
-      children: [
-        Positioned(
-          top: _friendsTopPosition,
-          right: 0.01 * screenWidth, // 화면 너비의 5%로 위치 설정
-          child: Transform.rotate(
-            angle: -pi / 7,
-            child: Container(
-              width: 0.45 * screenWidth, // 화면 너비의 45%로 크기 설정
-              height: 0.45 * screenWidth, // 화면 너비의 45%로 크기 설정
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/mypage/friends_bg.png'),
-                      fit: BoxFit.fill)),
-              child: Padding(
-                padding: EdgeInsets.only(top: 0.25 * 0.45 * screenWidth),
-                // 이미지 높이의 25%로 패딩 설정
-                child: Center(
-                  child: Text(
-                    "${widget.friendsNum}명",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 0.07 * screenWidth,
-                        fontFamily: 'Nanum'), // 화면 너비의 7%로 폰트 크기 설정
-                  ),
-                ),
+    return Positioned(
+      top: _friendsTopPosition,
+      right: 0.01 * screenWidth, // 화면 너비의 5%로 위치 설정
+      child: Transform.rotate(
+        angle: -pi / 7,
+        child: Container(
+          width: 0.45 * screenWidth, // 화면 너비의 45%로 크기 설정
+          height: 0.45 * screenWidth, // 화면 너비의 45%로 크기 설정
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/friends_bg.png'),
+                  fit: BoxFit.fill)),
+          child: Padding(
+            padding: EdgeInsets.only(top: 0.25 * 0.45 * screenWidth),
+            // 이미지 높이의 25%로 패딩 설정
+            child: Center(
+              child: Text(
+                "${widget.friendsNum}명",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 0.07 * screenWidth,
+                    fontFamily: 'Nanum'), // 화면 너비의 7%로 폰트 크기 설정
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
@@ -1104,37 +987,33 @@ class RankingItemState extends State<RankingItem>
       restartAnimation(screenHeight);
     }
 
-    return Stack(
-      children: [
-        Positioned(
-          top: _rankingTopPosition,
-          left: -0.01 * screenWidth, // 화면 너비의 -2%로 위치 설정
-          child: Transform.rotate(
-            angle: -pi / 20,
-            child: Container(
-              width: 0.46 * screenWidth, // 화면 너비의 40%로 크기 설정
-              height: 0.46 * screenWidth, // 화면 너비의 40%로 크기 설정
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/mypage/ranking_bg.png'),
-                      fit: BoxFit.fill)),
-              child: Padding(
-                padding: EdgeInsets.only(top: 0.2 * 0.4 * screenWidth),
-                // 이미지 높이의 20%로 패딩 설정
-                child: Center(
-                  child: Text(
-                    "${widget.rankingNum}번",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 0.05 * screenWidth,
-                        fontFamily: 'Nanum'), // 화면 너비의 5%로 폰트 크기 설정
-                  ),
-                ),
+    return Positioned(
+      top: _rankingTopPosition,
+      left: -0.01 * screenWidth, // 화면 너비의 -2%로 위치 설정
+      child: Transform.rotate(
+        angle: -pi / 20,
+        child: Container(
+          width: 0.46 * screenWidth, // 화면 너비의 40%로 크기 설정
+          height: 0.46 * screenWidth, // 화면 너비의 40%로 크기 설정
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('assets/mypage/ranking_bg.png'),
+                  fit: BoxFit.fill)),
+          child: Padding(
+            padding: EdgeInsets.only(top: 0.2 * 0.4 * screenWidth),
+            // 이미지 높이의 20%로 패딩 설정
+            child: Center(
+              child: Text(
+                "${widget.rankingNum}번",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 0.05 * screenWidth,
+                    fontFamily: 'Nanum'), // 화면 너비의 5%로 폰트 크기 설정
               ),
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }

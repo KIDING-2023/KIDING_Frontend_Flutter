@@ -184,13 +184,6 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                 ),
             ],
           ),
-          // 하단바
-          BottomAppBarWidget(
-            screenHeight: screenHeight,
-            screenWidth: screenWidth,
-            screen: "home",
-            hasAppBar: false,
-          ),
         ],
       ),
     );

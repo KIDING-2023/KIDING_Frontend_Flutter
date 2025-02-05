@@ -205,6 +205,15 @@ class _HomeScreenState extends State<HomeScreen> {
         title: '',
         backgroundColor: Colors.white,
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: BottomAppBarWidget(
+          screenHeight: screenSize.height,
+          screenWidth: screenSize.width,
+          screen: "home",
+          hasAppBar: true,
+        ),
+      ),
       body: Stack(
         children: [
           // 바디
@@ -376,14 +385,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               )),
-
-          // 하단바
-          BottomAppBarWidget(
-            screenHeight: screenSize.height,
-            screenWidth: screenSize.width,
-            screen: "home",
-            hasAppBar: true,
-          ),
         ],
       ),
     );

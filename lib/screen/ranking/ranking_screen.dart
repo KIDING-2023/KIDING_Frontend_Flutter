@@ -3,13 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
-import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
-import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
 import 'package:kiding_frontend/screen/search_screen.dart';
-import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -70,16 +67,6 @@ class _RankingScreenState extends State<RankingScreen> {
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      // appBar: AppBarWidget(
-      //   onNotificationTap: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(builder: (context) => FriendsRequestScreen()),
-      //     );
-      //   },
-      //   title: '랭킹',
-      //   backgroundColor: Colors.white,
-      // ),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: GestureDetector(
@@ -151,14 +138,6 @@ class _RankingScreenState extends State<RankingScreen> {
   List<Widget> _buildRankingWidgets(Size screenSize) {
     List<Widget> widgets = [];
     List<double> topOffsets = [0.1205, 0.2116, 0.3088, 0.4688, 0.5814, 0.6811];
-    List<String> containerImages = [
-      'assets/ranking/big_container.png',
-      'assets/ranking/big_container.png',
-      'assets/ranking/big_container.png',
-      'assets/ranking/small_container.png',
-      'assets/ranking/small_container.png',
-      'assets/ranking/small_container.png'
-    ];
     List<String> iconImages = [
       'assets/ranking/big_icon_1.png',
       'assets/ranking/big_icon_2.png',
@@ -174,22 +153,6 @@ class _RankingScreenState extends State<RankingScreen> {
       0.3888, // for 4th place
       0.59, // for 5th place
       0.3349 // for 6th place
-    ];
-    List<double> plusButtonLeftPositions = [
-      0.5272, // for 1st place
-      0.8439, // for 2nd place
-      0.4106, // for 3rd place
-      0.655, // for 4th place
-      0.855, // for 5th place
-      0.5994 // for 6th place
-    ];
-    List<double> plusButtonTopOffsets = [
-      0.11,
-      0.2013,
-      0.2988,
-      0.4588,
-      0.5713,
-      0.6713
     ];
 
     for (int i = 0; i < rankingData.length && i < 6; i++) {
@@ -278,84 +241,5 @@ class _RankingScreenState extends State<RankingScreen> {
     }
 
     return widgets;
-  }
-
-  // 추천게임
-  Widget _buildRecommends() {
-    return SizedBox(
-      height: 120,
-      child: ShaderMask(
-        shaderCallback: (Rect bounds) {
-          return LinearGradient(
-            begin: Alignment.centerLeft,
-            end: Alignment.centerRight,
-            colors: [
-              Colors.white.withOpacity(1.0), // 왼쪽의 불투명한 흰색
-              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
-              Colors.white.withOpacity(0.0), // 중앙의 투명한 흰색
-              Colors.white.withOpacity(1.0), // 오른쪽의 불투명한 흰색
-            ],
-            stops: [0.0, 0.15, 0.85, 1.0],
-          ).createShader(bounds);
-        },
-        blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
-        child: ListView(
-            padding: EdgeInsets.only(right: 30),
-            scrollDirection: Axis.horizontal,
-            children: _buildRecommendCards()),
-      ),
-    );
-  }
-
-  // 추천 카드 목록을 생성
-  List<Widget> _buildRecommendCards() {
-    List<Widget> cards = [];
-    cards.add(_buildRecommendCard1());
-    cards.add(_buildRecommendCard2());
-    return cards;
-  }
-
-  Widget _buildRecommendCard1() {
-    return GestureDetector(
-      onTap: () {
-        print('kikisday card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => KikisdayPlayScreen()),
-        );
-      },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_kikisday.png',
-                fit: BoxFit.cover),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // 임시 배치 (백엔드와 연결해야 함)
-  Widget _buildRecommendCard2() {
-    return GestureDetector(
-      onTap: () {
-        print('space card tapped');
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SpacePlayScreen()),
-        );
-      },
-      child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
-        child: Stack(
-          children: <Widget>[
-            Image.asset('assets/mypage/favorites_space.png', fit: BoxFit.cover),
-          ],
-        ),
-      ),
-    );
   }
 }
