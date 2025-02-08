@@ -1,54 +1,58 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:kiding_frontend/screen/login/start_screen.dart';
+import 'package:kiding_frontend/screen/mypage/mypage_screen.dart';
 
-class DeleteAccountConfirm extends StatefulWidget {
-  const DeleteAccountConfirm({super.key});
+class FriendsDeleteScreen extends StatefulWidget {
+  final String name;
+
+  const FriendsDeleteScreen({super.key, required this.name});
 
   @override
-  State<DeleteAccountConfirm> createState() => _DeleteAccountConfirmState();
+  State<FriendsDeleteScreen> createState() => _FriendsDeleteScreenState();
 }
 
-class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
+class _FriendsDeleteScreenState extends State<FriendsDeleteScreen> {
   bool _isLoading = false;
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스 생성
 
-  Future<void> _deleteAccount() async {
+  Future<void> _deleteFriend() async {
     setState(() {
       _isLoading = true;
     });
 
     String? token = await storage.read(key: 'accessToken');
 
-    var url = Uri.parse('${ApiConstants.baseUrl}/user/delete');
+    var url = Uri.parse('${ApiConstants.baseUrl}/friends/delete');
     var headers = {
       'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     };
+    var body = widget.name;
 
     try {
-      final response = await http.delete(url, headers: headers);
+      final response = await http.delete(url, headers: headers, body: body);
 
       if (response.statusCode == 200) {
-        // 성공적으로 계정 탈퇴됨
+        // 성공적으로 친구 삭제함
         final responseData = jsonDecode(response.body);
-        print('계정 탈퇴 성공: ${responseData['message']}');
+        print('친구 삭제 성공: ${responseData['message']}');
 
-        // 탈퇴 후 로그인 화면으로 이동
+        // 친구 삭제 후 마이페이지 화면으로 이동
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => StartScreen()),
+          MaterialPageRoute(builder: (context) => MyPageScreen()),
           (route) => false,
         );
       } else {
         // 실패 처리
         final responseData = jsonDecode(response.body);
-        print('탈퇴 실패: ${responseData['error']}');
-        _showErrorDialog('탈퇴에 실패했습니다. 다시 시도해주세요.');
+        print('친구 삭제 실패: ${responseData['error']}');
+        _showErrorDialog('친구 삭제에 실패했습니다. 다시 시도해주세요.');
       }
     } catch (error) {
       print('에러 발생: $error');
@@ -102,7 +106,7 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
               Center(
                 child: Text(
                   textAlign: TextAlign.center,
-                  '본인 계정을 탈퇴하고\n키딩북을 떠나시겠습니까?',
+                  widget.name,
                   style: const TextStyle(
                     fontFamily: 'Nanum',
                     fontSize: 15,
@@ -141,20 +145,20 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      _deleteAccount();
-                    }, // 계정 탈퇴 로직 추가
+                      _deleteFriend();
+                    },
                     child: Container(
                       width: 136.71,
                       height: 26.76,
                       decoration: ShapeDecoration(
-                        color: const Color(0xFFFF8A5B),
+                        color: const Color(0xFF883D1F),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13.38),
                         ),
                       ),
                       child: const Center(
                         child: Text(
-                          '탈퇴하기',
+                          '친구 삭제하기',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,

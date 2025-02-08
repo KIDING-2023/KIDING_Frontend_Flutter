@@ -11,6 +11,7 @@ import 'package:kiding_frontend/screen/friends/friends_request_screen.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
 import 'package:kiding_frontend/screen/mypage/delete_account_confirm.dart';
+import 'package:kiding_frontend/screen/mypage/friends_delete_screen.dart';
 import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
@@ -381,7 +382,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 ),
                 !_isFavoriteList[0] && !_isFavoriteList[1]
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.only(top: 10, left: 30),
                         child: Text(
                           '즐겨찾기한 게임이 없습니다.',
                           style: TextStyle(
@@ -443,7 +444,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            RankingFriendsScreen(
+                                            FriendsDeleteScreen(
                                           name: user['nickname'],
                                         ),
                                       ),

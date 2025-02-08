@@ -221,6 +221,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
       'password': password,
       'phone': phoneNumber,
     });
+    log('signupBody: $signupBody');
 
     try {
       // 회원가입 요청
@@ -231,7 +232,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
         final signupData = jsonDecode(signupResponse.body);
         log('Signup Response Data: $signupData');
 
-        if (signupData['isSuccess']) {
+        if (signupData['code'] == 200) {
           // 로그인 요청
           final loginBody = jsonEncode({
             'nickname': nickname,

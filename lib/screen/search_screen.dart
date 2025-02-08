@@ -132,9 +132,6 @@ class _SearchScreenState extends State<SearchScreen> {
           // 검색창 부분
           Column(
             children: [
-              SizedBox(
-                height: 60,
-              ),
               // 검색창
               Center(
                 child: Row(

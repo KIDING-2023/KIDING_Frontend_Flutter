@@ -23,6 +23,7 @@ class PhoneScreen extends StatefulWidget {
 class _PhoneScreenState extends State<PhoneScreen> {
   final _phoneController = TextEditingController(); // 전화번호 입력 컨트롤러
   final _codeController = TextEditingController(); // 인증 코드 입력 컨트롤러
+  String phone = ""; // 전화번호
   bool codeSent = false; // 인증 코드 전송 여부
   bool errorVisible = false; // 에러 발생 여부
   String errorMessage = ""; // 에러 메시지
@@ -244,6 +245,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
         setState(() {
           errorVisible = true;
           errorMessage = "인증번호를 보냈습니다.";
+          phone = _phoneController.text;
           // 전화번호 입력 칸의 내용을 삭제하고 hintText를 변경
           _phoneController.clear();
           codeSent = true; // 인증번호 입력 모드로 전환
@@ -298,8 +300,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => PasswordScreen(
-                    nickname: widget.nickname,
-                    phoneNumber: _phoneController.text)));
+                    nickname: widget.nickname, phoneNumber: phone)));
       } else {
         setState(() {
           errorVisible = true;

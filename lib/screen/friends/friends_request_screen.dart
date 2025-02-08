@@ -86,10 +86,14 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
     try {
       final response = await http.post(url, headers: headers, body: body);
       print('Response Status Code: ${response.statusCode}');
-      // print('Response Body: ${response.body}');
 
       if (response.statusCode == 200) {
-        // final data = jsonDecode(response.body);
+        setState(() {
+          // 요청을 처리한 친구 요청을 목록에서 제거
+          friendRequests
+              .removeWhere((request) => request['name'] == senderNickname);
+        });
+
         String message = isAccepted ? "친구 요청을 수락했습니다." : "친구 요청을 거절했습니다.";
         _showDialog(context, "알림", message);
       } else {
