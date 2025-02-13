@@ -12,7 +12,6 @@ import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
 import 'package:kiding_frontend/screen/mypage/delete_account_confirm.dart';
 import 'package:kiding_frontend/screen/mypage/friends_delete_screen.dart';
-import 'package:kiding_frontend/screen/ranking/ranking_friends_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
@@ -505,6 +504,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 width: screenSize.width * 0.835,
                 height: screenSize.height * 0.576,
                 decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
                         image: AssetImage('assets/mypage/my_record_bg.png'),
                         fit: BoxFit.fill)),
