@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/widgets/recommend_games_widget.dart';
@@ -34,7 +35,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Future<void> fetchSearchData() async {
     String? token = await storage.read(key: 'accessToken');
 
-    print("AccessToken: $token");
+    debugPrint("AccessToken: $token");
 
     var url = Uri.parse('${ApiConstants.baseUrl}/search?word=$searchWord');
     var headers = {
@@ -44,8 +45,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
     try {
       final response = await http.get(url, headers: headers);
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -63,17 +64,17 @@ class _SearchScreenState extends State<SearchScreen> {
           }
         } else {
           setState(() {
-            print(data['message']);
+            debugPrint(data['message']);
           });
         }
       } else {
         setState(() {
-          print("서버 오류: ${response.statusCode}");
+          debugPrint("서버 오류: ${response.statusCode}");
         });
       }
     } catch (e) {
       setState(() {
-        print("네트워크 오류: $e");
+        debugPrint("네트워크 오류: $e");
       });
     }
   }
@@ -143,11 +144,11 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: Icon(Icons.arrow_back_ios_new),
                     ),
                     SizedBox(
-                      width: 20,
+                      width: 20.w,
                     ),
                     Container(
-                      width: 300,
-                      height: 45,
+                      width: 300.w,
+                      height: 45.h,
                       decoration: ShapeDecoration(
                         color: Color(0xFFFF8A5B),
                         shape: RoundedRectangleBorder(
@@ -160,12 +161,12 @@ class _SearchScreenState extends State<SearchScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             SizedBox(
-                              width: 230,
+                              width: 230.w,
                               child: TextField(
                                 controller: searchController,
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 14.22,
+                                  fontSize: 14.22.sp,
                                   fontFamily: 'Nanum',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -173,7 +174,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                   hintText: '검색어를 입력하세요',
                                   hintStyle: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 14.22,
+                                    fontSize: 14.22.sp,
                                     fontFamily: 'Nanum',
                                     fontWeight: FontWeight.w800,
                                   ),
@@ -194,7 +195,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               },
                               child: Image.asset(
                                 'assets/home/search_icon_selected.png',
-                                width: 20,
+                                width: 20.w,
                               ),
                             ),
                           ],
@@ -205,29 +206,29 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 10.h,
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 20),
+                padding: EdgeInsets.only(left: 20.w),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset(
                       'assets/search/search_user_text.png',
-                      width: 92,
+                      width: 92.w,
                     ),
                     SizedBox(
-                      width: 30,
+                      width: 30.w,
                     ),
                     Image.asset(
                       'assets/search/search_game_text.png',
-                      width: 116,
+                      width: 116.w,
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: 35,
+                height: 35.h,
               ),
               // 최근 검색어
               Column(
@@ -241,7 +242,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           '최근 검색어',
                           style: TextStyle(
                             color: Color(0xFF858585),
-                            fontSize: 14.22,
+                            fontSize: 14.22.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                           ),
@@ -255,7 +256,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             '전체삭제',
                             style: TextStyle(
                               color: Color(0xFF858585),
-                              fontSize: 12.22,
+                              fontSize: 12.22.sp,
                               fontFamily: 'Nanum',
                               fontWeight: FontWeight.w800,
                             ),
@@ -266,9 +267,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                   // 최근 검색어 리스트
                   Padding(
-                    padding: const EdgeInsets.only(top: 10, left: 30),
+                    padding: EdgeInsets.only(top: 10.h, left: 30.w),
                     child: SizedBox(
-                      height: 30,
+                      height: 30.h,
                       child: ListView(
                         scrollDirection: Axis.horizontal,
                         children: List.generate(
@@ -285,15 +286,15 @@ class _SearchScreenState extends State<SearchScreen> {
                               fetchSearchData(); // 검색 함수 호출
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 10),
+                              padding: EdgeInsets.only(right: 10.w),
                               child: Container(
-                                height: 29.26,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                height: 29.26.h,
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
                                 decoration: ShapeDecoration(
                                   shape: RoundedRectangleBorder(
                                     side: BorderSide(
-                                        width: 1.02, color: Color(0xFFFF8A5B)),
+                                        width: 1.02.w,
+                                        color: Color(0xFFFF8A5B)),
                                     borderRadius: BorderRadius.circular(27.99),
                                   ),
                                 ),
@@ -303,7 +304,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Color(0xFFFF8A5B),
-                                      fontSize: 14.55,
+                                      fontSize: 14.55.sp,
                                       fontFamily: 'Nanum',
                                       fontWeight: FontWeight.w800,
                                     ),
@@ -324,7 +325,7 @@ class _SearchScreenState extends State<SearchScreen> {
           if (hasSearched) ...[
             // 친구
             Padding(
-              padding: const EdgeInsets.only(left: 30, top: 30),
+              padding: EdgeInsets.only(left: 30.w, top: 30.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -332,7 +333,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     '친구',
                     style: TextStyle(
                       color: Color(0xFF858585),
-                      fontSize: 14.22,
+                      fontSize: 14.22.sp,
                       fontFamily: 'Nanum',
                       fontWeight: FontWeight.w800,
                     ),
@@ -344,21 +345,21 @@ class _SearchScreenState extends State<SearchScreen> {
                           .toList()
                           .isEmpty
                       ? Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: 10.h),
                           child: Text(
                             '검색어와 일치하는 유저가 없습니다.',
                             style: TextStyle(
                               color: Color.fromARGB(255, 187, 187, 187),
-                              fontSize: 14.22,
+                              fontSize: 14.22.sp,
                               fontFamily: 'Nanum',
                               fontWeight: FontWeight.w800,
                             ),
                           ),
                         )
                       : Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                          padding: EdgeInsets.only(top: 10.h),
                           child: SizedBox(
-                            height: 100, // 이미지 높이를 고려한 적절한 크기 설정
+                            height: 100.h, // 이미지 높이를 고려한 적절한 크기 설정
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: searchResult
@@ -373,7 +374,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     .toList();
                                 final user = userList[index];
                                 return Padding(
-                                  padding: const EdgeInsets.only(right: 10),
+                                  padding: EdgeInsets.only(right: 10.w),
                                   child: GestureDetector(
                                     onTap: () {
                                       Navigator.push(
@@ -400,16 +401,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                                     NetworkImage(user['image']),
                                                 radius: 35, // 원형 이미지 크기
                                               ),
-                                        SizedBox(height: 5),
+                                        SizedBox(height: 5.h),
                                         // 친구 이름
                                         Text(
                                           user['name'],
                                           style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 15,
+                                            fontSize: 15.sp,
                                             fontFamily: 'Nanum',
                                             fontWeight: FontWeight.w800,
-                                            height: 1.12,
+                                            height: 1.12.h,
                                           ),
                                         ),
                                       ],
@@ -428,12 +429,12 @@ class _SearchScreenState extends State<SearchScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, top: 30),
+                  padding: EdgeInsets.only(left: 30.w, top: 30.h),
                   child: Text(
                     '게임',
                     style: TextStyle(
                       color: Color(0xFF858585),
-                      fontSize: 14.22,
+                      fontSize: 14.22.sp,
                       fontFamily: 'Nanum',
                       fontWeight: FontWeight.w800,
                     ),
@@ -446,21 +447,21 @@ class _SearchScreenState extends State<SearchScreen> {
                         .toList()
                         .isEmpty
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 30),
+                        padding: EdgeInsets.only(top: 10.h, left: 30.w),
                         child: Text(
                           '검색어와 일치하는 게임이 없습니다.',
                           style: TextStyle(
                             color: Color.fromARGB(255, 187, 187, 187),
-                            fontSize: 14.22,
+                            fontSize: 14.22.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                           ),
                         ),
                       )
                     : Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 30),
+                        padding: EdgeInsets.only(top: 10.h, left: 30.w),
                         child: SizedBox(
-                          height: 100, // 이미지 높이를 고려한 적절한 크기 설정
+                          height: 100.h, // 이미지 높이를 고려한 적절한 크기 설정
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: searchResult
@@ -474,7 +475,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                       result['entityTypeValue'] == 'BOARD_GAME')
                                   .toList();
                               return Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: 10.w),
                                 child: Row(
                                   children: [
                                     gameList.any(
@@ -490,7 +491,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               );
                                             },
                                             child: SizedBox(
-                                              width: 230,
+                                              width: 230.w,
                                               child: Stack(
                                                 children: <Widget>[
                                                   Image.asset(
@@ -514,7 +515,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               );
                                             },
                                             child: SizedBox(
-                                              width: 230,
+                                              width: 230.w,
                                               child: Stack(
                                                 children: <Widget>[
                                                   Image.asset(
@@ -537,17 +538,17 @@ class _SearchScreenState extends State<SearchScreen> {
           ],
           // 추천 게임 부분
           Padding(
-            padding: const EdgeInsets.only(top: 30),
+            padding: EdgeInsets.only(top: 30.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30, bottom: 10),
+                  padding: EdgeInsets.only(left: 30.w, bottom: 10.h),
                   child: Text(
                     '추천 게임',
                     style: TextStyle(
                       fontFamily: 'Nanum',
-                      fontSize: 14.22,
+                      fontSize: 14.22.sp,
                       color: Color(0xff868686),
                     ),
                   ),

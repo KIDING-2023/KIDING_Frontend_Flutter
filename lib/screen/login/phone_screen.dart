@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/screen/login/already_exist_screen.dart';
@@ -27,7 +28,6 @@ class _PhoneScreenState extends State<PhoneScreen> {
   bool codeSent = false; // 인증 코드 전송 여부
   bool errorVisible = false; // 에러 발생 여부
   String errorMessage = ""; // 에러 메시지
-  late String _verificationId; // 인증 코드
 
   // Flutter Secure Storage 인스턴스 생성
   final storage = FlutterSecureStorage();
@@ -65,8 +65,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
                 // 전화번호 입력칸 || 인증번호 입력칸
                 children: [
                   SizedBox(
-                    width: 261.38,
-                    height: 50.68,
+                    width: 261.38.w,
+                    height: 50.68.h,
                     child: TextField(
                       controller: codeSent ? _codeController : _phoneController,
                       decoration: InputDecoration(
@@ -80,7 +80,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                           contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
-                        fontSize: 17,
+                        fontSize: 17.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -110,7 +110,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                         errorMessage,
                         style: TextStyle(
                             fontFamily: 'nanum',
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             color: Color(0xFFFFA37C)),
                       ),
                     ],
@@ -217,15 +217,6 @@ class _PhoneScreenState extends State<PhoneScreen> {
   Future<void> _verifyPhone(String phoneNumber) async {
     log('인증번호 전송 시도');
     final url = Uri.parse('${ApiConstants.baseUrl}/help/send');
-    // String? token = await storage.read(key: 'accessToken');
-
-    // if (token == null) {
-    //   setState(() {
-    //     errorVisible = true;
-    //     errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
-    //   });
-    //   return;
-    // }
 
     final headers = {
       //'Authorization': 'Bearer $token',
@@ -267,15 +258,6 @@ class _PhoneScreenState extends State<PhoneScreen> {
   // 인증번호 검증 로직
   Future<void> _sendCode(String code) async {
     final url = Uri.parse('${ApiConstants.baseUrl}/help/send/verify');
-    //String? token = await storage.read(key: 'accessToken');
-
-    // if (token == null) {
-    //   setState(() {
-    //     errorVisible = true;
-    //     errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
-    //   });
-    //   return;
-    // }
 
     final headers = {
       //'Authorization': 'Bearer $token',
@@ -285,7 +267,6 @@ class _PhoneScreenState extends State<PhoneScreen> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
-      final data = jsonDecode(response.body);
 
       // 서버 응답을 로그로 출력
       log('서버 응답 상태 코드: ${response.statusCode}');

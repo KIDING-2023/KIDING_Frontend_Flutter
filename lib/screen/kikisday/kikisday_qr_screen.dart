@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/kikisday/set_player_number_screen.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -48,7 +49,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
               textAlign: TextAlign.center,
               text: TextSpan(
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 25.sp,
                   color: Colors.white,
                 ),
                 children: <TextSpan>[
@@ -69,7 +70,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
               child: Text(
                 errorMessage,
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontFamily: 'NanumRegular',
                     color: Colors.white),
               ),
@@ -103,7 +104,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 250.0;
+    var scanArea = 250.0.w;
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,

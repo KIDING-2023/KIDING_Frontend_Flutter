@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:developer' as developers;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/widgets/app_bar_widget.dart';
@@ -68,15 +69,14 @@ class _MyPageScreenState extends State<MyPageScreen> {
           setState(() {
             friendsList = data["result"]; // 상태 업데이트
           });
-          print(friendsList); // 디버깅 출력
         } else {
-          print("서버 응답 오류: ${data['message']}");
+          debugPrint("서버 응답 오류: ${data['message']}");
         }
       } else {
-        print("HTTP 오류: ${response.statusCode}");
+        debugPrint("HTTP 오류: ${response.statusCode}");
       }
     } catch (e) {
-      print("네트워크 오류: $e");
+      debugPrint("네트워크 오류: $e");
     }
   }
 
@@ -84,7 +84,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   Future<void> fetchMyPageData() async {
     String? token = await storage.read(key: 'accessToken');
 
-    print("AccessToken: $token");
+    debugPrint("AccessToken: $token");
 
     var url =
         Uri.parse('${ApiConstants.baseUrl}${ApiConstants.myPageEndpoint}');
@@ -95,8 +95,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
     try {
       final response = await http.get(url, headers: headers);
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -149,8 +149,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
     try {
       final response = await http.get(url, headers: headers);
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}'); // 서버로부터 받은 응답 로그 출력
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -227,14 +227,14 @@ class _MyPageScreenState extends State<MyPageScreen> {
     await storage.delete(key: 'accessToken');
     await storage.delete(key: 'refreshToken');
     await storage.delete(key: 'isLoggedIn');
-    print("저장된 토큰 삭제 완료");
+    debugPrint("저장된 토큰 삭제 완료");
   }
 
   Future<void> logout() async {
     await _clearStoredTokens();
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => StartScreen()));
-    print("로그아웃 완료");
+    debugPrint("로그아웃 완료");
   }
 
   // GlobalKey를 사용하여 각 애니메이션 아이템의 상태를 참조
@@ -272,7 +272,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         backgroundColor: Colors.white,
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.only(bottom: 10.h),
         child: BottomAppBarWidget(
           screenHeight: screenSize.height,
           screenWidth: screenSize.width,
@@ -284,12 +284,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(top: 15),
+            padding: EdgeInsets.only(top: 15.h),
             child: Center(
               // 오늘의 랭킹 박스
               child: Container(
-                width: MediaQuery.of(context).size.width - 60,
-                height: 117.73,
+                width: MediaQuery.of(context).size.width - 60.w,
+                height: 117.73.h,
                 decoration: ShapeDecoration(
                   color: Color(0xFFFF8A5B),
                   shape: RoundedRectangleBorder(
@@ -297,11 +297,11 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                    top: 11.83,
-                    left: 15.15,
-                    right: 15.15,
-                    bottom: 7.83,
+                  padding: EdgeInsets.only(
+                    top: 11.83.h,
+                    left: 15.15.w,
+                    right: 15.15.w,
+                    bottom: 7.83.h,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -310,15 +310,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         '오늘의 랭킹',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 20.sp,
                           fontFamily: 'Nanum',
                           fontWeight: FontWeight.w800,
                         ),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width -
-                            (60 + 15.15 * 2),
-                        height: 43.46,
+                            (60 + 15.15 * 2).w,
+                        height: 43.46.h,
                         decoration: ShapeDecoration(
                           color: Colors.white,
                           shape: RoundedRectangleBorder(
@@ -326,8 +326,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           ),
                         ),
                         child: Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: 22.14),
+                          padding: EdgeInsets.symmetric(horizontal: 22.14.h),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -335,7 +334,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 '대답수 $answers번',
                                 style: TextStyle(
                                   color: Color.fromARGB(255, 253, 184, 157),
-                                  fontSize: 25,
+                                  fontSize: 25.sp,
                                   fontFamily: 'Nanum',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -344,7 +343,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                 '$rank위',
                                 style: TextStyle(
                                   color: Color(0xFFFF8A5B),
-                                  fontSize: 25,
+                                  fontSize: 25.sp,
                                   fontFamily: 'Nanum',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -358,7 +357,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontFamily: 'Nanum',
                           fontWeight: FontWeight.w800,
                         ),
@@ -370,30 +369,30 @@ class _MyPageScreenState extends State<MyPageScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 30),
+            padding: EdgeInsets.only(top: 30.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left: 30),
+                  padding: EdgeInsets.only(left: 30.w),
                   child: Image.asset('assets/mypage/favorites_text.png',
-                      width: 57, height: 17),
+                      width: 57.w, height: 17.h),
                 ),
                 !_isFavoriteList[0] && !_isFavoriteList[1]
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 10, left: 30),
+                        padding: EdgeInsets.only(top: 10.h, left: 30.w),
                         child: Text(
                           '즐겨찾기한 게임이 없습니다.',
                           style: TextStyle(
                             color: Color.fromARGB(255, 187, 187, 187),
-                            fontSize: 14.22,
+                            fontSize: 14.22.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                           ),
                         ),
                       )
                     : Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(top: 10.h),
                         child: Column(
                           children: <Widget>[
                             _buildFavorites(),
@@ -404,39 +403,39 @@ class _MyPageScreenState extends State<MyPageScreen> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 30, top: 30),
+            padding: EdgeInsets.only(left: 30.w, top: 30.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset(
                   'assets/mypage/friends_list_text.png',
-                  width: 57,
-                  height: 17,
+                  width: 57.w,
+                  height: 17.h,
                 ),
                 friendsList.isEmpty
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(top: 10.h),
                         child: Text(
                           '친구가 아직 없습니다.',
                           style: TextStyle(
                             color: Color.fromARGB(255, 187, 187, 187),
-                            fontSize: 14.22,
+                            fontSize: 14.22.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                           ),
                         ),
                       )
                     : Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: EdgeInsets.only(top: 10.h),
                         child: SizedBox(
-                          height: 100,
+                          height: 100.h,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: friendsList.length,
                             itemBuilder: (context, index) {
                               final user = friendsList[index];
                               return Padding(
-                                padding: const EdgeInsets.only(right: 10),
+                                padding: EdgeInsets.only(right: 10.w),
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.push(
@@ -459,15 +458,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                                                 as ImageProvider,
                                         radius: 35,
                                       ),
-                                      SizedBox(height: 5),
+                                      SizedBox(height: 5.h),
                                       Text(
                                         user['nickname'],
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 15,
+                                          fontSize: 15.sp,
                                           fontFamily: 'Nanum',
                                           fontWeight: FontWeight.w800,
-                                          height: 1.12,
+                                          height: 1.12.h,
                                         ),
                                       ),
                                     ],
@@ -483,18 +482,18 @@ class _MyPageScreenState extends State<MyPageScreen> {
           ),
           // 나의 기록 텍스트, 새로고침 버튼
           Padding(
-            padding: const EdgeInsets.only(top: 10, left: 29.54, right: 29.54),
+            padding: EdgeInsets.only(top: 10.h, left: 29.54.w, right: 29.54.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // 나의 기록 텍스트
                 Image.asset('assets/mypage/my_record_text.png',
-                    width: 61, height: 17),
+                    width: 61.w, height: 17.h),
                 // 새로고침 버튼
                 IconButton(
                     onPressed: _restartAnimations,
                     icon: Image.asset('assets/mypage/reset_btn.png',
-                        width: 15.52, height: 15.52))
+                        width: 15.52.w, height: 15.5.h))
               ],
             ),
           ),
@@ -519,7 +518,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
           ),
           Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 25),
+              padding: EdgeInsets.symmetric(vertical: 25.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -529,7 +528,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       '로그아웃하기',
                       style: TextStyle(
                         color: Color(0xFF595959),
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         fontFamily: 'Nanum',
                         fontWeight: FontWeight.w800,
                         decoration: TextDecoration.underline,
@@ -537,15 +536,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: 30,
+                    width: 30.w,
                   ),
                   Container(
-                    width: 1,
-                    height: 20,
+                    width: 1.w,
+                    height: 20.h,
                     color: Color(0xff595959),
                   ),
                   SizedBox(
-                    width: 30,
+                    width: 30.h,
                   ),
                   GestureDetector(
                     onTap: () {
@@ -559,7 +558,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       '탈퇴하기',
                       style: TextStyle(
                         color: Color(0xFF595959),
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         fontFamily: 'Nanum',
                         fontWeight: FontWeight.w800,
                         decoration: TextDecoration.underline,
@@ -567,7 +566,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ),
                   ),
                   SizedBox(
-                    width: 30,
+                    width: 30.h,
                   ),
                 ],
               ),
@@ -580,7 +579,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   Widget _buildFavorites() {
     return SizedBox(
-      height: 120,
+      height: 120.h,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {
           return LinearGradient(
@@ -597,7 +596,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
         },
         blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
         child: ListView(
-            padding: EdgeInsets.only(right: 30),
+            padding: EdgeInsets.only(right: 30.w),
             scrollDirection: Axis.horizontal,
             children: _buildFavoriteCards()),
       ),
@@ -635,16 +634,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
       child: Stack(
         children: <Widget>[
           Container(
-            width: 230,
-            margin: EdgeInsets.only(left: 30),
+            width: 230.w,
+            margin: EdgeInsets.only(left: 30.w),
             child: Image.asset(
               'assets/mypage/favorites_kikisday.png',
               fit: BoxFit.cover,
             ),
           ),
           Positioned(
-            left: 45,
-            top: 13.18,
+            left: 45.w,
+            top: 13.18.h,
             child: GestureDetector(
               onTap: () {
                 _bookmarkDelete(1);
@@ -652,8 +651,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
               },
               child: Image.asset(
                 'assets/home/selected_star.png',
-                width: 19.79,
-                height: 19.79,
+                width: 19.79.w,
+                height: 19.79.h,
               ),
             ),
           ),
@@ -674,16 +673,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
       child: Stack(
         children: <Widget>[
           Container(
-            width: 230,
-            margin: EdgeInsets.only(left: 30),
+            width: 230.w,
+            margin: EdgeInsets.only(left: 30.w),
             child: Image.asset(
               'assets/mypage/favorites_space.png',
               fit: BoxFit.cover,
             ),
           ),
           Positioned(
-            left: 45,
-            top: 13.18,
+            left: 45.w,
+            top: 13.18.h,
             child: GestureDetector(
               onTap: () {
                 _bookmarkDelete(2);
@@ -691,8 +690,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
               },
               child: Image.asset(
                 'assets/home/selected_star.png',
-                width: 19.79,
-                height: 19.79,
+                width: 19.79.w,
+                height: 19.79.h,
               ),
             ),
           ),
@@ -738,8 +737,6 @@ class ChipsItemState extends State<ChipsItem>
       duration: const Duration(seconds: 3),
       vsync: this,
     );
-
-    // initState에서는 MediaQuery.of(context)를 사용할 수 없으므로, 애니메이션 초기화는 나중에 함.
   }
 
   @override

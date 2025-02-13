@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/screen/login/find_nickname_result_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
@@ -55,8 +56,8 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                 // 전화번호 입력칸
                 children: [
                   SizedBox(
-                    width: 261.32,
-                    height: 49.82,
+                    width: 261.32.w,
+                    height: 49.82.h,
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(
@@ -70,7 +71,7 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
                           contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
-                        fontSize: 17,
+                        fontSize: 17.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -131,21 +132,10 @@ class _FindNicknameScreenState extends State<FindNicknameScreen> {
     log('닉네임 찾기 시도');
     final url = Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.findNicknameEndpoint}?phone=$phoneNumber');
-    // String? token = await storage.read(key: 'accessToken');
-
-    // if (token == null) {
-    //   setState(() {
-    //     errorVisible = true;
-    //     errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
-    //   });
-    //   return;
-    // }
-
     final headers = {
       //'Authorization': 'Bearer $token',
       'Content-Type': 'application/json',
     };
-    //final body = jsonEncode({'phoneNumber': phoneNumber});
 
     try {
       final response = await http.get(url, headers: headers);

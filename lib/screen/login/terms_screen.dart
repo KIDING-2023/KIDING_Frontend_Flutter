@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/home/home_screen.dart';
 
 class TermsScreen extends StatefulWidget {
@@ -17,14 +18,14 @@ class _TermsScreenState extends State<TermsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 60, left: 20),
+            padding: EdgeInsets.only(top: 60.h, left: 20.w),
             child: GestureDetector(
               onTap: Navigator.of(context).pop,
               child: Icon(Icons.arrow_back_ios_new),
             ),
           ),
           SizedBox(
-            height: 30,
+            height: 30.h,
           ),
           Center(
             child: Image.asset(
@@ -33,12 +34,12 @@ class _TermsScreenState extends State<TermsScreen> {
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 10.h,
           ),
           Center(
             child: Container(
               width: MediaQuery.of(context).size.width - 46.26 * 2,
-              height: 469.69,
+              height: 469.69.h,
               decoration: ShapeDecoration(
                 color: Color(0xFFF5F5F5),
                 shape: RoundedRectangleBorder(
@@ -62,7 +63,7 @@ class _TermsScreenState extends State<TermsScreen> {
             ),
           ),
           SizedBox(
-            height: 30,
+            height: 30.h,
           ),
           Center(
             child: GestureDetector(
@@ -74,7 +75,7 @@ class _TermsScreenState extends State<TermsScreen> {
               },
               child: Container(
                 width: MediaQuery.of(context).size.width - 50 * 2,
-                height: 49.82,
+                height: 49.82.h,
                 decoration: ShapeDecoration(
                   color: Color(0xFFFF6A2A),
                   shape: RoundedRectangleBorder(
@@ -86,7 +87,7 @@ class _TermsScreenState extends State<TermsScreen> {
                     '동의하고 시작하기',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       fontFamily: 'Nanum',
                       fontWeight: FontWeight.w800,
                     ),

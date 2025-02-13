@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:provider/provider.dart';
 
@@ -51,7 +52,7 @@ class CompleteLayout extends StatelessWidget {
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
                       fontFamily: 'Nanum',
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       color: timerColor,
                     ),
                   ),

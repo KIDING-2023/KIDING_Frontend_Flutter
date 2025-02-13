@@ -1,5 +1,6 @@
 // 닉네임 찾기 결과 화면
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/login/back_screen.dart';
 import 'package:kiding_frontend/screen/login/find_password_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
@@ -47,7 +48,7 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
                   height: screenSize.height * 0.11),
             ),
             SizedBox(
-              height: 150,
+              height: 150.h,
             ),
             // 닉네임 찾기 결과, 로그인하기 & 비밀번호 찾기 버튼
             Center(
@@ -57,15 +58,17 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
                     '닉네임: \'${widget.nickname}\' 입니다.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontFamily: 'nanum', fontSize: 17, color: Colors.black),
+                        fontFamily: 'nanum',
+                        fontSize: 17.sp,
+                        color: Colors.black),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: 10.h,
                   ),
                   // 로그인 & 비밀번호 찾기 버튼 배경
                   Container(
-                    width: 259.96,
-                    height: 52.47,
+                    width: 259.96.w,
+                    height: 52.47.h,
                     decoration: ShapeDecoration(
                       color: Color(0xFFEDEDED),
                       shape: RoundedRectangleBorder(
@@ -85,8 +88,8 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
                             );
                           },
                           child: Container(
-                            width: 121.11,
-                            height: 43.63,
+                            width: 121.11.w,
+                            height: 43.63.h,
                             decoration: ShapeDecoration(
                               color: Color(0xFFFF6A2A),
                               shape: RoundedRectangleBorder(
@@ -98,7 +101,7 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
                                 '로그인하기',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 17,
+                                  fontSize: 17.sp,
                                   fontFamily: 'Nanum',
                                   fontWeight: FontWeight.w800,
                                 ),
@@ -116,8 +119,8 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
                             );
                           },
                           child: Container(
-                            width: 121.11,
-                            height: 43.63,
+                            width: 121.11.w,
+                            height: 43.63.h,
                             decoration: ShapeDecoration(
                               color: Color(0xFFFF6A2A),
                               shape: RoundedRectangleBorder(
@@ -129,7 +132,7 @@ class _FindNicknameResultScreenState extends State<FindNicknameResultScreen> {
                                 '비밀번호 찾기',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 17,
+                                  fontSize: 17.sp,
                                   fontFamily: 'Nanum',
                                   fontWeight: FontWeight.w800,
                                 ),

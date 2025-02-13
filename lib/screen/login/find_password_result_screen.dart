@@ -1,5 +1,6 @@
 // 비밀번호 찾기 - 결과 화면
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/login/back_screen.dart';
 import 'package:kiding_frontend/screen/login/find_nickname_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
@@ -23,7 +24,7 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
           children: [
             // 뒤로 가기 버튼
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 30.h),
               child: IconButton(
                 onPressed: () {
                   Navigator.push(
@@ -45,12 +46,12 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
                   height: screenSize.height * 0.15),
             ),
             SizedBox(
-              height: 150,
+              height: 150.h,
             ),
             Center(
               child: Container(
-                width: 259.96,
-                height: 52.47,
+                width: 259.96.w,
+                height: 52.47.h,
                 decoration: ShapeDecoration(
                   color: Color(0xFFEDEDED),
                   shape: RoundedRectangleBorder(
@@ -65,8 +66,8 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
                         _toLoginScreen();
                       },
                       child: Container(
-                        width: 121.11,
-                        height: 43.63,
+                        width: 121.11.w,
+                        height: 43.63.h,
                         decoration: ShapeDecoration(
                           color: Color(0xFFFF6A2A),
                           shape: RoundedRectangleBorder(
@@ -78,7 +79,7 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
                             '로그인하기',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 17.sp,
                               fontFamily: 'Nanum',
                               fontWeight: FontWeight.w800,
                             ),
@@ -91,8 +92,8 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
                         _toFindNicknameScreen();
                       },
                       child: Container(
-                        width: 121.11,
-                        height: 43.63,
+                        width: 121.11.w,
+                        height: 43.63.h,
                         decoration: ShapeDecoration(
                           color: Color(0xFFFF6A2A),
                           shape: RoundedRectangleBorder(
@@ -104,7 +105,7 @@ class _FindPasswordResultScreenState extends State<FindPasswordResultScreen> {
                             '닉네임 찾기',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 17,
+                              fontSize: 17.sp,
                               fontFamily: 'Nanum',
                               fontWeight: FontWeight.w800,
                             ),

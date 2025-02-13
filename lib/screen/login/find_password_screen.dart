@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/screen/login/password_phone_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
@@ -56,8 +57,8 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                 // 전화번호 입력칸
                 children: [
                   SizedBox(
-                    width: 261.32,
-                    height: 49.82,
+                    width: 261.32.w,
+                    height: 49.82.h,
                     child: TextField(
                       controller: _phoneController,
                       decoration: InputDecoration(
@@ -101,7 +102,7 @@ class _FindPasswordScreenState extends State<FindPasswordScreen> {
                         errorMessage,
                         style: TextStyle(
                             fontFamily: 'nanum',
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             color: Color(0xFFFFA37C)),
                       ),
                     ],

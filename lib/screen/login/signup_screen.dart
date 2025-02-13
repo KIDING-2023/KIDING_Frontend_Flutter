@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/screen/login/back_screen.dart';
@@ -80,8 +81,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 // 닉네임 입력칸
                 children: [
                   SizedBox(
-                    width: 261.38,
-                    height: 50.68,
+                    width: 261.38.w,
+                    height: 50.68.h,
                     child: TextField(
                       controller: _nicknameController,
                       decoration: InputDecoration(
@@ -95,7 +96,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
-                        fontSize: 17,
+                        fontSize: 17.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -125,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         errorMessage,
                         style: TextStyle(
                             fontFamily: 'nanum',
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             color: Color(0xFFFFA37C)),
                       ),
                     ],
@@ -215,15 +216,6 @@ class _SignupScreenState extends State<SignupScreen> {
   Future<void> _checkNicknameDuplication(String nickname) async {
     final url = Uri.parse(
         '${ApiConstants.baseUrl}${ApiConstants.signupEndpoint}/checkNickname?nickname=$nickname');
-    // String? token = await storage.read(key: 'accessToken');
-
-    // if (token == null) {
-    //   setState(() {
-    //     errorVisible = true;
-    //     errorMessage = "인증 오류가 발생했습니다. 다시 시도해주세요.";
-    //   });
-    //   return;
-    // }
 
     final headers = {
       //'Authorization': 'Bearer $token',

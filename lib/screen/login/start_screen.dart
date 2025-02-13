@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 
@@ -57,10 +58,11 @@ class _StartScreenState extends State<StartScreen> {
                         border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.circular(100)),
-                        contentPadding: EdgeInsets.only(left: 20, right: 20)),
+                        contentPadding:
+                            EdgeInsets.only(left: 20.w, right: 20.w)),
                     style: TextStyle(
                       fontFamily: 'nanum',
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       color: Colors.black,
                     ),
                   ),
@@ -87,7 +89,7 @@ class _StartScreenState extends State<StartScreen> {
                         contentPadding: EdgeInsets.only(left: 20, right: 20)),
                     style: TextStyle(
                       fontFamily: 'nanum',
-                      fontSize: 17,
+                      fontSize: 17.sp,
                       color: Colors.black,
                     ),
                   ),
@@ -118,7 +120,7 @@ class _StartScreenState extends State<StartScreen> {
                       errorMessage,
                       style: TextStyle(
                           fontFamily: 'nanum',
-                          fontSize: 13,
+                          fontSize: 13.sp,
                           color: Color(0xFFFFA37C)),
                     ),
                   ],
@@ -143,7 +145,7 @@ class _StartScreenState extends State<StartScreen> {
                         '시작하기',
                         style: TextStyle(
                           fontFamily: 'Nanum',
-                          fontSize: 17,
+                          fontSize: 17.sp,
                           color: Colors.white,
                         ),
                       ),
@@ -298,7 +300,7 @@ class _StartScreenState extends State<StartScreen> {
             context, MaterialPageRoute(builder: (context) => HomeScreen()));
       } else {
         // 토큰이 없으면 로그인 실패 처리
-        print("로그인 실패: 서버에서 토큰을 반환하지 않았습니다.");
+        debugPrint("로그인 실패: 서버에서 토큰을 반환하지 않았습니다.");
         if (responseData['result'] == "가입된 닉네임이 아닙니다.") {
           setState(() {
             errorVisible = true; // 에러 메시지 표시
@@ -313,14 +315,14 @@ class _StartScreenState extends State<StartScreen> {
       }
     } catch (error) {
       // 에러가 발생한 경우, 에러 로그 출력
-      print("에러 발생: $error");
+      debugPrint("에러 발생: $error");
 
       if (error is http.ClientException) {
-        print("HTTP 요청 중 오류 발생: ${error.message}");
+        debugPrint("HTTP 요청 중 오류 발생: ${error.message}");
       } else if (error is FormatException) {
-        print("응답 형식 오류: ${error.message}");
+        debugPrint("응답 형식 오류: ${error.message}");
       } else {
-        print("기타 오류: ${error.toString()}");
+        debugPrint("기타 오류: ${error.toString()}");
       }
 
       setState(() {
@@ -358,24 +360,24 @@ class _StartScreenState extends State<StartScreen> {
             // 유효한 토큰이 반환되면 홈 화면으로 이동
             await _storage.write(
                 key: 'accessToken', value: responseData['accessToken']);
-            print("토큰 유효: 홈 화면으로 이동합니다.");
+            debugPrint("토큰 유효: 홈 화면으로 이동합니다.");
             Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (context) => HomeScreen()));
           } else {
             // 토큰이 반환되지 않으면 로그인 화면으로 이동
-            print("토큰이 유효하지 않음: 다시 로그인 필요");
+            debugPrint("토큰이 유효하지 않음: 다시 로그인 필요");
             _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
           }
         } else {
-          print("로그인 API 실패: ${response.statusCode}");
+          debugPrint("로그인 API 실패: ${response.statusCode}");
           _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
         }
       } catch (e) {
-        print("네트워크 오류 발생: $e");
+        debugPrint("네트워크 오류 발생: $e");
         _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
       }
     } else {
-      print("저장된 토큰 또는 사용자 정보가 없습니다. 로그인 화면으로 이동합니다.");
+      debugPrint("저장된 토큰 또는 사용자 정보가 없습니다. 로그인 화면으로 이동합니다.");
       _clearStoredTokens(); // 저장된 토큰 및 사용자 정보 삭제
     }
   }

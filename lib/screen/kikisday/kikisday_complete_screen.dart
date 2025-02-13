@@ -79,15 +79,15 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['isSuccess']) {
-          print('서버 응답: ${data['message']}');
+          debugPrint('서버 응답: ${data['message']}');
         } else {
-          print('전송 실패: ${data['message']}');
+          debugPrint('전송 실패: ${data['message']}');
         }
       } else {
-        print('서버 오류: 상태 코드 ${response.statusCode}');
+        debugPrint('서버 오류: 상태 코드 ${response.statusCode}');
       }
     } catch (e) {
-      print('네트워크 오류: $e');
+      debugPrint('네트워크 오류: $e');
     }
   }
 
@@ -132,19 +132,6 @@ class _KikisdayCompleteScreenState extends State<KikisdayCompleteScreen> {
         ),
       );
     }
-
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => KikisdayRandomDiceScreen(),
-    //     settings: RouteSettings(
-    //       arguments: {
-    //         'position': gameProvider.currentPlayer.position,
-    //         'chips': chips + 1,
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 
   void _onBackButtonPressed() {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
@@ -8,7 +9,7 @@ class RecommendGamesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
+      height: 120.h,
       child: ShaderMask(
         shaderCallback: (Rect bounds) {
           return LinearGradient(
@@ -25,7 +26,7 @@ class RecommendGamesWidget extends StatelessWidget {
         },
         blendMode: BlendMode.dstOut,
         child: ListView(
-          padding: EdgeInsets.only(right: 30),
+          padding: EdgeInsets.only(right: 30.w),
           scrollDirection: Axis.horizontal,
           children: _buildRecommendCards(context),
         ),
@@ -58,8 +59,8 @@ class RecommendGamesWidget extends StatelessWidget {
         );
       },
       child: Container(
-        width: 230,
-        margin: EdgeInsets.only(left: 30),
+        width: 230.w,
+        margin: EdgeInsets.only(left: 30.w),
         child: Stack(
           children: [
             Image.asset(imagePath, fit: BoxFit.cover),

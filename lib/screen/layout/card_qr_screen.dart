@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kiding_frontend/screen/layout/card_read_layout.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
@@ -52,14 +53,14 @@ class _CardQRScreenState extends State<CardQRScreen> {
         children: <Widget>[
           _buildQrView(context),
           Positioned(
-            top: 200,
+            top: 200.h,
             left: 0,
             right: 0,
             child: RichText(
               textAlign: TextAlign.center, // 텍스트 정렬
               text: TextSpan(
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 25.sp,
                   color: Colors.white, // 기본 텍스트 색상
                 ),
                 children: <TextSpan>[
@@ -81,7 +82,7 @@ class _CardQRScreenState extends State<CardQRScreen> {
           ),
           if (result != null)
             Positioned(
-              bottom: 200,
+              bottom: 200.h,
               child: Text(
                 'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
                 style: TextStyle(
@@ -91,18 +92,18 @@ class _CardQRScreenState extends State<CardQRScreen> {
               ),
             ),
           Positioned(
-            bottom: 200,
+            bottom: 200.h,
             child: Text(
               result == null ? 'Scan a code' : '',
               style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   fontFamily: 'NanumRegular',
                   color: Colors.white),
             ),
           ),
           Positioned(
-            top: 30,
-            left: 15,
+            top: 30.h,
+            left: 15.w,
             child: IconButton(
                 onPressed: () {
                   _pauseCamera();
@@ -119,8 +120,8 @@ class _CardQRScreenState extends State<CardQRScreen> {
                 },
                 icon: Image.asset(
                   'assets/kikisday/back_icon.png',
-                  width: 13.16,
-                  height: 20.0,
+                  width: 13.16.w,
+                  height: 20.h,
                 )),
           ),
         ],
@@ -129,7 +130,7 @@ class _CardQRScreenState extends State<CardQRScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 250.0;
+    var scanArea = 250.w;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(

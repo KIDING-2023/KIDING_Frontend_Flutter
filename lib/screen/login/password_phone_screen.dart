@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/screen/login/password_reset_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
@@ -23,7 +24,6 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
   bool errorVisible = false; // 에러 메시지 가시성
   String errorMessage = ""; // 에러 메시지
   bool codeSent = false; // 인증 코드 전송 여부
-  late String _verificationId; // 인증 코드
 
   @override
   void initState() {
@@ -65,8 +65,8 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                 // 인증번호 입력 칸
                 children: [
                   SizedBox(
-                    width: 261.32,
-                    height: 49.82,
+                    width: 261.32.w,
+                    height: 49.82.h,
                     child: TextField(
                       controller: _codeController,
                       decoration: InputDecoration(
@@ -110,7 +110,7 @@ class _PasswordPhoneScreenState extends State<PasswordPhoneScreen> {
                         errorMessage,
                         style: TextStyle(
                             fontFamily: 'nanum',
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             color: Color(0xFFFFA37C)),
                       ),
                     ],

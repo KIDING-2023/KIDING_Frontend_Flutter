@@ -26,7 +26,7 @@ class _SpaceFinishScreenState extends State<SpaceFinishScreen> {
 
   Future<void> _sendGameCompleteRequest() async {
     final message = await _gameService.sendGameCompleteRequest(2, chips);
-    print(message); // 요청 결과 출력
+    debugPrint(message); // 요청 결과 출력
   }
 
   @override

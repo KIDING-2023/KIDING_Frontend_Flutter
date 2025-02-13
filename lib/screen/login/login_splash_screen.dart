@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/screen/login/choose_character_screen.dart';
 
@@ -29,9 +30,9 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
   Future<void> _loadToken() async {
     token = await storage.read(key: 'accessToken'); // 저장된 토큰 불러오기
     if (token != null) {
-      print("Token: $token"); // 토큰이 정상적으로 불러와졌는지 확인
+      debugPrint("Token: $token"); // 토큰이 정상적으로 불러와졌는지 확인
     } else {
-      print("토큰을 찾을 수 없습니다.");
+      debugPrint("토큰을 찾을 수 없습니다.");
     }
 
     // 토큰을 불러온 후 화면 전환 (2초 지연)
@@ -60,7 +61,7 @@ class _LoginSplashScreenState extends State<LoginSplashScreen> {
                 '회원가입이 완료되었습니다',
                 style: TextStyle(
                     fontFamily: 'nanum',
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     color: Color(0xFF838383)),
               ),
             ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 
 class CardReadLayout extends StatefulWidget {
@@ -83,7 +84,7 @@ class _CardReadLayoutState extends State<CardReadLayout> {
               top: screenHeight * 0.0375,
               left: screenWidth * 0.0417,
               child: Padding(
-                padding: const EdgeInsets.only(top: 15),
+                padding: EdgeInsets.only(top: 15.h),
                 child: IconButton(
                   icon: Image.asset(
                     'assets/kikisday/kikisday_back_btn.png',

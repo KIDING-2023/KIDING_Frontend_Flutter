@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 
@@ -37,7 +38,7 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
       if (response.statusCode == 200) {
         // 성공적으로 계정 탈퇴됨
         final responseData = jsonDecode(response.body);
-        print('계정 탈퇴 성공: ${responseData['message']}');
+        debugPrint('계정 탈퇴 성공: ${responseData['message']}');
 
         // 탈퇴 후 로그인 화면으로 이동
         Navigator.of(context).pushAndRemoveUntil(
@@ -47,11 +48,11 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
       } else {
         // 실패 처리
         final responseData = jsonDecode(response.body);
-        print('탈퇴 실패: ${responseData['error']}');
+        debugPrint('탈퇴 실패: ${responseData['error']}');
         _showErrorDialog('탈퇴에 실패했습니다. 다시 시도해주세요.');
       }
     } catch (error) {
-      print('에러 발생: $error');
+      debugPrint('에러 발생: $error');
       _showErrorDialog('네트워크 오류가 발생했습니다.');
     } finally {
       setState(() {
@@ -79,14 +80,13 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 86, 93, 108),
       body: Center(
         child: Container(
-          width: 300,
-          height: 180,
+          width: 300.w,
+          height: 180.h,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(25),
@@ -103,9 +103,9 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                 child: Text(
                   textAlign: TextAlign.center,
                   '본인 계정을 탈퇴하고\n키딩북을 떠나시겠습니까?',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontFamily: 'Nanum',
-                    fontSize: 15,
+                    fontSize: 15.sp,
                   ),
                 ),
               ),
@@ -117,23 +117,23 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                       Navigator.pop(context);
                     },
                     child: Container(
-                      width: 136.71,
-                      height: 26.76,
+                      width: 136.71.w,
+                      height: 26.76.h,
                       decoration: ShapeDecoration(
                         color: const Color(0xFF838383),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13.38),
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           '취소',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
-                            height: 1.40,
+                            height: 1.40.h,
                           ),
                         ),
                       ),
@@ -144,23 +144,23 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                       _deleteAccount();
                     }, // 계정 탈퇴 로직 추가
                     child: Container(
-                      width: 136.71,
-                      height: 26.76,
+                      width: 136.71.w,
+                      height: 26.76.h,
                       decoration: ShapeDecoration(
                         color: const Color(0xFFFF8A5B),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(13.38),
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           '탈퇴하기',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12,
+                            fontSize: 12.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
-                            height: 1.40,
+                            height: 1.40.h,
                           ),
                         ),
                       ),

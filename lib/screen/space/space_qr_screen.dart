@@ -2,10 +2,10 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:kiding_frontend/screen/space/space_set_player_number_screen.dart';
-import 'package:kiding_frontend/screen/space/space_tutorial1_screen.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'dart:io' as io;
@@ -54,7 +54,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
               textAlign: TextAlign.center, // 텍스트 정렬
               text: TextSpan(
                 style: TextStyle(
-                  fontSize: 25,
+                  fontSize: 25.sp,
                   color: Colors.white, // 기본 텍스트 색상
                 ),
                 children: <TextSpan>[
@@ -75,7 +75,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
               child: Text(
                 'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}',
                 style: TextStyle(
-                    fontSize: 15,
+                    fontSize: 15.sp,
                     fontFamily: 'NanumRegular',
                     color: Colors.white),
               ),
@@ -85,7 +85,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
             child: Text(
               errorMessage,
               style: TextStyle(
-                  fontSize: 15,
+                  fontSize: 15.sp,
                   fontFamily: 'NanumRegular',
                   color: Colors.white),
             ),
@@ -119,9 +119,8 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 250.0;
-    // To ensure the Scanner view is properly sizes after rotation
-    // we need to listen for Flutter SizeChanged notification and update controller
+    var scanArea = 250.w;
+
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/layout/tutorial_layout.dart';
 import 'package:kiding_frontend/screen/space/space_random_dice_screen.dart';
 
@@ -19,13 +20,13 @@ class _SpaceTutorial2ScreenState extends State<SpaceTutorial2Screen> {
       backBtnStr: 'assets/space/back_icon_white.png',
       textWid: Image.asset(
         'assets/kikisday/kikisday_tutorial2_text.png',
-        width: 339.79,
-        height: 229.08,
+        width: 339.79.w,
+        height: 229.08.h,
       ),
       characterWid: Image.asset(
         'assets/space/space_tutorial2_ch.png',
-        width: 360,
-        height: 302.53,
+        width: 360.w,
+        height: 302.53.h,
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
       nextScreen: SpaceRandomDiceScreen(),

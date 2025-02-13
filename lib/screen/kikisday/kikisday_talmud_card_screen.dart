@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:kiding_frontend/screen/kikisday/talmud_story_1_screen.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
@@ -26,12 +27,6 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
 
   void _startTimer(int duration) {
     _timer = Timer(Duration(seconds: duration), _navigateToRandomDiceScreen);
-  }
-
-  void _pauseTimer() {
-    if (_timer.isActive) {
-      _timer.cancel();
-    }
   }
 
   void _resumeTimer() {
@@ -70,9 +65,9 @@ class _KikisdaySongScreenState extends State<KikisdaySongScreen> {
           ),
           // 뒤로 가기 버튼 및 타이머
           Positioned(
-            top: 45,
-            left: 15,
-            right: 30,
+            top: 45.h,
+            left: 15.w,
+            right: 30.w,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

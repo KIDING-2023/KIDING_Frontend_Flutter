@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_dice_screen.dart';
 import 'package:kiding_frontend/screen/layout/tutorial_layout.dart';
 
@@ -6,11 +7,10 @@ class KikisdayTutorial2Screen extends StatefulWidget {
   const KikisdayTutorial2Screen({super.key});
 
   @override
-  _KikisdayTutorial2ScreenState createState() =>
-      _KikisdayTutorial2ScreenState();
+  KikisdayTutorial2ScreenState createState() => KikisdayTutorial2ScreenState();
 }
 
-class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
+class KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
   @override
   Widget build(BuildContext context) {
     return TutorialLayout(
@@ -18,13 +18,13 @@ class _KikisdayTutorial2ScreenState extends State<KikisdayTutorial2Screen> {
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       textWid: Image.asset(
         'assets/kikisday/kikisday_tutorial2_text.png',
-        width: 339.79,
-        height: 229.08,
+        width: 339.79.w,
+        height: 229.08.h,
       ),
       characterWid: Image.asset(
         'assets/kikisday/kikisday_tutorial2_ch.png',
-        width: 360,
-        height: 302.53,
+        width: 360.w,
+        height: 302.53.h,
       ),
       okBtnStr: 'assets/kikisday/kikisday_ok_btn.png',
       nextScreen: KikisdayDiceScreen(),

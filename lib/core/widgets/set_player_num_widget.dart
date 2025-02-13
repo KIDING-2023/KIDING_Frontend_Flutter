@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/model/game_provider.dart';
 import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
@@ -47,7 +48,7 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
                     fit: BoxFit.cover)),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 45.0, left: 15.0, right: 30.0),
+            padding: EdgeInsets.only(top: 45.h, left: 15.w, right: 30.w),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -73,7 +74,7 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
                       fontFamily: 'Nanum',
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       color: widget.textColor, // 글자 색 (타이머 색)
                     ),
                   ),
@@ -110,8 +111,8 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
                   ),
                 ),
                 Container(
-                  width: 71.37,
-                  height: 41.78,
+                  width: 71.37.w,
+                  height: 41.78.h,
                   decoration: BoxDecoration(
                       image: DecorationImage(
                     image: AssetImage('assets/kikisday/num_bg.png'),
@@ -122,7 +123,7 @@ class _SetPlayerNumWidgetState extends State<SetPlayerNumWidget> {
                       '$playerCount',
                       style: TextStyle(
                         fontFamily: 'Nanum',
-                        fontSize: 20,
+                        fontSize: 20.sp,
                         color: Colors.black,
                       ),
                     ),

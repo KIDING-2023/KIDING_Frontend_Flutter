@@ -1,5 +1,6 @@
 //import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/core/routes/kikiday_routes.dart';
 import 'package:kiding_frontend/core/routes/space_routes.dart';
 import 'package:kiding_frontend/model/game_provider.dart';
@@ -27,13 +28,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      initialRoute: HOME_ROUTE,
-      routes: {
-        HOME_ROUTE: (context) => StartScreen(),
-        ...kikisdayRoutes,
-        ...spaceRoutes,
-      },
-    );
+    return ScreenUtilInit(
+        designSize: Size(393, 852),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (_, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: HOME_ROUTE,
+            routes: {
+              HOME_ROUTE: (context) => StartScreen(),
+              ...kikisdayRoutes,
+              ...spaceRoutes,
+            },
+          );
+        });
   }
 }

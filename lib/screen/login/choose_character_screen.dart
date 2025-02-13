@@ -2,11 +2,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:kiding_frontend/screen/home/home_screen.dart';
 import 'package:kiding_frontend/screen/login/terms_screen.dart';
 
 class ChooseCharacterScreen extends StatefulWidget {
@@ -15,10 +15,10 @@ class ChooseCharacterScreen extends StatefulWidget {
   const ChooseCharacterScreen({super.key, required this.nickname});
 
   @override
-  _ChooseCharacterScreenState createState() => _ChooseCharacterScreenState();
+  ChooseCharacterScreenState createState() => ChooseCharacterScreenState();
 }
 
-class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
+class ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
   int _selectedCharacterIndex = -1;
   final storage = FlutterSecureStorage(); // Secure Storage 인스턴스
 
@@ -95,9 +95,9 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
                 '안녕하세요 ${widget.nickname}님,\n캐릭터를 선택해주세요',
                 style: TextStyle(
                   fontFamily: 'Nanum',
-                  fontSize: 23,
+                  fontSize: 23.sp,
                   color: Colors.black,
-                  height: 1.77,
+                  height: 1.77.h,
                 ),
               ),
             ),
@@ -221,20 +221,20 @@ class _ChooseCharacterScreenState extends State<ChooseCharacterScreen> {
       if (response.statusCode == 200) {
         var jsonResponse = jsonDecode(response.body);
         if (jsonResponse["isSuccess"]) {
-          print("캐릭터 설정 성공: ${jsonResponse["message"]}");
+          debugPrint("캐릭터 설정 성공: ${jsonResponse["message"]}");
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => TermsScreen()),
           );
         } else {
-          print("캐릭터 설정 실패: ${jsonResponse["message"]}");
+          debugPrint("캐릭터 설정 실패: ${jsonResponse["message"]}");
         }
       } else {
-        print("서버 오류 발생: 상태 코드 ${response.statusCode}");
-        print("응답 본문: ${response.body}");
+        debugPrint("서버 오류 발생: 상태 코드 ${response.statusCode}");
+        debugPrint("응답 본문: ${response.body}");
       }
     } catch (e) {
-      print("네트워크 오류 발생: $e");
+      debugPrint("네트워크 오류 발생: $e");
     }
   }
 }

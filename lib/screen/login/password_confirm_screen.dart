@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/screen/login/back_screen.dart';
@@ -69,8 +70,8 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
                 // 비밀번호 입력 칸
                 children: [
                   SizedBox(
-                    width: 261.32,
-                    height: 49.82,
+                    width: 261.32.w,
+                    height: 49.82.h,
                     child: TextField(
                       controller: _pwController,
                       obscureText: true,
@@ -85,7 +86,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
                           contentPadding: EdgeInsets.all(20)),
                       style: TextStyle(
                         fontFamily: 'nanum',
-                        fontSize: 17,
+                        fontSize: 17.sp,
                         color: Colors.black,
                       ),
                     ),
@@ -115,7 +116,7 @@ class _PasswordConfirmScreenState extends State<PasswordConfirmScreen> {
                         errorMessage,
                         style: TextStyle(
                             fontFamily: 'nanum',
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             color: Color(0xFFFFA37C)),
                       ),
                     ],

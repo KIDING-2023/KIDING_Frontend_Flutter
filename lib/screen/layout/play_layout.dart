@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:provider/provider.dart';
 
@@ -34,7 +35,7 @@ class PlayLayout extends StatelessWidget {
               top: screenHeight * 0.0375,
               left: screenWidth * 0.0417,
               child: Padding(
-                  padding: const EdgeInsets.only(top: 15),
+                  padding: EdgeInsets.only(top: 15.h),
                   child: IconButton(
                     icon: Image.asset(backIcon,
                         width: screenWidth * 0.0366,

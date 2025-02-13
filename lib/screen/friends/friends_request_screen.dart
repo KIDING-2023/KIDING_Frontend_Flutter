@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
-import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -37,8 +37,8 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
 
     try {
       final response = await http.get(url, headers: headers);
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Body: ${response.body}'); // 서버 응답 출력
+      debugPrint('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Body: ${response.body}'); // 서버 응답 출력
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
@@ -60,7 +60,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
         _showDialog(context, "오류", "서버 오류: ${response.statusCode}");
       }
     } catch (e) {
-      print("네트워크 오류: $e");
+      debugPrint("네트워크 오류: $e");
       _showDialog(context, "오류", "네트워크 오류가 발생했습니다.");
     }
   }
@@ -85,7 +85,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
 
     try {
       final response = await http.post(url, headers: headers, body: body);
-      print('Response Status Code: ${response.statusCode}');
+      debugPrint('Response Status Code: ${response.statusCode}');
 
       if (response.statusCode == 200) {
         setState(() {
@@ -142,7 +142,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 10, top: 50),
+                padding: EdgeInsets.only(left: 10.w, top: 50.h),
                 child: IconButton(
                   icon: Image.asset(
                     'assets/kikisday/kikisday_back_btn.png',
@@ -154,11 +154,11 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
               ),
               // 친구 요청 타이틀
               Padding(
-                padding: const EdgeInsets.only(left: 30, top: 10),
-                child: const Text(
+                padding: EdgeInsets.only(left: 30.w, top: 10.h),
+                child: Text(
                   '친구요청',
                   style: TextStyle(
-                    fontSize: 15.79,
+                    fontSize: 15.79.sp,
                     fontFamily: 'Nanum',
                     color: Colors.black,
                   ),
@@ -169,7 +169,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                 SizedBox(
                   height: screenHeight * 0.65,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: EdgeInsets.only(top: 10.h),
                     child: Column(
                       children: List.generate(
                         friendRequests.length,
@@ -197,8 +197,8 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
       double screenWidth, double screenHeight) {
     return Center(
       child: Container(
-        width: screenWidth - 60,
-        height: 128.18,
+        width: screenWidth - 60.w,
+        height: 128.18.h,
         padding: EdgeInsets.all(10),
         decoration: ShapeDecoration(
           color: Colors.white,
@@ -218,17 +218,17 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                   radius: 35, // 프로필 이미지 크기
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2),
+                        padding: EdgeInsets.symmetric(vertical: 2.h),
                         child: Text(
                           '$name 친구',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: 17,
+                            fontSize: 17.sp,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                             height: 0.99,
@@ -239,7 +239,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                         '랭킹 $rank위',
                         style: TextStyle(
                           color: Color(0xFFB3B3B3),
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontFamily: 'Nanum',
                           fontWeight: FontWeight.w800,
                           height: 1.40,
@@ -262,8 +262,8 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                     );
                   },
                   child: Container(
-                    height: 26.76,
-                    padding: EdgeInsets.symmetric(horizontal: 52),
+                    height: 26.76.h,
+                    padding: EdgeInsets.symmetric(horizontal: 52.w),
                     decoration: ShapeDecoration(
                       color: Color(0xFF838383),
                       shape: RoundedRectangleBorder(
@@ -275,7 +275,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                         '거절하기',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontFamily: 'Nanum',
                           fontWeight: FontWeight.w800,
                           height: 1.40,
@@ -293,8 +293,8 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                     );
                   },
                   child: Container(
-                    height: 26.76,
-                    padding: EdgeInsets.symmetric(horizontal: 52),
+                    height: 26.76.h,
+                    padding: EdgeInsets.symmetric(horizontal: 52.w),
                     decoration: ShapeDecoration(
                       color: Color(0xFFFF8A5B),
                       shape: RoundedRectangleBorder(
@@ -306,7 +306,7 @@ class _FriendsRequestScreenState extends State<FriendsRequestScreen> {
                         '수락하기',
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 12.sp,
                           fontFamily: 'Nanum',
                           fontWeight: FontWeight.w800,
                           height: 1.40,

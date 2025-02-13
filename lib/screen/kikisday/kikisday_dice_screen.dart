@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/model/game_provider.dart';
 import 'package:kiding_frontend/model/timer_mode.dart';
 import 'package:kiding_frontend/screen/kikisday/kikisday_talmud_card_screen.dart';
@@ -12,10 +13,10 @@ class KikisdayDiceScreen extends StatefulWidget {
   const KikisdayDiceScreen({super.key});
 
   @override
-  _KikisdayDiceScreenState createState() => _KikisdayDiceScreenState();
+  KikisdayDiceScreenState createState() => KikisdayDiceScreenState();
 }
 
-class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
+class KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
   VideoPlayerController? _controller;
   Future<void>? _initializeVideoPlayerFuture;
 
@@ -155,12 +156,12 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
               children: [
                 Image.asset(
                   'assets/space/speaker_icon.png',
-                  width: 39.72,
-                  height: 47.68,
+                  width: 39.72.w,
+                  height: 47.68.h,
                 ),
                 Container(
-                  width: 100.88,
-                  height: 30.98,
+                  width: 100.88.w,
+                  height: 30.98.h,
                   decoration: ShapeDecoration(
                     color: Colors.white,
                     shape: RoundedRectangleBorder(
@@ -173,18 +174,18 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF4D4D4D),
-                        fontSize: 15,
+                        fontSize: 15.sp,
                         fontFamily: 'Nanum',
                         fontWeight: FontWeight.w800,
-                        height: 1.53,
+                        height: 1.53.h,
                       ),
                     ),
                   ),
                 ),
                 Image.asset(
                   'assets/kikisday/dice_text_black.png',
-                  width: 270,
-                  height: 80,
+                  width: 270.w,
+                  height: 80.h,
                 ),
               ],
             ),
@@ -220,7 +221,7 @@ class _KikisdayDiceScreenState extends State<KikisdayDiceScreen> {
                     timer.formattedTime, // TimerModel로부터 현재 시간을 가져옵니다.
                     style: TextStyle(
                       fontFamily: 'Nanum',
-                      fontSize: 15,
+                      fontSize: 15.sp,
                       color: Color(0xFF868686),
                     ),
                   ),

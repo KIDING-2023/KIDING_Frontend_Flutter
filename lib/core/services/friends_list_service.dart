@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import '../constants/api_constants.dart';
@@ -25,15 +26,15 @@ class FriendsListService {
           // 서버로부터 받은 친구 목록 데이터 반환
           return List<Map<String, dynamic>>.from(data['result']);
         } else {
-          print("서버 응답 오류: ${data['message']}");
+          debugPrint("서버 응답 오류: ${data['message']}");
           return [];
         }
       } else {
-        print("HTTP 오류: ${response.statusCode}");
+        debugPrint("HTTP 오류: ${response.statusCode}");
         return [];
       }
     } catch (e) {
-      print("네트워크 오류: $e");
+      debugPrint("네트워크 오류: $e");
       return [];
     }
   }

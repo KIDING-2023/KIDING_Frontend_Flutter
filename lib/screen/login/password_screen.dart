@@ -1,5 +1,6 @@
 // 회원가입 비밀번호 설정 화면
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/login/back_screen.dart';
 import 'package:kiding_frontend/screen/login/password_confirm_screen.dart';
 
@@ -53,8 +54,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
                 // 비밀번호 입력칸
                 children: [
                   SizedBox(
-                    width: 261.32,
-                    height: 49.82,
+                    width: 261.32.w,
+                    height: 49.82.h,
                     child: TextField(
                       controller: _pwController,
                       obscureText: true,
@@ -98,7 +99,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                         errorMessage,
                         style: TextStyle(
                             fontFamily: 'nanum',
-                            fontSize: 13,
+                            fontSize: 13.sp,
                             color: Color(0xFFFFA37C)),
                       ),
                     ],

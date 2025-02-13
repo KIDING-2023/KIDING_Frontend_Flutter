@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/kikisday/talmud_story_4_screen.dart';
 import 'package:kiding_frontend/screen/layout/exit_layout.dart';
 import 'package:kiding_frontend/screen/layout/talmud_story_layout.dart';
@@ -27,12 +28,6 @@ class _KikisdayTalmudStory3ScreenState
 
   void _startTimer(int duration) {
     _timer = Timer(Duration(seconds: duration), _navigateToRandomDiceScreen);
-  }
-
-  void _pauseTimer() {
-    if (_timer.isActive) {
-      _timer.cancel();
-    }
   }
 
   void _resumeTimer() {
@@ -75,8 +70,8 @@ class _KikisdayTalmudStory3ScreenState
       backBtnStr: 'assets/kikisday/kikisday_back_btn.png',
       storyWid: Image.asset(
         'assets/kikisday/talmud_story_3.png',
-        width: 339.79,
-        height: 476.3,
+        width: 339.79.w,
+        height: 476.3.h,
       ),
       timerColor: Color(0xFF868686),
       onBackButtonPressed: _onBackButtonPressed,

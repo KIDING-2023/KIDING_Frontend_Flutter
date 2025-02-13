@@ -38,12 +38,6 @@ class _SpaceCompleteScreenState extends State<SpaceCompleteScreen> {
     _timer = Timer(Duration(seconds: duration), _navigateToRandomDiceScreen);
   }
 
-  void _pauseTimer() {
-    if (_timer.isActive) {
-      _timer.cancel();
-    }
-  }
-
   void _resumeTimer() {
     _startTimer(remainingTime);
   }
@@ -77,15 +71,15 @@ class _SpaceCompleteScreenState extends State<SpaceCompleteScreen> {
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         if (data['isSuccess']) {
-          print('서버 응답: ${data['message']}');
+          debugPrint('서버 응답: ${data['message']}');
         } else {
-          print('전송 실패: ${data['message']}');
+          debugPrint('전송 실패: ${data['message']}');
         }
       } else {
-        print('서버 오류: 상태 코드 ${response.statusCode}');
+        debugPrint('서버 오류: 상태 코드 ${response.statusCode}');
       }
     } catch (e) {
-      print('네트워크 오류: $e');
+      debugPrint('네트워크 오류: $e');
     }
   }
 

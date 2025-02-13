@@ -29,12 +29,6 @@ class _KikisdayTalmudStory1ScreenState
     _timer = Timer(Duration(seconds: duration), _navigateToRandomDiceScreen);
   }
 
-  void _pauseTimer() {
-    if (_timer.isActive) {
-      _timer.cancel();
-    }
-  }
-
   void _resumeTimer() {
     _startTimer(remainingTime);
   }

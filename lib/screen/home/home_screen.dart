@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 
@@ -17,10 +18,10 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   int _selectedSortIndex = 0;
   String kikiStarImage = 'unselected_star.png';
   String spaceStarImage = 'unselected_star.png';
@@ -206,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.white,
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: EdgeInsets.only(bottom: 10.h),
         child: BottomAppBarWidget(
           screenHeight: screenSize.height,
           screenWidth: screenSize.width,
@@ -266,8 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         top: screenSize.height * 0.62,
                         child: Center(
                           child: Container(
-                            width: 300.17,
-                            height: 111,
+                            width: 300.17.w,
+                            height: 111.h,
                             padding: EdgeInsets.all(10),
                             decoration: ShapeDecoration(
                               color: Color(0xFFE8EEFB),
@@ -279,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 5),
+                                  padding: EdgeInsets.only(top: 5.h),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
@@ -291,13 +292,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Image.asset(
                                             'assets/home/award.png',
-                                            width: 21.81,
+                                            width: 21.81.w,
                                           ),
                                           Text(
                                             '오늘의 랭킹',
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 18.96,
+                                              fontSize: 18.96.sp,
                                               fontFamily: 'Nanum',
                                               fontWeight: FontWeight.w800,
                                             ),
@@ -317,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         child: Icon(
                                           Icons.add,
-                                          size: 30,
+                                          size: 30.w,
                                           color: Colors.white,
                                         ),
                                       ),
@@ -325,9 +326,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                                 Container(
-                                  width: 280.38,
-                                  height: 40.40,
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
+                                  width: 280.38.w,
+                                  height: 40.40.h,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
                                   decoration: ShapeDecoration(
                                     color: Colors.white,
                                     shape: RoundedRectangleBorder(
@@ -343,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         '1위',
                                         style: TextStyle(
                                           color: Color(0xFFFF8A5B),
-                                          fontSize: 18.96,
+                                          fontSize: 18.96.sp,
                                           fontFamily: 'Nanum',
                                           fontWeight: FontWeight.w800,
                                         ),
@@ -354,19 +356,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                             nickname,
                                             style: TextStyle(
                                               color: Colors.black,
-                                              fontSize: 18.96,
+                                              fontSize: 18.96.sp,
                                               fontFamily: 'Nanum',
                                               fontWeight: FontWeight.w800,
                                             ),
                                           ),
                                           SizedBox(
-                                            width: 8,
+                                            width: 8.w,
                                           ),
                                           Text(
                                             '$answers번',
                                             style: TextStyle(
                                               color: Color(0xFF75777E),
-                                              fontSize: 18.96,
+                                              fontSize: 18.96.sp,
                                               fontFamily: 'Nanum',
                                               fontWeight: FontWeight.w800,
                                             ),
@@ -401,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 25.0),
+        margin: EdgeInsets.only(right: 25.w),
         child: Row(
           children: <Widget>[
             Image.asset(
@@ -477,7 +479,7 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         blendMode: BlendMode.dstOut, // 그라데이션 효과를 합성하는 방식
         child: ListView.builder(
-          padding: EdgeInsets.only(right: 30),
+          padding: EdgeInsets.only(right: 30.w),
           scrollDirection: Axis.horizontal,
           itemCount: _boardGames.length, // itemCount를 _boardGames.length로 설정
           itemBuilder: (context, index) {
@@ -516,26 +518,26 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Container(
         width: screenSize.width * 0.51,
-        margin: EdgeInsets.only(left: 30),
+        margin: EdgeInsets.only(left: 30.w),
         child: Stack(
           children: <Widget>[
             Image.asset('assets/home/${gameImage}_card.png', fit: BoxFit.cover),
             Positioned(
-              left: 20,
-              top: 13.18,
+              left: 20.w,
+              top: 13.18.h,
               child: Row(
                 children: <Widget>[
                   Text('플레이 ${game['players']}명',
                       style: TextStyle(
                           color: Colors.orange,
-                          fontSize: 11.38,
+                          fontSize: 11.38.sp,
                           fontFamily: 'Nanum')),
                 ],
               ),
             ),
             Positioned(
               right: screenSize.width * 0.03,
-              top: 13.18,
+              top: 13.18.h,
               child: GestureDetector(
                 onTap: () {
                   setState(() {
@@ -548,8 +550,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 child: Image.asset(
                     'assets/home/${game['bookmarked'] ? 'selected_star.png' : 'unselected_star.png'}',
-                    width: 19.79,
-                    height: 19.79),
+                    width: 19.79.w,
+                    height: 19.79.h),
               ),
             )
           ],

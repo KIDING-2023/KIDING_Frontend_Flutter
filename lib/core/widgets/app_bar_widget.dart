@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kiding_frontend/screen/search_screen.dart';
 
 class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
@@ -24,12 +25,12 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       // AppBar의 그림자 제거
       leading: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 10),
+        padding: EdgeInsets.only(left: 10.w, top: 10.h),
         child: IconButton(
           icon: Image.asset(
             'assets/home/notice.png',
-            width: 17.08,
-            height: 20,
+            width: 17.08.w,
+            height: 20.h,
           ),
           onPressed: onNotificationTap,
         ),
@@ -38,17 +39,17 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
         title, // 전달받은 제목 사용
         style: TextStyle(
           color: Colors.black,
-          fontSize: 18,
+          fontSize: 18.sp,
           fontFamily: 'Nanum',
         ),
       ),
       actions: [
         Padding(
-          padding: EdgeInsets.only(right: 15, top: 10),
+          padding: EdgeInsets.only(right: 15.w, top: 10.h),
           child: AnimatedContainer(
             duration: Duration(seconds: 1),
             curve: Curves.easeInOut,
-            width: 40,
+            width: 40.w,
             height: screenSize.height * 0.0563,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -67,8 +68,8 @@ class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
                       child: IconButton(
                         icon: Image.asset(
                           'assets/home/search.png',
-                          width: 20.95,
-                          height: 20,
+                          width: 20.95.w,
+                          height: 20.h,
                         ),
                         onPressed: () {
                           // 검색 화면으로 이동
