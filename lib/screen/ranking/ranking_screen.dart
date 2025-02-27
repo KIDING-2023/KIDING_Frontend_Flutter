@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/widgets/bottom_app_bar_widget.dart';
@@ -105,13 +106,16 @@ class _RankingScreenState extends State<RankingScreen> {
           ),
         ],
       ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: BottomAppBarWidget(
-          screenHeight: screenSize.height,
-          screenWidth: screenSize.width,
-          screen: "ranking",
-          hasAppBar: true,
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: 10.h),
+          child: BottomAppBarWidget(
+            screenHeight: screenSize.height,
+            screenWidth: screenSize.width,
+            screen: "ranking",
+            hasAppBar: true,
+          ),
         ),
       ),
       body: Container(

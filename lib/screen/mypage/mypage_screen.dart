@@ -13,6 +13,7 @@ import 'package:kiding_frontend/screen/kikisday/kikisday_play_screen.dart';
 import 'package:kiding_frontend/screen/login/start_screen.dart';
 import 'package:kiding_frontend/screen/mypage/delete_account_confirm.dart';
 import 'package:kiding_frontend/screen/mypage/friends_delete_screen.dart';
+import 'package:kiding_frontend/screen/mypage/logout_confirm_screen.dart';
 import 'package:kiding_frontend/screen/space/space_play_screen.dart';
 
 import 'package:http/http.dart' as http;
@@ -523,7 +524,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    onTap: () => logout(),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LogoutConfirmScreen()),
+                      );
+                    },
                     child: Text(
                       '로그아웃하기',
                       style: TextStyle(

@@ -180,6 +180,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ),
                                   border: InputBorder.none,
                                 ),
+                                onSubmitted: (value) async {
+                                  setState(() {
+                                    searchWord = value;
+                                    hasSearched = true; // 검색 상태 업데이트
+                                  });
+                                  await addSearchWord(searchWord); // 검색 기록 저장
+                                  fetchSearchData(); // 검색 API 호출
+                                  updateRecentSearchWords(); // UI 업데이트
+                                },
                               ),
                             ),
                             // 검색 버튼
