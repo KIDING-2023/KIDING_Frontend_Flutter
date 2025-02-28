@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/jeonsiwon/Documents/development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/jeonsiwon/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/android/app/.cxx/RelWithDebInfo/5fq19484/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/jeonsiwon/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/android/app/.cxx/RelWithDebInfo/5fq19484/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

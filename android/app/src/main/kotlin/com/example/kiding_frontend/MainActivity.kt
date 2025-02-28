@@ -1,4 +1,4 @@
-package com.example.kiding_frontend
+package com.kidingbook.app
 
 import io.flutter.embedding.android.FlutterActivity
 

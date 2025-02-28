@@ -1,0 +1,2 @@
+/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/android/app/.cxx/RelWithDebInfo/5fq19484/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/android/app/.cxx/RelWithDebInfo/5fq19484/armeabi-v7a/CMakeFiles/rebuild_cache.dir

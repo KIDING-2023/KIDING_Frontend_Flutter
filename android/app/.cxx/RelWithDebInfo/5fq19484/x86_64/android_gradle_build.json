@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/Users/jeonsiwon/Documents/development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/jeonsiwon/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/android/app/.cxx/RelWithDebInfo/5fq19484/x86_64",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/jeonsiwon/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/jeonsiwon/Documents/StudioProjects/KIDING/KIDING_Frontend_Flutter/android/app/.cxx/RelWithDebInfo/5fq19484/x86_64",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/Users/jeonsiwon/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/Users/jeonsiwon/Library/Android/sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}
