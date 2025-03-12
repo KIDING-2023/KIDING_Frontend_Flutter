@@ -26,7 +26,7 @@ class PlayLayout extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(bg),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: Stack(
