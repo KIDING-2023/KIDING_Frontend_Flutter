@@ -290,7 +290,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
               // 오늘의 랭킹 박스
               child: Container(
                 width: MediaQuery.of(context).size.width - 60.w,
-                height: 117.73.h,
+                height: 150.h,
                 decoration: ShapeDecoration(
                   color: Color(0xFFFF8A5B),
                   shape: RoundedRectangleBorder(
