@@ -105,7 +105,7 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                   '본인 계정을 탈퇴하고\n키딩북을 떠나시겠습니까?',
                   style: TextStyle(
                     fontFamily: 'Nanum',
-                    fontSize: 15.sp,
+                    fontSize: 15,
                   ),
                 ),
               ),
@@ -130,7 +130,7 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                           '취소',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                             height: 1.40.h,
@@ -157,7 +157,7 @@ class _DeleteAccountConfirmState extends State<DeleteAccountConfirm> {
                           '탈퇴하기',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                             height: 1.40.h,

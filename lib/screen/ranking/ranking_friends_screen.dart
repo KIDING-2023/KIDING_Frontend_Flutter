@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kiding_frontend/core/constants/api_constants.dart';
 import 'package:kiding_frontend/core/services/friends_list_service.dart';
@@ -101,8 +102,8 @@ class _RankingFriendsScreenState extends State<RankingFriendsScreen> {
       backgroundColor: const Color.fromARGB(255, 86, 93, 108),
       body: Center(
         child: Container(
-          width: 300,
-          height: 180,
+          width: 300.w,
+          height: 180.h,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(25),
@@ -133,8 +134,8 @@ class _RankingFriendsScreenState extends State<RankingFriendsScreen> {
                       Navigator.pop(context);
                     },
                     child: Container(
-                      width: 136.71,
-                      height: 26.76,
+                      width: 136.71.w,
+                      height: 26.76.h,
                       decoration: ShapeDecoration(
                         color: const Color(0xFF838383),
                         shape: RoundedRectangleBorder(
@@ -162,8 +163,8 @@ class _RankingFriendsScreenState extends State<RankingFriendsScreen> {
                       }
                     },
                     child: Container(
-                      width: 136.71,
-                      height: 26.76,
+                      width: 136.71.w,
+                      height: 26.76.h,
                       decoration: ShapeDecoration(
                         color: isAvailable
                             ? const Color(0xFFFF8A5B)

@@ -56,7 +56,7 @@ class _LogoutConfirmState extends State<LogoutConfirmScreen> {
                   '키딩북에서\n로그아웃하시겠습니까?',
                   style: TextStyle(
                     fontFamily: 'Nanum',
-                    fontSize: 15.sp,
+                    fontSize: 15,
                   ),
                 ),
               ),
@@ -81,7 +81,7 @@ class _LogoutConfirmState extends State<LogoutConfirmScreen> {
                           '취소',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                             height: 1.40.h,
@@ -108,7 +108,7 @@ class _LogoutConfirmState extends State<LogoutConfirmScreen> {
                           '로그아웃하기',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 12.sp,
+                            fontSize: 12,
                             fontFamily: 'Nanum',
                             fontWeight: FontWeight.w800,
                             height: 1.40.h,
