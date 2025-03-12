@@ -119,7 +119,7 @@ class _SpaceQrScreenState extends State<SpaceQrScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 250.w;
+    var scanArea = 300.0;
 
     return QRView(
       key: qrKey,

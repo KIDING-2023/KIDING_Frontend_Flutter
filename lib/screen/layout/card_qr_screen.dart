@@ -130,7 +130,7 @@ class _CardQRScreenState extends State<CardQRScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 250.w;
+    var scanArea = 300.0;
     // To ensure the Scanner view is properly sizes after rotation
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(

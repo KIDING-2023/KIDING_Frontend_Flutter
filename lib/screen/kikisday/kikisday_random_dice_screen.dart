@@ -262,7 +262,7 @@ class _KikisdayRandomDiceScreenState extends State<KikisdayRandomDiceScreen> {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF4D4D4D),
-                        fontSize: 15.sp,
+                        fontSize: 15,
                         fontFamily: 'Nanum',
                         fontWeight: FontWeight.w800,
                         height: 1.53.h,

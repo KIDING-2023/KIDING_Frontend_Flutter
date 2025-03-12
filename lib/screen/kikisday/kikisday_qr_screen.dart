@@ -104,7 +104,7 @@ class _KikisdayQrScreenState extends State<KikisdayQrScreen> {
   }
 
   Widget _buildQrView(BuildContext context) {
-    var scanArea = 250.0.w;
+    var scanArea = 300.0;
     return QRView(
       key: qrKey,
       onQRViewCreated: _onQRViewCreated,

@@ -125,7 +125,7 @@ class _RankingScreenState extends State<RankingScreen> {
           color: Color(0xffE9EEFC),
           image: DecorationImage(
             image: AssetImage('assets/ranking/bg_line.png'), // 배경 이미지 경로
-            fit: BoxFit.cover, // 이미지 크기 조정
+            fit: BoxFit.fill, // 이미지 크기 조정
           ),
         ),
         child: rankingData.isEmpty
@@ -141,7 +141,14 @@ class _RankingScreenState extends State<RankingScreen> {
 
   List<Widget> _buildRankingWidgets(Size screenSize) {
     List<Widget> widgets = [];
-    List<double> topOffsets = [0.1205, 0.2116, 0.3088, 0.4688, 0.5814, 0.6811];
+    List<double> topOffsets = [
+      0.1205,
+      0.2116,
+      0.3088,
+      0.4688,
+      0.5814,
+      0.6811,
+    ];
     List<String> iconImages = [
       'assets/ranking/big_icon_1.png',
       'assets/ranking/big_icon_2.png',
@@ -156,7 +163,7 @@ class _RankingScreenState extends State<RankingScreen> {
       0.0865, // for 3rd place
       0.3888, // for 4th place
       0.59, // for 5th place
-      0.3349 // for 6th place
+      0.3349, // for 6th place
     ];
 
     for (int i = 0; i < rankingData.length && i < 6; i++) {
@@ -166,15 +173,15 @@ class _RankingScreenState extends State<RankingScreen> {
           left: screenSize.width * leftPositions[i],
           top: screenSize.height * topOffsets[i],
           child: SizedBox(
-            width: i < 3 ? 142 : 119,
-            height: i < 3 ? 73 : 61,
+            width: i < 3 ? 142.w : 119.w,
+            height: i < 3 ? 73.h : 61.h,
             child: Stack(
               children: [
                 Positioned(
                   left: 0,
                   child: Container(
-                    width: i < 3 ? 141.2 : 118.06,
-                    height: i < 3 ? 72.67 : 60.76,
+                    width: i < 3 ? 141.2.w : 118.06.w,
+                    height: i < 3 ? 72.67.h : 60.76.h,
                     decoration: ShapeDecoration(
                       color: Colors.white,
                       shape: RoundedRectangleBorder(
@@ -195,7 +202,7 @@ class _RankingScreenState extends State<RankingScreen> {
                             Text(
                               user["user"],
                               style: TextStyle(
-                                fontSize: i < 3 ? 18 : 15,
+                                fontSize: i < 3 ? 18.sp : 15.sp,
                                 fontFamily: 'Nanum',
                                 color: Colors.black,
                               ),
@@ -203,7 +210,7 @@ class _RankingScreenState extends State<RankingScreen> {
                             Text(
                               '${user["chips"]}개',
                               style: TextStyle(
-                                fontSize: i < 3 ? 12 : 10,
+                                fontSize: i < 3 ? 12.sp : 10.sp,
                                 fontFamily: 'Nanum',
                                 color: Colors.black.withOpacity(0.7),
                               ),
