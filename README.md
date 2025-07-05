@@ -77,9 +77,6 @@ KIDING은 **실물 보드게임과 연동하여 부모님과 아이가 함께 �
 
 ## 🔗 API 연동
 
-### 📍 기본 API 주소
-- API_URL=http://3.37.76.76:8081
-
 ### ✅ API 연동 특징
 - **HTTP 통신** (`http` 및 `stomp_dart_client` 패키지 활용)
 - **JWT 기반 사용자 인증** (`flutter_secure_storage`를 활용한 토큰 관리)
